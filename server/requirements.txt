@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+sqlalchemy[asyncio]
+asyncpg
+pydantic
+pydantic-settings
+email-validator
+python-jose[cryptography]
+bcrypt
+redis
+celery
+python-multipart
+google-auth
+requests
+supabase
+httpx
