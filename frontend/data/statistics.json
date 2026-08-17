@@ -1,0 +1,238 @@
+{
+    "facts": [
+        {
+            "value": "≈1.4 bn",
+            "label": "adults worldwide remain unbanked",
+            "source": "World Bank Global Findex 2021"
+        },
+        {
+            "value": "≈140 m",
+            "label": "low-income borrowers served by microfinance institutions globally",
+            "source": "MIX / Convergences sector estimates"
+        },
+        {
+            "value": "≈80 %",
+            "label": "of microfinance clients are women (typical sector share)",
+            "source": "CGAP sector reviews"
+        },
+        {
+            "value": "$500 bn+",
+            "label": "annual green bond issuance in recent peak years",
+            "source": "Climate Bonds Initiative"
+        },
+        {
+            "value": "≈85 %",
+            "label": "of new global power capacity added recently is renewable",
+            "source": "IRENA capacity statistics"
+        },
+        {
+            "value": ">90 %",
+            "label": "typical microloan repayment rates reported by major MFIs",
+            "source": "MIX Market data"
+        }
+    ],
+    "countryStats": {
+        "title": "Financial inclusion and microfinance by country",
+        "note": "Account ownership = share of adults with an account at a financial institution or mobile money provider (Findex 2021). Microfinance outreach figures are approximate sector estimates and vary by source.",
+        "source": "World Bank Global Findex 2021; MIX Market; national regulators",
+        "columns": [
+            "Country",
+            "Account ownership (% adults)",
+            "Microfinance character",
+            "Flagship model"
+        ],
+        "rows": [
+            [
+                "Bangladesh",
+                "≈53 %",
+                "Birthplace of modern microfinance; tens of millions of borrowers",
+                "Grameen groups, BRAC, bKash mobile money"
+            ],
+            [
+                "India",
+                "≈78 %",
+                "Largest client base globally; self-help-group (SHG) model dominant",
+                "SHG-bank linkage, small finance banks"
+            ],
+            [
+                "Kenya",
+                "≈79 %",
+                "Mobile-money-led inclusion; M-Pesa ubiquitous",
+                "M-Pesa, Equity Bank, M-Shwari"
+            ],
+            [
+                "Bolivia",
+                "≈69 %",
+                "Dense regulated microfinance sector per capita",
+                "BancoSol and regulated MFIs"
+            ],
+            [
+                "Mexico",
+                "≈49 %",
+                "Large untapped market; Compartamos effect",
+                "Compartamos, fintech lenders"
+            ],
+            [
+                "Indonesia",
+                "≈52 %",
+                "Village-unit banks (BRI Units) at massive scale",
+                "Bank Rakyat Indonesia micro-units"
+            ],
+            [
+                "Peru",
+                "≈65 %",
+                "Strong municipal savings banks (cajas)",
+                "Cajas municipales"
+            ],
+            [
+                "Nigeria",
+                "≈45 %",
+                "Agent banking and fintech driving growth",
+                "Agent networks, OPay/PalmPay"
+            ],
+            [
+                "Pakistan",
+                "≈21 %",
+                "Low formal inclusion; branchless banking growing",
+                "Easypaisa, JazzCash"
+            ],
+            [
+                "Philippines",
+                "≈56 %",
+                "Cooperatives + e-wallets (GCash) expanding access",
+                "GCash, rural banks"
+            ]
+        ]
+    },
+    "companyStats": {
+        "title": "Selected institutions at a glance",
+        "note": "Figures are rounded public approximations from annual reports and public statistics pages; they change over time — treat them as orders of magnitude.",
+        "source": "Organisation annual reports and public statistics pages",
+        "columns": [
+            "Institution",
+            "Country",
+            "Type",
+            "Scale (approx.)",
+            "Known for"
+        ],
+        "rows": [
+            [
+                "Grameen Bank",
+                "Bangladesh",
+                "Microfinance bank",
+                "≈9–10 m members",
+                "Group lending; Nobel Peace Prize 2006"
+            ],
+            [
+                "BRAC",
+                "Bangladesh",
+                "NGO / MFI network",
+                "Millions of borrowers",
+                "Microfinance-plus development model"
+            ],
+            [
+                "Bank Rakyat Indonesia",
+                "Indonesia",
+                "State bank (micro units)",
+                "Tens of millions of savers & borrowers",
+                "Most profitable micro-banking network"
+            ],
+            [
+                "Equity Bank",
+                "Kenya",
+                "Commercial bank",
+                "10 m+ customers",
+                "Mass-market inclusive banking"
+            ],
+            [
+                "Compartamos Banco",
+                "Mexico",
+                "Microfinance bank",
+                "Millions of clients",
+                "2007 IPO; pricing debate"
+            ],
+            [
+                "M-Pesa (Safaricom)",
+                "Kenya",
+                "Mobile money",
+                "Tens of millions of users",
+                "Phone-based payments & savings"
+            ],
+            [
+                "Kiva",
+                "USA (global)",
+                "Crowdfunding non-profit",
+                "$1.9 bn+ lent",
+                "$25 crowdfunded microloans"
+            ],
+            [
+                "M-KOPA",
+                "Kenya",
+                "Fintech / asset finance",
+                "Millions of homes connected",
+                "Pay-as-you-go solar"
+            ],
+            [
+                "Ørsted",
+                "Denmark",
+                "Energy company",
+                "World's largest offshore-wind developer",
+                "Fossil-to-wind transition"
+            ],
+            [
+                "Triodos Bank",
+                "Netherlands",
+                "Values-based bank",
+                "Mid-sized European bank",
+                "Publishes every loan; impact-only lending"
+            ]
+        ]
+    },
+    "greenStats": {
+        "title": "Sustainable finance market pulse",
+        "note": "Rounded figures from market trackers; annual values vary by year and methodology.",
+        "source": "Climate Bonds Initiative; IEA; IRENA; BloombergNEF",
+        "columns": [
+            "Indicator",
+            "Approximate value",
+            "Trend"
+        ],
+        "rows": [
+            [
+                "Annual green bond issuance",
+                "US$500 bn+ in peak years",
+                "Growing"
+            ],
+            [
+                "Cumulative green bond issuance",
+                "Above US$2.5 trillion",
+                "Growing"
+            ],
+            [
+                "Global renewable capacity additions",
+                "Hundreds of GW per year",
+                "Accelerating"
+            ],
+            [
+                "Share of renewables in new power capacity",
+                "≈85 %",
+                "Accelerating"
+            ],
+            [
+                "Energy-transition investment (annual)",
+                "Above US$1 trillion",
+                "Accelerating"
+            ],
+            [
+                "ESG-labelled assets under management",
+                "Tens of trillions of US$ (broad definitions)",
+                "Normalising after rapid growth"
+            ],
+            [
+                "Carbon pricing coverage",
+                "≈23 % of global emissions under a price",
+                "Slowly expanding"
+            ]
+        ]
+    }
+}

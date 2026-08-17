@@ -1,0 +1,1717 @@
+{
+  "slug": "microfinance",
+  "title": "Microfinance: Financial Inclusion in Action",
+  "tagline": "Microcredit, micro-savings, micro-insurance and micro-leasing — the tools that bank the unbanked.",
+  "topic": "microfinance",
+  "level": "Intermediate",
+  "instructor": {
+    "name": "Dr. Priya Raman",
+    "title": "Development finance researcher",
+    "bio": "Priya has spent 12 years studying inclusive finance across South Asia and East Africa, and teaches practitioners how microfinance really works on the ground."
+  },
+  "outcomes": [
+    "Explain how microcredit, micro-savings, micro-insurance and micro-leasing each work",
+    "Compare group lending, individual lending and village banking models",
+    "Break down why microloan interest rates are high and how to read them honestly",
+    "Describe how MFIs are structured, regulated and supervised",
+    "Assess portfolio quality using PAR and other risk metrics",
+    "Weigh the real evidence on microfinance's social impact",
+    "Analyse the opportunities and risks of digital microfinance"
+  ],
+  "gated": true,
+  "modules": [
+    {
+      "id": "m1",
+      "title": "What Is Microfinance?",
+      "lessons": [
+        {
+          "id": "m1l1",
+          "title": "Small Loans, Big Idea: The Birth of Microfinance",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## A Working Definition\n\n**Microfinance** means providing basic financial services — small loans, savings accounts, insurance, and payment services — to people who are shut out of the traditional banking system. The best-known piece is **microcredit**: very small loans given to low-income entrepreneurs to start or grow tiny businesses, like a food stall, a tailor shop, or a goat-rearing operation.\n\nThe idea rests on a simple observation: poor people are not poor because they lack skills or work ethic. Often they lack only **access** — to capital, to a safe place to save, to a way to smooth out a bad month.\n\n## The Jobra Experiment, 1976\n\nThe modern microfinance movement traces back to one village and one economics professor. In 1974, a famine struck Bangladesh. **Muhammad Yunus**, who taught economics at Chittagong University, found that his elegant classroom theories felt hollow while people starved outside. He began visiting the neighboring village of **Jobra** to understand poverty up close.\n\nThere he met craftswomen who made bamboo stools. They worked hard all day but earned almost nothing, because they had to borrow from traders to buy raw bamboo — and the traders demanded they sell the finished stools back to them at prices the traders set. The women were trapped: too poor to buy materials, too indebted to keep their profits.\n\nIn 1976, Yunus did something radical in its simplicity. He lent **about $27 of his own money to 42 villagers** so they could buy materials and work for themselves. Every borrower repaid. Conventional banks, he noticed, would never have made those loans — they demanded collateral, paperwork, and loan sizes far bigger than a stool maker needed.\n\n## From Experiment to Grameen Bank\n\nYunus spent years persuading banks to lend to the poor, offering himself as guarantor. When that proved too slow, he created a bank for the poor instead. **Grameen Bank** — \"gram\" means \"village\" in Bengali — was formally established in 1983. Its model flipped banking upside down:\n\n- Lend to the **poorest**, especially women\n- Require **no collateral**\n- Organize borrowers into small **groups**\n- Collect repayment in tiny, frequent **installments**\n\nGrameen grew to serve millions of borrowers, and in **2006, Yunus and Grameen Bank were jointly awarded the Nobel Peace Prize** for showing that credit could be a tool against poverty.\n\n## More Than Loans\n\nToday \"microfinance\" covers a family of services:\n\n- **Microcredit** — small business and emergency loans\n- **Microsavings** — safe deposit accounts with tiny minimums\n- **Microinsurance** — health, crop, and life cover for a few cents a week\n- **Payments and transfers** — often delivered by mobile phone\n\n> \"The poor themselves can create a poverty-free world — all we have to do is to free them from the chains that we have put around them.\" — Muhammad Yunus\n\nConsider **Fatima**, who borrows $200 to buy a used sewing machine. She stitches clothes for her neighbors, repays a few dollars each week, and within a year owns the machine outright. That is microfinance at work: not charity, but access."
+        },
+        {
+          "id": "m1l2",
+          "title": "Financial Inclusion: Who Microfinance Serves and Why",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## The Unbanked World\n\nAround the world, roughly **1.4 billion adults have no account at a bank or other financial institution**, according to the World Bank's Global Findex survey. Being **unbanked** does not mean having no money — it means having nowhere safe to keep it, no way to borrow formally, and no record to build on. The unbanked save in cash at home, borrow from moneylenders, and rely on relatives in emergencies.\n\n**Financial inclusion** is the effort to bring these households into the formal financial system with services that fit their lives: tiny deposits, small loans, and payments that work without a payslip or a permanent address.\n\n## Why Traditional Banks Stayed Away\n\nBanks did not ignore the poor out of pure prejudice; the economics pushed them away:\n\n- **No collateral.** A landless farmer has no titled property to pledge against a loan.\n- **No credit history.** Informal workers leave no paper trail a bank can score.\n- **Tiny transactions.** A $150 loan costs nearly as much paperwork as a $150,000 one, but earns a fraction of the revenue.\n- **Distance.** Serving scattered rural villages means travel, staff, and cash handling that eat up thin margins.\n- **Irregular income.** A harvest arrives twice a year; daily wages fluctuate. Standard monthly loan schedules fit poorly.\n- **Paperwork barriers.** Forms, identity documents, and literacy requirements screen many people out before a loan is even discussed.\n\nThe result: a vegetable seller with a thriving stall could not borrow $100 from a bank, but a moneylender would happily lend it — at rates that swallowed her profit.\n\n## Who Microfinance Serves\n\nMicrofinance institutions (MFIs) designed their model around exactly the clients banks rejected:\n\n- **Women**, who make up the large majority of microfinance clients worldwide — in part because banks excluded them the most, and because early experience suggested they invested earnings heavily in their children's food and schooling\n- **Market vendors and stallholders** needing small amounts of working capital\n- **Smallholder farmers** buying seed and fertilizer before the planting season\n- **Artisans and home-based workers** — weavers, potters, food processors\n- **Informal laborers** smoothing income between jobs\n\nConsider **Rosa**, who sells fruit in a town market. Each morning she needs $30 of stock. Without microfinance, a wholesaler lends her the money at 10% *per day*. With a microloan at a fraction of that cost, she keeps her margin — and starts saving for the first time.\n\n## The Promise and the Honest Caveats\n\nMicrofinance has reached **hundreds of millions of clients** globally, and studies suggest it helps many households smooth consumption, keep children in school during lean months, and grow micro-businesses. But researchers also urge honesty: microcredit is **not a magic exit from poverty** for everyone. Loans used for emergencies rather than business can leave families deeper in debt, and some borrowers juggle multiple loans at once. Later modules look at savings, insurance, and consumer protection — the pieces that make the toolkit safer.\n\n> Access to finance is a tool, not a cure: it amplifies whatever a household already does with money."
+        },
+        {
+          "id": "m1l3",
+          "title": "Quiz: Microfinance Basics",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "What is microfinance?",
+                "choices": [
+                  "Providing small loans, savings, insurance, and payment services to people excluded from traditional banking",
+                  "Government cash transfers to households below the poverty line",
+                  "Large loans to established corporations in developing countries",
+                  "Charity donations that never need to be repaid"
+                ],
+                "answer": 0,
+                "explain": "Microfinance is a family of financial services — not charity or corporate lending — designed for people shut out of banks."
+              },
+              {
+                "q": "In the 1976 Jobra experiment, Muhammad Yunus...",
+                "choices": [
+                  "Convinced a national bank to open branches in every village",
+                  "Lent about $27 of his own money to 42 villagers, and every borrower repaid",
+                  "Won the Nobel Peace Prize for his banking model",
+                  "Founded Grameen Bank with government funding"
+                ],
+                "answer": 1,
+                "explain": "Yunus personally lent about $27 to 42 villagers in Jobra; the Nobel Prize (2006) and Grameen's founding (1983) came later."
+              },
+              {
+                "q": "What trap did the bamboo stool makers of Jobra face?",
+                "choices": [
+                  "They had no skills customers wanted",
+                  "Banks competed to lend them money at low rates",
+                  "They had to borrow from traders and sell the stools back at prices the traders set",
+                  "Their bamboo supplies were destroyed by floods"
+                ],
+                "answer": 2,
+                "explain": "Traders financed the raw bamboo and dictated the buy-back price, leaving the women almost no profit from their own labor."
+              },
+              {
+                "q": "When was Grameen Bank formally established?",
+                "choices": [
+                  "1976",
+                  "2006",
+                  "1990",
+                  "1983"
+                ],
+                "answer": 3,
+                "explain": "Grameen Bank was formally established in 1983, seven years after the Jobra experiment."
+              },
+              {
+                "q": "What honor did Muhammad Yunus and Grameen Bank share in 2006?",
+                "choices": [
+                  "The Nobel Peace Prize",
+                  "The World Bank's development award",
+                  "The Pulitzer Prize",
+                  "The Nobel Prize in Economics"
+                ],
+                "answer": 0,
+                "explain": "They were jointly awarded the Nobel Peace Prize for showing that credit can be a tool against poverty."
+              },
+              {
+                "q": "Which of these is NOT typically counted as a microfinance service?",
+                "choices": [
+                  "Microsavings accounts",
+                  "Microinsurance",
+                  "Large corporate merger financing",
+                  "Microcredit"
+                ],
+                "answer": 2,
+                "explain": "Microfinance covers small loans, savings, insurance, and payments for the excluded — not corporate finance deals."
+              },
+              {
+                "q": "According to the World Bank's Global Findex survey, roughly how many adults worldwide are unbanked?",
+                "choices": [
+                  "About 140 million",
+                  "About 1.4 billion",
+                  "About 14 billion",
+                  "About 5 billion"
+                ],
+                "answer": 1,
+                "explain": "The Findex survey reports roughly 1.4 billion adults with no account at a financial institution."
+              },
+              {
+                "q": "Which is a key economic reason traditional banks avoided lending to the poor?",
+                "choices": [
+                  "Poor borrowers never repaid loans in the past",
+                  "Banking laws made small loans illegal",
+                  "The poor refused to pay any interest",
+                  "A tiny loan costs nearly as much to process as a large one, but earns far less"
+                ],
+                "answer": 3,
+                "explain": "Small transactions carry high fixed costs relative to their revenue, so banks found them unprofitable to serve."
+              },
+              {
+                "q": "Who makes up the large majority of microfinance clients worldwide?",
+                "choices": [
+                  "Women",
+                  "Retired workers",
+                  "Government employees",
+                  "Large landowners"
+                ],
+                "answer": 0,
+                "explain": "Women are the large majority of microfinance clients, partly because banks had excluded them the most."
+              },
+              {
+                "q": "What does 'financial inclusion' mean?",
+                "choices": [
+                  "Requiring banks to merge with microfinance institutions",
+                  "Giving every citizen a free loan that need not be repaid",
+                  "Bringing excluded households into the formal financial system with services that fit their lives",
+                  "Replacing cash entirely with mobile money"
+                ],
+                "answer": 2,
+                "explain": "Financial inclusion means extending fitting formal services — accounts, loans, payments — to households the system left out."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m2",
+      "title": "Microcredit I: How Small Loans Work",
+      "lessons": [
+        {
+          "id": "m2l1",
+          "title": "Anatomy of a Microloan",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Small by Design\n\nA **microloan** is built for a business that fits in a market stall. While sizes vary by country and lender, typical first loans often fall in the range of **$50 to $500** — enough for a sewing machine, a bicycle rickshaw, or a crate of goods to resell. Terms are short, commonly **three to twelve months**, and repayment happens in tiny, frequent installments — often **weekly**.\n\nThis design is deliberate. A weekly installment of a few dollars matches the daily cash flow of a vendor who earns a little every day. It also surfaces trouble early: if a borrower misses week two, the lender knows long before a year-long loan would have quietly gone bad.\n\n## The Solidarity Group\n\nThe signature invention of early microcredit was **group lending**. In the Grameen-style model, borrowers form **self-selected groups of about five people** — neighbors, friends, market colleagues. Each member receives her own loan for her own business, but the group takes responsibility together.\n\nWhy groups instead of individuals?\n\n- **Screening.** Members know each other's reputations. A group rarely accepts someone it considers unreliable, because the group will pay the price.\n- **Monitoring.** Between lender visits, members keep an eye on whether loans are used as promised.\n- **Support.** Members share advice, cover small gaps, and encourage one another through slow weeks.\n- **Lower cost.** One loan officer can serve five borrowers in a single meeting, which keeps the lender's costs down.\n\nA typical sequence: the group forms, members receive basic financial training, the first two members get loans and begin repayment, and the rest follow once the first two show discipline. Lending in stages builds a track record inside the group itself.\n\n## A Week in the Life\n\nPicture **Amina**, a vegetable seller in a five-woman group. She borrows $120 for wholesale stock. Every Friday morning the group meets the loan officer under a tree; Amina hands over about $10 — principal plus interest. The officer records the payment in each member's passbook. The meeting takes an hour, and members also swap news: whose daughter is sick, whose supplier cheated them, who found a cheaper wholesaler.\n\n## What the Loan Actually Buys\n\nMost microloans fund **working capital** — stock, raw materials, seeds — rather than big equipment. The business earns a margin on fast turnover: buy vegetables at dawn, sell out by noon, repay a slice on Friday, repeat. When the cycle works, each loan round leaves the borrower slightly better stocked than the last.\n\nGroups typically graduate to **larger loans over successive cycles** as trust and repayment history build. That is why a first loan is often small even when a borrower's plans are big: the small loan is the entrance exam, and repayment is the passing grade."
+        },
+        {
+          "id": "m2l2",
+          "title": "Trust as Collateral: Joint Liability and Character-Based Lending",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Lending Without Collateral\n\nTraditional loans rest on **collateral** — property the bank can seize if you default. Microcredit's clients have none, so the model substitutes something else: **social trust**, made concrete through two tools — **joint liability** and **character-based underwriting**.\n\n## Joint Liability\n\nIn a group loan, members are **jointly liable**: if one member cannot pay, the others must cover her installment, or the whole group loses access to future loans. This sounds harsh, but it converts a borrower's strongest asset — her standing among neighbors — into loan security.\n\n- Members choose groupmates carefully, because a careless choice becomes their own problem.\n- Members help each other in a crunch, because one default endangers everyone's credit line.\n- Lenders can skip expensive collateral checks, because the group performs them socially.\n\n## Character-Based Underwriting\n\nWith no credit scores and no collateral, how does a lender decide who gets a loan? By reading **character and cash flow** instead of paperwork:\n\n- **Reputation.** The group itself vouches for members; local standing substitutes for a credit bureau file.\n- **Business visits.** A loan officer walks the borrower's stall or workshop, counts stock, and asks about daily sales and costs.\n- **Cash-flow logic.** The question is not \"what do you own?\" but \"does this business bring in enough each week to cover the installment?\"\n- **Progressive lending.** Borrowers prove themselves with a small loan, then qualify for larger ones — repayment history becomes the borrower's credit record.\n\n## The Weekly Meeting\n\nRepayment usually happens at a **group meeting**, held weekly or every two weeks, often in a public spot in the village. Meetings do several jobs at once:\n\n- Collect installments transparently — everyone sees who paid, recorded in passbooks\n- Create **repayment discipline**: a fixed, frequent, public appointment is hard to forget\n- Deliver training on budgeting, health, or business skills\n- Let the loan officer spot problems early — a member who starts arriving late, or borrowing from neighbors to pay, is signaling trouble\n\n## The Honest Risks\n\nGroup lending's strengths can cut both ways. **Peer pressure** can slide from encouragement into coercion; there are documented cases of groups seizing a defaulting member's assets, and of women borrowing from moneylenders just to keep up appearances at meetings. A single local shock — a flood, an illness outbreak — can knock out several members of one group at once, because neighbors often share the same local economy.\n\nWell-run lenders therefore pair joint liability with flexibility: rescheduling for genuine hardship, keeping loan sizes modest, and never treating the group's pressure as a substitute for humane judgment. Used well, trust-based lending achieves repayment rates that conventional bankers once insisted were impossible among the poor. Used badly, it can turn a neighborly safety net into a trap."
+        },
+        {
+          "id": "m2l3",
+          "title": "Quiz: How Small Loans Work",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "Typical first microloans often fall in which size range?",
+                "choices": [
+                  "$5 to $10",
+                  "$50 to $500",
+                  "$10,000 to $50,000",
+                  "$1 million and up"
+                ],
+                "answer": 1,
+                "explain": "First microloans are usually small — commonly $50 to $500 — with larger loans offered in later cycles."
+              },
+              {
+                "q": "Why are microloan installments usually collected weekly?",
+                "choices": [
+                  "Weekly collection matches vendors' daily cash flow and surfaces trouble early",
+                  "It maximizes the interest the lender can charge",
+                  "Borrowers are legally required to meet weekly",
+                  "Weekly meetings exist mainly to sell insurance"
+                ],
+                "answer": 0,
+                "explain": "Small weekly payments fit businesses that earn a little every day, and a missed week two is an early warning sign."
+              },
+              {
+                "q": "In the Grameen-style model, a solidarity group usually has about how many members?",
+                "choices": [
+                  "Two",
+                  "Twenty-five",
+                  "Five",
+                  "Fifty"
+                ],
+                "answer": 2,
+                "explain": "Grameen-style solidarity groups are self-selected groups of about five borrowers."
+              },
+              {
+                "q": "Who chooses the members of a solidarity group?",
+                "choices": [
+                  "The bank's head office",
+                  "Village officials",
+                  "A loan officer assigns strangers together",
+                  "The borrowers select each other"
+                ],
+                "answer": 3,
+                "explain": "Groups are self-selected: members pick people they trust, because the group shares responsibility."
+              },
+              {
+                "q": "How does group lending lower the lender's costs?",
+                "choices": [
+                  "Groups pay higher interest rates",
+                  "One loan officer can serve several borrowers in a single meeting",
+                  "Group members do not need passbooks",
+                  "Groups repay in one lump sum at the end"
+                ],
+                "answer": 1,
+                "explain": "Serving five borrowers in one weekly meeting cuts travel and administration costs per loan."
+              },
+              {
+                "q": "Most microloans are used to finance...",
+                "choices": [
+                  "Working capital like stock, raw materials, and seeds",
+                  "Luxury consumption",
+                  "Real estate speculation",
+                  "Stock market investment"
+                ],
+                "answer": 0,
+                "explain": "Microloans typically fund working capital that turns over fast — buy at dawn, sell by noon, repay weekly."
+              },
+              {
+                "q": "Joint liability means...",
+                "choices": [
+                  "The lender is liable if a business fails",
+                  "Only the group's leader must repay",
+                  "Members share one loan for one joint business",
+                  "If one member cannot pay, the others must cover her installment or the group loses access to future loans"
+                ],
+                "answer": 3,
+                "explain": "Joint liability makes the whole group responsible for each member's installments, using social trust as security."
+              },
+              {
+                "q": "Character-based underwriting mainly asks...",
+                "choices": [
+                  "Does this business bring in enough cash each week to cover the installment?",
+                  "How many acres of titled land does the borrower own?",
+                  "What is the borrower's formal credit score?",
+                  "Can the borrower provide three years of audited accounts?"
+                ],
+                "answer": 0,
+                "explain": "Without collateral or credit scores, lenders judge reputation and whether weekly business cash flow covers the payment."
+              },
+              {
+                "q": "Progressive lending means...",
+                "choices": [
+                  "Interest rates fall every week",
+                  "Loans are forgiven after a year",
+                  "Borrowers start with a small loan and qualify for larger ones after repaying",
+                  "Groups must add a new member each cycle"
+                ],
+                "answer": 2,
+                "explain": "Progressive lending grows loan sizes over successive cycles as borrowers build a repayment record."
+              },
+              {
+                "q": "What is one honest risk of joint-liability lending?",
+                "choices": [
+                  "It makes repayment impossible for everyone",
+                  "Peer pressure can turn coercive, and a shared local shock can hit a whole group at once",
+                  "It requires borrowers to own land",
+                  "It eliminates the need for weekly meetings"
+                ],
+                "answer": 1,
+                "explain": "Group pressure can become coercion, and neighbors sharing one local economy can be hit by the same shock together."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "title": "Microcredit II: Lending Models & Pricing",
+      "lessons": [
+        {
+          "id": "m3l1",
+          "title": "Lending Models: From Solidarity Groups to Village Banks",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## One Size Does Not Fit All\n\nMicrocredit is not a single product. Over the decades, practitioners developed several **lending models**, each suited to different clients and communities. The three you will meet most often are **solidarity group lending**, **individual lending**, and **village banking**.\n\n## Solidarity Group Lending (Recap)\n\nThe previous module covered this model: self-selected groups of about five, joint liability, weekly meetings. It works best for first-time borrowers with tiny working-capital needs and strong local ties. Its weakness: loan sizes stay small, and group pressure is not for everyone.\n\n## Individual Lending\n\nAs businesses grow, many borrowers \"graduate\" to **individual microloans**:\n\n- **Larger amounts** — from a few hundred to several thousand dollars\n- **One borrower, one contract** — no group liability\n- **Some security** — a guarantor, business assets, or a co-signer may replace group pressure\n- **Longer terms** — a year or more, matching bigger investments like equipment or a shop lease\n\nIndividual lending suits established micro-enterprises with steady records. The lender underwrites the business itself — visiting the shop, reviewing sales, checking references — much as the group once did socially. Many MFIs run both models side by side: groups as the entry ramp, individual loans as the highway.\n\n## Village Banking\n\nA **village bank** is bigger and more community-run than a solidarity group. Typically **20 to 30 members** — often women — form a single association that:\n\n1. Receives one **external loan** from a microfinance institution\n2. Re-lends that money to members as small internal loans\n3. Collects **member savings** into an \"internal account,\" which members can also borrow from\n4. Manages its own records, sets internal loan terms, and enforces repayment itself\n\nThe MFI relates to the village bank as a wholesale lender; the village bank is the retail shop, run by the community. Because members' own savings circulate inside the bank, members earn returns on their deposits and the institution's capital goes further. When the external loan is repaid, the cycle repeats — often with members' growing savings providing more and more of the funds.\n\nPicture **twenty-five women in a lakeside village**. Their village bank borrows $1,250 from an MFI and re-lends it as $50 internal loans for stock and seed. Members also deposit a dollar or two of savings each week. By the third annual cycle, their own savings fund most of the lending — and the MFI's money has become a boost, not a lifeline.\n\n## Related Models Worth Knowing\n\n- **Self-help groups (SHGs)** — especially widespread in **India**; small groups that save together first, then lend internally, and later link up with banks\n- **Credit unions and cooperatives** — member-owned institutions that pool savings and lend to members, serving both rural and urban communities\n\n> The pattern across models: start from trust and small sums, build records, and let successful borrowers climb to bigger, more individual products."
+        },
+        {
+          "id": "m3l2",
+          "title": "Understanding Microloan Pricing",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Two Ways to Quote Interest\n\nMicroloans are priced in two ways that sound identical but are not. Understanding the difference is the single most important pricing skill for a borrower — or a student of microfinance.\n\n**Flat interest** is charged on the **original loan amount for the whole term**, even as you repay. Borrow $100 for 10 months at a 20% flat rate, and you owe $20 of interest — about $2 of interest every month — even in the final month, when you only owe $10 of principal.\n\n**Declining-balance interest** is charged only on what you **still owe**. At a 20% declining rate, the first month's interest is computed on $100; by the last month, it is computed on about $10. The total interest cost falls sharply.\n\nHere is the trap: a 20% **flat** rate costs nearly twice as much as a 20% **declining** rate. As a rule of thumb, a flat rate roughly corresponds to an APR of about **1.8 to 2 times** the quoted figure, because the borrower has use of the full principal for only part of the term.\n\n## Why Microloan Rates Are High — Honestly\n\nInterest rates on microloans often look shocking next to rich-country bank loans: annualized rates of 20%, 30%, or more are common. Why?\n\n- **Small loans, fixed costs.** Visiting villages, appraising tiny businesses, and collecting weekly installments takes similar effort whether the loan is $100 or $10,000. Spread over a $100 loan, that cost is a large percentage.\n- **High delivery expense.** Rural travel, passbooks, meetings, and cash handling are labor-intensive.\n- **No collateral.** Lenders price for risk they cannot secure against property.\n- **Funding costs.** MFIs themselves borrow money, sometimes at commercial rates.\n\nContext matters: a moneylender charging 10% *per month* is usually far costlier still — the MFI's 30% *per year* can be the **cheapest option in town**. That does not make high rates painless, but it explains why borrowers line up.\n\n## APR and Transparency\n\nBecause flat quotes hide the true cost, reformers pushed for **APR (annual percentage rate)** disclosure — a single number capturing interest plus fees, on a declining basis, comparable across lenders. A loan advertised at \"3% per month flat\" may carry an APR near 60%; a borrower comparing only the quoted numbers would never know.\n\nTransparency initiatives now encourage lenders to publish true APRs, disclose all fees up front, and train clients to ask one question: **\"What is the total cost of this loan, in cash, over its whole life?\"** For a $100 loan repaid over 10 months, \"I repay $120 in total\" is the most honest sentence in microfinance pricing."
+        },
+        {
+          "id": "m3l3",
+          "title": "Quiz: Lending Models & Pricing",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "Compared with group loans, individual microloans typically involve...",
+                "choices": [
+                  "Smaller amounts and joint liability",
+                  "Larger amounts, one borrower and one contract, and sometimes a guarantor",
+                  "No repayment schedule",
+                  "Only first-time borrowers"
+                ],
+                "answer": 1,
+                "explain": "Individual microloans are larger, signed by one borrower, and may use a guarantor or assets instead of group pressure."
+              },
+              {
+                "q": "A typical village bank has about how many members?",
+                "choices": [
+                  "5",
+                  "100",
+                  "20 to 30",
+                  "1,000"
+                ],
+                "answer": 2,
+                "explain": "Village banks are community-run associations of roughly 20 to 30 members."
+              },
+              {
+                "q": "In a village bank, the 'internal account' is...",
+                "choices": [
+                  "A secret fund controlled by the MFI",
+                  "The MFI's profit margin",
+                  "A government grant account",
+                  "Members' pooled savings, which members can also borrow from"
+                ],
+                "answer": 3,
+                "explain": "The internal account holds member savings that circulate as internal loans, earning returns for the members themselves."
+              },
+              {
+                "q": "Self-help groups (SHGs) that save together first and later link with banks are especially widespread in...",
+                "choices": [
+                  "India",
+                  "Brazil",
+                  "France",
+                  "Japan"
+                ],
+                "answer": 0,
+                "explain": "SHGs — save first, lend internally, then link with banks — are a hallmark of microfinance in India."
+              },
+              {
+                "q": "Flat interest is calculated on...",
+                "choices": [
+                  "The remaining balance each month",
+                  "The original loan amount for the whole term, even as you repay",
+                  "The group's total savings",
+                  "The borrower's monthly profit"
+                ],
+                "answer": 1,
+                "explain": "Flat interest keeps charging on the original principal, so it stays expensive even as the balance shrinks."
+              },
+              {
+                "q": "A 20% flat rate, compared with a 20% declining-balance rate on the same loan, is...",
+                "choices": [
+                  "Exactly the same cost",
+                  "About half the cost",
+                  "Nearly twice the cost — its APR equivalent is roughly 1.8 to 2 times the quoted flat rate",
+                  "Always cheaper for the borrower"
+                ],
+                "answer": 2,
+                "explain": "Because the borrower has the full principal for only part of the term, a flat rate's true APR is roughly 1.8 to 2 times higher."
+              },
+              {
+                "q": "What is the main honest reason microloan interest rates are high?",
+                "choices": [
+                  "MFIs are mostly unprofitable scams",
+                  "The fixed costs of appraising and servicing tiny loans are large relative to each loan",
+                  "Poor borrowers always default",
+                  "Governments require high rates"
+                ],
+                "answer": 1,
+                "explain": "Travel, meetings, and paperwork cost similar effort for any loan size — spread over a $100 loan, that is a large percentage."
+              },
+              {
+                "q": "An MFI charging 30% per year versus a moneylender charging 10% per month — which is cheaper for the borrower?",
+                "choices": [
+                  "The moneylender, because 10 is less than 30",
+                  "They cost about the same",
+                  "The MFI — 10% per month compounds to far more than 30% per year",
+                  "Neither one lends to the poor"
+                ],
+                "answer": 2,
+                "explain": "Monthly moneylender rates compound to well over 100% per year, so the MFI's 30% annual rate is far cheaper."
+              },
+              {
+                "q": "The purpose of APR disclosure is to...",
+                "choices": [
+                  "Hide fees inside the interest rate",
+                  "Let borrowers compare loans with a single number capturing interest plus fees",
+                  "Set all microloan rates by law",
+                  "Replace weekly repayment meetings"
+                ],
+                "answer": 1,
+                "explain": "APR bundles interest and fees into one comparable figure, exposing flat-rate quotes that disguise the true cost."
+              },
+              {
+                "q": "What is the most honest question a borrower can ask about pricing?",
+                "choices": [
+                  "What is the total cost of this loan, in cash, over its whole life?",
+                  "What is the advertised flat rate?",
+                  "How big is the loan officer's commission?",
+                  "Which loan has the most paperwork?"
+                ],
+                "answer": 0,
+                "explain": "Total cash cost over the loan's life cuts through flat-rate confusion and hidden fees."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m4",
+      "title": "Micro Savings",
+      "lessons": [
+        {
+          "id": "m4l1",
+          "title": "Why Savings Matter Even More Than Credit",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## The Forgotten Half of Finance\n\nMicrofinance became famous for loans, but ask poor households what they need most and many answer: **a safe place to save**. The logic is simple. A loan is someone else's money — it must be repaid, on schedule, with interest, in good weeks and bad. Savings are your own money. They wait patiently, cost nothing to hold, and are there on the day a child falls ill or a roof leaks.\n\n## Why the Poor Need Savings More\n\nPoor households live with **volatility**, not just scarcity:\n\n- Income arrives in lumps — a harvest, a market season — while needs arrive daily\n- Emergencies are frequent and uninsured: illness, funerals, crop failures\n- Opportunities appear suddenly — a discounted bulk purchase, a school fee deadline — and vanish just as fast\n\nWithout savings, every shock becomes a crisis solved by a moneylender, a distress sale of a goat, or a skipped meal. Researchers who tracked the daily financial diaries of very poor households — the study described in the book *Portfolios of the Poor* — found that even families living on a couple of dollars a day **save constantly**: in cash at home, with neighbors, in rotating groups. The demand is enormous. What is missing is a **safe, convenient place** to do it. Cash under the mattress gets stolen, eroded by inflation, or — most commonly — spent, because money at home is money within reach of every urgent request.\n\n## Voluntary vs Compulsory Savings\n\nMicrofinance distinguishes two kinds of deposits.\n\n**Compulsory savings** (also called \"forced\" or \"compensating\" savings) are required as part of a loan:\n\n- Deposited regularly alongside loan installments\n- Often **locked until the loan is repaid**\n- Act as a **partial guarantee** — the lender holds something if the borrower defaults\n- Build the saving habit automatically, a few coins at a time\n\n**Voluntary savings** are deposits made by choice:\n\n- Open to anyone, whether or not they borrow\n- **Withdrawable on demand** (or with agreed notice)\n- A signal of real trust: clients only save voluntarily with institutions they believe will still be there next year\n\nMany early MFIs offered only compulsory savings — and regulators often barred them from taking voluntary deposits at all. Experience showed that poor savers prize **access** above almost everything: a locked deposit that cannot be reached in an emergency is of limited comfort. The best programs now combine both — compulsory savings tied to loans as a guarantee and discipline device, plus voluntary accounts a family can actually live on.\n\n## A Mini-Example\n\n**Grace**, a tailor, must deposit $2 a week into a locked account while repaying her loan — that is compulsory savings. She also keeps a voluntary account where she drops coins on good days. When her sewing machine breaks mid-term, it is the voluntary account — not a moneylender — that pays for the repair."
+        },
+        {
+          "id": "m4l2",
+          "title": "Deposit Products and Savings Groups",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Designing Deposits for Small Savers\n\nServing a saver who deposits 50 cents at a time is a design challenge. Products that work share a few features:\n\n- **No minimum balance and no fees on tiny accounts** — a $1 monthly fee can devour a small saver's whole balance\n- **Nearby access** — village agents, market-day collection, or mobile phones instead of distant branches\n- **Simple records** — a passbook the saver can read and trust\n- **Commitment options** — accounts that lock until a goal date, helping savers protect money from daily temptation and from pressure by relatives\n\n**Mobile money** transformed this landscape: in Kenya and beyond, phone-based accounts let people deposit and withdraw at corner shops, bringing the cost of even the smallest transaction close to zero.\n\n## ROSCAs: The Rotating Pot\n\nLong before banks reached their villages, communities built their own institutions. A **ROSCA** — rotating savings and credit association — is elegantly simple:\n\n1. A group of, say, **ten neighbors** agrees that each will contribute **$10 every month**\n2. Each month, one member takes the whole **$100 pot**\n3. The pot rotates until everyone has received it once; then the group may start a new round\n\nA ROSCA turns scattered small savings into useful lump sums — exactly what a school fee, a bulk purchase, or a bicycle requires. The order of receiving matters: members who need money urgently negotiate for early turns. ROSCAs need no outside lender, no paperwork, and no interest — their currency is trust and the social cost of letting the group down. They exist under local names on every continent: *tontines* in West Africa, *chit funds* in India, *tandas* in Mexico.\n\nTheir limits are real: members **earn no interest**, a member might take the pot early and then stop paying, and the pot size is capped by what the group can contribute.\n\n## VSLAs: The Community Bank in a Box\n\nA **VSLA** — village savings and loan association — upgrades the ROSCA idea:\n\n- **15 to 30 members** save together weekly, buying \"shares\" worth a few cents each\n- The pooled fund makes **small internal loans** to members, repaid with interest the group sets itself\n- A simple lockbox with three keys, held by three different members, guards the cash\n- After roughly **9 to 12 months**, the fund is **shared out** — each member receives their savings plus a slice of the interest earned\n\nBecause the interest stays inside the group, savers earn returns directly from their neighbors' loans. VSLAs need no outside institution at all, though NGOs often train groups in record-keeping. Millions of rural households — especially women — now save and borrow this way, often as their first step toward formal finance."
+        },
+        {
+          "id": "m4l3",
+          "title": "Quiz: Micro Savings",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "Why do many poor households value savings even more than credit?",
+                "choices": [
+                  "Savings earn guaranteed high interest",
+                  "Savings are their own money, available in an emergency without a repayment schedule",
+                  "Savings are required by law",
+                  "Credit is always free"
+                ],
+                "answer": 1,
+                "explain": "A loan must be repaid on schedule in good weeks and bad; savings simply wait until the day they are needed."
+              },
+              {
+                "q": "Compulsory savings are...",
+                "choices": [
+                  "Deposits required alongside a loan, often locked until the loan is repaid",
+                  "Voluntary deposits withdrawable anytime",
+                  "Government taxes on savings",
+                  "Interest paid by the bank"
+                ],
+                "answer": 0,
+                "explain": "Compulsory savings come with the loan contract — regular locked deposits that also serve as a partial guarantee."
+              },
+              {
+                "q": "One function of compulsory savings in a loan program is to...",
+                "choices": [
+                  "Pay the loan officer's salary",
+                  "Replace weekly repayment meetings",
+                  "Act as a partial guarantee while building the saving habit",
+                  "Disqualify borrowers who own no land"
+                ],
+                "answer": 2,
+                "explain": "The locked deposit gives the lender something to hold against default while teaching the borrower to save regularly."
+              },
+              {
+                "q": "The key feature of voluntary savings is that...",
+                "choices": [
+                  "They are locked until the loan ends",
+                  "They can be deposited by choice and withdrawn on demand",
+                  "Only existing borrowers may hold them",
+                  "They can never earn interest"
+                ],
+                "answer": 1,
+                "explain": "Voluntary accounts are open to anyone and accessible when needed — access is what poor savers prize most."
+              },
+              {
+                "q": "The financial diaries described in *Portfolios of the Poor* found that...",
+                "choices": [
+                  "Poor households never save",
+                  "Only wealthy households save",
+                  "Even very poor households save constantly — they just lack safe, convenient places to do it",
+                  "Savings groups always collapse"
+                ],
+                "answer": 2,
+                "explain": "Households living on a couple of dollars a day save in cash, with neighbors, and in groups — the missing piece is a safe place."
+              },
+              {
+                "q": "Which product feature matters most for very small savers?",
+                "choices": [
+                  "High minimum balances",
+                  "Monthly fees on every account",
+                  "Branches only in capital cities",
+                  "No minimum balance, tiny or no fees, and nearby access"
+                ],
+                "answer": 3,
+                "explain": "A $1 monthly fee can erase a small balance, so tiny accounts need no minimums, low fees, and close-by access points."
+              },
+              {
+                "q": "In a ROSCA...",
+                "choices": [
+                  "Members contribute a fixed amount each round and take turns receiving the whole pot",
+                  "A bank lends to the group as a whole",
+                  "Members buy shares that are never returned",
+                  "Only the group's leader is allowed to save"
+                ],
+                "answer": 0,
+                "explain": "Ten neighbors contributing $10 a month create a $100 pot that rotates to one member each round."
+              },
+              {
+                "q": "Which is a genuine limitation of ROSCAs?",
+                "choices": [
+                  "They require collateral",
+                  "They charge high interest",
+                  "Members earn no interest, and a member might take the pot early and stop paying",
+                  "They require mobile phones"
+                ],
+                "answer": 2,
+                "explain": "ROSCAs pay no interest and run purely on trust, so early winners can default on later rounds."
+              },
+              {
+                "q": "In a VSLA, at the end of a cycle of roughly 9 to 12 months...",
+                "choices": [
+                  "The fund is donated to an NGO",
+                  "The fund is shared out — each member gets their savings plus a slice of the interest earned",
+                  "The MFI takes the fund as fees",
+                  "All loans convert to grants"
+                ],
+                "answer": 1,
+                "explain": "The share-out returns each member's savings plus their portion of the interest the group's internal loans earned."
+              },
+              {
+                "q": "In a VSLA, the interest paid on internal loans...",
+                "choices": [
+                  "Goes to a distant bank",
+                  "Is paid to the government",
+                  "Is kept by whoever guards the lockbox",
+                  "Stays inside the group and is earned by the members themselves"
+                ],
+                "answer": 3,
+                "explain": "Members lend their own pooled savings to each other, so the interest flows back to the savers at share-out."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m5",
+      "title": "Micro Insurance",
+      "lessons": [
+        {
+          "id": "m5l1",
+          "title": "Why Poor Households Need Insurance",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## The Risk Trap\n\nLow-income households live with risk every day. A single shock — a fever that requires hospital care, a flood that destroys a harvest, a fire in a market stall, the death of a breadwinner — can erase years of careful saving. Because the poor have few cushions, they are forced into coping strategies that make things worse: selling a productive animal, pulling children out of school, skipping meals, or borrowing from a moneylender at crushing rates. Economists call this the **poverty ratchet**: each shock pushes the household down a rung, and the coping strategy makes climbing back harder.\n\n> Insurance does not prevent shocks. It prevents shocks from becoming catastrophes.\n\n## What Micro-Insurance Is\n\n**Micro-insurance** is insurance designed for low-income people. It works on the same principle as ordinary insurance — **risk pooling**. Many people each pay a small, affordable **premium** into a common pool. Only a few will suffer a loss in any given period, and the pool pays their **claims**. The amounts are scaled down: premiums may be a few cents a week, and coverage might be a few hundred dollars — small for an insurer, but life-changing for a family facing a hospital bill.\n\nTo work for poor clients, micro-insurance must be:\n\n- **Simple** — one page of terms, in plain language, with no fine-print traps\n- **Affordable** — premiums matched to what households can actually pay\n- **Accessible** — sold and serviced where clients already are\n- **Fast** — claims paid in days, not months, because a grieving family cannot wait\n\n## How It Works in Practice\n\nA formal insurance company usually underwrites the product, because insurance is a regulated business. But insurers rarely reach village clients directly. Instead they partner with organizations the poor already trust — microfinance institutions, cooperatives, funeral societies, or mobile phone companies. A common arrangement is a **group policy**: one contract covers all members of a cooperative or all borrowers of an MFI, which dramatically lowers administration costs per person.\n\nConsider Amina, a market trader. She pays a small weekly premium, collected together with her loan installment, so that a hospital visit will not wipe out her savings. When her son breaks his arm, the clinic bill is covered, she keeps her stall stocked, and her daughter stays in school. That is the entire logic of micro-insurance in one story: a tiny, predictable cost replaces a huge, unpredictable one.\n\nThe pool only survives if premiums roughly match payouts plus running costs, so product design is a careful balancing act — the subject of the next lesson."
+        },
+        {
+          "id": "m5l2",
+          "title": "Products, Premiums, and Delivery",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## The Main Products\n\nMicro-insurance comes in a few core products, each targeting a shock that poor households fear most.\n\n- **Life and credit-life insurance.** The most common product by far. A small life policy pays funeral costs and gives the family a modest sum. **Credit-life** covers the borrower's outstanding loan if they die or become disabled, so a widow does not inherit her husband's debt. Many MFIs bundle credit-life automatically with every loan.\n- **Health insurance.** Covers clinic visits, medicines, and hospital stays. It is the product clients want most — and the hardest to run well, because claims are frequent, costs vary, and fraud is tempting.\n- **Crop insurance.** Pays out when drought, flood, or pests destroy a harvest. Traditional crop insurance required expensive farm-by-farm loss assessments, so a newer approach, **index insurance**, pays based on an objective trigger — for example, rainfall below a set level at the local weather station. No farm visits and faster payouts, but sometimes the index fails to match a farmer's actual loss; this gap is called **basis risk**.\n- **Livestock insurance.** Covers the death of animals — often a family's most valuable asset. Some schemes in East Africa use satellite measures of vegetation as an index: when grazing land dries up, herders receive payouts before their animals die.\n\n## Designing Premiums\n\nPremiums must fit the rhythm of poor households' cash flow. A farmer earns money at harvest; a market trader earns it daily. Good products therefore collect **small, frequent payments** — weekly at market day, mobile deductions, or a single premium at harvest time. Coverage is kept modest so premiums stay low. Some governments and donors subsidize premiums, especially for crop insurance, to get schemes started. But a scheme that permanently costs more than it collects will collapse, so designers walk a line between **affordability** for clients and **sustainability** for the pool.\n\n## Delivery: Meeting Clients Where They Are\n\nInsurers almost never sell micro-insurance directly. They rely on **delivery channels** clients already use:\n\n- **MFIs and cooperatives** bundle insurance with loans or savings, using existing trust and payment flows. This is cheap and effective, though bundling can hide costs from clients.\n- **Mobile money** lets people pay premiums by phone and receive payouts the same way — a major reason micro-insurance has spread in Kenya, Tanzania, and Ghana. Mobile networks reach villages no insurance agent ever visits.\n- **Community-based schemes** pool members' own contributions, common for health coverage.\n\nTwo problems haunt every scheme. First, **trust**: families who have seen a claim denied may refuse to buy again, so paying legitimate claims quickly is the best marketing. Second, **fraud and selection**: people who know they are sick are likelier to buy health cover (**adverse selection**), and insured people may take more risks (**moral hazard**). Group policies, waiting periods, and simple verification keep these in check."
+        },
+        {
+          "id": "m5l3",
+          "title": "Quiz: Micro Insurance",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "What is the main purpose of micro-insurance?",
+                "choices": [
+                  "To make poor households wealthy over time",
+                  "To prevent small shocks from becoming financial catastrophes",
+                  "To replace the need for savings entirely",
+                  "To guarantee that household income grows every year"
+                ],
+                "answer": 1,
+                "explain": "Micro-insurance pools risk so that one shock — illness, death, crop failure — does not wipe out savings or push a family deeper into poverty."
+              },
+              {
+                "q": "Risk pooling means:",
+                "choices": [
+                  "Many people each pay a small premium into a common pool that pays the claims of the few who suffer losses",
+                  "Banks pooling deposits to make bigger loans",
+                  "Insurers sharing their profits with policyholders",
+                  "Villagers storing food together for the lean season"
+                ],
+                "answer": 0,
+                "explain": "Insurance works because the many who pay premiums but do not claim cover the losses of the few who do."
+              },
+              {
+                "q": "Why do insurers usually partner with MFIs, cooperatives, or mobile phone companies to sell micro-insurance?",
+                "choices": [
+                  "Because the law forbids insurers from selling directly to individuals",
+                  "Because partners take over all claim payments from the insurer",
+                  "Because these channels already reach, and are trusted by, low-income clients",
+                  "Because poor clients refuse to speak with insurance companies"
+                ],
+                "answer": 2,
+                "explain": "Insurers rarely reach village clients directly, so they use organizations that already have trust, presence, and payment flows."
+              },
+              {
+                "q": "What does credit-life insurance do?",
+                "choices": [
+                  "Pays funeral costs and a large inheritance",
+                  "Builds the borrower's credit score",
+                  "Insures the lender against currency changes",
+                  "Pays off the borrower's outstanding loan if they die or become disabled"
+                ],
+                "answer": 3,
+                "explain": "Credit-life ensures that a surviving family does not inherit the deceased borrower's debt, and it is often bundled with loans."
+              },
+              {
+                "q": "Index insurance triggers payouts based on:",
+                "choices": [
+                  "A vote by a village committee",
+                  "An objective measure such as rainfall recorded at a weather station",
+                  "A farm-by-farm inspection of losses",
+                  "The farmer's sworn statement of loss"
+                ],
+                "answer": 1,
+                "explain": "Index products pay when an objective trigger (like low rainfall) is hit, avoiding costly individual loss assessments and speeding payouts."
+              },
+              {
+                "q": "Basis risk refers to:",
+                "choices": [
+                  "The risk that the insurer goes bankrupt",
+                  "The risk that premiums rise over time",
+                  "The risk that the index payout does not match the farmer's actual loss",
+                  "The risk of clients submitting fake claims"
+                ],
+                "answer": 2,
+                "explain": "Because payouts follow the index rather than individual losses, a farmer can suffer a real loss while the index shows no trigger — that mismatch is basis risk."
+              },
+              {
+                "q": "For a farmer, premium collection is usually best timed:",
+                "choices": [
+                  "At harvest, when the farmer has cash",
+                  "Weekly, regardless of season",
+                  "Monthly by bank draft",
+                  "Only when a claim is made"
+                ],
+                "answer": 0,
+                "explain": "Premiums must fit cash flow; farmers earn in harvest lumps, so collecting at harvest works far better than weekly or monthly billing."
+              },
+              {
+                "q": "Adverse selection means:",
+                "choices": [
+                  "Insurers refusing to cover farmers",
+                  "Premiums being too low to cover claims",
+                  "A mobile network failing during signup",
+                  "People who know they are likely to claim being the most eager to buy insurance"
+                ],
+                "answer": 3,
+                "explain": "When those most likely to claim (for example, people who are already sick) buy the most, the pool's costs rise — schemes counter this with group policies and waiting periods."
+              },
+              {
+                "q": "Why are coverage amounts in micro-insurance usually kept modest?",
+                "choices": [
+                  "Because regulations cap all insurance payouts",
+                  "Because clients dislike larger coverage",
+                  "To keep premiums affordable while keeping the pool sustainable",
+                  "To discourage clients from claiming"
+                ],
+                "answer": 2,
+                "explain": "Modest coverage keeps premiums within reach of poor households while ensuring the pool collects roughly what it pays out plus running costs."
+              },
+              {
+                "q": "What builds trust in a micro-insurance scheme more than anything else?",
+                "choices": [
+                  "Aggressive advertising campaigns",
+                  "Paying legitimate claims quickly",
+                  "Bundling insurance with every loan",
+                  "Charging higher premiums"
+                ],
+                "answer": 1,
+                "explain": "Families who see claims paid promptly believe the product works; a single denied or delayed claim can poison trust in a whole community."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m6",
+      "title": "Micro Leasing",
+      "lessons": [
+        {
+          "id": "m6l1",
+          "title": "Lease or Loan? How Micro-Leasing Works",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Two Ways to Finance an Asset\n\nA tailor needs a sewing machine. She has two ways to pay for it. She can take a **loan**: receive cash, buy the machine herself, and repay the cash with interest. Or she can take a **lease**: a leasing company buys the machine, she uses it while making regular payments, and ownership is settled when the contract ends. In a loan, she owns the asset from day one and the lender holds a claim against her. In a lease, the **lessor** owns the asset throughout and the **lessee** merely rents the right to use it.\n\nThis difference sounds technical but matters enormously. Because the lessor keeps legal ownership, a lease is **self-collateralizing**: if the client stops paying, the lessor simply takes the machine back. There is no need for land titles, guarantors, or the other collateral that poor borrowers usually cannot provide.\n\n## How Micro-Leasing Works\n\n**Micro-leasing** applies this model to microenterprises — the stalls, workshops, and tiny farms that MFIs serve. The steps are straightforward:\n\n1. The client chooses the equipment she needs and its supplier.\n2. The leasing company (often an MFI's leasing arm) buys it and becomes the legal owner.\n3. The client pays a small **down payment**, then fixed lease installments over a set term — often one to three years.\n4. During the term the client uses, maintains, and insures the asset as the contract specifies.\n5. At the end of the term, the contract settles ownership (the next lesson covers the options).\n\n> With a loan you borrow money. With a lease you borrow the thing itself.\n\nPayments are usually matched to the income the asset generates — monthly for a tailor, seasonal for a farmer leasing a water pump. Because the lessor can repossess and resell the asset, **approval depends more on whether the equipment will generate cash than on the client's wealth or history**. This opens doors for clients with no credit record and no property.\n\nLeasing is not free money, of course. The total of payments usually exceeds the cash price of the equipment, because the lessor charges for financing, administration, and risk. And a client who defaults loses the asset and everything she has already paid into it. Consider Bakari, who leases a motorcycle for his delivery business: the bike earns its own installments, but two missed payments and it goes back to the lessor. The next lesson looks at what kinds of equipment fit leasing, how ownership transfers, and when leasing genuinely beats credit."
+        },
+        {
+          "id": "m6l2",
+          "title": "Equipment, Ownership, and Ijara",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## What Gets Leased\n\nMicro-leasing works best for **durable, productive equipment** — assets that generate income, hold their value, and can be repossessed and resold if things go wrong. Typical examples:\n\n- Sewing machines, weaving looms, and woodworking tools\n- Refrigerators and milling machines for food processors\n- Motorcycles, bicycles, and auto-rickshaws for transport businesses\n- Water pumps, irrigation kits, and dairy equipment for farmers\n- Solar systems for off-grid shops\n\nSoft or fast-consumed goods — stock, seed, fertilizer — do not fit, because there is nothing to repossess. Those still require ordinary loans.\n\n## Ownership at the End of the Term\n\nLease contracts differ in what happens when the last payment is made. In a **finance lease** (the usual micro-leasing form), ownership transfers to the client at term end, sometimes for a small final fee — economically, it resembles buying on installments. In an **operating lease**, the lessor keeps the asset and the client simply hands it back or renews, which suits equipment that becomes obsolete quickly. Clients should always check the end-of-term clause before signing: it decides whether years of payments end in ownership or in nothing.\n\n## Ijara: Leasing in Islamic Finance\n\nIslamic finance prohibits **riba** — interest on money — so a conventional lease or loan can be religiously unacceptable to many Muslim clients. **Ijara** is the Islamic leasing contract that solves this. The financier buys the asset and leases it to the client for agreed rental payments; the financier's profit comes from rent on a real asset, not interest on cash. In **ijara wa iqtina** (lease ending in ownership), ownership transfers to the client when payments finish. Because the financier genuinely owns the asset during the term, it shares real ownership risk — which is precisely what makes the contract permissible. Ijara is now a core product of Islamic microfinance from Sudan to Indonesia.\n\n## When Leasing Beats Credit\n\nLeasing is often the better choice when:\n\n- The client **lacks collateral** — the asset itself secures the deal\n- The client has **no credit history**, because approval rests on the asset's earning power\n- The equipment is **identifiable and resalable**, so repossession is practical\n- The client wants **payments matched to the asset's income**, including seasonal schedules\n- Religious rules make an interest-bearing loan unacceptable — ijara fills the gap\n\nCredit wins when the need is working capital, when the client already owns collateral and can get cheaper money, or when the asset is consumed rather than durable. A good provider offers both and helps the client match the tool to the job. The poorest clients, who own nothing, are often exactly the ones leasing serves best — the asset is the collateral, and the work it does pays the rent."
+        },
+        {
+          "id": "m6l3",
+          "title": "Quiz: Micro Leasing",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "What is the core difference between a lease and a loan for buying equipment?",
+                "choices": [
+                  "Leases are always cheaper than loans",
+                  "Leases never involve regular payments",
+                  "In a lease the lessor owns the asset during the term; in a loan the client owns it from day one",
+                  "Loans require no repayment"
+                ],
+                "answer": 2,
+                "explain": "Ownership is the dividing line: a lessor keeps legal ownership and rents out use of the asset, while a lender provides cash and the client owns the purchase."
+              },
+              {
+                "q": "Saying a lease is self-collateralizing means:",
+                "choices": [
+                  "The asset itself secures the deal, because the lessor can repossess it",
+                  "The client must also pledge land",
+                  "The lease requires a guarantor",
+                  "The lessor takes no risk at all"
+                ],
+                "answer": 0,
+                "explain": "Since the lessor owns the asset, default simply leads to repossession — no land title or guarantor is needed."
+              },
+              {
+                "q": "Approval for a micro-lease depends mainly on:",
+                "choices": [
+                  "The client's land holdings",
+                  "The client's salary slips",
+                  "The client's age and connections",
+                  "Whether the equipment will generate enough cash to cover the installments"
+                ],
+                "answer": 3,
+                "explain": "Because the asset secures the contract, the lessor's key question is whether it will earn its own payments, not the client's wealth or credit history."
+              },
+              {
+                "q": "Which asset fits micro-leasing best?",
+                "choices": [
+                  "Fertilizer for one season",
+                  "A motorcycle for a transport business",
+                  "A stock of fresh vegetables",
+                  "Seed for planting"
+                ],
+                "answer": 1,
+                "explain": "Leasing suits durable, resalable, income-generating assets; consumed goods like seed, fertilizer, or stock cannot be repossessed."
+              },
+              {
+                "q": "In a finance lease, what usually happens at the end of the term?",
+                "choices": [
+                  "The asset returns to the supplier",
+                  "The contract always renews automatically",
+                  "Ownership transfers to the client, sometimes for a small final fee",
+                  "The lessor sells the asset to a third party"
+                ],
+                "answer": 2,
+                "explain": "A finance lease economically resembles buying on installments: after the last payment (and any small final fee), the client owns the asset."
+              },
+              {
+                "q": "An operating lease is most suitable when:",
+                "choices": [
+                  "The equipment becomes obsolete quickly, since the lessor keeps it",
+                  "The client wants guaranteed ownership",
+                  "The asset has no resale value",
+                  "The client needs working capital"
+                ],
+                "answer": 0,
+                "explain": "In an operating lease the client hands the asset back or renews, which fits fast-depreciating equipment the client does not want to own."
+              },
+              {
+                "q": "Ijara is permissible in Islamic finance because:",
+                "choices": [
+                  "It charges hidden interest",
+                  "It involves no profit at all",
+                  "It is treated as a gift",
+                  "The financier's profit comes from rent on a real asset it owns, not interest on money"
+                ],
+                "answer": 3,
+                "explain": "Islamic finance prohibits riba (interest); in ijara the financier genuinely owns the asset and earns rent, sharing real ownership risk."
+              },
+              {
+                "q": "Ijara wa iqtina means:",
+                "choices": [
+                  "A lease ending in ownership",
+                  "A lease with no payments",
+                  "An interest-free loan",
+                  "A profit-and-loss sharing partnership"
+                ],
+                "answer": 1,
+                "explain": "Ijara wa iqtina is the ijara variant in which ownership transfers to the client once payments are complete."
+              },
+              {
+                "q": "Leasing tends to beat credit when:",
+                "choices": [
+                  "The client needs market stock",
+                  "The client wants to consume the asset quickly",
+                  "The client lacks collateral and needs durable, resalable equipment",
+                  "The client already has access to cheap bank credit"
+                ],
+                "answer": 2,
+                "explain": "Leasing shines when the client has no collateral or credit history but needs a durable asset whose income can cover the payments."
+              },
+              {
+                "q": "Credit is usually a better choice than leasing for:",
+                "choices": [
+                  "Working capital and goods that are consumed quickly",
+                  "Durable machines with resale value",
+                  "Clients with no credit history",
+                  "Clients who require Islamic finance"
+                ],
+                "answer": 0,
+                "explain": "Loans fit needs like stock, seed, or fertilizer — things that are used up rather than repossessed — where leasing cannot work."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m7",
+      "title": "Financial Literacy & Client Protection",
+      "lessons": [
+        {
+          "id": "m7l1",
+          "title": "Budgeting an Irregular Income, Managing Debt",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## The Problem of Lumpy Cash Flow\n\nA salaried worker earns the same amount every month. A poor household rarely does. A farmer's income arrives in two or three harvest lumps; a market trader's rises and falls with the season; a casual laborer simply does not know what next week brings. Meanwhile expenses — food, rent, school fees, medicine — arrive steadily. **Budgeting on an irregular income means bridging the gap between lumpy income and steady spending.**\n\nThe core technique is to plan around the *lean* season, not the good one:\n\n- **Estimate a floor income** — what the household earns in its worst normal month — and keep essential spending inside it\n- **Save aggressively in good times**, treating the surplus as the lean season's wages, not as a bonus\n- **Separate the money physically**: different tins, envelopes, or mobile wallets for food, school fees, business stock, and emergencies, so one bad week cannot raid everything\n- **List fixed obligations** (rent, loan installments, fees) and pay them first from any income that arrives\n\nFinancial diaries research — notably the *Portfolios of the Poor* project — found that poor households are already active, sophisticated money managers, juggling savings clubs, rotating groups, and small loans precisely because their incomes are unreliable. Good financial literacy training builds on those habits rather than replacing them.\n\n## Managing Debt Wisely\n\nDebt is a tool: used well it buys assets that raise income; used badly it eats the household alive. A few rules keep debt productive:\n\n- **Borrow for income, not consumption**, whenever possible — a loan for stock repays itself; a loan for a feast does not\n- **Match the installment to cash flow**: a farmer should not carry weekly repayments due long before harvest\n- **Know the real cost** — ask for the total amount repayable, not just the flat rate, and compare across lenders\n- **One loan at a time.** Taking a second loan to repay the first is the classic doorway into a debt spiral\n- **Keep a small emergency buffer**, even one week's expenses, so a single shock cannot force a distress loan\n\n> The question is never 'can I get the loan?' It is 'can the payments fit inside my worst month?'\n\nConsider Mariam, a vegetable seller. Her wholesaler offers a bigger loan for festival stock; she checks her lean-month figures first, borrows only what those figures can carry, and keeps her school-fee envelope untouched. Households that master these two skills — smoothing lumpy income and keeping debt productive — are the same households that use microfinance safely. The next lesson looks at the other side of the contract: what lenders owe their clients."
+        },
+        {
+          "id": "m7l2",
+          "title": "Client Protection and the Over-Indebtedness Trap",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## What Clients Are Owed\n\nMicrofinance grew up promising to serve the poor, but serving is not the same as protecting. As the industry commercialized, scandals — hidden fees, abusive collection, mass defaults — forced it to define what clients are owed. The most widely used framework is the **Client Protection Principles**, developed by the global Smart Campaign. In plain terms:\n\n1. **Appropriate products** — designed for client needs, not just lender convenience\n2. **Prevention of over-indebtedness** — lend only what the household's cash flow can repay\n3. **Transparency** — full disclosure of prices, terms, and conditions in understandable language\n4. **Responsible pricing** — costs that are affordable and in line with the market\n5. **Fair and respectful treatment** — no discrimination, no abusive or coercive collection\n6. **Privacy of client data** — personal information protected, not sold or exposed\n7. **Complaint mechanisms** — a working channel for clients to raise and resolve problems\n\nThese principles matter because microfinance clients often cannot read a contract's fine print, cannot switch lenders easily, and may face social pressure from group lending. Protection is not charity; it is the lender's side of the bargain.\n\n## Over-Indebtedness: The Warning Signs\n\n**Over-indebtedness** means a household's debt payments have outgrown its ability to pay without serious harm. It damages clients, and it damages lenders too — over-indebted clients default. Both sides should watch for the classic warning signs:\n\n- **Borrowing to repay** — a new loan taken mainly to service an old one\n- **Multiple parallel loans** from several lenders at once, each invisible to the others\n- **Skipping meals or selling productive assets** to make installments\n- **Repayment consuming a large share of income** — many practitioners treat debt service above roughly a third of household income as a danger zone\n- **Hiding debts from family members**, or constant anxiety and conflict over payments\n- **Dropping out of savings** — the household stops saving entirely because every coin goes to creditors\n\n> Debt distress rarely arrives suddenly. It accumulates quietly, one small top-up loan at a time.\n\nResponsible lenders check repayment capacity before lending, share data through **credit bureaus** so parallel borrowing becomes visible, and restructure rather than punish when a good client hits a genuine shock. Clients, for their part, should treat the warning signs as an alarm bell: the moment a loan requires skipping meals or borrowing to repay, it is time to talk to the lender — and to stop adding debt. Financial literacy and client protection are two halves of one idea: informed clients and responsible lenders make credit safe."
+        },
+        {
+          "id": "m7l3",
+          "title": "Quiz: Financial Literacy & Client Protection",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "What is the core budgeting technique for an irregular income?",
+                "choices": [
+                  "Spend freely in good months and hope for the best",
+                  "Build essential spending around the lean-season floor income",
+                  "Save only whatever is left after spending",
+                  "Avoid planning because income is unpredictable"
+                ],
+                "answer": 1,
+                "explain": "Planning around the worst normal month — and saving good-month surpluses — bridges the gap between lumpy income and steady expenses."
+              },
+              {
+                "q": "Why separate money into different envelopes, tins, or mobile wallets?",
+                "choices": [
+                  "Because the law requires it",
+                  "To hide money from lenders",
+                  "To make budgeting unnecessary",
+                  "So one bad week cannot raid money meant for school fees or stock"
+                ],
+                "answer": 3,
+                "explain": "Physically separating money by purpose protects essentials like fees and stock from being absorbed by everyday shortfalls."
+              },
+              {
+                "q": "The Portfolios of the Poor research found that poor households:",
+                "choices": [
+                  "Are active, sophisticated managers juggling many financial tools",
+                  "Never save at all",
+                  "Use only cash kept at home",
+                  "Are unable to plan ahead"
+                ],
+                "answer": 0,
+                "explain": "Financial diaries showed poor households actively combining savings clubs, rotating groups, and loans precisely because their incomes are unreliable."
+              },
+              {
+                "q": "The first rule of wise borrowing is:",
+                "choices": [
+                  "Always take the largest loan offered",
+                  "Borrow from several lenders at once",
+                  "Borrow for income rather than consumption whenever possible",
+                  "Borrow mainly for ceremonies"
+                ],
+                "answer": 2,
+                "explain": "A loan that buys income-generating assets can repay itself; consumption loans must be repaid from income the household does not yet have."
+              },
+              {
+                "q": "The classic doorway into a debt spiral is:",
+                "choices": [
+                  "Paying installments early",
+                  "Taking a new loan to repay an old one",
+                  "Keeping an emergency buffer",
+                  "Comparing lenders before borrowing"
+                ],
+                "answer": 1,
+                "explain": "Borrowing to repay means the debt itself is generating the need for more debt — the signature of a spiral."
+              },
+              {
+                "q": "Which of these is NOT one of the seven Client Protection Principles?",
+                "choices": [
+                  "Transparency",
+                  "Prevention of over-indebtedness",
+                  "Privacy of client data",
+                  "Guaranteed approval of every loan application"
+                ],
+                "answer": 3,
+                "explain": "The principles cover appropriate products, transparency, responsible pricing, fair treatment, privacy, complaint mechanisms, and preventing over-indebtedness — never guaranteed approval."
+              },
+              {
+                "q": "The transparency principle requires lenders to provide:",
+                "choices": [
+                  "Full disclosure of prices, terms, and conditions in understandable language",
+                  "Verbal promises only",
+                  "Publication of client names",
+                  "Flat-rate quotes without stating the total cost"
+                ],
+                "answer": 0,
+                "explain": "Transparency means clients can see and understand the full price and terms of what they are signing before they sign it."
+              },
+              {
+                "q": "Which is a warning sign of over-indebtedness?",
+                "choices": [
+                  "Saving regularly",
+                  "One loan with affordable installments",
+                  "Skipping meals or selling productive assets to make payments",
+                  "Asking about the total repayable amount"
+                ],
+                "answer": 2,
+                "explain": "When debt service forces a household to cut meals or sell the assets that earn its income, the debt has outgrown the ability to pay."
+              },
+              {
+                "q": "Many practitioners treat debt service above what share of household income as a danger zone?",
+                "choices": [
+                  "About 5 percent",
+                  "Roughly one third",
+                  "About 10 percent",
+                  "About three quarters"
+                ],
+                "answer": 1,
+                "explain": "A common rule of thumb flags trouble once repayments consume more than roughly a third of household income."
+              },
+              {
+                "q": "How do credit bureaus help prevent over-indebtedness?",
+                "choices": [
+                  "By lending directly to clients",
+                  "By guaranteeing loan approval",
+                  "By setting interest rates",
+                  "By making parallel borrowing from multiple lenders visible"
+                ],
+                "answer": 3,
+                "explain": "When lenders share data through a bureau, a client stacking loans from several sources becomes visible, so lenders can refuse to overload them."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m8",
+      "title": "Microfinance Institutions (MFIs)",
+      "lessons": [
+        {
+          "id": "m8l1",
+          "title": "The Many Shapes of an MFI",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Not All MFIs Are Alike\n\nMicrofinance institution is an umbrella term covering very different organizations that share one mission: financial services for people the formal banking system ignores. The four main types differ in ownership, regulation, and what they are allowed to do — especially whether they may take **deposits from the public**.\n\n**NGO microfinance.** The original form. A non-governmental, non-profit organization lends to the poor, funded by donations, grants, and soft loans from donors. NGOs are mission-driven, reach very poor clients, and move fast — but in most countries they are *not* licensed to take voluntary deposits, so they can only lend out money they raise. Grameen-style programs and countless village lending schemes began this way.\n\n**Cooperatives and credit unions.** Owned by their **members**, who are both savers and borrowers. Members buy shares, elect the board (one member, one vote), and share surpluses. Because they pool member savings, co-ops can usually take deposits from members. They range from tiny village savings-and-credit cooperatives to large regulated credit unions. Their strength is local trust and member control; their weakness is that governance can be amateur, and poor management risks members' own savings.\n\n**Non-bank financial institutions (NBFIs).** Companies licensed to lend — and sometimes to offer other services — but without full banking licenses, so they generally cannot take demand deposits. NBFIs are regulated, can raise commercial investment, and often grow faster than NGOs. Many specialized microfinance companies take this legal form.\n\n**Commercial microfinance banks.** Fully licensed banks specializing in microfinance. They can do everything: accept deposits from the public, lend, move money, and offer payment services. Deposit-taking is the prize — savings from thousands of poor clients provide cheap, stable funding and give clients a safe place to save. The cost is heavy: capital requirements, supervision, reporting, and professional management.\n\n> Same mission, different machinery: who owns the institution, who regulates it, and whether it may hold the public's savings.\n\n## Choosing the Right Form\n\nEach form trades reach against rigor. Consider Fatou, who saves with her village credit union, while the market town nearby is served by a regulated microfinance bank. Her co-op knows her by name and answers to its members; the bank offers her nephew a debit account and payment services the co-op cannot. NGOs reach the poorest but depend on donors. Co-ops are democratic but sometimes fragile. NBFIs scale with investor money but stay one step from full banking. Microfinance banks unlock deposits and scale — at the price of regulation. The next lesson covers how institutions move along this path, and how **governance** keeps them honest."
+        },
+        {
+          "id": "m8l2",
+          "title": "Transformation and Governance",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## From NGO to Regulated Bank\n\nMany of today's regulated microfinance banks began as small NGO lending projects. The journey from charity to bank is called **transformation**, and institutions make it for practical reasons:\n\n- **Deposits.** Only a licensed institution can legally mobilize voluntary savings from the public — and deposits are the cheapest, most stable funding an MFI can get, freeing it from donor cycles.\n- **Scale.** A regulated shareholding company can raise equity from investors, which grants and soft loans cannot match.\n- **Permanence.** Donors leave; a licensed institution can outlive any funding program.\n- **Client demand.** Poor clients want savings and payments, not only loans.\n\nTransformation is not just a paperwork change. The NGO typically creates a new regulated company, sells shares to investors (often including socially minded funds), hires professional managers, and submits to the central bank's supervision: minimum capital, reporting, audits, and inspections. The original NGO may keep a stake and continue social programs on the side.\n\nThe risks are real. New owners want financial returns, and the fear of **mission drift** — gradually abandoning the poorest clients for wealthier, more profitable ones — hangs over every transformation. The famous stock market listing of Mexico's Compartamos in 2007 made early investors rich while the institution charged very high interest rates, sparking a global debate about where serving the poor ends and profiting from them begins. Defenders answer that scale itself serves the poor, reaching clients no charity could.\n\n## Governance: Keeping the Institution Honest\n\n**Governance** is the system that directs and controls an institution — who owns it, who sits on its board, and who watches the managers. Good governance in an MFI includes:\n\n- A **board** with real skills (finance, law, the industry) and independent members, not just the founders' friends\n- Clear separation between the board, which sets policy and oversees, and **management**, which runs daily operations\n- Honest **financial reporting**, external audits, and supervision by the regulator\n- Transparent ownership and protection of member or depositor interests\n- **Double bottom line** thinking: the board explicitly tracks both financial sustainability and social mission — who is reached, at what cost, with what protection\n\nFailures of governance are behind most microfinance disasters: credit unions looted by insiders, transformed MFIs that drifted into pure profit-chasing, NGOs whose charismatic founders answered to no one. The institution's legal form matters less than whether someone with power is watching — and cares about both the money and the mission.\n\n> An MFI asks poor people to trust it with their livelihoods. Governance is how it earns that trust every year, not just at founding."
+        },
+        {
+          "id": "m8l3",
+          "title": "Quiz: Microfinance Institutions",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "All institutions under the MFI umbrella share which mission?",
+                "choices": [
+                  "Maximizing shareholder profit",
+                  "Replacing central banks",
+                  "Financial services for people the formal banking system ignores",
+                  "Lending only to large companies"
+                ],
+                "answer": 2,
+                "explain": "Despite different ownership and regulation, all MFIs exist to serve clients excluded from formal banking."
+              },
+              {
+                "q": "In most countries, an NGO MFI cannot legally:",
+                "choices": [
+                  "Lend to the poor",
+                  "Take voluntary deposits from the public",
+                  "Receive donor grants",
+                  "Train its clients"
+                ],
+                "answer": 1,
+                "explain": "NGOs are typically unlicensed for deposit-taking, so they can only lend money they raise from donors and lenders."
+              },
+              {
+                "q": "In a credit union, control belongs to:",
+                "choices": [
+                  "The largest depositor",
+                  "Foreign investors",
+                  "The founding NGO",
+                  "The members, one member one vote"
+                ],
+                "answer": 3,
+                "explain": "Cooperatives are member-owned: members buy shares, elect the board democratically, and share surpluses."
+              },
+              {
+                "q": "A non-bank financial institution (NBFI) generally:",
+                "choices": [
+                  "Is licensed to lend but cannot take demand deposits",
+                  "Can issue currency",
+                  "Is completely unregulated",
+                  "Must operate as a non-profit"
+                ],
+                "answer": 0,
+                "explain": "NBFIs hold lending licenses without full banking licenses, so they are regulated and can raise investment but generally cannot take demand deposits."
+              },
+              {
+                "q": "The biggest prize of a full microfinance bank license is:",
+                "choices": [
+                  "Exemption from taxes",
+                  "Freedom from supervision",
+                  "The ability to mobilize deposits from the public",
+                  "The right to print money"
+                ],
+                "answer": 2,
+                "explain": "Deposit-taking provides cheap, stable funding and gives poor clients a safe place to save — the key advantage that justifies heavy regulation."
+              },
+              {
+                "q": "In microfinance, transformation means:",
+                "choices": [
+                  "Moving offices to the capital city",
+                  "Converting from an NGO into a regulated, shareholding institution",
+                  "Merging two credit unions",
+                  "Switching from loans to grants"
+                ],
+                "answer": 1,
+                "explain": "Transformation is the journey from donor-funded NGO lender to licensed, regulated company able to take deposits and raise investment."
+              },
+              {
+                "q": "Which is a practical reason for an MFI to transform?",
+                "choices": [
+                  "Deposits provide cheap, stable funding and end dependence on donor cycles",
+                  "Regulation disappears after transformation",
+                  "Donors require it in every country",
+                  "It removes the need for audits"
+                ],
+                "answer": 0,
+                "explain": "Institutions transform to mobilize deposits, raise equity for scale, gain permanence, and meet client demand for savings and payments."
+              },
+              {
+                "q": "Mission drift refers to:",
+                "choices": [
+                  "Expanding into new districts",
+                  "Hiring professional managers",
+                  "Accepting central bank supervision",
+                  "Gradually abandoning the poorest clients for wealthier, more profitable ones"
+                ],
+                "answer": 3,
+                "explain": "When commercial owners push for returns, an MFI may slowly shift upmarket — the core fear attached to transformation."
+              },
+              {
+                "q": "The 2007 Compartamos stock listing sparked global debate because:",
+                "choices": [
+                  "It failed financially",
+                  "It was the first MFI in Mexico",
+                  "Early investors grew rich while clients paid very high interest rates",
+                  "It refused to take deposits"
+                ],
+                "answer": 2,
+                "explain": "The huge investor profits alongside very high client rates forced the industry to argue openly about where serving the poor ends and profiting from them begins."
+              },
+              {
+                "q": "Good MFI governance includes:",
+                "choices": [
+                  "A founder with unchecked power",
+                  "A skilled, partly independent board, external audits, and tracking of both financial and social results",
+                  "Keeping ownership secret",
+                  "Letting managers oversee themselves"
+                ],
+                "answer": 1,
+                "explain": "Strong boards, honest reporting, clear oversight of management, and double-bottom-line tracking are what keep an MFI honest about both money and mission."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m9",
+      "title": "Risk & Portfolio Quality",
+      "lessons": [
+        {
+          "id": "m9l1",
+          "title": "Reading the Loan Book: PAR30, Provisions, and Write-offs",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Repayment Is Everything\n\nMicrofinance institutions (MFIs) run on thin margins and heavy trust. Because most borrowers offer no physical collateral, the single most important signal of institutional health is whether clients repay on time. The industry tracks this with a small set of standardized risk metrics that managers, funders, and regulators all watch.\n\n## Portfolio at Risk (PAR)\n\n**Portfolio at risk (PAR)** measures the slice of the loan book in danger. **PAR30** — the most common version — is the outstanding balance of all loans with at least one payment **30 or more days late**, divided by the total gross loan portfolio.\n\n- Example: an MFI with a 10 million dollar portfolio and 400,000 dollars in loans 30+ days overdue has a PAR30 of 4 percent.\n- A widely used rule of thumb: PAR30 under roughly 5 percent is considered healthy; above that, alarms should ring.\n- PAR is **balance-weighted**, not head-counted. One large late loan hurts PAR more than ten tiny ones — which is fair, because the money at risk is what matters.\n\nManagers also track PAR1, PAR60, and PAR90 to watch how delinquency ages through the book.\n\n## From Late Loans to Losses\n\nA late loan is a warning; a loss is the bill. Two tools connect them:\n\n- **Provisioning**: as a loan stays overdue, the MFI sets aside reserves against the likely loss. Typical policies escalate — a modest provision after 30 days, larger ones at 60 and 90 days, and near-full provisioning for severely late loans. Provisions reduce profits immediately, so rising PAR quickly squeezes earnings.\n- **Write-offs**: when a loan is judged uncollectible — often after about 180 days of delinquency — it leaves the balance sheet. The **write-off ratio** (write-offs over the average portfolio) shows realized losses.\n\nPAR is a **leading indicator**: it predicts tomorrow's losses. Write-offs are **lagging**: they confirm yesterday's. Watch both.\n\n## Hiding Places\n\nRisk metrics can be gamed. **Ever-greening** — restructuring a delinquent loan, or issuing a fresh one so the borrower can pay the old one — makes the book look current while the underlying risk grows. Honest reporting, surprise portfolio audits, and strict restructuring rules keep the numbers real.\n\n> A microfinance portfolio can look fine right up until it does not — repayment discipline is a culture, not a number.\n\nGood risk measurement is not bureaucracy. It protects the donor funds, savings, and future lending capacity that the next borrowers will need."
+        },
+        {
+          "id": "m9l2",
+          "title": "Liquidity, Operational Risk, and the Group-Lending Safety Net",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Liquidity Risk: Short Money, Long Loans\n\nMFIs must pay their own bills — salaries, rent, and repayments to the banks and funds that finance them — whether or not borrowers repay. **Liquidity risk** is the danger of running out of cash at the wrong moment.\n\n- **Maturity mismatch**: many MFIs borrow on 12-month credit lines while issuing 18-month loans. If funders refuse to renew, lending stops mid-stream.\n- **Repayment shocks**: a flood, a price crash, or even a rumor can make many borrowers stop paying at once, drying up cash inflows within weeks.\n- Prudent managers hold cash buffers, diversify funding sources, and stagger funding maturities.\n\n## Operational Risk: People, Cash, and Systems\n\nMicrofinance runs on thousands of tiny cash transactions handled in the field. That creates **operational risk** — losses from failed processes, people, or systems.\n\n- **Fraud**: a loan officer invents ghost borrowers, pockets the disbursed cash, and books fake repayments until the scheme collapses.\n- **Theft and error**: physical cash moves between villages and branches; weak dual-control practices invite leakage.\n- **Systems failure**: a broken management information system (MIS) can misstate balances, hide delinquency, or lose records entirely.\n\nStandard defenses include dual custody of cash, rotating loan officers between areas, surprise audits, and separating the people who disburse money from the people who record it.\n\n## Why Group Lending Manages Risk\n\nClassic microfinance was invented to control credit risk without collateral. Its machinery is social:\n\n- **Peer screening**: borrowers form their own groups — often five people — and members know each other's businesses and character better than any loan officer could. The unreliable get filtered out at formation.\n- **Joint liability**: members guarantee one another. If one person misses a payment, the others must cover it or the whole group loses access to future loans.\n- **Social collateral**: reputation replaces land titles. Defaulting means losing standing with neighbors, not just with a bank.\n- **Dynamic incentives**: a clean record unlocks larger future loans, making tomorrow's credit worth more than today's default.\n- **Efficiency**: groups meet together, so one officer serves many clients and spots trouble early.\n\nThe model has limits. Group pressure can shade into coercion, and because members' fortunes are linked, one local shock can trigger **collective default** — the group that protects the lender in good times can collapse together in bad ones. Even so, for decades group lending kept repayment high enough to make uncollateralized lending to poor households viable — the core risk insight on which the industry was built."
+        },
+        {
+          "id": "m9l3",
+          "title": "Quiz: Risk & Portfolio Quality",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "What does PAR30 measure?",
+                "choices": [
+                  "The percentage of borrowers who have ever missed a payment",
+                  "The outstanding balance of loans with at least one payment 30 or more days late, as a share of the total gross portfolio",
+                  "The share of loans written off within 30 days of default",
+                  "The percentage of the portfolio covered by loan-loss provisions"
+                ],
+                "answer": 1,
+                "explain": "PAR30 divides the balance of loans 30+ days overdue by the gross loan portfolio — it weights by money at risk, not by borrower counts."
+              },
+              {
+                "q": "An MFI has a 5 million dollar portfolio with 250,000 dollars in loans 30+ days overdue. Its PAR30 is:",
+                "choices": [
+                  "0.5 percent",
+                  "2 percent",
+                  "5 percent",
+                  "20 percent"
+                ],
+                "answer": 2,
+                "explain": "250,000 divided by 5,000,000 equals 5 percent — right at the commonly used healthy-limit rule of thumb."
+              },
+              {
+                "q": "Why is PAR considered a leading indicator?",
+                "choices": [
+                  "It signals likely future losses before they appear as write-offs",
+                  "It is calculated before any other metric each month",
+                  "It automatically triggers regulator intervention",
+                  "It measures loans before they are disbursed"
+                ],
+                "answer": 0,
+                "explain": "Delinquency shows up in PAR weeks or months before loans are fully provisioned or written off, so it predicts coming losses."
+              },
+              {
+                "q": "Provisioning refers to:",
+                "choices": [
+                  "Issuing new loans to fast-growing sectors",
+                  "Buying insurance against borrower death",
+                  "Distributing profits to investors",
+                  "Setting aside reserves against expected loan losses as delinquency ages"
+                ],
+                "answer": 3,
+                "explain": "MFIs set aside escalating reserves as loans stay overdue; provisions hit profits immediately, which is why rising PAR squeezes earnings."
+              },
+              {
+                "q": "Writing off a loan means:",
+                "choices": [
+                  "Forgiving the borrower and permanently canceling all recovery efforts",
+                  "Removing it from the balance sheet as uncollectible, often after about 180 days",
+                  "Selling it to another MFI at a discount",
+                  "Restructuring it with a longer repayment schedule"
+                ],
+                "answer": 1,
+                "explain": "Write-off is the accounting recognition of loss; recovery attempts may continue, but the loan leaves the books and shows up in the write-off ratio."
+              },
+              {
+                "q": "Which is a clear example of operational risk?",
+                "choices": [
+                  "A drought hurting farmers' harvests",
+                  "A rival MFI lowering its interest rates",
+                  "A loan officer inventing ghost borrowers and pocketing disbursed cash",
+                  "Rising national inflation"
+                ],
+                "answer": 2,
+                "explain": "Staff fraud is a failure of internal people and processes — the definition of operational risk. Drought and inflation are external risks."
+              },
+              {
+                "q": "An MFI funded by 12-month credit lines that makes 18-month loans mainly faces:",
+                "choices": [
+                  "Liquidity risk from maturity mismatch",
+                  "Foreign-exchange risk",
+                  "Regulatory risk",
+                  "Credit-scoring model risk"
+                ],
+                "answer": 0,
+                "explain": "If funders do not renew short-term lines while loans are still outstanding, the MFI can run out of cash — maturity mismatch is the core liquidity problem."
+              },
+              {
+                "q": "Joint liability in group lending means:",
+                "choices": [
+                  "The MFI is liable for group members' business losses",
+                  "All members share a single bank account",
+                  "Loans are registered jointly with the government",
+                  "Group members guarantee each other's repayment and lose future access if the group defaults"
+                ],
+                "answer": 3,
+                "explain": "Members cover for one another, and a group default cuts off everyone's future loans — creating mutual pressure to repay."
+              },
+              {
+                "q": "Peer screening reduces lending risk because:",
+                "choices": [
+                  "Group members have local knowledge of each other's reliability that a loan officer lacks",
+                  "Peers must lend their own money to the group first",
+                  "Screening is mandated by banking regulators",
+                  "It removes the need for any record-keeping"
+                ],
+                "answer": 0,
+                "explain": "Members form their own groups and know each other's character and businesses, filtering out risky borrowers at formation."
+              },
+              {
+                "q": "Ever-greening refers to:",
+                "choices": [
+                  "Lending to environmentally friendly projects",
+                  "Expanding lending into new villages",
+                  "Restructuring or refinancing delinquent loans so the portfolio looks current while risk stays hidden",
+                  "Holding cash reserves in safe liquid assets"
+                ],
+                "answer": 2,
+                "explain": "A fresh loan or restructuring lets a borrower appear to repay, masking true delinquency — a classic way to game PAR metrics."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m10",
+      "title": "Social Performance & Impact",
+      "lessons": [
+        {
+          "id": "m10l1",
+          "title": "The Double Bottom Line and Measuring Social Performance",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Two Bottom Lines, One Balance Sheet\n\nMicrofinance institutions (MFIs) promise something unusual: to be **financially sustainable** while also **reducing poverty**. These twin goals are called the **double bottom line**. The first bottom line is money — enough revenue from interest and fees to cover costs, pay staff, and grow. The second is social — reaching poor clients, especially women and rural households, and improving their lives.\n\nThe tension is real. Serving very poor, remote clients is expensive: small loans cost almost as much to administer as large ones. When funding gets tight, an MFI faces a choice — push into poorer areas (the social goal) or serve better-off urban clients with bigger loans (the financial goal). Drifting toward richer clients is common enough that it has a name: **mission drift**.\n\n## Measuring Outreach\n\nSocial performance starts with counting. Managers track:\n\n- **Breadth of outreach** — how many clients are served\n- **Depth of outreach** — how poor those clients are\n- **Average loan size** — a rough proxy for depth, since poorer borrowers usually take smaller loans\n\nBut counting clients says nothing about whether their lives improved. That requires measuring poverty itself.\n\n## The Poverty Probability Index\n\nThe most widely used tool is the **Poverty Probability Index (PPI)** — formerly the Progress out of Poverty Index — developed with the Grameen Foundation and now managed by Innovations for Poverty Action. It works like this:\n\n- A short survey of about **ten questions**, tailored to each country (roof material, cooking fuel, children in school, asset ownership)\n- Answers are scored against national household survey data\n- The result estimates the **likelihood** a household falls below a poverty line\n\n> The PPI cannot prove a loan caused change, but it tells an MFI who it is actually reaching — and whether that mix is shifting over time.\n\nMini-example: an MFI in Peru finds 40% of new clients are likely below the national poverty line, up from 28% three years earlier — evidence that its rural expansion is genuinely reaching poorer households rather than drifting upward.\n\n## The Women's Empowerment Claim\n\nRoughly **four in five** microfinance clients worldwide are women. The industry argues that lending to women empowers them: income rises, bargaining power at home grows, children stay in school. The logic is plausible — and women do tend to repay reliably, which is one reason lenders target them.\n\nBut the evidence is mixed:\n\n- Some studies find women hand loans to **male relatives** who control the business\n- Empowerment is hard to measure; household income can rise while a woman's control does not\n- Group meetings, training, and savings habits may matter as much as the loan itself\n\nHonest practitioners now treat empowerment as a **goal to verify**, not a slogan to assume.\n\n## Social Performance Management\n\nIndustry bodies such as the **Social Performance Task Force** have written universal standards: define a social mission, measure it, report it, and act on the findings. The lesson of a decade of measurement is simple — what gets measured gets managed, and what gets assumed gets exaggerated."
+        },
+        {
+          "id": "m10l2",
+          "title": "What the Evidence Says — and the Critics",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## The Randomized Revolution\n\nFor years, microfinance impact claims rested on **before-and-after stories**: a borrower took a loan, her business grew, therefore microfinance works. The problem is **selection** — people who choose to borrow may be more entrepreneurial to begin with, so they might have prospered anyway. In the 2000s, researchers including **Abhijit Banerjee and Esther Duflo** began running **randomized controlled trials (RCTs)**: some communities received microfinance access while similar communities did not, and outcomes were compared.\n\nAround 2015, six such studies — conducted in India (Hyderabad), Morocco, Mexico, Mongolia, Bosnia, and Ethiopia — were published together, mostly in the *American Economic Journal: Applied Economics*. For the first time, the sector had rigorous, comparable evidence.\n\n## What the Studies Found\n\nThe headline results were sobering but not hopeless:\n\n- **No average transformation** — households with microcredit access did not, on average, earn or consume dramatically more\n- **Real but modest business effects** — some existing businesses expanded, and a slice of more entrepreneurial households benefited noticeably\n- **Little movement on schooling or health** — children were not clearly more likely to stay in school\n- **Greater financial freedom** — households shifted spending, cut temptation goods, and gained flexibility to manage ups and downs\n\nA typical pattern: a tailor in Hyderabad uses a loan to buy a second sewing machine, works longer hours, and earns more — while her neighbor simply replaces expensive informal debt with a cheaper microfinance loan. Both are better off; neither escapes poverty.\n\n## The Critics' Case\n\nCritics argue the sector oversold itself:\n\n- **Interest rates are high** — often roughly 25–40% a year or more, a heavy burden for the poor\n- **Over-indebtedness** — easy access plus group pressure can trap borrowers in cycles of re-borrowing\n- **Collection pressure** — weekly meetings and joint liability can turn coercive\n- **Opportunity cost** — the money might do more good in savings, insurance, or job-creation programs\n\nSome development thinkers go further, calling microcredit a distraction from the bigger drivers of poverty: jobs, infrastructure, and health.\n\n## The Middle Ground\n\nThe fairest reading of the evidence: microfinance is a **useful tool, not a miracle**. It helps poor households manage money, smooth consumption, and sometimes grow tiny businesses — genuinely valuable outcomes — but it does not, on its own, lift whole communities out of poverty.\n\n## Why the Findings Matter\n\nThe RCT results changed practice. Donors shifted attention toward **savings, payments, and insurance**; MFIs added flexible products and financial training; marketers stopped promising miracles. Credible impact claims now sound like the evidence: *modest, real, and uneven* — which is exactly what honest social performance reporting should say."
+        },
+        {
+          "id": "m10l3",
+          "title": "Quiz: Social Performance & Impact",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "What does the \"double bottom line\" refer to in microfinance?",
+                "choices": [
+                  "Pursuing financial sustainability and a social mission at the same time",
+                  "Operating both domestic and international branches",
+                  "Offering both short-term and long-term loans",
+                  "Serving both urban and rural markets"
+                ],
+                "answer": 0,
+                "explain": "The double bottom line means an MFI tries to cover its costs financially while also reaching poor clients and improving their lives."
+              },
+              {
+                "q": "What is \"mission drift\"?",
+                "choices": [
+                  "Expanding operations into new countries",
+                  "Shifting toward richer clients and larger loans, away from the poorest",
+                  "Changing from group lending to individual lending",
+                  "Losing donor funding over time"
+                ],
+                "answer": 1,
+                "explain": "Mission drift happens when an MFI moves toward better-off clients because they are cheaper to serve, weakening its original poverty focus."
+              },
+              {
+                "q": "What does the Poverty Probability Index (PPI) estimate?",
+                "choices": [
+                  "A borrower's probability of repaying a loan",
+                  "An MFI's expected profitability",
+                  "The likelihood that a household falls below a poverty line",
+                  "The interest rate a client can afford"
+                ],
+                "answer": 2,
+                "explain": "The PPI scores about ten simple survey questions against national household data to estimate the chance a household is below a poverty line."
+              },
+              {
+                "q": "Why can't the PPI prove that a loan caused a change in clients' lives?",
+                "choices": [
+                  "It measures who an MFI reaches, not what caused their outcomes",
+                  "It only works in one country",
+                  "It requires too many survey questions",
+                  "It only measures business revenue"
+                ],
+                "answer": 0,
+                "explain": "As the reading notes, the PPI shows the poverty mix of clients being reached but cannot establish that the loan caused any change."
+              },
+              {
+                "q": "Roughly what share of microfinance clients worldwide are women?",
+                "choices": [
+                  "About one in five",
+                  "About half",
+                  "About two-thirds",
+                  "About four in five"
+                ],
+                "answer": 3,
+                "explain": "The reading states that roughly four in five microfinance clients globally are women."
+              },
+              {
+                "q": "Which finding complicates the claim that lending to women automatically empowers them?",
+                "choices": [
+                  "Women repay loans less reliably than men",
+                  "Some women hand control of loans to male relatives",
+                  "Women rarely apply for loans",
+                  "Loans to women are always too small to matter"
+                ],
+                "answer": 1,
+                "explain": "Some studies found women pass loans to male relatives who control the business, so household income can rise without the woman's control increasing."
+              },
+              {
+                "q": "Why were randomized controlled trials (RCTs) an improvement over before-and-after impact stories?",
+                "choices": [
+                  "They were cheaper to run",
+                  "They required no surveys at all",
+                  "They avoided selection bias by comparing similar groups with and without access",
+                  "They measured only lender profits"
+                ],
+                "answer": 2,
+                "explain": "Borrowers may be more entrepreneurial to begin with; RCTs compare comparable communities so that microfinance access itself is the difference being tested."
+              },
+              {
+                "q": "What did the six RCTs published around 2015 find, on average?",
+                "choices": [
+                  "Large average gains in household income",
+                  "No effects on any outcome whatsoever",
+                  "Modest but real business effects, with no average transformation out of poverty",
+                  "Guaranteed improvements in children's schooling"
+                ],
+                "answer": 3,
+                "explain": "The studies found modest, real effects — some businesses expanded — but no average dramatic rise in income, consumption, schooling, or health."
+              },
+              {
+                "q": "Which of these is part of the critics' case against microfinance?",
+                "choices": [
+                  "Interest rates are too low to sustain lenders",
+                  "High interest rates, over-indebtedness, and coercive collection pressure",
+                  "Loans are too large for poor households",
+                  "The sector refuses to lend to women"
+                ],
+                "answer": 1,
+                "explain": "Critics point to high rates (often roughly 25–40% a year or more), re-borrowing cycles, and collection pressure that can turn coercive."
+              },
+              {
+                "q": "How did the RCT evidence change industry practice?",
+                "choices": [
+                  "The microfinance industry shut down",
+                  "Interest rates were raised worldwide",
+                  "Donors shifted toward savings, payments, and insurance, and marketers stopped promising miracles",
+                  "MFIs stopped serving women"
+                ],
+                "answer": 2,
+                "explain": "The evidence pushed donors and MFIs toward broader financial services, more flexibility and training, and more honest, modest impact claims."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m11",
+      "title": "Digital Microfinance",
+      "lessons": [
+        {
+          "id": "m11l1",
+          "title": "Mobile Money and the Digital Rails",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## From Cash to Keypads\n\nTraditional microfinance ran on **cash**: loan officers carried money to villages, borrowers repaid at weekly meetings, and every note was counted by hand. That changed when **mobile money** arrived — most famously **M-Pesa**, launched in Kenya in 2007 by Safaricom. Mobile money lets people store value on a phone account and send it by simple text commands — no bank account or smartphone required.\n\nWithin a few years, tens of millions of Kenyans were using it, and the model spread across East Africa, South Asia, and beyond. For microfinance, it was the missing infrastructure: **rails** on which cheaper, faster financial services could run.\n\n## How Agent Networks Work\n\nMobile money is not pure software; it depends on **agents** — small shopkeepers who convert between cash and electronic value:\n\n- A customer hands the agent **cash**, and the agent credits her phone wallet (a *cash-in*)\n- To withdraw, the customer sends e-money to the agent, who hands over **cash** (a *cash-out*)\n- Agents manage their **float** — the balance of e-money and physical cash they hold — and earn commissions on each transaction\n\nMini-example: a farmer sells maize, receives payment on her phone, and walks to the corner kiosk to cash out part of it for market day. The kiosk owner is the human face of the digital system. Without a dense agent network, digital money is just numbers on a screen.\n\n## Why Mobile Money Matters for Microfinance\n\nThe rails cut costs at every step:\n\n- **Disbursement** — loans arrive instantly on a phone instead of at a weekly meeting\n- **Repayment** — borrowers pay from home instead of traveling to a branch\n- **Records** — every transaction creates a **digital trail** that institutions can analyze\n- **Savings** — even tiny balances can be held safely without a bank branch\n\nLower cost per transaction makes smaller loans viable, so the economics of serving the very poor improve.\n\n## Digital Credit Scoring\n\nThe biggest change is invisible: **data**. Poor borrowers historically had no credit history, so lending to them was a gamble. Digital systems create substitutes:\n\n- **Mobile money history** — steady flows in and out suggest income stability\n- **Airtime top-ups** — frequent, consistent purchases signal cash management\n- **Bill payments and remittances** — evidence of obligations met\n- **Psychometric tests** — short quizzes measuring traits like planning and honesty, used by lenders such as EFL\n\nAlgorithms combine these signals into a **credit score** for someone a traditional bank could not assess at all.\n\n## The Invisible Become Visible\n\nA shopkeeper with no payslip, no collateral, and no bank statement can now be scored in minutes. That is the genuine promise of digital microfinance — not replacing the loan officer's judgment everywhere, but extending a first rung of the financial ladder to people the old system could never reach profitably."
+        },
+        {
+          "id": "m11l2",
+          "title": "Instant Nano-Loans: Opportunity and Risk",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## Credit in Ninety Seconds\n\nDigital rails plus automated scoring produced something new: the **nano-loan** — a tiny, instant, short-term loan delivered entirely by phone. A typical offer: **$20 for two weeks**, approved in minutes, with no paperwork, no meeting, and no collateral. Apps and mobile-money menus across Africa and South Asia now push such offers to millions of people.\n\nThe borrower experience is radically simple:\n\n- Open the menu or app and request an amount\n- An algorithm scores you instantly from your phone and transaction data\n- Money lands in your wallet; repayment is due on a set date\n\nFor a market vendor who needs stock before dawn, this is transformative compared with a two-week group-lending process.\n\n## The Opportunities\n\n- **Emergency smoothing** — a small loan can bridge a medical bill or a slow sales week without selling assets\n- **Credit histories** — repaid nano-loans create records that can unlock larger, cheaper credit later\n- **Competition** — new digital lenders pressure traditional MFIs to cut costs and speed up\n- **Convenience** — no travel, no waiting, no lost work hours\n\n## Risk One: Privacy\n\nSpeed comes from **data extraction**, and some lenders go too far:\n\n- Apps request access to **contact lists, messages, photos, and location**\n- Collection tactics have included **debt-shaming** — messaging a borrower's friends and family about missed payments\n- Consent is often meaningless: declining permissions means declining the loan\n\nYour phone becomes the collateral — and the pressure device.\n\n## Risk Two: Algorithmic Bias\n\nAutomated scoring is **opaque**:\n\n- Nobody explains why you were denied or offered a smaller limit\n- Models trained on biased data can **systematically disadvantage** women, rural users, or particular groups — even without intending to\n- Errors are hard to appeal when there is no loan officer to ask\n\n> A score that no one can explain is a verdict that no one can challenge.\n\n## Risk Three: Digital Over-Indebtedness\n\nThe features that make nano-loans attractive also make them dangerous:\n\n- **Frictionless re-borrowing** — repay today, borrow again tonight\n- **Multiple apps** — borrowers stack loans across lenders who cannot see each other\n- **Fee structures** — small fees on very short terms annualize to extremely high effective rates\n- **Thin files** — new borrowers are scored on little data, so limits can jump faster than incomes\n\n## What Good Looks Like\n\nResponsible digital lending needs **consumer protection fit for phones**: clear disclosure of the total cost, genuine data consent, limits on contact-list abuse, reporting to credit bureaus so lenders can see each other's loans, and a human route for complaints. The technology is neutral; the rules around it decide whether nano-loans become a ladder or a trap."
+        },
+        {
+          "id": "m11l3",
+          "title": "Quiz: Digital Microfinance",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "What is M-Pesa?",
+                "choices": [
+                  "A Kenyan mobile money service launched by Safaricom in 2007",
+                  "A Nigerian commercial bank",
+                  "An Indian loan app",
+                  "A global credit bureau"
+                ],
+                "answer": 0,
+                "explain": "M-Pesa, launched in Kenya in 2007, pioneered storing and sending money by phone without needing a bank account or smartphone."
+              },
+              {
+                "q": "In a mobile money system, what is an \"agent\"?",
+                "choices": [
+                  "A government regulator",
+                  "A shopkeeper who converts between cash and electronic money",
+                  "A loan-collection officer",
+                  "A credit-scoring algorithm"
+                ],
+                "answer": 1,
+                "explain": "Agents are small retailers who handle cash-ins and cash-outs, forming the human network that makes digital money usable."
+              },
+              {
+                "q": "What does an agent's \"float\" refer to?",
+                "choices": [
+                  "The interest rate on digital loans",
+                  "The time a transfer takes to arrive",
+                  "The balance of e-money and physical cash the agent holds",
+                  "A type of smartphone used for payments"
+                ],
+                "answer": 2,
+                "explain": "Float is the stock of e-money and cash an agent maintains to serve customers' cash-in and cash-out requests."
+              },
+              {
+                "q": "How does mobile money most directly help microfinance institutions?",
+                "choices": [
+                  "It eliminates the need for agents",
+                  "It guarantees that loans will be repaid",
+                  "It replaces credit scoring entirely",
+                  "It cuts transaction costs and creates digital records of every payment"
+                ],
+                "answer": 3,
+                "explain": "Digital disbursement and repayment are cheaper than cash handling, and every transaction leaves a trail institutions can analyze."
+              },
+              {
+                "q": "Which of these is used as a signal in digital credit scoring?",
+                "choices": [
+                  "Airtime top-up patterns",
+                  "A borrower's height",
+                  "Land-title deeds only",
+                  "Salary payslips"
+                ],
+                "answer": 0,
+                "explain": "Scoring draws on alternative data such as airtime purchases, mobile money flows, bill payments, and psychometric quizzes."
+              },
+              {
+                "q": "What is a nano-loan?",
+                "choices": [
+                  "A ten-year housing loan",
+                  "A tiny, instant, short-term loan delivered entirely by phone",
+                  "A loan available only to large farms",
+                  "A grant that does not need to be repaid"
+                ],
+                "answer": 1,
+                "explain": "Nano-loans are very small amounts — like $20 for two weeks — approved in minutes by an algorithm with no paperwork."
+              },
+              {
+                "q": "What is \"debt-shaming\" in digital lending?",
+                "choices": [
+                  "Charging a late fee",
+                  "Reporting a default to a credit bureau",
+                  "Messaging a borrower's friends and family about missed payments",
+                  "Lowering the borrower's credit limit"
+                ],
+                "answer": 2,
+                "explain": "Some apps abuse contact-list access by pressuring borrowers through their social circle — a serious privacy violation."
+              },
+              {
+                "q": "Why is algorithmic bias a concern in digital credit?",
+                "choices": [
+                  "Algorithms approve every applicant automatically",
+                  "Algorithms never charge interest",
+                  "Scores are shared too openly with borrowers",
+                  "Scores are opaque and can systematically disadvantage groups, with little way to appeal"
+                ],
+                "answer": 3,
+                "explain": "Models trained on biased data can unfairly deny or limit credit to women, rural users, or other groups, and there is often no human to ask why."
+              },
+              {
+                "q": "What makes digital over-indebtedness more likely than traditional over-borrowing?",
+                "choices": [
+                  "Slow, paperwork-heavy approval processes",
+                  "Frictionless re-borrowing and stacking loans across multiple apps that cannot see each other",
+                  "Mandatory financial training before every loan",
+                  "Permanently low credit limits for all users"
+                ],
+                "answer": 1,
+                "explain": "Instant re-borrowing plus multiple lenders with no shared view lets borrowers pile up obligations faster than their incomes can support."
+              },
+              {
+                "q": "Which practice is part of responsible digital lending (\"what good looks like\")?",
+                "choices": [
+                  "Hiding fees inside complex repayment schedules",
+                  "Denying customers any say over their data",
+                  "Clear disclosure of total cost and reporting loans to credit bureaus",
+                  "Removing all channels for complaints"
+                ],
+                "answer": 2,
+                "explain": "Responsible practice includes transparent costs, genuine consent, credit-bureau reporting so lenders see each other's loans, and complaint routes."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "m12",
+      "title": "Regulation & the Future",
+      "lessons": [
+        {
+          "id": "m12l1",
+          "title": "Why Regulation Matters",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## The Stakes Are High\n\nMicrofinance serves clients who are **poor, often financially inexperienced, and rarely able to shop around**. A badly designed product or a predatory lender can destroy a household's fragile finances. Regulation exists to keep the sector's promise — financial inclusion — from turning into exploitation.\n\nThere is also a systemic stake. When millions of poor households borrow at once, the sector's health affects whole communities, and unregulated lending booms have ended badly more than once.\n\n## The Interest-Rate-Caps Debate\n\nThe most heated regulatory argument concerns **price caps** — legal ceilings on the interest MFIs may charge.\n\nThe case for caps:\n\n- Poor borrowers lack bargaining power and information\n- Very high rates can make loans unpayable, deepening poverty\n- Public legitimacy: voters will not accept 40% rates charged to the poor\n\nThe case against caps:\n\n- Small loans are genuinely **expensive to deliver**; costs do not shrink with loan size\n- Below-cost caps push lenders to **exit poor and rural markets** or to add **hidden fees**\n- Supply shrinks, and borrowers return to moneylenders, who charge more and answer to no one\n\nExperience suggests that caps set **too low backfire**. Many regulators therefore favor **transparency** instead — requiring lenders to disclose the full, comparable cost of credit — so competition and informed choice do the disciplining.\n\nMini-example: under a disclosure rule, two lenders must quote the total cost of a $100 loan in the same standard format. The borrower sees one costs $112 and the other $118, chooses accordingly — and price competition starts to work without any ceiling at all.\n\n## Deposit-Taking Changes Everything\n\nMany MFIs began as **NGOs lending out donor money**, which is relatively safe to supervise lightly: if the NGO fails, donors lose grants. But once an institution takes **deposits from the public**, it holds poor people's savings — and failure means wiped-out nest eggs.\n\nDeposit-taking therefore demands **bank-style supervision**:\n\n- **Capital requirements** — owners must have their own money at risk\n- **Liquidity rules** — enough cash on hand to meet withdrawals\n- **Governance standards** — fit-and-proper management and audited accounts\n- **Reporting and inspection** — regular oversight by the central bank or a delegated supervisor\n\nThis is why many successful MFIs eventually **transform** into regulated microfinance banks or licensed deposit-taking institutions — gaining a stable local funding source in exchange for accepting supervision.\n\n## Proportionality: Matching Rules to Risk\n\nGood regulation is **proportional**:\n\n- Credit-only NGO lenders: registration, reporting, and conduct rules\n- Deposit-takers: full prudential supervision\n- Tiny community savings groups: light-touch exemption\n\nOver-regulate and you strangle the smallest, most local providers. Under-regulate and you invite the next crisis. The craft of microfinance regulation is finding the level where protection is real but inclusion survives."
+        },
+        {
+          "id": "m12l2",
+          "title": "The Andhra Pradesh Crisis and the Road Ahead",
+          "type": "reading",
+          "durationMin": 8,
+          "content": "## A Boom That Ended in Weeks\n\nIn the 2000s, the Indian state of **Andhra Pradesh** was the world's microfinance boomtown. Competition was fierce, growth was celebrated, and lending doubled again and again. Then, in **2010**, the boom collapsed in a matter of weeks — the sector's defining cautionary tale.\n\nWhat went wrong:\n\n- **Multiple lending** — several MFIs lent to the same borrower, each unaware of the others; no credit bureau covered the sector\n- **Coercive collection** — relentless pressure for near-perfect weekly repayment, with reports linking collection practices to borrower distress and, in some cases, suicides\n- **Growth-first incentives** — staff bonuses and investor returns rewarded loan volume, not borrower outcomes\n- **Political backlash** — the state government issued an **ordinance** that effectively halted collections\n\nRepayments collapsed almost overnight, lenders could not refinance, and a sector serving millions nearly vanished. It recovered only after national reserve-bank regulation, mandatory **credit bureaus**, and responsible-lending codes were put in place.\n\n## The Lesson\n\nThe crisis was not proof that microfinance is harmful — it was proof that **fast growth without guardrails is**. When lending is measured by disbursement volume and collections are enforced by pressure, the social mission becomes a marketing claim. The fixes — shared credit data, conduct rules, supervision — are precisely the boring infrastructure the boom had skipped.\n\n> Andhra Pradesh taught the industry that trust, once lost by the sector as a whole, is lost by every lender in it.\n\n## Where the Sector Is Heading\n\nMicrofinance today is converging with the broader **financial inclusion** agenda:\n\n- **Digital-first delivery** — mobile money, agent banking, and automated scoring keep cutting costs\n- **Beyond credit** — savings, insurance, and payments are now seen as at least as valuable as loans\n- **Embedded finance** — credit built into platforms people already use: farm-input suppliers, marketplaces, pay-as-you-go solar\n- **Climate-smart microfinance** — loans and insurance for drought-resistant seeds, irrigation, and recovery after floods\n- **Graduation approaches** — combining assets, training, and cash support to move the ultra-poor toward sustainable livelihoods, and eventually toward mainstream microfinance\n\nMini-example: a pay-as-you-go solar company already collects small mobile payments for power; layering a small appliance loan onto the same account costs little and reaches households no bank branch ever served.\n\nConsolidation is also likely, with stronger regulated deposit-takers absorbing smaller players and technology platforms handling distribution.\n\n## The Realistic Bottom Line\n\nThe sector's self-image has matured. The claim is no longer \"credit ends poverty\" but rather: **finance, responsibly delivered, helps poor households manage risk and seize opportunity**. Regulation, evidence, and digital infrastructure are the tools for making that modest, real promise hold."
+        },
+        {
+          "id": "m12l3",
+          "title": "Quiz: Regulation & the Future",
+          "type": "quiz",
+          "durationMin": 8,
+          "quiz": {
+            "passPct": 70,
+            "questions": [
+              {
+                "q": "Why does microfinance need regulation in the first place?",
+                "choices": [
+                  "To guarantee high profits for lenders",
+                  "Because clients are poor and financially inexperienced, so predatory practices can destroy fragile household finances",
+                  "To prevent MFIs from serving women",
+                  "To force all interest rates to zero"
+                ],
+                "answer": 1,
+                "explain": "Regulation keeps the promise of financial inclusion from turning into exploitation of clients who can rarely shop around or walk away."
+              },
+              {
+                "q": "What is the main argument FOR interest-rate caps?",
+                "choices": [
+                  "Caps always increase the supply of loans",
+                  "Caps encourage more lending in rural areas",
+                  "Poor borrowers lack bargaining power, and very high rates can make loans unpayable",
+                  "Caps reduce paperwork for lenders"
+                ],
+                "answer": 2,
+                "explain": "Supporters argue caps protect borrowers who have little power or information from rates that deepen rather than relieve poverty."
+              },
+              {
+                "q": "What is the main argument AGAINST caps set too low?",
+                "choices": [
+                  "They cause currency inflation",
+                  "Lenders exit poor markets or add hidden fees, shrinking supply",
+                  "They make loans too cheap to be useful",
+                  "They make moneylenders less competitive"
+                ],
+                "answer": 1,
+                "explain": "When caps fall below the genuine cost of delivering tiny loans, lenders withdraw or disguise costs, and borrowers fall back on moneylenders."
+              },
+              {
+                "q": "What alternative to strict caps do many regulators now favor?",
+                "choices": [
+                  "Banning all fees",
+                  "Setting no rules at all",
+                  "Requiring every MFI to become a commercial bank",
+                  "Transparency — disclosure of the full, comparable cost of credit"
+                ],
+                "answer": 3,
+                "explain": "Transparent disclosure lets competition and informed choice discipline prices without choking off the supply of small loans."
+              },
+              {
+                "q": "Why does taking deposits change an MFI's regulatory requirements?",
+                "choices": [
+                  "It then holds poor people's savings, so failure wipes out nest eggs",
+                  "Deposits are tax-free",
+                  "Deposits make audits unnecessary",
+                  "Deposit-takers never fail"
+                ],
+                "answer": 0,
+                "explain": "An institution holding the public's savings needs bank-style supervision because its failure directly destroys clients' money, not just donors' grants."
+              },
+              {
+                "q": "Which of these is part of bank-style prudential supervision?",
+                "choices": [
+                  "Weekly borrower group meetings",
+                  "Lower interest rates for everyone",
+                  "Capital requirements, liquidity rules, and audited governance",
+                  "Social media marketing standards"
+                ],
+                "answer": 2,
+                "explain": "Deposit-takers face capital, liquidity, governance, and reporting requirements — the same prudential toolkit used for banks."
+              },
+              {
+                "q": "What does \"proportionality\" mean in microfinance regulation?",
+                "choices": [
+                  "Every institution faces identical rules",
+                  "Interest rates proportional to loan size",
+                  "Donors supervise NGOs directly",
+                  "Matching the strictness of rules to the risk each type of institution poses"
+                ],
+                "answer": 3,
+                "explain": "Proportional regulation supervises deposit-takers fully, applies lighter conduct rules to credit-only lenders, and exempts tiny community groups."
+              },
+              {
+                "q": "What happened in Andhra Pradesh in 2010?",
+                "choices": [
+                  "After years of multiple lending and coercive collection, a state ordinance halted collections and repayments collapsed",
+                  "MFIs voluntarily stopped lending",
+                  "The central bank abolished microfinance across India",
+                  "Borrowers repaid early and the sector closed down"
+                ],
+                "answer": 0,
+                "explain": "Guardrail-free growth ended in a political crackdown that froze collections; a sector serving millions nearly vanished overnight."
+              },
+              {
+                "q": "Which fix followed the Andhra Pradesh crisis?",
+                "choices": [
+                  "A ban on credit bureaus",
+                  "The end of all regulation",
+                  "Mandatory credit bureaus, reserve-bank regulation, and responsible-lending codes",
+                  "Higher group-lending quotas"
+                ],
+                "answer": 2,
+                "explain": "Recovery came with shared credit data, national supervision, and conduct codes — exactly the boring infrastructure the boom had skipped."
+              },
+              {
+                "q": "Which trend is part of where the microfinance sector is heading?",
+                "choices": [
+                  "Returning to cash-only delivery",
+                  "Digital-first delivery, climate-smart products, and services beyond credit",
+                  "Abandoning savings and insurance",
+                  "The end of regulation worldwide"
+                ],
+                "answer": 1,
+                "explain": "The reading points to digital delivery, savings/insurance/payments, embedded finance, climate-smart lending, and graduation approaches."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "lengthMin": 288
+}

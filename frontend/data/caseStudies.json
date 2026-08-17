@@ -1,0 +1,182 @@
+[
+    {
+        "id": "grameen-bank",
+        "title": "Grameen Bank: banking on trust instead of collateral",
+        "sector": "microfinance",
+        "country": "Bangladesh",
+        "region": "South Asia",
+        "org": "Grameen Bank",
+        "year": 1976,
+        "summary": "Economics professor Muhammad Yunus lent the equivalent of $27 from his own pocket to 42 bamboo stool makers in the village of Jobra, who were trapped buying materials from moneylenders. That experiment became Grameen Bank (1983), built on group lending, weekly meetings and the belief that the poor are creditworthy.",
+        "results": [
+            "Grew to serve roughly 9–10 million members, about 97% of them women",
+            "Pioneered solidarity-group lending now copied in dozens of countries",
+            "Yunus and the bank received the 2006 Nobel Peace Prize",
+            "Popularised the idea that repayment discipline can replace collateral"
+        ],
+        "lesson": "Social collateral (the group) can substitute for physical collateral — but it requires disciplined, high-touch operations.",
+        "source": "Grameen Bank publications; Nobel Prize records"
+    },
+    {
+        "id": "brac",
+        "title": "BRAC: from relief agency to the world's largest NGO lender",
+        "sector": "microfinance",
+        "country": "Bangladesh",
+        "region": "South Asia",
+        "org": "BRAC",
+        "year": 1972,
+        "summary": "BRAC began as a relief organisation after Bangladesh's independence war and gradually built one of the world's largest microfinance operations, pairing credit with health, education and livelihood programmes — the 'microfinance-plus' model.",
+        "results": [
+            "Serves millions of borrowers across Bangladesh, mostly rural women",
+            "Demonstrated that combining credit with training can deepen impact",
+            "Its 'graduation' approach for the ultra-poor has been adapted in dozens of countries",
+            "Operates bKash, one of the world's largest mobile money services (as majority owner)"
+        ],
+        "lesson": "Credit works best as one tool in a wider development toolkit, especially for the poorest households.",
+        "source": "BRAC annual reports; CGAP case studies"
+    },
+    {
+        "id": "bancosol",
+        "title": "BancoSol: the NGO that became a commercial microfinance bank",
+        "sector": "microfinance",
+        "country": "Bolivia",
+        "region": "Latin America",
+        "org": "BancoSol (Banco Solidario)",
+        "year": 1992,
+        "summary": "BancoSol was the world's first private commercial bank dedicated exclusively to microfinance. It grew out of the NGO PRODEM, proving microcredit could be run profitably under full banking regulation — and attract commercial capital instead of donor money.",
+        "results": [
+            "Showed microfinance could fund itself from savings and capital markets",
+            "Sparked a wave of 'transformations' from NGO to regulated bank worldwide",
+            "Kept focus on micro-entrepreneurs in El Alto and other urban markets",
+            "Demonstrated the trade-offs of commercialisation (growth vs depth of outreach)"
+        ],
+        "lesson": "Regulation and commercial funding can scale microfinance — but mission drift is a real, manageable risk.",
+        "source": "CGAP; BancoSol public reports"
+    },
+    {
+        "id": "equity-bank",
+        "title": "Equity Bank: from building society to East Africa's banking giant",
+        "sector": "microfinance",
+        "country": "Kenya",
+        "region": "East Africa",
+        "org": "Equity Bank",
+        "year": 1984,
+        "summary": "Founded as a small building society, Equity re-invented itself in the 1990s to serve low-income Kenyans whom banks ignored — no minimum balances, branches in rural towns, and later agency banking and mobile services (Equitel).",
+        "results": [
+            "Grew into one of Africa's largest banks by customer numbers (well over 10 million customers)",
+            "Proved a mass-market, low-margin model can be highly profitable",
+            "Pioneered agency banking through local shops, slashing distribution costs",
+            "Became a template for inclusive banking in Africa"
+        ],
+        "lesson": "Designing products around low-income customers' realities beats repackaging rich-country banking.",
+        "source": "Equity Bank Group reports; IFC case studies"
+    },
+    {
+        "id": "compartamos",
+        "title": "Compartamos: microfinance's most controversial IPO",
+        "sector": "microfinance",
+        "country": "Mexico",
+        "region": "Latin America",
+        "org": "Compartamos Banco",
+        "year": 2007,
+        "summary": "Mexico's Compartamos went from NGO to regulated bank to a stock-market listing that made early investors large returns. Its high interest rates and the IPO windfall ignited a global debate: how much profit is acceptable when lending to the poor?",
+        "results": [
+            "Reached millions of borrowers and proved massive demand for microcredit",
+            "Its IPO triggered an industry-wide reckoning on pricing and mission",
+            "Spurred interest-rate transparency initiatives such as MFTransparency",
+            "Became the canonical case study in 'mission drift' debates"
+        ],
+        "lesson": "Commercial success and social mission can coexist — but pricing and governance decide whether clients share in the gains.",
+        "source": "Academic case studies (e.g. Stanford GSB); public filings"
+    },
+    {
+        "id": "kiva",
+        "title": "Kiva: crowdfunding microloans from a laptop",
+        "sector": "microfinance",
+        "country": "United States (global)",
+        "region": "Global",
+        "org": "Kiva",
+        "year": 2005,
+        "summary": "Kiva let anyone lend $25 to micro-entrepreneurs worldwide through online profiles. Behind the scenes, funds flow through local field partners (MFIs), which pre-finance the loans — a structure often misunderstood as direct person-to-person lending.",
+        "results": [
+            "Channelled well over a billion dollars in crowdfunded microloans to millions of borrowers",
+            "Brought a new generation of small lenders into financial inclusion",
+            "Taught the sector hard lessons about transparent communication",
+            "Expanded into 0%-interest direct lending experiments (Kiva US, Kiva Protocol)"
+        ],
+        "lesson": "Storytelling can mobilise capital at scale, but honesty about how money actually moves matters.",
+        "source": "Kiva public statistics page"
+    },
+    {
+        "id": "mpesa",
+        "title": "M-Pesa: the phone that became a bank account",
+        "sector": "digital-finance",
+        "country": "Kenya",
+        "region": "East Africa",
+        "org": "Safaricom / Vodafone",
+        "year": 2007,
+        "summary": "M-Pesa turned basic mobile phones into money wallets, using a vast network of airtime agents as cash-in/cash-out points. It began as a microfinance loan-repayment tool and exploded into East Africa's dominant payment rail — later adding savings (M-Shwari) and credit products.",
+        "results": [
+            "Grew to tens of millions of users across several African countries",
+            "Moved a large share of Kenya's GDP through mobile transactions",
+            "Lifted many households' access to finance, documented in MIT research (Suri & Jack)",
+            "Became the reference model for mobile money worldwide"
+        ],
+        "lesson": "Distribution is everything: trusted local agents plus simple phones beat bank branches for reach.",
+        "source": "Suri & Jack (Science, 2016); Safaricom reports"
+    },
+    {
+        "id": "orsted",
+        "title": "Ørsted: the oil-and-gas company that sold itself into wind",
+        "sector": "green-energy",
+        "country": "Denmark",
+        "region": "Europe",
+        "org": "Ørsted (formerly DONG Energy)",
+        "year": 2009,
+        "summary": "DONG Energy was a fossil-fuel utility. Over a decade it divested oil, gas and coal, renamed itself Ørsted, and bet the company on offshore wind — financed through green bonds, project partnerships and farm-downs of stakes in wind farms to recycle capital.",
+        "results": [
+            "Became the world's largest offshore-wind developer by capacity",
+            "Regularly ranked among the most sustainable energy companies (Corporate Knights)",
+            "Showed capital markets will fund a credible transition story at scale",
+            "Provided the template utilities worldwide now cite in transition plans"
+        ],
+        "lesson": "Transition finance works when strategy, assets and funding all move in the same direction — half-measures convince no one.",
+        "source": "Ørsted annual reports; Corporate Knights rankings"
+    },
+    {
+        "id": "m-kopa",
+        "title": "M-KOPA: pay-as-you-go solar for off-grid homes",
+        "sector": "green-energy",
+        "country": "Kenya",
+        "region": "East Africa",
+        "org": "M-KOPA",
+        "year": 2011,
+        "summary": "M-KOPA sells solar home systems to off-grid households on daily mobile-money instalments, with the system locking remotely if payments stop. It fused microfinance, mobile money and clean energy into one product — PAYGo solar.",
+        "results": [
+            "Connected millions of homes to solar power across several African markets",
+            "Built credit histories for customers with no formal records",
+            "Showed asset-finance can electrify off-grid households profitably",
+            "Expanded from solar into smartphones and electric bikes on the same model"
+        ],
+        "lesson": "The pay-as-you-go structure turns an unaffordable $200 asset into an affordable daily habit — financing is the product.",
+        "source": "M-KOPA public impact reports; GOGLA sector data"
+    },
+    {
+        "id": "triodos",
+        "title": "Triodos Bank: banking that publishes every loan it makes",
+        "sector": "sustainability",
+        "country": "Netherlands",
+        "region": "Europe",
+        "org": "Triodos Bank",
+        "year": 1980,
+        "summary": "Triodos was founded to lend only to projects with positive social, environmental or cultural impact — organic farms, wind co-ops, schools, social housing. It publishes every organisation it lends to, making transparency its brand.",
+        "results": [
+            "Grew into a mid-sized European bank financing hundreds of sustainable projects",
+            "Co-created the Global Alliance for Banking on Values",
+            "Proved values-based banking can be stable and profitable across crises",
+            "Set the transparency bar mainstream banks are now pushed toward"
+        ],
+        "lesson": "Radical transparency is a viable business strategy, not just an ethical luxury.",
+        "source": "Triodos Bank annual reports; GABV"
+    }
+]

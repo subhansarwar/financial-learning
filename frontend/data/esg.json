@@ -1,0 +1,77 @@
+{
+    "note": "Illustrative demo dataset for the ESG comparison tool. Scores are fictional and for teaching purposes only — replace with your own data in the admin panel.",
+    "companies": [
+        {
+            "id": "greenshore-energy",
+            "name": "Greenshore Energy",
+            "sector": "Renewable utilities",
+            "e": 88,
+            "s": 74,
+            "g": 81,
+            "summary": "Wind and solar generator with strong disclosure and a fully audited supply chain."
+        },
+        {
+            "id": "oldrock-mining",
+            "name": "Oldrock Mining Co.",
+            "sector": "Extractives",
+            "e": 32,
+            "s": 48,
+            "g": 55,
+            "summary": "Coal-heavy miner facing two environmental fines; governance improving after board refresh."
+        },
+        {
+            "id": "nimbus-bank",
+            "name": "Nimbus Bank",
+            "sector": "Banking",
+            "e": 61,
+            "s": 70,
+            "g": 78,
+            "summary": "Retail bank with a growing green-loan book and strong board independence."
+        },
+        {
+            "id": "fastfashion-co",
+            "name": "FastFashion Co.",
+            "sector": "Apparel retail",
+            "e": 41,
+            "s": 35,
+            "g": 58,
+            "summary": "High-volume retailer with recurring supply-chain labour controversies."
+        },
+        {
+            "id": "clearwater-foods",
+            "name": "Clearwater Foods",
+            "sector": "Food & agriculture",
+            "e": 66,
+            "s": 72,
+            "g": 64,
+            "summary": "Mid-cap food producer investing in water efficiency and fair-trade sourcing."
+        },
+        {
+            "id": "helix-semiconductors",
+            "name": "Helix Semiconductors",
+            "sector": "Technology",
+            "e": 58,
+            "s": 63,
+            "g": 71,
+            "summary": "Chipmaker with energy-intensive fabs but leading governance practices."
+        },
+        {
+            "id": "aurora-logistics",
+            "name": "Aurora Logistics",
+            "sector": "Transport",
+            "e": 44,
+            "s": 59,
+            "g": 62,
+            "summary": "Freight operator mid-transition to an electric fleet; safety record above average."
+        },
+        {
+            "id": "verdant-reit",
+            "name": "Verdant REIT",
+            "sector": "Real estate",
+            "e": 73,
+            "s": 61,
+            "g": 69,
+            "summary": "Property trust with certified green buildings across 80% of its portfolio."
+        }
+    ]
+}

@@ -1,0 +1,149 @@
+[
+    {
+        "slug": "microfinance",
+        "title": "Microfinance: Financial Inclusion in Action",
+        "tagline": "Microcredit, micro-savings, micro-insurance and micro-leasing — the tools that bank the unbanked.",
+        "topic": "microfinance",
+        "level": "Intermediate",
+        "lengthMin": 288,
+        "lessons": 36,
+        "modules": 12,
+        "instructor": {
+            "name": "Dr. Priya Raman",
+            "title": "Development finance researcher"
+        },
+        "featured": true,
+        "gated": true,
+        "tags": [
+            "microfinance",
+            "microcredit",
+            "micro-savings",
+            "micro-insurance",
+            "micro-leasing",
+            "inclusion"
+        ]
+    },
+    {
+        "slug": "sustainability-finance",
+        "title": "Sustainability & Finance",
+        "tagline": "How money shapes — and is shaped by — the transition to a sustainable economy.",
+        "topic": "sustainable-finance",
+        "level": "Intermediate",
+        "lengthMin": 360,
+        "lessons": 36,
+        "modules": 12,
+        "instructor": {
+            "name": "Dr. Elena Vargas",
+            "title": "Sustainable finance researcher"
+        },
+        "featured": true,
+        "gated": true,
+        "tags": [
+            "sustainable-finance",
+            "ESG",
+            "green-bonds",
+            "climate-risk",
+            "impact-investing"
+        ]
+    },
+    {
+        "slug": "personal-finance-essentials",
+        "title": "Personal Finance Essentials",
+        "tagline": "Budgeting that sticks, safety nets, and getting out of debt — the core skills of money.",
+        "topic": "personal-finance",
+        "level": "Beginner",
+        "lengthMin": 60,
+        "lessons": 6,
+        "modules": 2,
+        "instructor": {
+            "name": "Maya Chen",
+            "title": "Certified financial planner"
+        },
+        "featured": true,
+        "tags": [
+            "budgeting",
+            "saving",
+            "debt"
+        ]
+    },
+    {
+        "slug": "investing-101",
+        "title": "Investing 101",
+        "tagline": "Stocks, bonds, funds and compounding — how ordinary people build long-term wealth.",
+        "topic": "investing",
+        "level": "Beginner",
+        "lengthMin": 70,
+        "lessons": 7,
+        "modules": 2,
+        "instructor": {
+            "name": "Daniel Okafor",
+            "title": "CFA charterholder"
+        },
+        "featured": true,
+        "tags": [
+            "stocks",
+            "ETFs",
+            "compounding"
+        ]
+    },
+    {
+        "slug": "banking-basics",
+        "title": "Banking Basics",
+        "tagline": "Accounts, payments, credit scores and the central banks behind it all.",
+        "topic": "banking",
+        "level": "Beginner",
+        "lengthMin": 50,
+        "lessons": 5,
+        "modules": 2,
+        "instructor": {
+            "name": "Sofia Marino",
+            "title": "Former retail banker"
+        },
+        "featured": false,
+        "tags": [
+            "accounts",
+            "credit",
+            "interest rates"
+        ]
+    },
+    {
+        "slug": "fintech-frontiers",
+        "title": "Fintech Frontiers",
+        "tagline": "Digital payments, neobanks, open banking and blockchain — where money meets technology.",
+        "topic": "fintech",
+        "level": "Intermediate",
+        "lengthMin": 55,
+        "lessons": 6,
+        "modules": 2,
+        "instructor": {
+            "name": "Leo Park",
+            "title": "Fintech product lead"
+        },
+        "featured": false,
+        "tags": [
+            "payments",
+            "blockchain",
+            "neobanks"
+        ]
+    },
+    {
+        "slug": "intro-islamic-finance",
+        "title": "Introduction to Islamic Finance",
+        "tagline": "Riba, risk-sharing, sukuk and takaful — the principles of Sharia-compliant finance.",
+        "topic": "islamic-finance",
+        "level": "Beginner",
+        "lengthMin": 60,
+        "lessons": 6,
+        "modules": 2,
+        "instructor": {
+            "name": "Dr. Bilal Rahman",
+            "title": "Islamic finance scholar"
+        },
+        "featured": false,
+        "tags": [
+            "sukuk",
+            "takaful",
+            "ethics"
+        ]
+    }
+]

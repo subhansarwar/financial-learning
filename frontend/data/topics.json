@@ -1,0 +1,51 @@
+[
+    {
+        "id": "personal-finance",
+        "name": "Personal Finance",
+        "blurb": "Budgeting, saving, debt and everyday money decisions.",
+        "icon": "💼",
+        "hue": 190
+    },
+    {
+        "id": "sustainable-finance",
+        "name": "Sustainable Finance",
+        "blurb": "ESG, green bonds and investing for a better world.",
+        "icon": "🌱",
+        "hue": 152
+    },
+    {
+        "id": "banking",
+        "name": "Banking",
+        "blurb": "How banks, accounts, credit and central banks work.",
+        "icon": "🏛️",
+        "hue": 215
+    },
+    {
+        "id": "investing",
+        "name": "Investing",
+        "blurb": "Stocks, bonds, funds and long-term wealth building.",
+        "icon": "📈",
+        "hue": 325
+    },
+    {
+        "id": "fintech",
+        "name": "Fintech",
+        "blurb": "Payments, digital banks and the tech reshaping money.",
+        "icon": "⚡",
+        "hue": 22
+    },
+    {
+        "id": "islamic-finance",
+        "name": "Islamic Finance",
+        "blurb": "Sharia-compliant principles, sukuk and takaful.",
+        "icon": "🌙",
+        "hue": 275
+    },
+    {
+        "id": "microfinance",
+        "name": "Microfinance",
+        "blurb": "Microcredit, micro-savings, micro-insurance and micro-leasing for the unbanked.",
+        "icon": "🤝",
+        "hue": 258
+    }
+]
