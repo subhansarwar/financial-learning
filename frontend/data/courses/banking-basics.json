@@ -8,7 +8,7 @@
   "instructor": {
     "name": "Sofia Marino",
     "title": "Former retail banker",
-    "bio": "Sofia spent 15 years in retail and commercial banking before moving into financial education. She knows which parts of banking confuse people most — because she answered those questions across a counter for years."
+    "bio": "Sofia spent 15 years in retail and commercial banking before moving into financial education. She knows which parts of banking confuse people most because she answered those questions across a counter for years."
   },
   "outcomes": [
     "Choose the right bank account and understand how payments move",
@@ -26,14 +26,14 @@
           "title": "Accounts and Payments",
           "type": "reading",
           "durationMin": 8,
-          "content": "## What a bank actually does with your money\n\nA bank takes deposits, keeps them safe, moves them when you ask — and lends most of them out to other customers. The interest it earns on loans is how it pays for your account. That is the whole business model in one sentence.\n\n### The two accounts almost everyone needs\n\n**Current / checking account** — your money's home base. Salary arrives here, bills leave from here. Optimised for access, not growth: expect little or no interest.\n\n**Savings account** — for money with a job later. Higher interest, sometimes with limits on withdrawals. This is where your emergency fund lives.\n\n### How payments actually move\n\nWhen you tap your card, a quiet relay race happens: your bank checks the money, the card network routes the request, the shop's bank receives it, and settlement follows behind the scenes. Transfers between banks use similar rails — which is why some are instant and some take days.\n\n### Read the fee schedule once\n\nMonthly fees, overdraft fees, ATM fees, foreign transaction fees. Banks publish all of them; almost nobody reads them. Ten minutes with the fee schedule of any account you open will save you real money over the years.\n\n> **Quick win:** if your account charges a monthly fee, ask your bank what waives it — a minimum balance or regular deposit usually does."
+          "content": "## What a bank actually does with your money\n\nA bank takes deposits, keeps them safe, moves them when you ask and lends most of them out to other customers. The interest it earns on loans is how it pays for your account. That is the whole business model in one sentence.\n\n### The two accounts almost everyone needs\n\n**Current / checking account** your money's home base. Salary arrives here, bills leave from here. Optimised for access, not growth: expect little or no interest.\n\n**Savings account** for money with a job later. Higher interest, sometimes with limits on withdrawals. This is where your emergency fund lives.\n\n### How payments actually move\n\nWhen you tap your card, a quiet relay race happens: your bank checks the money, the card network routes the request, the shop's bank receives it, and settlement follows behind the scenes. Transfers between banks use similar rails which is why some are instant and some take days.\n\n### Read the fee schedule once\n\nMonthly fees, overdraft fees, ATM fees, foreign transaction fees. Banks publish all of them; almost nobody reads them. Ten minutes with the fee schedule of any account you open will save you real money over the years.\n\n> **Quick win:** if your account charges a monthly fee, ask your bank what waives it a minimum balance or regular deposit usually does."
         },
         {
           "id": "m1l2",
           "title": "Interest, Credit and Credit Scores",
           "type": "reading",
           "durationMin": 9,
-          "content": "## The two faces of interest\n\n**APR (annual percentage rate)** is what borrowing costs you per year. **APY (annual percentage yield)** is what savings earn you per year, including compounding. Same machinery, opposite directions — know which one you are looking at.\n\n### What a credit score is\n\nA credit score is a number that summarises your borrowing history into a single question: *how likely is this person to repay?* Lenders use it to decide whether to lend and at what rate. Higher score, cheaper money.\n\n### What moves it\n\n- **Payment history** — the heavyweight. Pay on time, every time. One missed payment can sting for years.\n- **Utilisation** — how much of your available credit you are using. Under roughly 30% looks healthy; maxed-out cards look desperate.\n- **History length** — older accounts help. Do not close your oldest card without a reason.\n- **New applications** — each hard check nicks the score briefly. Do not spray applications around.\n\n### Using credit without it using you\n\nA credit card paid in full every month builds your score and costs you nothing. The same card carrying a balance at 24% APR is one of the most expensive loans on earth. The card is neutral; the balance is the decision.\n\n> **Remember:** your score is a reputation that follows you between banks. Protect it like one."
+          "content": "## The two faces of interest\n\n**APR (annual percentage rate)** is what borrowing costs you per year. **APY (annual percentage yield)** is what savings earn you per year, including compounding. Same machinery, opposite directions know which one you are looking at.\n\n### What a credit score is\n\nA credit score is a number that summarises your borrowing history into a single question: *how likely is this person to repay?* Lenders use it to decide whether to lend and at what rate. Higher score, cheaper money.\n\n### What moves it\n\n- **Payment history** the heavyweight. Pay on time, every time. One missed payment can sting for years.\n- **Utilisation** how much of your available credit you are using. Under roughly 30% looks healthy; maxed-out cards look desperate.\n- **History length** older accounts help. Do not close your oldest card without a reason.\n- **New applications** each hard check nicks the score briefly. Do not spray applications around.\n\n### Using credit without it using you\n\nA credit card paid in full every month builds your score and costs you nothing. The same card carrying a balance at 24% APR is one of the most expensive loans on earth. The card is neutral; the balance is the decision.\n\n> **Remember:** your score is a reputation that follows you between banks. Protect it like one."
         },
         {
           "id": "m1l3",
@@ -45,12 +45,12 @@
             "questions": [
               {
                 "q": "What is the main job of a current/checking account?",
-                "choices": ["Long-term growth", "Daily money flow — salary in, bills out", "Tax avoidance", "Currency trading"],
+                "choices": ["Long-term growth", "Daily money flow salary in, bills out", "Tax avoidance", "Currency trading"],
                 "answer": 1,
                 "explain": "Checking is optimised for access, not interest. Savings accounts are for money with a later job."
               },
               {
-                "q": "APR vs APY — which is which?",
+                "q": "APR vs APY which is which?",
                 "choices": ["APR is savings yield, APY is loan cost", "APR is the yearly cost of borrowing; APY is the yearly yield on savings including compounding", "They are identical", "APR only applies to mortgages"],
                 "answer": 1,
                 "explain": "Same machinery, opposite directions: APR is what you pay, APY is what you earn."
@@ -81,7 +81,7 @@
           "title": "Central Banks and Why Rates Move",
           "type": "reading",
           "durationMin": 8,
-          "content": "## The banker's bank\n\nAbove every banking system sits a **central bank** — the Federal Reserve, the European Central Bank, the Bank of England and their peers. They do not serve customers; they steer the whole economy using one main lever: the **policy interest rate**.\n\n### The lever, in both directions\n\n**Inflation too high?** The central bank raises rates. Borrowing gets expensive, spending and hiring cool down, and price rises slow. Your savings account pays more — and your variable-rate loan costs more.\n\n**Economy too weak?** It cuts rates. Borrowing gets cheap, businesses invest, spending recovers. Savers earn less; borrowers breathe easier.\n\n### Why your mortgage cares about a meeting in another city\n\nBanks price their loans off the policy rate. When the central bank moves, mortgage offers, savings rates and credit card APRs follow within weeks or months. That headline about a rate decision is, quite literally, about your money.\n\n### The other jobs\n\nCentral banks also keep the banking system stable — acting as **lender of last resort** in a crisis — and most target steady, low inflation, commonly around 2%. Not zero: a little inflation keeps the economy's gears turning.\n\n> **Takeaway:** when you hear rates rose or fell, translate it immediately: what does this do to my savings rate and my borrowing cost? Now you read financial news like an insider."
+          "content": "## The banker's bank\n\nAbove every banking system sits a **central bank** the Federal Reserve, the European Central Bank, the Bank of England and their peers. They do not serve customers; they steer the whole economy using one main lever: the **policy interest rate**.\n\n### The lever, in both directions\n\n**Inflation too high?** The central bank raises rates. Borrowing gets expensive, spending and hiring cool down, and price rises slow. Your savings account pays more and your variable-rate loan costs more.\n\n**Economy too weak?** It cuts rates. Borrowing gets cheap, businesses invest, spending recovers. Savers earn less; borrowers breathe easier.\n\n### Why your mortgage cares about a meeting in another city\n\nBanks price their loans off the policy rate. When the central bank moves, mortgage offers, savings rates and credit card APRs follow within weeks or months. That headline about a rate decision is, quite literally, about your money.\n\n### The other jobs\n\nCentral banks also keep the banking system stable acting as **lender of last resort** in a crisis and most target steady, low inflation, commonly around 2%. Not zero: a little inflation keeps the economy's gears turning.\n\n> **Takeaway:** when you hear rates rose or fell, translate it immediately: what does this do to my savings rate and my borrowing cost? Now you read financial news like an insider."
         },
         {
           "id": "m2l2",
@@ -101,13 +101,13 @@
                 "q": "When the policy rate falls, savers usually…",
                 "choices": ["Earn more interest", "Earn less interest", "Pay a fee to save", "See no change ever"],
                 "answer": 1,
-                "explain": "Banks price off the policy rate. Cuts mean cheaper loans — and lower savings rates."
+                "explain": "Banks price off the policy rate. Cuts mean cheaper loans and lower savings rates."
               },
               {
                 "q": "What inflation target do most major central banks aim for?",
                 "choices": ["0% exactly", "Around 2%", "10%", "Whatever happens, happens"],
                 "answer": 1,
-                "explain": "Around 2% — low and steady. A little inflation keeps the economy moving; a lot destroys purchasing power."
+                "explain": "Around 2% low and steady. A little inflation keeps the economy moving; a lot destroys purchasing power."
               }
             ]
           }

@@ -1,5 +1,5 @@
 // lib/admin.js
-// Finance Platform Demo — admin panel
+// Finance Platform Demo admin panel
 
 "use client";
 
@@ -164,10 +164,10 @@ export const saveCourse = async (course, courseKey, catalogData) => {
         });
 
         await refreshKeys();
-        toast("Published ✓ — live on the site now");
+        toast("Published live on the site now");
         return true;
     } catch (err) {
-        toast("Error saving: " + err.message);
+        // toast("Error saving: " + err.message);
         return false;
     }
 };
@@ -202,7 +202,7 @@ export const resetCourse = async (courseKey) => {
             body: JSON.stringify({ key: courseKey }),
         });
         await refreshKeys();
-        toast("Reset done — reloading");
+        toast("Reset done reloading");
         if (typeof window !== "undefined") {
             setTimeout(() => window.location.reload(), 800);
         }

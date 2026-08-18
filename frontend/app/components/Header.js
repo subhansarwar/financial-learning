@@ -162,7 +162,7 @@ export default function Header() {
                                     className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-deep to-brand px-5 py-2 text-sm font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-brand/25"
                                 >
                                     <Sparkles className="h-4 w-4" strokeWidth={2.5} />
-                                    Log in — free
+                                    Log in free
                                 </Link>
                             )}
                         </div>
@@ -252,7 +252,7 @@ export default function Header() {
                                     className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-deep to-brand px-5 py-3 text-sm font-bold text-white transition-all hover:shadow-lg hover:shadow-brand/25"
                                 >
                                     <Sparkles className="h-4 w-4" strokeWidth={2.5} />
-                                    Log in — free
+                                    Log in free
                                 </Link>
                             )}
                         </div>

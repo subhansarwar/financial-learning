@@ -87,7 +87,7 @@ export default function EsgTool() {
                             <div className="flex items-start gap-2">
                                 <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" strokeWidth={2} />
                                 <p className="text-xs text-ink-2">
-                                    Demo dataset — fictional companies for learning.
+                                    Demo dataset fictional companies for learning.
                                 </p>
                             </div>
                         </div>

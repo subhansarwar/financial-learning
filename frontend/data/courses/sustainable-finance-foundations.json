@@ -14,7 +14,7 @@
     "Explain what sustainable finance is and why it matters",
     "Break down the three pillars of ESG and how investors use them",
     "Tell green bonds, impact investing and sustainability-linked loans apart",
-    "Describe SRI, carbon credits and microfinance — and spot greenwashing"
+    "Describe SRI, carbon credits and microfinance and spot greenwashing"
   ],
   "modules": [
     {
@@ -26,22 +26,22 @@
           "title": "What Is Sustainable Finance?",
           "type": "reading",
           "durationMin": 8,
-          "content": "## Money with a longer memory\n\nSustainable finance means making financial decisions that look beyond this quarter's profit. It weaves **environmental, social and governance (ESG)** factors into lending, investing and insurance, so that capital supports long-term economic stability instead of short-term gain at any cost.\n\nTraditional finance asks one question: *what return will this make?* Sustainable finance adds a second: *what does this money do along the way?* A loan might fund a factory — but does that factory pollute a river, underpay workers, or hide risks from its own shareholders? Those factors eventually become financial risks too: fines, lawsuits, stranded assets, lost customers.\n\n### Why it matters\n\n- **Climate risk is financial risk.** Floods, heat and transition costs already move markets.\n- **Fair treatment pays.** Companies that treat workers and communities well tend to be more resilient.\n- **Regulation is catching up.** Disclosure rules in major markets increasingly force companies to report sustainability data, and investors use it.\n\n### The challenges, honestly\n\nSustainable finance is not perfect. **Greenwashing** — overstating environmental credentials — erodes trust. There is **no single global standard** for ESG reporting, which makes cross-border comparison hard. And the specialist data and compliance costs can **shut out smaller firms**.\n\nThis course gives you the seven main methods, one by one, so you can read past the marketing."
+          "content": "## Money with a longer memory\n\nSustainable finance means making financial decisions that look beyond this quarter's profit. It weaves **environmental, social and governance (ESG)** factors into lending, investing and insurance, so that capital supports long-term economic stability instead of short-term gain at any cost.\n\nTraditional finance asks one question: *what return will this make?* Sustainable finance adds a second: *what does this money do along the way?* A loan might fund a factory but does that factory pollute a river, underpay workers, or hide risks from its own shareholders? Those factors eventually become financial risks too: fines, lawsuits, stranded assets, lost customers.\n\n### Why it matters\n\n- **Climate risk is financial risk.** Floods, heat and transition costs already move markets.\n- **Fair treatment pays.** Companies that treat workers and communities well tend to be more resilient.\n- **Regulation is catching up.** Disclosure rules in major markets increasingly force companies to report sustainability data, and investors use it.\n\n### The challenges, honestly\n\nSustainable finance is not perfect. **Greenwashing** overstating environmental credentials erodes trust. There is **no single global standard** for ESG reporting, which makes cross-border comparison hard. And the specialist data and compliance costs can **shut out smaller firms**.\n\nThis course gives you the seven main methods, one by one, so you can read past the marketing."
         },
         {
           "id": "m1l2",
           "title": "ESG Investing: The Three Pillars",
           "type": "reading",
           "durationMin": 9,
-          "content": "## Scoring the whole company\n\n**ESG investing** incorporates environmental, social and governance factors into financial decision-making. Instead of funding one green project, it asks: *how responsibly does this entire company operate?* The idea is simple — companies that manage environmental risk, treat stakeholders fairly and keep honest governance are more likely to stay profitable over the long term.\n\n### The three pillars\n\n**Environmental** — how a company affects the natural world. Investors examine carbon emissions, energy use, waste, water and climate strategy. Poor practice here can mean fines, reputational damage and real financial losses.\n\n**Social** — how a company treats people: working conditions, wages, health and safety, diversity, human rights. Unsafe workplaces or discrimination can trigger lawsuits, boycotts and talent flight.\n\n**Governance** — the rules that keep a company transparent and accountable: board independence, executive pay, audit quality, shareholder rights, anti-corruption policies.\n\n### How investors use ESG\n\nMost investors start with a published **ESG rating** — but the professionals always read the **methodology** behind the score. Two agencies can rate the same company very differently, because they weigh the pillars differently. The score is the start of the research, not the end.\n\n> **Remember:** ESG does not require a company to be perfect. It ranks companies against each other, so a best-in-class oil company can still score well — which is exactly why some investors prefer the stricter methods later in this course."
+          "content": "## Scoring the whole company\n\n**ESG investing** incorporates environmental, social and governance factors into financial decision-making. Instead of funding one green project, it asks: *how responsibly does this entire company operate?* The idea is simple companies that manage environmental risk, treat stakeholders fairly and keep honest governance are more likely to stay profitable over the long term.\n\n### The three pillars\n\n**Environmental** how a company affects the natural world. Investors examine carbon emissions, energy use, waste, water and climate strategy. Poor practice here can mean fines, reputational damage and real financial losses.\n\n**Social**  how a company treats people: working conditions, wages, health and safety, diversity, human rights. Unsafe workplaces or discrimination can trigger lawsuits, boycotts and talent flight.\n\n**Governance**  the rules that keep a company transparent and accountable: board independence, executive pay, audit quality, shareholder rights, anti-corruption policies.\n\n### How investors use ESG\n\nMost investors start with a published **ESG rating**  but the professionals always read the **methodology** behind the score. Two agencies can rate the same company very differently, because they weigh the pillars differently. The score is the start of the research, not the end.\n\n> **Remember:** ESG does not require a company to be perfect. It ranks companies against each other, so a best-in-class oil company can still score well  which is exactly why some investors prefer the stricter methods later in this course."
         },
         {
           "id": "m1l3",
-          "title": "Watch: ESG Investing — What It Means, Pros and Cons",
+          "title": "Watch: ESG Investing  What It Means, Pros and Cons",
           "type": "video",
           "durationMin": 11,
           "videoUrl": "https://www.youtube.com/embed/o0jdjisttys",
-          "content": "A clear, balanced walkthrough of what ESG investing means in practice, and the honest trade-offs — from The Plain Bagel. Watch it, then mark the lesson complete."
+          "content": "A clear, balanced walkthrough of what ESG investing means in practice, and the honest trade-offs  from The Plain Bagel. Watch it, then mark the lesson complete."
         },
         {
           "id": "m1l4",
@@ -55,7 +55,7 @@
                 "q": "What does sustainable finance add to a traditional financial decision?",
                 "choices": ["A guarantee of higher returns", "Consideration of environmental, social and governance factors", "A government subsidy", "Lower interest rates for everyone"],
                 "answer": 1,
-                "explain": "Sustainable finance keeps the return question but adds: what does the money do along the way — environmentally, socially and in terms of governance."
+                "explain": "Sustainable finance keeps the return question but adds: what does the money do along the way  environmentally, socially and in terms of governance."
               },
               {
                 "q": "Which of these is a GOVERNANCE factor?",
@@ -73,7 +73,7 @@
                 "q": "What is greenwashing?",
                 "choices": ["Investing only in green bonds", "Overstating or selectively disclosing environmental credentials", "A certified audit of emissions", "Washing money through green projects"],
                 "answer": 1,
-                "explain": "Greenwashing is marketing that overstates sustainability. It is one of the biggest trust problems in the field — which is why verification and standards matter."
+                "explain": "Greenwashing is marketing that overstates sustainability. It is one of the biggest trust problems in the field  which is why verification and standards matter."
               }
             ]
           }
@@ -89,21 +89,21 @@
           "title": "Green Bonds",
           "type": "reading",
           "durationMin": 7,
-          "content": "## Debt with a defined purpose\n\nA **green bond** raises capital specifically for projects with a clear environmental benefit — renewable energy, clean transport, climate adaptation. Unlike ESG investing, which scores a whole company, a green bond is tied to a **defined project**, so investors can trace exactly what their money builds.\n\nThe market has grown fast since the European Investment Bank issued the first green bond in 2007.\n\n### How it works\n\n1. **Issue** — a government, bank or company issues a bond earmarked for a specific environmental project.\n2. **Allocate** — proceeds are ring-fenced for the named project, such as a solar farm or rail line.\n3. **Report** — the issuer publishes regular updates on how funds were spent.\n4. **Verify** — independent reviewers confirm the project meets recognised green bond standards.\n\n### Are green bonds riskier?\n\nNot inherently. A green bond carries the **same credit risk** as a standard bond from the same issuer — the difference is where the proceeds are earmarked, not the underlying risk profile.\n\n### Why it matters\n\nGreen bonds let an investor fund a **specific, traceable outcome** rather than betting on a company's overall conduct. That precision has made them one of the fastest-growing instruments in sustainable finance."
+          "content": "## Debt with a defined purpose\n\nA **green bond** raises capital specifically for projects with a clear environmental benefit  renewable energy, clean transport, climate adaptation. Unlike ESG investing, which scores a whole company, a green bond is tied to a **defined project**, so investors can trace exactly what their money builds.\n\nThe market has grown fast since the European Investment Bank issued the first green bond in 2007.\n\n### How it works\n\n1. **Issue**  a government, bank or company issues a bond earmarked for a specific environmental project.\n2. **Allocate**  proceeds are ring-fenced for the named project, such as a solar farm or rail line.\n3. **Report**  the issuer publishes regular updates on how funds were spent.\n4. **Verify**  independent reviewers confirm the project meets recognised green bond standards.\n\n### Are green bonds riskier?\n\nNot inherently. A green bond carries the **same credit risk** as a standard bond from the same issuer  the difference is where the proceeds are earmarked, not the underlying risk profile.\n\n### Why it matters\n\nGreen bonds let an investor fund a **specific, traceable outcome** rather than betting on a company's overall conduct. That precision has made them one of the fastest-growing instruments in sustainable finance."
         },
         {
           "id": "m2l2",
           "title": "Impact Investing",
           "type": "reading",
           "durationMin": 7,
-          "content": "## Proof, not just intent\n\nImpact investing goes a step further than ESG screening: it seeks investments **built to create a measurable positive outcome** — social or environmental — alongside a financial return.\n\nWhere ESG asks *how responsibly does this company operate?*, impact investing asks *what specific problem does this investment solve, and can we measure it?* Reporting is built around defined metrics: tonnes of carbon avoided, households served, patients treated.\n\n### How it works\n\n1. **Define** — the investor sets a specific, measurable outcome to target alongside financial return.\n2. **Select** — capital is directed to businesses or funds built around that outcome.\n3. **Track** — progress is measured against the original target throughout the investment.\n4. **Report** — results are published, distinguishing real impact from marketing claims.\n\n### Why it matters\n\nBecause outcomes are defined and tracked from the outset, impact investing is **harder to greenwash** than broad ESG claims. That is a large part of its appeal to investors who want proof, not just intent. The trade-off: measurement itself costs money, and not every good outcome fits neatly into a metric."
+          "content": "## Proof, not just intent\n\nImpact investing goes a step further than ESG screening: it seeks investments **built to create a measurable positive outcome**  social or environmental  alongside a financial return.\n\nWhere ESG asks *how responsibly does this company operate?*, impact investing asks *what specific problem does this investment solve, and can we measure it?* Reporting is built around defined metrics: tonnes of carbon avoided, households served, patients treated.\n\n### How it works\n\n1. **Define**  the investor sets a specific, measurable outcome to target alongside financial return.\n2. **Select**  capital is directed to businesses or funds built around that outcome.\n3. **Track**  progress is measured against the original target throughout the investment.\n4. **Report**  results are published, distinguishing real impact from marketing claims.\n\n### Why it matters\n\nBecause outcomes are defined and tracked from the outset, impact investing is **harder to greenwash** than broad ESG claims. That is a large part of its appeal to investors who want proof, not just intent. The trade-off: measurement itself costs money, and not every good outcome fits neatly into a metric."
         },
         {
           "id": "m2l3",
           "title": "Sustainability-Linked Loans",
           "type": "reading",
           "durationMin": 6,
-          "content": "## Ordinary loans with a twist\n\nA **sustainability-linked loan (SLL)** is a normal corporate loan whose interest rate moves with the borrower's progress against agreed sustainability targets — cutting emissions, improving diversity metrics, reducing waste.\n\nMiss the target, and the rate **rises**. Beat it, and the rate **falls**. The structure rewards genuine progress rather than intent.\n\n### How it works\n\n1. **Agree** — borrower and lender set measurable sustainability performance targets.\n2. **Borrow** — proceeds fund general company purposes, not one ring-fenced project.\n3. **Measure** — performance against targets is checked at agreed intervals.\n4. **Adjust** — the interest rate moves up or down depending on whether targets were met.\n\n### Why it matters\n\nBecause the loan is not restricted to a green project, SLLs reach **far more borrowers** than green bonds can. Any company with existing debt can use one — no flagship solar farm required. That reach has made SLLs one of the fastest-growing corners of sustainable finance.\n\n> **Green bond vs SLL:** a green bond restricts *where the money goes*; an SLL rewards *how the whole company performs*."
+          "content": "## Ordinary loans with a twist\n\nA **sustainability-linked loan (SLL)** is a normal corporate loan whose interest rate moves with the borrower's progress against agreed sustainability targets  cutting emissions, improving diversity metrics, reducing waste.\n\nMiss the target, and the rate **rises**. Beat it, and the rate **falls**. The structure rewards genuine progress rather than intent.\n\n### How it works\n\n1. **Agree**  borrower and lender set measurable sustainability performance targets.\n2. **Borrow**  proceeds fund general company purposes, not one ring-fenced project.\n3. **Measure**  performance against targets is checked at agreed intervals.\n4. **Adjust**  the interest rate moves up or down depending on whether targets were met.\n\n### Why it matters\n\nBecause the loan is not restricted to a green project, SLLs reach **far more borrowers** than green bonds can. Any company with existing debt can use one  no flagship solar farm required. That reach has made SLLs one of the fastest-growing corners of sustainable finance.\n\n> **Green bond vs SLL:** a green bond restricts *where the money goes*; an SLL rewards *how the whole company performs*."
         }
       ]
     },
@@ -116,21 +116,21 @@
           "title": "Socially Responsible Investing",
           "type": "reading",
           "durationMin": 6,
-          "content": "## The firm ethical line\n\n**Socially responsible investing (SRI)** applies ethical screens to **exclude entire sectors** — tobacco, weapons, fossil fuels — from a portfolio outright, rather than scoring companies on a sliding scale.\n\nSRI is the oldest method in this course. It traces back to religious and values-based investing long before the term ESG existed, and it remains popular with investors who want a clear moral line rather than a graded assessment.\n\n### How it works\n\n1. **Set values** — the investor or fund defines which industries or practices to avoid.\n2. **Screen** — companies matching the excluded categories are removed from consideration.\n3. **Select** — the remaining universe is invested using normal financial analysis.\n4. **Review** — screens are revisited periodically as values and standards evolve.\n\n### Why it matters\n\nSRI trades some diversification for **moral clarity**: a simple, defensible line on what a portfolio will never hold. For investors who find graded ESG scores too permissive — remember, a best-in-class oil company can score well — that clarity is the whole point."
+          "content": "## The firm ethical line\n\n**Socially responsible investing (SRI)** applies ethical screens to **exclude entire sectors**  tobacco, weapons, fossil fuels  from a portfolio outright, rather than scoring companies on a sliding scale.\n\nSRI is the oldest method in this course. It traces back to religious and values-based investing long before the term ESG existed, and it remains popular with investors who want a clear moral line rather than a graded assessment.\n\n### How it works\n\n1. **Set values**  the investor or fund defines which industries or practices to avoid.\n2. **Screen**  companies matching the excluded categories are removed from consideration.\n3. **Select**  the remaining universe is invested using normal financial analysis.\n4. **Review**  screens are revisited periodically as values and standards evolve.\n\n### Why it matters\n\nSRI trades some diversification for **moral clarity**: a simple, defensible line on what a portfolio will never hold. For investors who find graded ESG scores too permissive  remember, a best-in-class oil company can score well  that clarity is the whole point."
         },
         {
           "id": "m3l2",
           "title": "Carbon Credits & Offsetting",
           "type": "reading",
           "durationMin": 6,
-          "content": "## Balancing the books on emissions\n\n**Carbon credits** let a company fund verified emissions-reduction projects — reforestation, renewable energy — to balance out emissions it cannot yet eliminate directly.\n\nOffsetting is best used **alongside real reductions, not instead of them**. The quality of the underlying project varies widely, which is why independent verification standards matter as much as the credit itself.\n\n### How it works\n\n1. **Measure** — a company calculates the emissions it cannot yet eliminate.\n2. **Fund** — it purchases credits from a verified reduction or removal project.\n3. **Verify** — an independent standard confirms the claimed reductions are real.\n4. **Retire** — the credit is retired so it cannot be resold or counted twice.\n\n### Why it matters\n\nA tonne of carbon avoided is not worth much if the project would have happened anyway — the concept called **additionality**. The credibility of the verification standard matters more than the price of the credit. Cheap, low-quality offsets are one of the most common greenwashing tools, so read the standard before the story."
+          "content": "## Balancing the books on emissions\n\n**Carbon credits** let a company fund verified emissions-reduction projects  reforestation, renewable energy  to balance out emissions it cannot yet eliminate directly.\n\nOffsetting is best used **alongside real reductions, not instead of them**. The quality of the underlying project varies widely, which is why independent verification standards matter as much as the credit itself.\n\n### How it works\n\n1. **Measure**  a company calculates the emissions it cannot yet eliminate.\n2. **Fund**  it purchases credits from a verified reduction or removal project.\n3. **Verify**  an independent standard confirms the claimed reductions are real.\n4. **Retire**  the credit is retired so it cannot be resold or counted twice.\n\n### Why it matters\n\nA tonne of carbon avoided is not worth much if the project would have happened anyway  the concept called **additionality**. The credibility of the verification standard matters more than the price of the credit. Cheap, low-quality offsets are one of the most common greenwashing tools, so read the standard before the story."
         },
         {
           "id": "m3l3",
           "title": "Community & Microfinance",
           "type": "reading",
           "durationMin": 6,
-          "content": "## Small loans, direct impact\n\n**Community investing and microfinance** direct capital — often in small amounts — to entrepreneurs, cooperatives and underserved communities that traditional lenders overlook.\n\nBy reaching households and small businesses outside the conventional banking system, this method addresses inequality directly, one loan at a time. It is frequently the entry point for impact investing at a local scale.\n\n### How it works\n\n1. **Identify** — underserved entrepreneurs or communities without access to conventional credit are found.\n2. **Lend** — small loans are extended, often through a local intermediary or cooperative.\n3. **Support** — borrowers frequently receive training or mentorship alongside capital.\n4. **Reinvest** — repayments are recycled into new loans, extending the fund's reach.\n\n### Why it matters\n\nLoan sizes are small and repayment rates are typically strong. Microfinance shows that **underserved does not mean uncreditworthy** — it means overlooked by conventional lending models."
+          "content": "## Small loans, direct impact\n\n**Community investing and microfinance** direct capital  often in small amounts  to entrepreneurs, cooperatives and underserved communities that traditional lenders overlook.\n\nBy reaching households and small businesses outside the conventional banking system, this method addresses inequality directly, one loan at a time. It is frequently the entry point for impact investing at a local scale.\n\n### How it works\n\n1. **Identify**  underserved entrepreneurs or communities without access to conventional credit are found.\n2. **Lend**  small loans are extended, often through a local intermediary or cooperative.\n3. **Support**  borrowers frequently receive training or mentorship alongside capital.\n4. **Reinvest**  repayments are recycled into new loans, extending the fund's reach.\n\n### Why it matters\n\nLoan sizes are small and repayment rates are typically strong. Microfinance shows that **underserved does not mean uncreditworthy**  it means overlooked by conventional lending models."
         },
         {
           "id": "m3l4",
@@ -150,11 +150,11 @@
                 "q": "What distinguishes impact investing from ESG screening?",
                 "choices": ["It excludes all fossil fuels", "It targets a specific, measurable outcome alongside financial return", "It only invests in charities", "It avoids the stock market entirely"],
                 "answer": 1,
-                "explain": "Impact investing defines an outcome up front — tonnes of CO2 avoided, households served — and tracks performance against it."
+                "explain": "Impact investing defines an outcome up front  tonnes of CO2 avoided, households served  and tracks performance against it."
               },
               {
                 "q": "In a sustainability-linked loan, what happens if the borrower misses its targets?",
-                "choices": ["The loan is cancelled", "The interest rate rises", "Nothing — targets are voluntary", "The borrower must plant trees"],
+                "choices": ["The loan is cancelled", "The interest rate rises", "Nothing  targets are voluntary", "The borrower must plant trees"],
                 "answer": 1,
                 "explain": "SLL rates ratchet: miss the target and the rate rises; beat it and the rate falls. Progress is priced in."
               },
@@ -162,7 +162,7 @@
                 "q": "Which method excludes entire sectors like tobacco or weapons outright?",
                 "choices": ["ESG investing", "Green bonds", "Socially responsible investing", "Sustainability-linked loans"],
                 "answer": 2,
-                "explain": "SRI uses exclusionary screens — a firm ethical line — rather than grading companies on a scale."
+                "explain": "SRI uses exclusionary screens  a firm ethical line  rather than grading companies on a scale."
               },
               {
                 "q": "Why does verification matter so much for carbon credits?",
@@ -172,7 +172,7 @@
               },
               {
                 "q": "Microfinance repayment rates are typically…",
-                "choices": ["Strong — underserved does not mean uncreditworthy", "Terrible — the loans always default", "Identical to credit cards", "Unknown — never measured"],
+                "choices": ["Strong  underserved does not mean uncreditworthy", "Terrible  the loans always default", "Identical to credit cards", "Unknown  never measured"],
                 "answer": 0,
                 "explain": "Repayment rates in microfinance are typically strong. The borrowers were overlooked by conventional models, not uncreditworthy."
               }

@@ -1,7 +1,7 @@
 {
   "slug": "fintech-frontiers",
   "title": "Fintech Frontiers",
-  "tagline": "Digital payments, neobanks, open banking and blockchain — where money meets technology.",
+  "tagline": "Digital payments, neobanks, open banking and blockchain where money meets technology.",
   "topic": "fintech",
   "level": "Intermediate",
   "lengthMin": 55,
@@ -26,14 +26,14 @@
           "title": "Digital Payments and Neobanks",
           "type": "reading",
           "durationMin": 8,
-          "content": "## The wallet ate the wallet\n\nPayments went digital in layers. First cards replaced cash. Then phones replaced cards — tap-to-pay wallets store your card securely and pay with a wave. In many countries, instant bank-to-bank transfers now move money in seconds, free, at any hour.\n\n### Enter the neobank\n\nA **neobank** is a bank without branches — an app first, a balance sheet second. No queues, no paper, lower costs, and features traditional banks took years to copy: instant spending notifications, fee-free foreign spending, automatic round-ups into savings.\n\nThe trade-offs are real, though:\n\n- **No branches** means no counter when something goes badly wrong.\n- **Deposit protection varies** — some neobanks hold a full banking licence, others partner with a licensed bank. Know which yours is before keeping serious money there.\n- **Profitability is hard** — many run at a loss for years, which is why features and fees can change quickly.\n\n### What actually changed\n\nNot money itself — the **experience and cost of moving it**. Fees that were once invisible became visible, then competitive. That pressure benefits you, whichever app wins.\n\n> **Rule of thumb:** keep your emergency fund where deposit protection is explicit and boring. Experiment with new apps using money you can afford to have frozen for a week."
+          "content": "## The wallet ate the wallet\n\nPayments went digital in layers. First cards replaced cash. Then phones replaced cards tap-to-pay wallets store your card securely and pay with a wave. In many countries, instant bank-to-bank transfers now move money in seconds, free, at any hour.\n\n### Enter the neobank\n\nA **neobank** is a bank without branches an app first, a balance sheet second. No queues, no paper, lower costs, and features traditional banks took years to copy: instant spending notifications, fee-free foreign spending, automatic round-ups into savings.\n\nThe trade-offs are real, though:\n\n- **No branches** means no counter when something goes badly wrong.\n- **Deposit protection varies** some neobanks hold a full banking licence, others partner with a licensed bank. Know which yours is before keeping serious money there.\n- **Profitability is hard** many run at a loss for years, which is why features and fees can change quickly.\n\n### What actually changed\n\nNot money itself the **experience and cost of moving it**. Fees that were once invisible became visible, then competitive. That pressure benefits you, whichever app wins.\n\n> **Rule of thumb:** keep your emergency fund where deposit protection is explicit and boring. Experiment with new apps using money you can afford to have frozen for a week."
         },
         {
           "id": "m1l2",
           "title": "Open Banking and APIs",
           "type": "reading",
           "durationMin": 7,
-          "content": "## Your data, working for you\n\n**Open banking** is the idea — in many countries, the law — that your banking data belongs to you, and you can permit other apps to read it or even initiate payments on your behalf. The plumbing that makes it work is the **API**: a secure, standardised way for software to talk to your bank.\n\n### What it unlocks\n\n- **One dashboard for everything** — budgeting apps that pull all your accounts into a single view.\n- **Smarter lending** — a lender can assess your real cash flow instead of just a credit score, which can mean fairer rates for people with thin credit files.\n- **Pay-by-bank** — paying straight from your account, skipping card fees, increasingly common at checkout.\n- **Easy switching** — comparisons and account switching with less friction.\n\n### The sensible cautions\n\nPermission is the key word. Grant access only to regulated apps, check what you are authorising (read-only vs payment initiation), and review connected apps once or twice a year — revoke what you no longer use.\n\n> Open banking turns your financial history from a locked filing cabinet into a tool you can carry between providers. Used carefully, it quietly saves you money."
+          "content": "## Your data, working for you\n\n**Open banking** is the idea in many countries, the law that your banking data belongs to you, and you can permit other apps to read it or even initiate payments on your behalf. The plumbing that makes it work is the **API**: a secure, standardised way for software to talk to your bank.\n\n### What it unlocks\n\n- **One dashboard for everything** budgeting apps that pull all your accounts into a single view.\n- **Smarter lending** a lender can assess your real cash flow instead of just a credit score, which can mean fairer rates for people with thin credit files.\n- **Pay-by-bank** paying straight from your account, skipping card fees, increasingly common at checkout.\n- **Easy switching** comparisons and account switching with less friction.\n\n### The sensible cautions\n\nPermission is the key word. Grant access only to regulated apps, check what you are authorising (read-only vs payment initiation), and review connected apps once or twice a year revoke what you no longer use.\n\n> Open banking turns your financial history from a locked filing cabinet into a tool you can carry between providers. Used carefully, it quietly saves you money."
         },
         {
           "id": "m1l3",
@@ -47,7 +47,7 @@
                 "q": "What defines a neobank?",
                 "choices": ["It has the most branches", "It is an app-first bank without physical branches", "It only accepts cryptocurrency", "It is owned by the government"],
                 "answer": 1,
-                "explain": "Neobanks are branch-free, app-first banks — lower costs and modern features, but check how your deposits are protected."
+                "explain": "Neobanks are branch-free, app-first banks lower costs and modern features, but check how your deposits are protected."
               },
               {
                 "q": "Before keeping serious money with a neobank, check…",
@@ -59,13 +59,13 @@
                 "q": "Open banking lets you…",
                 "choices": ["Open a bank branch anywhere", "Securely permit regulated apps to read your data or initiate payments", "Use any ATM free worldwide", "Bank without any identity checks"],
                 "answer": 1,
-                "explain": "Open banking is permissioned data sharing via secure APIs — enabling dashboards, smarter lending and pay-by-bank."
+                "explain": "Open banking is permissioned data sharing via secure APIs enabling dashboards, smarter lending and pay-by-bank."
               },
               {
                 "q": "A sensible open-banking habit is to…",
                 "choices": ["Grant every app full access forever", "Review connected apps periodically and revoke ones you no longer use", "Share your online banking password with apps", "Avoid all regulated apps"],
                 "answer": 1,
-                "explain": "Permission is the key word. Regulated apps, minimal scopes, periodic review — that is the safe pattern."
+                "explain": "Permission is the key word. Regulated apps, minimal scopes, periodic review that is the safe pattern."
               }
             ]
           }
@@ -81,14 +81,14 @@
           "title": "Blockchain and Digital Assets",
           "type": "reading",
           "durationMin": 9,
-          "content": "## What the technology actually does\n\nA **blockchain** is a shared ledger that many computers maintain together. Instead of one bank keeping the official record, thousands of copies stay in sync, and changing history is practically impossible. That is the entire trick: **agreement without a central referee**.\n\n### What people build on it\n\n- **Cryptocurrencies** like Bitcoin — digital money with no issuer, secured by the network itself.\n- **Stablecoins** — tokens designed to hold a steady value, usually pegged to a currency like the dollar, used for fast transfers.\n- **Tokenised assets** — representing things like bonds or fund shares on a ledger so they can move and settle faster.\n\n### The honest pros and cons\n\n**Genuinely useful:** moving value across borders quickly, settlement that never sleeps, and programmable money.\n\n**Genuinely risky:** prices of most crypto assets swing violently; scams and hacks are common; losing your private keys can mean losing everything, with no bank to call; and regulation is still being written in most countries.\n\n### Where this is heading\n\nWhatever happens to coin prices, the **plumbing is being adopted**: major institutions now experiment with tokenised deposits, bonds and settlement. Separating the durable technology from the speculative frenzy around it is the core skill of this lesson.\n\n> Education, not advice: this course explains how the technology works. Whether any digital asset belongs in your finances is a question of risk you alone can answer — never invest money you cannot afford to lose."
+          "content": "## What the technology actually does\n\nA **blockchain** is a shared ledger that many computers maintain together. Instead of one bank keeping the official record, thousands of copies stay in sync, and changing history is practically impossible. That is the entire trick: **agreement without a central referee**.\n\n### What people build on it\n\n- **Cryptocurrencies** like Bitcoin digital money with no issuer, secured by the network itself.\n- **Stablecoins** tokens designed to hold a steady value, usually pegged to a currency like the dollar, used for fast transfers.\n- **Tokenised assets** representing things like bonds or fund shares on a ledger so they can move and settle faster.\n\n### The honest pros and cons\n\n**Genuinely useful:** moving value across borders quickly, settlement that never sleeps, and programmable money.\n\n**Genuinely risky:** prices of most crypto assets swing violently; scams and hacks are common; losing your private keys can mean losing everything, with no bank to call; and regulation is still being written in most countries.\n\n### Where this is heading\n\nWhatever happens to coin prices, the **plumbing is being adopted**: major institutions now experiment with tokenised deposits, bonds and settlement. Separating the durable technology from the speculative frenzy around it is the core skill of this lesson.\n\n> Education, not advice: this course explains how the technology works. Whether any digital asset belongs in your finances is a question of risk you alone can answer never invest money you cannot afford to lose."
         },
         {
           "id": "m2l2",
           "title": "Risk, Regulation and What Comes Next",
           "type": "reading",
           "durationMin": 7,
-          "content": "## The rules catch up\n\nFintech moved faster than regulation for a decade. That gap is closing. Understanding the direction of the rules tells you where the industry — and your money — is heading.\n\n### The big themes\n\n**Consumer protection** — clear disclosure, fair lending algorithms, and accountability when an app fails. Expect more of it, everywhere.\n\n**Stablecoin and crypto rules** — reserves, audits and licensing are becoming standard requirements in major markets. The Wild West phase is ending; that is healthy for everyone except cowboys.\n\n**Data and AI** — as lending and fraud detection go algorithmic, regulators are asking whether the models are fair, explainable and accurate. Your data rights will keep expanding.\n\n**Central bank digital currencies (CBDCs)** — many central banks are piloting digital versions of their own currency. If adopted, they could make payments nearly free and instant — and reshape what banks are for.\n\n### How to stay safe as a user\n\n1. Prefer regulated providers; check the licence, not the logo.\n2. Be suspicious of guaranteed returns — in any currency, on any app.\n3. Keep experimenting money and serious money in different places.\n\n> The pattern of every financial era repeats: innovation, excess, correction, then boring reliability. Fintech is simply mid-story."
+          "content": "## The rules catch up\n\nFintech moved faster than regulation for a decade. That gap is closing. Understanding the direction of the rules tells you where the industry and your money is heading.\n\n### The big themes\n\n**Consumer protection** clear disclosure, fair lending algorithms, and accountability when an app fails. Expect more of it, everywhere.\n\n**Stablecoin and crypto rules** reserves, audits and licensing are becoming standard requirements in major markets. The Wild West phase is ending; that is healthy for everyone except cowboys.\n\n**Data and AI** as lending and fraud detection go algorithmic, regulators are asking whether the models are fair, explainable and accurate. Your data rights will keep expanding.\n\n**Central bank digital currencies (CBDCs)** many central banks are piloting digital versions of their own currency. If adopted, they could make payments nearly free and instant and reshape what banks are for.\n\n### How to stay safe as a user\n\n1. Prefer regulated providers; check the licence, not the logo.\n2. Be suspicious of guaranteed returns in any currency, on any app.\n3. Keep experimenting money and serious money in different places.\n\n> The pattern of every financial era repeats: innovation, excess, correction, then boring reliability. Fintech is simply mid-story."
         },
         {
           "id": "m2l3",
@@ -102,17 +102,17 @@
                 "q": "What problem does a blockchain solve?",
                 "choices": ["Making money from nothing", "Keeping a shared record that many parties agree on without a central referee", "Speeding up bank branches", "Guaranteeing investment returns"],
                 "answer": 1,
-                "explain": "A blockchain is a shared ledger maintained by many computers in sync — agreement without a central authority."
+                "explain": "A blockchain is a shared ledger maintained by many computers in sync agreement without a central authority."
               },
               {
                 "q": "What is a stablecoin designed to do?",
                 "choices": ["Fluctuate wildly", "Hold a steady value, usually pegged to a currency like the dollar", "Replace all banks by law", "Pay guaranteed interest"],
                 "answer": 1,
-                "explain": "Stablecoins aim for price stability so they can be used for payments and transfers — though their reserves and regulation matter."
+                "explain": "Stablecoins aim for price stability so they can be used for payments and transfers though their reserves and regulation matter."
               },
               {
                 "q": "If you lose the private keys to a self-custodied crypto wallet…",
-                "choices": ["The bank resets them", "Support recovers them within 24 hours", "The funds may be unrecoverable — there is no central party to call", "Nothing happens"],
+                "choices": ["The bank resets them", "Support recovers them within 24 hours", "The funds may be unrecoverable there is no central party to call", "Nothing happens"],
                 "answer": 2,
                 "explain": "No issuer means no recovery desk. Self-custody trades convenience for total personal responsibility."
               },

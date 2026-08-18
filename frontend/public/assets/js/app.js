@@ -1,10 +1,10 @@
-/* Finance Platform Demo — shared core: chrome, auth, data, progress, markdown, utils */
+/* Finance Platform Demo shared core: chrome, auth, data, progress, markdown, utils */
 (function () {
     "use strict";
 
     const FL = (window.FL = {});
 
-    /* ---------------- Mock auth (no real accounts — name + email only) ------- */
+    /* ---------------- Mock auth (no real accounts name + email only) ------- */
     const USER_KEY = "efp.user";
     FL.auth = {
         user() {
@@ -92,7 +92,7 @@
                 ? `<span class="user-chip" title="${FL.esc(u.email || "")}">👤 ${FL.esc(u.name)}</span>
                <a href="dashboard.html" class="${PAGE === "dashboard" ? "active" : ""}">My Learning</a>
                <a href="#" id="navLogout" class="nav-cta-outline">Log out</a>`
-                : `<a href="login.html" class="nav-cta">Log in — free</a>`}
+                : `<a href="login.html" class="nav-cta">Log in free</a>`}
         </nav>
       </div>
     </header>`;
@@ -134,7 +134,7 @@
           education only. Nothing on this site is financial, investment, legal or tax advice, and no content is a
           recommendation to buy or sell any product. Always consider your own circumstances and,
           where needed, consult a licensed professional in your country.<br><br>
-          © ${new Date().getFullYear()} Finance Platform Demo. Free forever — built for learners everywhere.
+          © ${new Date().getFullYear()} Finance Platform Demo. Free forever built for learners everywhere.
         </div>
       </div>
     </footer>
@@ -155,13 +155,13 @@
     if (logoutLink) logoutLink.addEventListener("click", (e) => {
         e.preventDefault();
         FL.auth.logout();
-        FL.toast("Logged out — see you soon");
+        FL.toast("Logged out see you soon");
         setTimeout(() => (location.href = "index.html"), 500);
     });
 
     /* ---------------- Utils ---------------- */
     FL.fmtMin = (min) => {
-        if (!min) return "—";
+        if (!min) return "";
         const h = Math.floor(min / 60), m = min % 60;
         if (h && m) return `${h}h ${m}m`;
         if (h) return `${h}h`;
@@ -227,7 +227,7 @@
         try {
             const r = await fetch(`/api/content/${encodeURIComponent(key)}`, { cache: "no-store" });
             if (r.ok) data = await r.json();
-        } catch (_) { /* static hosting — fine */ }
+        } catch (_) { /* static hosting fine */ }
         if (!data) {
             const r = await fetch(staticPath, { cache: "no-store" });
             if (!r.ok) throw new Error("Missing data: " + key);

@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
     if (!lesson) return { title: "Lesson Not Found" };
 
     return {
-        title: `${lesson.title} — ${courseData.title} | Finance Platform Demo`,
+        title: `${lesson.title} ${courseData.title} | Finance Platform Demo`,
         description: `Learn ${lesson.title} in ${courseData.title}. Free finance education lesson.`,
         keywords: `${lesson.title}, ${courseData.title}, finance lesson, ${lesson.type}`,
     };

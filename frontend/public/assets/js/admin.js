@@ -1,4 +1,4 @@
-/* Finance Platform Demo — admin panel */
+/* Finance Platform Demo admin panel */
 (function () {
     "use strict";
 
@@ -41,7 +41,7 @@
                 body: JSON.stringify({ password: pw }),
             });
         } catch (_) {
-            $("loginMsg").textContent = "Admin API unreachable — this only works on the live Cloudflare deployment.";
+            $("loginMsg").textContent = "Admin API unreachable this only works on the live Cloudflare deployment.";
             return;
         }
         if (r.status === 503) { $("loginMsg").textContent = "Admin not configured on the server yet."; return; }
@@ -114,7 +114,7 @@
         <div class="field"><label>Intro text (shown above the video)</label>
         <textarea data-lf="content" style="min-height:70px">${FL.esc(l.content || "")}</textarea></div>`;
         if (l.type === "quiz")
-            return `<div class="field"><label>Quiz JSON — {passPct, questions:[{q, choices[4], answer(0-3), explain}]}</label>
+            return `<div class="field"><label>Quiz JSON {passPct, questions:[{q, choices[4], answer(0-3), explain}]}</label>
         <textarea data-lf="quiz" style="min-height:220px">${FL.esc(JSON.stringify(l.quiz || { passPct: 70, questions: [] }, null, 2))}</textarea>
         <p class="hint quiz-hint"></p></div>`;
         return `<div class="field"><label>Lesson content (markdown)</label>
@@ -189,7 +189,7 @@
         if (resetBtn) resetBtn.addEventListener("click", async () => {
             if (!confirm("Discard your edits and restore the built-in version of this course?")) return;
             await api("admin/delete", { method: "POST", body: JSON.stringify({ key: currentKey }) });
-            FL.toast("Reset done — reloading");
+            FL.toast("Reset done reloading");
             setTimeout(() => location.reload(), 800);
         });
         $("delBtn").addEventListener("click", async () => {
@@ -262,7 +262,7 @@
                         l.quiz = JSON.parse(el.value);
                         box.querySelector(".quiz-hint").textContent = "✓ valid JSON";
                     } catch (e) {
-                        box.querySelector(".quiz-hint").textContent = "⚠ invalid JSON — fix before saving";
+                        box.querySelector(".quiz-hint").textContent = "⚠ invalid JSON fix before saving";
                     }
                 } else l[el.dataset.lf] = el.value;
             }));
@@ -329,7 +329,7 @@
         await refreshKeys();
         renderCourseList();
         renderEditor();
-        FL.toast("Published ✓ — live on the site now");
+        FL.toast("Published ✓ live on the site now");
     }
 
     /* ---------------- new course ---------------- */
@@ -358,7 +358,7 @@
         await refreshKeys();
         renderCourseList();
         openCourse(slug);
-        FL.toast("Course created — edit and publish when ready");
+        FL.toast("Course created edit and publish when ready");
     });
 
     /* ---------------- topics editor ---------------- */
@@ -404,7 +404,7 @@
         try {
             const d = JSON.parse($("esgEditor").value);
             if (!Array.isArray(d.companies)) throw new Error("needs a companies array");
-            $("esgMsg").textContent = `✓ valid — ${d.companies.length} companies`;
+            $("esgMsg").textContent = `✓ valid ${d.companies.length} companies`;
         } catch (e) { $("esgMsg").textContent = "⚠ " + e.message; }
     });
     $("saveEsgBtn").addEventListener("click", async () => {

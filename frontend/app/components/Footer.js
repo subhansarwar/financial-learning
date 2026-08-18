@@ -87,7 +87,7 @@ export default function Footer() {
                     Always consider your own circumstances and, where needed, consult a
                     licensed professional in your country.
                     <br />
-                    <br />© {currentYear} Finance Platform Demo. Free forever — built for
+                    <br />© {currentYear} Finance Platform Demo. Free forever built for
                     learners everywhere.
                 </div>
             </div>

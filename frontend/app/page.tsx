@@ -57,18 +57,18 @@ export default async function HomePage() {
         <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6">
           <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
             <Sparkles className="h-3.5 w-3.5" strokeWidth={2.5} />
-            100% free — no paywalls, ever
+            100% free no paywalls, ever
           </span>
 
           <h1 className="mt-6 max-w-[16ch] text-[2.4rem] font-extrabold leading-[1.08] tracking-tight text-ink sm:text-[3.2rem] lg:text-[4.3rem]">
             Learn how finance{" "}
-            <em className="not-italic text-brand-gradient">includes</em> people — and
+            <em className="not-italic text-brand-gradient">includes</em> people and
             how it heals the <em className="not-italic text-brand-gradient">planet</em>.
           </h1>
 
           <p className="mt-5 max-w-[55ch] text-base font-medium text-ink-2 sm:text-lg">
-            Two flagship 12-module programs — <b>Microfinance</b> and{" "}
-            <b>Sustainability &amp; Finance</b> — plus case studies, country statistics
+            Two flagship 12-module programs <b>Microfinance</b> and{" "}
+            <b>Sustainability &amp; Finance</b> plus case studies, country statistics
             and a student research corner. Pass each module at 70% to unlock the next,
             and earn your certificate.
           </p>
@@ -169,7 +169,7 @@ export default async function HomePage() {
               </div>
               <h3 className="mb-1.5 text-[1.3rem] font-bold tracking-tight">Case studies</h3>
               <p className="text-sm font-medium text-muted">
-                Grameen, BRAC, M-Pesa, M-KOPA, Ørsted and more — real organisations,
+                Grameen, BRAC, M-Pesa, M-KOPA, Ørsted and more real organisations,
                 real results, and the lessons each one teaches.
               </p>
             </Link>
@@ -195,7 +195,7 @@ export default async function HomePage() {
               </div>
               <h3 className="mb-1.5 text-[1.3rem] font-bold tracking-tight">Research corner</h3>
               <p className="text-sm font-medium text-muted">
-                Read papers written by students — and publish your own microfinance
+                Read papers written by students and publish your own microfinance
                 or sustainability research as a PDF.
               </p>
             </Link>
@@ -264,7 +264,7 @@ export default async function HomePage() {
               <h3 className="mb-1.5 text-[1.3rem] font-bold tracking-tight">2. Pass to unlock</h3>
               <p className="text-sm font-medium text-muted">
                 Each module ends with a quiz. Score 70% or higher to unlock the next
-                module — your progress is saved automatically on your device.
+                module your progress is saved automatically on your device.
               </p>
             </div>
             <div className="rounded-xl2 border border-line bg-card p-7">

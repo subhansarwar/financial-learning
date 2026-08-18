@@ -141,7 +141,7 @@ const ResearchComp = () => {
             setPapers(updated);
             setForm({ ...form, title: "", abstract: "", file: null });
             setUploading(false);
-            alert("🎉 Paper published successfully!");
+            alert("Paper published successfully!");
         }, 1000);
     };
 
@@ -340,7 +340,7 @@ const ResearchComp = () => {
 
                     <p className="mb-4 text-sm font-medium leading-relaxed text-muted">
                         Share your essay or research with other learners. PDF only, up to 10
-                        MB. Papers are student contributions — they are{" "}
+                        MB. Papers are student contributions they are{" "}
                         <strong className="text-ink-2">not peer-reviewed</strong> by the
                         platform.
                     </p>

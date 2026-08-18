@@ -222,7 +222,7 @@ export default function CompoundTool() {
                                 Growth multiple
                             </span>
                             <span className="font-bold text-brand-deep">
-                                {result.paid ? (result.final / result.paid).toFixed(2) : "—"}×
+                                {result.paid ? (result.final / result.paid).toFixed(2) : ""}×
                             </span>
                         </div>
                     </div>
@@ -231,7 +231,7 @@ export default function CompoundTool() {
                         <div className="flex items-start gap-2">
                             <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" strokeWidth={2} />
                             <div className="text-sm text-ink-2">
-                                Try {compound.years} years vs {compound.years + 10} — that gap is the whole
+                                Try {compound.years} years vs {compound.years + 10} that gap is the whole
                                 argument for starting early.
                             </div>
                         </div>

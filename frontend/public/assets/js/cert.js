@@ -1,4 +1,4 @@
-/* Finance Platform Demo — certificate generator (client-side PDF via jsPDF) */
+/* Finance Platform Demo certificate generator (client-side PDF via jsPDF) */
 (function () {
     "use strict";
 
@@ -18,7 +18,7 @@
             if (!name) return;
             const prog = FL.progress.course(slug);
             if (!prog.completedAt) { FL.toast("Finish all lessons first"); return; }
-            if (!window.jspdf) { FL.toast("PDF engine still loading — try again in a second"); return; }
+            if (!window.jspdf) { FL.toast("PDF engine still loading try again in a second"); return; }
 
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });

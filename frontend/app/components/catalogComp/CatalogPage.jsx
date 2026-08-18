@@ -21,7 +21,7 @@ export default async function CatalogPage({ searchParams }) {
                     Find your next course
                 </h1>
                 <p className="mt-2.5 max-w-[55ch] text-sm font-medium text-muted sm:text-base">
-                    Every course is completely free — search, filter, and start in one click.
+                    Every course is completely free search, filter, and start in one click.
                 </p>
 
                 <div className="mt-8 sm:mt-10">

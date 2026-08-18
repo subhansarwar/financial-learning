@@ -192,7 +192,7 @@ const StatisticsComp = () => {
                             Statistics
                         </h1>
                         <p className="mt-4 max-w-[55ch] text-base font-medium text-ink-2 sm:text-lg">
-                            The shape of financial inclusion and sustainable finance — by
+                            The shape of financial inclusion and sustainable finance by
                             country and by institution.
                         </p>
                     </div>
@@ -243,7 +243,7 @@ const StatisticsComp = () => {
                                 <div className="mt-3 flex items-start gap-2 text-xs font-medium text-muted">
                                     <Info className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-brand" strokeWidth={2} />
                                     <span>
-                                        {data.countryStats.note} — Source: {data.countryStats.source}
+                                        {data.countryStats.note} Source: {data.countryStats.source}
                                     </span>
                                 </div>
                             )}
@@ -266,7 +266,7 @@ const StatisticsComp = () => {
                                 <div className="mt-3 flex items-start gap-2 text-xs font-medium text-muted">
                                     <Info className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-brand" strokeWidth={2} />
                                     <span>
-                                        {data.companyStats.note} — Source: {data.companyStats.source}
+                                        {data.companyStats.note} Source: {data.companyStats.source}
                                     </span>
                                 </div>
                             )}
@@ -291,7 +291,7 @@ const StatisticsComp = () => {
                                 <div className="mt-3 flex items-start gap-2 text-xs font-medium text-muted">
                                     <Info className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-brand" strokeWidth={2} />
                                     <span>
-                                        {data.greenStats.note} — Source: {data.greenStats.source}
+                                        {data.greenStats.note} Source: {data.greenStats.source}
                                     </span>
                                 </div>
                             )}

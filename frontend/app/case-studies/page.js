@@ -9,13 +9,13 @@ export const metadata = {
     keywords:
         "finance case studies, microfinance cases, sustainable finance cases, real examples, Grameen Bank, M-Pesa, Ørsted",
     openGraph: {
-        title: "Case Studies — Real Finance Examples",
+        title: "Case Studies Real Finance Examples",
         description:
             "Explore real case studies from Grameen Bank, M-Pesa, Ørsted, and more.",
         url: "https://your-domain.com/case-studies",
     },
     twitter: {
-        title: "Case Studies — Real Finance Examples",
+        title: "Case Studies Real Finance Examples",
         description:
             "Explore real case studies from Grameen Bank, M-Pesa, Ørsted, and more.",
     },
@@ -45,7 +45,7 @@ export default async function CaseStudiesPage() {
                             Case studies
                         </h1>
                         <p className="mt-4 max-w-[55ch] text-base font-medium text-ink-2 sm:text-lg">
-                            Real organisations, real numbers, real lessons — from Grameen's
+                            Real organisations, real numbers, real lessons from Grameen's
                             village groups to Ørsted's wind-farm pivot.
                         </p>
                     </div>

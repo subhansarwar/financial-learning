@@ -56,7 +56,7 @@ export default function ToolComp() {
                             Turn theory into numbers
                         </h1>
                         <p className="mt-4 max-w-[55ch] text-base font-medium text-ink-2 sm:text-lg">
-                            Free forever, no sign-up. Everything runs in your browser — your
+                            Free forever, no sign-up. Everything runs in your browser your
                             numbers never leave your device.
                         </p>
                     </div>

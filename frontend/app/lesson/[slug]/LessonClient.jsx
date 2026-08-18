@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import {
     BookOpen,
     PlayCircle,
@@ -87,18 +88,9 @@ export default function LessonClient({
         }
     }, [slug, lesson, allLessons]);
 
-    const showToast = (msg) => {
-        const toast = document.getElementById("flToast");
-        if (toast) {
-            toast.textContent = msg;
-            toast.dataset.show = "true";
-            setTimeout(() => (toast.dataset.show = "false"), 3000);
-        }
-    };
-
     const markComplete = () => {
         if (isLocked) {
-            showToast("🔒 This lesson is locked");
+            toast.error("This lesson is locked");
             return;
         }
 
@@ -120,7 +112,7 @@ export default function LessonClient({
                     pct: totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0,
                 });
 
-                showToast("✓ Lesson completed!");
+                toast.success("Lesson completed!");
             }
         }
     };
@@ -155,9 +147,9 @@ export default function LessonClient({
 
         if (passed) {
             setIsComplete(true);
-            showToast(`🎉 Quiz passed! Score: ${pct}%`);
+            toast.success(`Quiz passed! Score: ${pct}%`);
         } else {
-            showToast(`❌ Score: ${pct}% — need ${lesson.quiz?.passPct || 70}% to pass`);
+            toast.error(`Score: ${pct}% need ${lesson.quiz?.passPct || 70}% to pass`);
         }
     };
 
@@ -170,7 +162,6 @@ export default function LessonClient({
             <div className="flex min-h-[400px] items-center justify-center rounded-xl2 border border-line bg-card p-8">
                 <div className="flex flex-col items-center gap-3">
                     <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-soft border-t-brand-deep" />
-                    <p className="text-sm text-muted">Loading lesson...</p>
                 </div>
             </div>
         );
@@ -186,7 +177,10 @@ export default function LessonClient({
                 <p className="mt-2 max-w-sm text-muted">
                     Pass the previous module's quiz to unlock this lesson.
                 </p>
-                <a href={`/course/${slug}`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-deep px-6 py-3 font-bold text-white hover:bg-[#241f6b]">
+                <a
+                    href={`/course/${slug}`}
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-deep px-6 py-3 font-bold text-white hover:bg-[#241f6b]"
+                >
                     <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
                     Back to course
                 </a>
@@ -200,20 +194,15 @@ export default function LessonClient({
                 <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-emerald-100">
                     <GraduationCap className="h-12 w-12 text-emerald-600" strokeWidth={1.5} />
                 </div>
-                <h1 className="text-3xl font-extrabold text-ink">Course Complete! 🎉</h1>
+                <h1 className="text-3xl font-extrabold text-ink">Course Complete!</h1>
                 <p className="mt-3 max-w-md text-lg text-ink-2">
                     You finished every lesson in <span className="font-bold">{course.title}</span>.
-                    Download your free certificate of completion — nice work!
+                    Download your free certificate of completion nice work!
                 </p>
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                     <button
                         onClick={() => {
-                            const certToast = document.getElementById("flToast");
-                            if (certToast) {
-                                certToast.textContent = "📄 Certificate downloaded!";
-                                certToast.dataset.show = "true";
-                                setTimeout(() => (certToast.dataset.show = "false"), 3000);
-                            }
+                            toast.success("Certificate downloaded!");
                         }}
                         className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-3 font-bold text-white transition-colors hover:bg-emerald-700"
                     >
@@ -455,7 +444,7 @@ function QuizRenderer({
     const handleSubmit = (e) => {
         e.preventDefault();
         if (answers.includes(null)) {
-            alert("Please answer all questions");
+            toast.error("Please answer all questions");
             return;
         }
 
@@ -472,6 +461,7 @@ function QuizRenderer({
         setShowResults(false);
         setAnswers(new Array(quiz.questions.length).fill(null));
         setSelected({});
+        toast.info("Quiz reset. Try again!");
     };
 
     if (!quiz || !quiz.questions) {
@@ -490,7 +480,7 @@ function QuizRenderer({
                         <div className="text-sm text-muted">Passed</div>
                     </div>
                 </div>
-                <p className="font-bold text-ink">🎉 You passed — lesson complete!</p>
+                <p className="font-bold text-ink">You passed lesson complete!</p>
                 <p className="text-sm text-muted">
                     {correctCount} of {quiz.questions.length} correct. Best score is kept.
                 </p>
@@ -552,15 +542,15 @@ function QuizRenderer({
                                         type="button"
                                         onClick={() => handleOptionSelect(qi, ci)}
                                         className={`flex w-full items-center gap-3 rounded-lg border px-4 py-2.5 text-left text-sm transition-all ${isSelected
-                                                ? "border-brand bg-brand-soft font-medium text-brand-deep"
-                                                : "border-line-soft bg-card text-ink-2 hover:border-brand/40 hover:bg-brand-soft/20"
+                                            ? "border-brand bg-brand-soft font-medium text-brand-deep"
+                                            : "border-line-soft bg-card text-ink-2 hover:border-brand/40 hover:bg-brand-soft/20"
                                             } ${showResults ? "cursor-default opacity-60" : ""}`}
                                         disabled={showResults}
                                     >
                                         <span
                                             className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${isSelected
-                                                    ? "bg-brand text-white"
-                                                    : "bg-cream-2 text-muted"
+                                                ? "bg-brand text-white"
+                                                : "bg-cream-2 text-muted"
                                                 }`}
                                         >
                                             {["A", "B", "C", "D"][ci]}

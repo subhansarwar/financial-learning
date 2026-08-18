@@ -1,7 +1,7 @@
 {
   "slug": "investing-101",
   "title": "Investing 101",
-  "tagline": "Stocks, bonds, funds and compounding — how ordinary people build long-term wealth.",
+  "tagline": "Stocks, bonds, funds and compounding how ordinary people build long-term wealth.",
   "topic": "investing",
   "level": "Beginner",
   "lengthMin": 70,
@@ -26,14 +26,14 @@
           "title": "Stocks, Bonds and Funds",
           "type": "reading",
           "durationMin": 9,
-          "content": "## The three ingredients of almost every portfolio\n\n**A stock** is a slice of ownership in a company. When the company profits and grows, your slice becomes more valuable; many companies also share profits directly as **dividends**. Stocks offer the highest long-term growth of the three — and the bumpiest ride.\n\n**A bond** is a loan you make to a government or company. They pay you interest on a schedule and return your money at the end. Bonds are steadier than stocks, but steady is not risk-free: prices fall when interest rates rise, and a weak borrower can default.\n\n**A fund** bundles many stocks or bonds into one purchase. Instead of picking winners, you buy the basket — instantly diversified, managed either by humans (active funds, higher fees) or by rules that track an index (passive funds, low fees).\n\n### Why this matters\n\nYou do not need to predict which company wins. Owning the whole basket through a low-cost fund has, historically, beaten most professional stock-pickers after fees. That is not a hack — it is just arithmetic: markets minus low costs beat markets minus high costs.\n\n> **Key idea:** stocks for growth, bonds for stability, funds for diversification. Most long-term investors own all three, blended to match their timeline and stomach for risk."
+          "content": "## The three ingredients of almost every portfolio\n\n**A stock** is a slice of ownership in a company. When the company profits and grows, your slice becomes more valuable; many companies also share profits directly as **dividends**. Stocks offer the highest long-term growth of the three and the bumpiest ride.\n\n**A bond** is a loan you make to a government or company. They pay you interest on a schedule and return your money at the end. Bonds are steadier than stocks, but steady is not risk-free: prices fall when interest rates rise, and a weak borrower can default.\n\n**A fund** bundles many stocks or bonds into one purchase. Instead of picking winners, you buy the basket instantly diversified, managed either by humans (active funds, higher fees) or by rules that track an index (passive funds, low fees).\n\n### Why this matters\n\nYou do not need to predict which company wins. Owning the whole basket through a low-cost fund has, historically, beaten most professional stock-pickers after fees. That is not a hack it is just arithmetic: markets minus low costs beat markets minus high costs.\n\n> **Key idea:** stocks for growth, bonds for stability, funds for diversification. Most long-term investors own all three, blended to match their timeline and stomach for risk."
         },
         {
           "id": "m1l2",
           "title": "Risk, Return and Diversification",
           "type": "reading",
           "durationMin": 8,
-          "content": "## The price of admission\n\nRisk and return are joined at the hip: higher expected return is the **reward for tolerating uncertainty**. Any product promising high returns with no risk is not an investment — it is a red flag.\n\n### The two kinds of risk\n\n**Market risk** — the whole market falls. Wars, recessions, rate shocks. You cannot diversify this away; you survive it with time horizon and nerves.\n\n**Specific risk** — one company or one country collapses. This one you *can* diversify away. Own hundreds of companies across sectors and regions, and no single failure can sink you.\n\n### Diversification, in one sentence\n\nDo not put all your eggs in one basket — and do not pay anyone extra to watch the basket.\n\n### Matching risk to your life\n\n- **Money needed in 20+ years** (retirement at 25) can ride out storms: mostly stocks.\n- **Money needed in 5 years** (a house deposit) cannot: more bonds and cash.\n- **Money needed next month** should not be invested at all — that is your emergency fund's job.\n\n> The biggest risk for most beginners is not a crash. It is **panic-selling in one** — locking in a temporary fall as a permanent loss. Time in the market beats timing the market."
+          "content": "## The price of admission\n\nRisk and return are joined at the hip: higher expected return is the **reward for tolerating uncertainty**. Any product promising high returns with no risk is not an investment it is a red flag.\n\n### The two kinds of risk\n\n**Market risk** the whole market falls. Wars, recessions, rate shocks. You cannot diversify this away; you survive it with time horizon and nerves.\n\n**Specific risk** one company or one country collapses. This one you *can* diversify away. Own hundreds of companies across sectors and regions, and no single failure can sink you.\n\n### Diversification, in one sentence\n\nDo not put all your eggs in one basket and do not pay anyone extra to watch the basket.\n\n### Matching risk to your life\n\n- **Money needed in 20+ years** (retirement at 25) can ride out storms: mostly stocks.\n- **Money needed in 5 years** (a house deposit) cannot: more bonds and cash.\n- **Money needed next month** should not be invested at all that is your emergency fund's job.\n\n> The biggest risk for most beginners is not a crash. It is **panic-selling in one** locking in a temporary fall as a permanent loss. Time in the market beats timing the market."
         },
         {
           "id": "m1l3",
@@ -59,7 +59,7 @@
                 "q": "Which risk can diversification remove?",
                 "choices": ["Market risk", "Specific risk of one company or country collapsing", "Inflation risk", "All risk entirely"],
                 "answer": 1,
-                "explain": "Specific risk diversifies away. Market risk does not — you manage that with time horizon, not stock-picking."
+                "explain": "Specific risk diversifies away. Market risk does not you manage that with time horizon, not stock-picking."
               },
               {
                 "q": "Money you need next month should be…",
@@ -89,14 +89,14 @@
           "title": "The Power of Compounding",
           "type": "reading",
           "durationMin": 8,
-          "content": "## Growth on growth on growth\n\n**Compounding** means your returns start earning returns of their own. In year one, you earn interest on your deposit. In year two, you earn interest on the deposit *plus last year's interest*. The curve bends upward, slowly at first, then dramatically.\n\n### Starting early beats starting big\n\nTwo savers, same 7% average return:\n\n- **Amina** invests $200 a month from age 25 to 35 — then stops entirely. Total paid in: $24,000.\n- **Omar** waits until 35, then invests $200 a month until 65. Total paid in: $72,000.\n\nAt 65, Amina — who invested a third as much — typically ends up **ahead**, because her money compounded for 40 years instead of 30. Time is the ingredient money cannot replace.\n\n### Try it yourself\n\nOpen the **compound interest calculator** in Tools. Enter $200 a month at 7% for 30 years, then 40. The difference between the two lines is the entire argument for starting now with whatever you have.\n\n> **Rule of 72:** divide 72 by your annual return to get the years needed to double your money. At 7%, money doubles roughly every 10 years."
+          "content": "## Growth on growth on growth\n\n**Compounding** means your returns start earning returns of their own. In year one, you earn interest on your deposit. In year two, you earn interest on the deposit *plus last year's interest*. The curve bends upward, slowly at first, then dramatically.\n\n### Starting early beats starting big\n\nTwo savers, same 7% average return:\n\n- **Amina** invests $200 a month from age 25 to 35 then stops entirely. Total paid in: $24,000.\n- **Omar** waits until 35, then invests $200 a month until 65. Total paid in: $72,000.\n\nAt 65, Amina who invested a third as much typically ends up **ahead**, because her money compounded for 40 years instead of 30. Time is the ingredient money cannot replace.\n\n### Try it yourself\n\nOpen the **compound interest calculator** in Tools. Enter $200 a month at 7% for 30 years, then 40. The difference between the two lines is the entire argument for starting now with whatever you have.\n\n> **Rule of 72:** divide 72 by your annual return to get the years needed to double your money. At 7%, money doubles roughly every 10 years."
         },
         {
           "id": "m2l3",
           "title": "Index Funds and ETFs",
           "type": "reading",
           "durationMin": 8,
-          "content": "## Buying the whole haystack\n\nAn **index fund** simply copies a market index — like the S&P 500 or a global stock index — instead of paying managers to pick winners. An **ETF (exchange-traded fund)** does the same job but trades on an exchange all day like a single stock.\n\nFor a beginner, the practical differences are small. The important shared features:\n\n- **Diversification** — one fund can hold hundreds or thousands of companies.\n- **Low cost** — passive funds often charge 0.03–0.2% a year, versus 1%+ for active funds.\n- **No crystal ball needed** — you own the market's overall return, minus a tiny fee.\n\n### Why fees deserve their own paragraph\n\nFees compound too — against you. A 1% annual fee sounds small, but over 30 years it can consume **a quarter or more** of your potential ending wealth. Costs are one of the few things in investing you can actually control.\n\n### A sensible beginner shape\n\nMany educators point to a simple default: a low-cost global stock index fund for growth, optionally blended with a bond fund as you near your goal. Boring, automatic, diversified — and historically very hard for professionals to beat after their fees.\n\n> This is education, not advice: the right mix depends on your country, taxes, timeline and temperament. The principles — diversify, keep costs tiny, stay the course — travel everywhere."
+          "content": "## Buying the whole haystack\n\nAn **index fund** simply copies a market index like the S&P 500 or a global stock index instead of paying managers to pick winners. An **ETF (exchange-traded fund)** does the same job but trades on an exchange all day like a single stock.\n\nFor a beginner, the practical differences are small. The important shared features:\n\n- **Diversification** one fund can hold hundreds or thousands of companies.\n- **Low cost** passive funds often charge 0.03–0.2% a year, versus 1%+ for active funds.\n- **No crystal ball needed** you own the market's overall return, minus a tiny fee.\n\n### Why fees deserve their own paragraph\n\nFees compound too against you. A 1% annual fee sounds small, but over 30 years it can consume **a quarter or more** of your potential ending wealth. Costs are one of the few things in investing you can actually control.\n\n### A sensible beginner shape\n\nMany educators point to a simple default: a low-cost global stock index fund for growth, optionally blended with a bond fund as you near your goal. Boring, automatic, diversified and historically very hard for professionals to beat after their fees.\n\n> This is education, not advice: the right mix depends on your country, taxes, timeline and temperament. The principles diversify, keep costs tiny, stay the course travel everywhere."
         },
         {
           "id": "m2l4",
@@ -120,7 +120,7 @@
               },
               {
                 "q": "Why do low fees matter so much over 30 years?",
-                "choices": ["They do not — 1% is trivial", "Fees compound against you and can consume a quarter or more of ending wealth", "High fees guarantee better managers", "Fees are tax deductible everywhere"],
+                "choices": ["They do not 1% is trivial", "Fees compound against you and can consume a quarter or more of ending wealth", "High fees guarantee better managers", "Fees are tax deductible everywhere"],
                 "answer": 1,
                 "explain": "A 1% annual fee drags every year's compounding. Over decades the lost growth dwarfs the fee itself."
               },
@@ -128,7 +128,7 @@
                 "q": "What does an index fund do?",
                 "choices": ["Picks the ten best stocks each year", "Copies a market index at very low cost", "Times the market automatically", "Guarantees the index return plus 2%"],
                 "answer": 1,
-                "explain": "Index funds track a whole market passively. You get the market's return minus a tiny fee — which beats most active managers after their costs."
+                "explain": "Index funds track a whole market passively. You get the market's return minus a tiny fee which beats most active managers after their costs."
               }
             ]
           }

@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import {
     BookOpen,
     CheckCircle2,
@@ -110,6 +111,7 @@ const DashboardComp = () => {
             } catch (error) {
                 console.error("Failed to load dashboard:", error);
                 setLoading(false);
+                // toast.error("Failed to load dashboard data");
             }
         }
     };
@@ -126,11 +128,11 @@ const DashboardComp = () => {
                 data.name = newName.trim();
                 localStorage.setItem("finlearn.v1", JSON.stringify(data));
                 setDashboardData({ ...dashboardData, name: newName.trim() });
-                showToast("✓ Name saved successfully!");
+                toast.success("Name saved successfully!");
             }
             setShowNameModal(false);
         } else {
-            showToast("⚠️ Please enter a valid name");
+            toast.error("Please enter a valid name");
         }
     };
 
@@ -141,26 +143,20 @@ const DashboardComp = () => {
             const course = await getCourseBySlug(slug);
             if (course) {
                 downloadCertificate(slug, course);
-                showToast("📄 Certificate downloaded!");
+                toast.success("Certificate downloaded successfully!");
             }
         } catch (error) {
-            showToast("Failed to download certificate");
-        }
-    };
-
-    const showToast = (msg) => {
-        const toast = document.getElementById("flToast");
-        if (toast) {
-            toast.textContent = msg;
-            toast.dataset.show = "true";
-            setTimeout(() => (toast.dataset.show = "false"), 3000);
+            toast.error("Failed to download certificate");
         }
     };
 
     const handleLogout = () => {
         if (typeof window !== "undefined") {
             localStorage.removeItem("efp.user");
-            window.location.href = "/";
+            toast.success("Logged out successfully");
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 300);
         }
     };
 
@@ -195,12 +191,10 @@ const DashboardComp = () => {
                                 Dashboard
                             </span>
                             <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                                {name
-                                    ? `Welcome back, ${name.split(" ")[0]}`
-                                    : "My learning"}
+                                {name ? `Welcome back, ${name.split(" ")[0]} 👋` : "My learning"}
                             </h1>
                             <p className="mt-2 text-sm font-medium text-muted sm:text-base">
-                                Your progress is saved privately on this device — no account needed.
+                                Your progress is saved privately on this device no account needed.
                             </p>
                         </div>
                         <div className="flex flex-wrap items-center gap-3">
@@ -239,7 +233,13 @@ const DashboardComp = () => {
                                     <div className="text-sm font-medium text-muted">courses started</div>
                                 </div>
                                 <div className="rounded-full bg-brand-soft px-2.5 py-1 text-xs font-bold text-brand-deep">
-                                    {rows.length > 0 ? `${Math.round((doneLessons / (rows.reduce((acc, r) => acc + r.s.total, 0) || 1)) * 100)}%` : "0%"}
+                                    {rows.length > 0
+                                        ? `${Math.round(
+                                            (doneLessons /
+                                                (rows.reduce((acc, r) => acc + r.s.total, 0) || 1)) *
+                                            100
+                                        )}%`
+                                        : "0%"}
                                 </div>
                             </div>
                         </div>
@@ -273,7 +273,7 @@ const DashboardComp = () => {
                                     </div>
                                     <div className="text-sm font-medium text-muted">certificates earned</div>
                                 </div>
-                                <div className="rounded-full bg-emerald-50 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-brand-deep text-emerald-600">
+                                <div className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-600">
                                     <Trophy className="inline h-3 w-3" strokeWidth={2} />
                                     {doneCourses > 0 ? "🎓" : "Keep going"}
                                 </div>
@@ -310,9 +310,7 @@ const DashboardComp = () => {
                                 <GraduationCap className="h-10 w-10 text-brand-deep" strokeWidth={1.5} />
                             </div>
                             <h3 className="text-xl font-bold text-ink">Nothing started yet</h3>
-                            <p className="mt-1 text-sm text-muted">
-                                Pick any course — they're all free.
-                            </p>
+                            <p className="mt-1 text-sm text-muted">Pick any course they're all free.</p>
                             <Link
                                 href="/catalog"
                                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-deep px-6 py-3 font-bold text-white transition-colors hover:bg-[#241f6b]"
@@ -345,9 +343,7 @@ const DashboardComp = () => {
                                                 <span className="absolute left-3 top-3 rounded-full bg-white/85 px-3 py-1 text-xs font-bold text-ink-2 backdrop-blur-sm sm:left-4 sm:top-4">
                                                     {course.level || "Beginner"}
                                                 </span>
-                                                <span className="text-4xl sm:text-5xl">
-                                                    {topic?.icon || "📚"}
-                                                </span>
+                                                <span className="text-4xl sm:text-5xl">{topic?.icon || "📚"}</span>
                                                 <span className="absolute right-3 top-3 rounded-full bg-white/85 px-2.5 py-1 text-xs font-bold text-brand-deep backdrop-blur-sm">
                                                     {s.pct}%
                                                 </span>
@@ -414,9 +410,10 @@ const DashboardComp = () => {
 
                         <div className="space-y-3">
                             {certs.map(({ slug, course }) => {
-                                const courseData = JSON.parse(
-                                    localStorage.getItem("finlearn.v1") || "{}"
-                                )?.courses?.[slug] || {};
+                                const courseData =
+                                    JSON.parse(localStorage.getItem("finlearn.v1") || "{}")?.courses?.[
+                                    slug
+                                    ] || {};
                                 const completedDate = courseData.completedAt
                                     ? new Date(courseData.completedAt).toLocaleDateString("en-GB", {
                                         day: "numeric",
@@ -515,10 +512,7 @@ const DashboardComp = () => {
                         </p>
 
                         <div className="mb-6">
-                            <label
-                                htmlFor="nameInput"
-                                className="mb-1.5 block text-sm font-bold text-ink-2"
-                            >
+                            <label htmlFor="nameInput" className="mb-1.5 block text-sm font-bold text-ink-2">
                                 Your full name
                             </label>
                             <div className="relative">
