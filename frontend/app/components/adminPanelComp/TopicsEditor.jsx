@@ -2,12 +2,19 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "@/lib/app";
+import toast from "react-hot-toast";
 import { adminApi } from "../../api/admin/utils/adminApi";
+import TopicsHeader from "./TopicsHeader";
+// import TopicsGrid from "./TopicsGrid";
+import TopicsActions from "./TopicsActions";
+import DeleteTopicModal from "./DeleteTopicModal";
+import TopicCard from "./TopicCard";
 
 export default function TopicsEditor({ topics, onDataChange }) {
     const [editingTopics, setEditingTopics] = useState(topics);
     const [saving, setSaving] = useState(false);
+    const [deleteIndex, setDeleteIndex] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const updateTopic = (index, field, value) => {
         const updated = [...editingTopics];
@@ -18,15 +25,29 @@ export default function TopicsEditor({ topics, onDataChange }) {
     const addTopic = () => {
         setEditingTopics([
             ...editingTopics,
-            { id: "topic-" + Date.now(), name: "New topic", blurb: "Short description.", icon: "📚", hue: 200 }
+            {
+                id: "topic-" + Date.now(),
+                name: "New Topic",
+                blurb: "Short description...",
+                icon: "📚",
+                hue: 200,
+            },
         ]);
+        toast.success("New topic added");
     };
 
-    const deleteTopic = (index) => {
-        const topic = editingTopics[index];
-        if (!confirm(`Delete topic "${topic.name}"?`)) return;
-        const updated = editingTopics.filter((_, i) => i !== index);
+    const confirmDelete = (index) => {
+        setDeleteIndex(index);
+        setShowDeleteModal(true);
+    };
+
+    const handleDelete = () => {
+        if (deleteIndex === null) return;
+        const updated = editingTopics.filter((_, i) => i !== deleteIndex);
         setEditingTopics(updated);
+        setShowDeleteModal(false);
+        setDeleteIndex(null);
+        toast.success("Topic deleted successfully");
     };
 
     const saveTopics = async () => {
@@ -34,34 +55,49 @@ export default function TopicsEditor({ topics, onDataChange }) {
         try {
             await adminApi.saveTopics(editingTopics);
             await onDataChange();
-            toast("Topics published!");
+            toast.success("Topics published successfully!");
         } catch (error) {
-            toast("Error saving topics: " + error.message);
+            // toast.error("Error saving topics: " + error.message);
         } finally {
             setSaving(false);
         }
     };
 
+    const getDeletedTopicName = () => {
+        if (deleteIndex === null) return "";
+        return editingTopics[deleteIndex]?.name || "Unknown";
+    };
+
     return (
-        <div className="admin-editor">
-            <div>
-                {editingTopics.map((t, i) => (
-                    <div key={i} style={{ display: "grid", gridTemplateColumns: "120px 1fr 1fr 70px 90px 40px", gap: "10px", alignItems: "center", marginBottom: "10px" }}>
-                        <input value={t.id || ""} onChange={(e) => updateTopic(i, "id", e.target.value)} placeholder="id" style={{ border: "1px solid var(--line)", borderRadius: "10px", padding: "9px", background: "#fff" }} />
-                        <input value={t.name || ""} onChange={(e) => updateTopic(i, "name", e.target.value)} placeholder="name" style={{ border: "1px solid var(--line)", borderRadius: "10px", padding: "9px", background: "#fff" }} />
-                        <input value={t.blurb || ""} onChange={(e) => updateTopic(i, "blurb", e.target.value)} placeholder="blurb" style={{ border: "1px solid var(--line)", borderRadius: "10px", padding: "9px", background: "#fff" }} />
-                        <input value={t.icon || ""} onChange={(e) => updateTopic(i, "icon", e.target.value)} placeholder="icon" style={{ border: "1px solid var(--line)", borderRadius: "10px", padding: "9px", background: "#fff" }} />
-                        <input type="number" value={t.hue || 160} onChange={(e) => updateTopic(i, "hue", parseInt(e.target.value) || 160)} placeholder="hue" style={{ border: "1px solid var(--line)", borderRadius: "10px", padding: "9px", background: "#fff" }} />
-                        <button className="btn btn-outline btn-sm" style={{ color: "var(--danger)" }} onClick={() => deleteTopic(i)}>✕</button>
-                    </div>
-                ))}
+        <>
+            <div className="space-y-6">
+                <TopicsHeader topicCount={editingTopics.length} onAddTopic={addTopic} />
+
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {editingTopics.map((topic, index) => (
+                        <TopicCard
+                            key={index}
+                            topic={topic}
+                            index={index}
+                            onUpdate={updateTopic}
+                            onDelete={confirmDelete}
+                        />
+                    ))}
+                </div>
+
+                <TopicsActions
+                    topicCount={editingTopics.length}
+                    saving={saving}
+                    onSave={saveTopics}
+                />
             </div>
-            <div style={{ display: "flex", gap: "10px", marginTop: "16px", flexWrap: "wrap" }}>
-                <button className="btn btn-outline btn-sm" onClick={addTopic}>+ Add topic</button>
-                <button className="btn btn-primary btn-sm" onClick={saveTopics} disabled={saving}>
-                    {saving ? "Saving..." : "Save topics"}
-                </button>
-            </div>
-        </div>
+
+            <DeleteTopicModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleDelete}
+                topicName={getDeletedTopicName()}
+            />
+        </>
     );
 }

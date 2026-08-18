@@ -6,7 +6,8 @@ export const metadata = {
 };
 
 
-import AppComp from "../components/appComp/AppComp";
+import { useState, useEffect, useRef } from "react";
+import AppComp from "../components/appComp/appComp";
 
 export default function AppPage() {
 

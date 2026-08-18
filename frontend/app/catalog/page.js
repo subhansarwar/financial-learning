@@ -16,12 +16,17 @@ export const metadata = {
 };
 
 
-export default function CatalogFilters({ searchParams }) {
+export default async function CatalogFilters({ searchParams }) {
 
+    const params = await searchParams;
 
+    const initialFilters = {
+        q: params?.q || "",
+        topic: params?.topic || "",
+    };
     return (
         <>
-            <CatalogPage searchParams={searchParams} />
+            <CatalogPage initialFilters={initialFilters} />
         </>
     );
 }

@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./AdminDashboard";
+import { Loader2 } from "lucide-react";
 
 export default function AdminClient({ initialCourses, initialTopics }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -12,10 +13,11 @@ export default function AdminClient({ initialCourses, initialTopics }) {
     const [topics, setTopics] = useState(initialTopics);
 
     useEffect(() => {
-        // Check if already authenticated
-        const token = sessionStorage.getItem("fl_admin");
-        if (token) {
-            setIsAuthenticated(true);
+        if (typeof window !== "undefined") {
+            const token = sessionStorage.getItem("fl_admin");
+            if (token) {
+                setIsAuthenticated(true);
+            }
         }
         setLoading(false);
     }, []);
@@ -25,10 +27,11 @@ export default function AdminClient({ initialCourses, initialTopics }) {
     };
 
     const handleLogout = () => {
-        sessionStorage.removeItem("fl_admin");
+        if (typeof window !== "undefined") {
+            sessionStorage.removeItem("fl_admin");
+        }
         setIsAuthenticated(false);
     };
-
     const refreshData = async () => {
         try {
             const response = await fetch("/api/admin/refresh");
@@ -44,8 +47,10 @@ export default function AdminClient({ initialCourses, initialTopics }) {
 
     if (loading) {
         return (
-            <div className="admin-shell" style={{ textAlign: "center", padding: "60px 0" }}>
-                <p>Loading admin panel...</p>
+            <div className="flex min-h-[calc(100vh-160px)] items-center justify-center bg-cream py-20">
+                <div className="flex flex-col items-center gap-3">
+                    <Loader2 className="h-10 w-10 animate-spin text-brand" strokeWidth={2} />
+                </div>
             </div>
         );
     }

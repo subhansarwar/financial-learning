@@ -20,19 +20,15 @@ function getStaticPath(key) {
 export async function GET(request, { params }) {
     try {
         const key = decodeURIComponent(params.key.join("/"));
-        const staticPath = getStaticPath(key);
 
+        // Try to read from local file system (simulating KV)
+        const staticPath = getStaticPath(key);
         if (!staticPath) {
             return Response.json({ error: "unknown key" }, { status: 404 });
         }
 
         try {
-            // Add turbopackIgnore comment to fix build warning
-            const filePath = path.join(
-                /*turbopackIgnore: true*/
-                process.cwd(),
-                staticPath
-            );
+            const filePath = path.join(process.cwd(), staticPath);
             const content = await fs.readFile(filePath, "utf-8");
             return new Response(content, {
                 headers: {

@@ -1,14 +1,32 @@
 // app/course/[slug]/CourseClient.jsx
 "use client";
 
-import { useState, useEffect } from "react";
+import {
+    BookOpen,
+    Check,
+    CheckCircle2,
+    ChevronDown,
+    ChevronRight,
+    Clock,
+    Shield,
+    HelpCircle,
+    Layers,
+    Lock,
+    PlayCircle
+} from "lucide-react";
 import Link from "next/link";
-import { progress, gating, toast, esc, fmtMin } from "@/lib/app";
+import { useEffect, useState } from "react";
 
-const typeIcon = {
-    reading: "📖",
-    video: "▶️",
-    quiz: "✍️"
+const typeIconMap = {
+    reading: { icon: BookOpen, color: "text-blue-500" },
+    video: { icon: PlayCircle, color: "text-rose-500" },
+    quiz: { icon: HelpCircle, color: "text-amber-500" },
+};
+
+const typeLabel = {
+    reading: "Reading",
+    video: "Video",
+    quiz: "Quiz",
 };
 
 export default function CourseClient({ slug, course, topic }) {
@@ -16,144 +34,230 @@ export default function CourseClient({ slug, course, topic }) {
     const [courseProgress, setCourseProgress] = useState(null);
     const [completedLessons, setCompletedLessons] = useState([]);
     const [moduleStates, setModuleStates] = useState({});
+    const [openModules, setOpenModules] = useState({});
+
     const modules = Array.isArray(course?.modules) ? course.modules : [];
     const gated = !!course?.gated;
-    const needPct = gating.passPct(course);
-
-    // Safe flatMap - only if modules is array
-    const lessons = modules.flatMap(m => m?.lessons || []) || [];
+    const needPct = 70;
+    const lessons = modules.flatMap((m) => m?.lessons || []) || [];
 
     useEffect(() => {
         setMounted(true);
-        if (!course || modules.length === 0) {
-            return;
-        }
-        // Get progress from localStorage
-        const stats = progress.stats(slug, course);
-        const prog = progress.course(slug);
-        const done = prog.done || [];
+        if (!course || modules.length === 0) return;
 
-        setCourseProgress(stats);
+        const prog = JSON.parse(localStorage.getItem("finlearn.v1") || "{}");
+        const done = prog?.courses?.[slug]?.done || [];
         setCompletedLessons(done);
 
-        // Check module lock states
         const states = {};
         course.modules?.forEach((m, i) => {
-            const locked = gated && gating.isModuleLocked(slug, course, i);
-            const passed = gated && gating.modulePassed(slug, m);
-            states[m.id] = { locked, passed };
+            const locked = gated && isModuleLocked(slug, course, i, done);
+            states[m.id] = { locked, passed: false };
         });
         setModuleStates(states);
 
+        // Open first module by default
+        if (modules.length > 0) {
+            setOpenModules({ [modules[0].id]: true });
+        }
     }, [slug, course, gated]);
 
-    // Mark lesson as complete
+    const isModuleLocked = (slug, course, moduleIndex, done) => {
+        if (moduleIndex === 0) return false;
+        const prevModule = course.modules?.[moduleIndex - 1];
+        if (!prevModule) return false;
+        const prevLessonIds = prevModule.lessons?.map((l) => l.id) || [];
+        const allDone = prevLessonIds.every((id) => done.includes(id));
+        return !allDone;
+    };
+
+    const toggleModule = (moduleId) => {
+        setOpenModules((prev) => ({
+            ...prev,
+            [moduleId]: !prev[moduleId],
+        }));
+    };
+
     const markComplete = (lessonId) => {
         if (!completedLessons.includes(lessonId)) {
-            progress.complete(slug, lessonId);
-            setCompletedLessons([...completedLessons, lessonId]);
+            const updated = [...completedLessons, lessonId];
+            setCompletedLessons(updated);
 
-            // Update progress
-            const stats = progress.stats(slug, course);
-            setCourseProgress(stats);
+            const data = JSON.parse(localStorage.getItem("finlearn.v1") || "{}");
+            if (!data.courses) data.courses = {};
+            if (!data.courses[slug]) data.courses[slug] = { done: [] };
+            data.courses[slug].done = updated;
+            localStorage.setItem("finlearn.v1", JSON.stringify(data));
 
-            toast("Lesson marked complete ✓");
+            // Update module states
+            const newStates = { ...moduleStates };
+            modules.forEach((m, i) => {
+                const locked = gated && isModuleLocked(slug, course, i, updated);
+                newStates[m.id] = { ...newStates[m.id], locked };
+            });
+            setModuleStates(newStates);
+
+            showToast("Lesson completed! ✓");
+        }
+    };
+
+    const showToast = (msg) => {
+        const toast = document.getElementById("flToast");
+        if (toast) {
+            toast.textContent = msg;
+            toast.dataset.show = "true";
+            setTimeout(() => (toast.dataset.show = "false"), 3000);
         }
     };
 
     if (!mounted) {
-        return <div className="text-muted">Loading course content...</div>;
-    }
-    if (modules?.length === 0) {
         return (
-            <div className="empty-state">
-                <div className="big">📚</div>
-                <p><b>No course content available.</b></p>
-                <p className="text-muted">This course is being prepared.</p>
+            <div className="flex items-center justify-center py-12">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-soft border-t-brand-deep" />
+                    <p className="text-sm text-muted">Loading course content...</p>
+                </div>
             </div>
         );
     }
-    return (
-        <div id="modulesList">
-            {modules?.map((m, i) => {
-                if (!m) return null;
 
+    if (modules.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center rounded-xl2 border border-line bg-card px-6 py-16 text-center">
+                <BookOpen className="mb-4 h-12 w-12 text-muted" strokeWidth={1.5} />
+                <h3 className="text-lg font-bold text-ink">No content available</h3>
+                <p className="text-sm text-muted">This course is being prepared.</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-3">
+            {modules.map((m, i) => {
+                if (!m) return null;
                 const moduleLessons = Array.isArray(m.lessons) ? m.lessons : [];
                 const mins = moduleLessons.reduce((n, l) => n + (l?.durationMin || 0), 0);
                 const state = moduleStates[m.id] || { locked: false, passed: false };
                 const locked = state.locked;
-                const passed = state.passed;
-                const quizIds = gating.moduleQuizIds(m);
-                const best = quizIds.length ? progress.quizScore(slug, quizIds[0]) : null;
-
-                let status;
-                if (locked) {
-                    status = `<span class="m-lock">🔒 Score ${needPct}%+ in module ${i + 1}</span>`;
-                } else if (passed && best) {
-                    status = `<span class="m-pass">✓ Passed (${best.pct}%)</span>`;
-                } else {
-                    status = `<span class="m-meta">${moduleLessons.length} lessons · ${fmtMin(mins)}</span>`;
-                }
-
+                const isOpen = openModules[m.id] || false;
+                const doneCount = moduleLessons.filter((l) => completedLessons.includes(l.id)).length;
+                const isComplete = doneCount === moduleLessons.length && moduleLessons.length > 0;
 
                 return (
                     <div
                         key={m.id}
-                        className={`module-block ${i === 0 ? "open" : ""} ${locked ? "locked" : ""}`}
-                        data-mod={m.id}
+                        className={`overflow-hidden rounded-xl2 border transition-all duration-200 ${locked ? "border-line-soft opacity-60" : isComplete ? "border-emerald-200" : "border-line"
+                            } ${isOpen ? "bg-card" : "bg-cream-2/50"}`}
                     >
+                        {/* Module Header */}
                         <button
-                            className="module-head"
-                            aria-expanded={i === 0}
-                            disabled={locked}
                             onClick={() => {
                                 if (locked) {
-                                    toast(`🔒 Pass the previous module's quiz at ${needPct}%+ to unlock this one`);
+                                    showToast(`🔒 Pass the previous module's quiz at ${needPct}%+ to unlock this one`);
                                     return;
                                 }
-                                const block = document.querySelector(`[data-mod="${m.id}"]`);
-                                block.classList.toggle("open");
-                                const btn = block.querySelector(".module-head");
-                                btn.setAttribute("aria-expanded", block.classList.contains("open"));
+                                toggleModule(m.id);
                             }}
+                            disabled={locked}
+                            className={`flex w-full items-center gap-3 p-4 text-left transition-colors sm:p-5 ${locked ? "cursor-not-allowed" : "hover:bg-cream-2/50"
+                                }`}
                         >
-                            <span className="m-num">{locked ? "🔒" : i + 1}</span>
-                            <h3>{esc(m.title)}</h3>
-                            <span dangerouslySetInnerHTML={{ __html: status }} />
-                            <span className="chev">▾</span>
-                        </button>
-                        <div className="lesson-list">
-                            {/* Use moduleLessons instead of m.lessons */}
-                            {moduleLessons.map(l => {
-                                if (!l) return null;
-                                const done = completedLessons.includes(l.id);
-                                if (locked) {
-                                    return (
-                                        <span key={l.id} className="lesson-row is-locked">
-                                            <span className={`l-icon ${l.type}`}>{typeIcon[l.type] || "📖"}</span>
-                                            <span className="l-title">{esc(l.title)}</span>
-                                            <span className="l-dur">{fmtMin(l.durationMin)}</span>
-                                            <span className="l-done"></span>
+                            <div
+                                className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ${locked
+                                    ? "bg-muted/20 text-muted"
+                                    : isComplete
+                                        ? "bg-emerald-100 text-emerald-600"
+                                        : "bg-brand-soft text-brand-deep"
+                                    }`}
+                            >
+                                {locked ? <Lock className="h-3.5 w-3.5" strokeWidth={2.5} /> : isComplete ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : i + 1}
+                            </div>
+
+                            <div className="flex-1">
+                                <h3 className="font-bold text-ink">{m.title}</h3>
+                                <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
+                                    <span className="flex items-center gap-1">
+                                        <Layers className="h-3 w-3" strokeWidth={2} />
+                                        {moduleLessons.length} lessons
+                                    </span>
+                                    <span className="flex items-center gap-1">
+                                        <Clock className="h-3 w-3" strokeWidth={2} />
+                                        {formatDuration(mins)}
+                                    </span>
+                                    {isComplete && (
+                                        <span className="flex items-center gap-1 text-emerald-600">
+                                            <CheckCircle2 className="h-3 w-3" strokeWidth={2.5} />
+                                            Complete
                                         </span>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                                {locked && (
+                                    <span className="text-xs font-medium text-muted">
+                                        <Lock className="inline h-3 w-3" strokeWidth={2.5} /> Locked
+                                    </span>
+                                )}
+                                {isOpen ? (
+                                    <ChevronDown className="h-4 w-4 text-muted" strokeWidth={2.5} />
+                                ) : (
+                                    <ChevronRight className="h-4 w-4 text-muted" strokeWidth={2.5} />
+                                )}
+                            </div>
+                        </button>
+
+                        {/* Module Lessons */}
+                        {isOpen && !locked && (
+                            <div className="border-t border-line-soft p-1.5">
+                                {moduleLessons.map((l) => {
+                                    if (!l) return null;
+                                    const done = completedLessons.includes(l.id);
+                                    const { icon: Icon, color } = typeIconMap[l.type] || typeIconMap.reading;
+
+                                    return (
+                                        <div
+                                            key={l.id}
+                                            className="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-cream-2/50"
+                                        >
+                                            {done ? (
+                                                <CheckCircle2 className="h-4 w-4 text-emerald-500" strokeWidth={2.5} />
+                                            ) : (
+                                                <Icon className={`h-4 w-4 ${color}`} strokeWidth={2} />
+                                            )}
+                                            <Link
+                                                href={`/lesson/${slug}--${l.id}`}
+                                                className={`flex-1 text-sm font-medium transition-colors ${done ? "text-muted line-through" : "text-ink-2 hover:text-brand-deep"
+                                                    }`}
+                                            >
+                                                {l.title}
+                                            </Link>
+                                            <span className="text-xs text-muted">{formatDuration(l.durationMin)}</span>
+                                            {!done && (
+                                                <button
+                                                    onClick={() => markComplete(l.id)}
+                                                    className="rounded-full bg-brand-soft px-3 py-0.5 text-xs font-bold text-brand-deep opacity-0 transition-opacity group-hover:opacity-100"
+                                                >
+                                                    Mark done
+                                                </button>
+                                            )}
+                                        </div>
                                     );
-                                }
-                                return (
-                                    <Link
-                                        key={l.id}
-                                        className={`lesson-row ${done ? "done" : ""}`}
-                                        href={`/lesson/${slug}--${l.id}`}
-                                    >
-                                        <span className={`l-icon ${l.type}`}>{typeIcon[l.type] || "📖"}</span>
-                                        <span className="l-title">{esc(l.title)}</span>
-                                        <span className="l-dur">{fmtMin(l.durationMin)}</span>
-                                        <span className="l-done">{done ? "✓" : ""}</span>
-                                    </Link>
-                                );
-                            })}
-                        </div>
+                                })}
+                            </div>
+                        )}
                     </div>
                 );
             })}
         </div>
     );
+}
+
+function formatDuration(min) {
+    if (!min || min <= 0) return "—";
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    if (h && m) return `${h}h ${m}m`;
+    if (h) return `${h}h`;
+    return `${m} min`;
 }

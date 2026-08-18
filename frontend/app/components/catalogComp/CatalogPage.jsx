@@ -1,12 +1,10 @@
+import { getTopics } from "@/lib/data";
+import { Search } from "lucide-react";
 import { Suspense } from "react";
 import CatalogComp from "./CatalogComp";
-import { getCourses, getTopics } from "@/lib/data";
 
 export default async function CatalogPage({ searchParams }) {
-    const [courses, topics] = await Promise.all([
-        getCourses(),
-        getTopics()
-    ]);
+    const topics = await getTopics();
 
     const initialFilters = {
         q: searchParams?.q || "",
@@ -14,15 +12,30 @@ export default async function CatalogPage({ searchParams }) {
     };
 
     return (
-        <section className="section tight" style={{ paddingTop: "48px" }}>
-            <div className="wrap">
-                <span className="overline">Course catalog</span>
-                <h1 className="section-title">Find your next course</h1>
-                <p className="text-muted">Every course is completely free — search, filter, and start in one click.</p>
+        <section className="py-10 sm:py-14 lg:py-16">
+            <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <span className="mb-2.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
+                    Course catalog
+                </span>
+                <h1 className="max-w-[20ch] text-[1.9rem] font-extrabold leading-tight tracking-tight text-ink sm:text-[2.4rem] lg:text-[2.8rem]">
+                    Find your next course
+                </h1>
+                <p className="mt-2.5 max-w-[55ch] text-sm font-medium text-muted sm:text-base">
+                    Every course is completely free — search, filter, and start in one click.
+                </p>
 
-                <Suspense fallback={<div className="text-muted">Loading filters...</div>}>
-                    <CatalogComp topics={topics} initialFilters={initialFilters} />
-                </Suspense>
+                <div className="mt-8 sm:mt-10">
+                    <Suspense
+                        fallback={
+                            <div className="flex items-center gap-2 rounded-xl2 border border-line bg-card px-5 py-8 text-sm font-semibold text-muted">
+                                <Search className="h-4 w-4 animate-pulse" strokeWidth={2.25} />
+                                Loading filters…
+                            </div>
+                        }
+                    >
+                        <CatalogComp topics={topics} initialFilters={initialFilters} />
+                    </Suspense>
+                </div>
             </div>
         </section>
     );

@@ -1,8 +1,67 @@
-import "./globals.css";
-import { Lato } from "next/font/google";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+// import "./globals.css";
+// import { Lato } from "next/font/google";
+// import Header from "./components/Header";
+// import Footer from "./components/Footer";
 
+
+// const lato = Lato({
+//   subsets: ["latin"],
+//   weight: ["400", "700", "900"],
+//   display: "swap",
+//   variable: "--font-lato",
+// });
+// export const metadata = {
+//   title: "Finance Platform Free finance education for everyone",
+//   description: "Free courses in microfinance and sustainable finance microcredit, micro-savings, micro-insurance, micro-leasing, green energy, ESG and more.",
+//   keywords: "finance education, microfinance, sustainable finance, free courses, ESG, financial inclusion",
+//   authors: [{ name: "Finance Platform Demo" }],
+//   openGraph: {
+//     title: "Finance Platform Free finance education",
+//     description: "Learn microfinance and sustainable finance for free. Complete courses, earn certificates.",
+//     url: "https://your-domain.com",
+//     siteName: "Finance Platform Demo",
+//     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+//     locale: "en_US",
+//     type: "website",
+//   },
+//   twitter: {
+//     card: "summary_large_image",
+//     title: "Finance Platform Demo",
+//     description: "Free finance education for everyone.",
+//     images: ["/og-image.png"],
+//   },
+//   robots: "index, follow",
+//   viewport: "width=device-width, initial-scale=1",
+// };
+
+// export default function RootLayout({ children }: any) {
+//   return (
+//     <html lang="en" className={lato.variable}>
+//       <head>
+//         <link rel="preconnect" href="https://fonts.googleapis.com" />
+//         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+//         <link
+//           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+//           rel="stylesheet"
+//         />
+//         <link rel="icon" href="/favicon.ico" />
+//       </head>
+//       <body>
+//         <Header />
+//         <main id="main">{children}</main>
+//         <Footer />
+//       </body>
+//     </html>
+//   );
+// }
+
+
+import type { Metadata, Viewport } from "next";
+import { Lato } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import "./globals.css";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -10,14 +69,18 @@ const lato = Lato({
   display: "swap",
   variable: "--font-lato",
 });
-export const metadata = {
+
+export const metadata: Metadata = {
   title: "Finance Platform Free finance education for everyone",
-  description: "Free courses in microfinance and sustainable finance microcredit, micro-savings, micro-insurance, micro-leasing, green energy, ESG and more.",
-  keywords: "finance education, microfinance, sustainable finance, free courses, ESG, financial inclusion",
+  description:
+    "Free courses in microfinance and sustainable finance: microcredit, micro-savings, micro-insurance, micro-leasing, green energy, ESG and more.",
+  keywords:
+    "finance education, microfinance, sustainable finance, free courses, ESG, financial inclusion",
   authors: [{ name: "Finance Platform Demo" }],
   openGraph: {
     title: "Finance Platform — Free finance education",
-    description: "Learn microfinance and sustainable finance for free. Complete courses, earn certificates.",
+    description:
+      "Learn microfinance and sustainable finance for free. Complete courses, earn certificates.",
     url: "https://your-domain.com",
     siteName: "Finance Platform Demo",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -31,27 +94,49 @@ export const metadata = {
     images: ["/og-image.png"],
   },
   robots: "index, follow",
+  icons: { icon: "/favicon.ico" },
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: any) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={lato.variable}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-      <body>
+    <html lang="en" className={`${lato.variable} font-sans`}>
+      <body className="bg-cream text-ink font-medium text-[16.5px] leading-[1.65] antialiased overflow-x-hidden">
         <Header />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#fff",
+              color: "#1c2033",
+              borderRadius: "12px",
+              padding: "14px 18px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+              fontSize: "14px",
+              fontWeight: "500",
+              maxWidth: "420px",
+            },
+            success: {
+              style: {
+                borderLeft: "4px solid #10b981",
+              },
+            },
+            error: {
+              style: {
+                borderLeft: "4px solid #ef4444",
+              },
+            },
+          }}
+        />
         <main id="main">{children}</main>
         <Footer />
       </body>

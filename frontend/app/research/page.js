@@ -11,6 +11,10 @@ export default function ResearchPage() {
 
 
     return (
-        <ResearchComp />
+        <section className="py-14 sm:py-[78px]">
+            <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <ResearchComp />
+            </div>
+        </section>
     );
 }

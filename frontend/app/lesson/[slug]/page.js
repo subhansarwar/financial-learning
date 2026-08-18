@@ -1,44 +1,38 @@
-// app/lesson/[slug]/page.js
+// app/lesson/[slug]/page.jsx
 import { getCourseBySlug } from "@/lib/data";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import LessonClient from "./LessonClient";
+import {
+    BookOpen,
+    ChevronLeft,
+    CheckCircle2,
+    Lock,
+    PlayCircle,
+    FileText,
+    HelpCircle,
+    Clock,
+    Layers,
+    Award,
+    GraduationCap,
+} from "lucide-react";
 
-// Generate metadata for SEO
 export async function generateMetadata({ params }) {
     const { slug } = await params;
-
-    // Extract course slug and lesson ID from the slug parameter
-    // Format: "course-slug--lesson-id"
-    const parts = slug.split('--');
+    const parts = slug.split("--");
     const courseSlug = parts[0];
     const lessonId = parts[1] || parts[0];
 
     const courseData = await getCourseBySlug(courseSlug);
+    if (!courseData) return { title: "Lesson Not Found" };
 
-    if (!courseData) {
-        return {
-            title: "Lesson Not Found",
-            description: "The lesson you're looking for doesn't exist.",
-        };
-    }
-
-    // Find the lesson
     const modules = Array.isArray(courseData.modules) ? courseData.modules : [];
     let lesson = null;
     for (const m of modules) {
-        const found = m.lessons?.find(l => l.id === lessonId);
-        if (found) {
-            lesson = found;
-            break;
-        }
+        const found = m.lessons?.find((l) => l.id === lessonId);
+        if (found) { lesson = found; break; }
     }
 
-    if (!lesson) {
-        return {
-            title: "Lesson Not Found",
-            description: "The lesson you're looking for doesn't exist.",
-        };
-    }
+    if (!lesson) return { title: "Lesson Not Found" };
 
     return {
         title: `${lesson.title} — ${courseData.title} | Finance Platform Demo`,
@@ -47,40 +41,29 @@ export async function generateMetadata({ params }) {
     };
 }
 
-// Main Page Component
 export default async function LessonPage({ params, searchParams }) {
     const { slug } = await params;
 
-    // ✅ Check if old query parameter format is used and redirect
+    // Redirect old format
     if (searchParams?.c && searchParams?.l) {
-        // Redirect to new URL format
-        const { redirect } = await import("next/navigation");
         redirect(`/lesson/${searchParams.c}--${searchParams.l}`);
     }
 
-    // Extract course slug and lesson ID from slug
-    const parts = slug.split('--');
+    const parts = slug.split("--");
     const courseSlug = parts[0];
     const lessonId = parts[1] || parts[0];
 
-    // ✅ Fetch course data (use different variable name)
     const courseData = await getCourseBySlug(courseSlug);
+    if (!courseData) return notFound();
 
-    if (!courseData) {
-        return notFound();
-    }
-
-    // Ensure modules is an array
     const modules = Array.isArray(courseData.modules) ? courseData.modules : [];
-
-    // Find the lesson and its module
     let currentLesson = null;
     let currentModule = null;
     let moduleIndex = -1;
 
     for (let i = 0; i < modules.length; i++) {
         const m = modules[i];
-        const found = m.lessons?.find(l => l.id === lessonId);
+        const found = m.lessons?.find((l) => l.id === lessonId);
         if (found) {
             currentLesson = found;
             currentModule = m;
@@ -89,39 +72,36 @@ export default async function LessonPage({ params, searchParams }) {
         }
     }
 
-    // If lesson not found, return 404
-    if (!currentLesson) {
-        return notFound();
-    }
+    if (!currentLesson) return notFound();
 
-    // Get all lessons flat for navigation
-    const allLessons = modules.flatMap(m =>
-        (m.lessons || []).map(l => ({ ...l, moduleId: m.id, moduleTitle: m.title }))
+    const allLessons = modules.flatMap((m) =>
+        (m.lessons || []).map((l) => ({ ...l, moduleId: m.id, moduleTitle: m.title }))
     );
 
-    const currentIndex = allLessons.findIndex(l => l.id === lessonId);
+    const currentIndex = allLessons.findIndex((l) => l.id === lessonId);
     const prevLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
     const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
 
-    // Check if module is locked (for gated courses)
-    const isLocked = courseData.gated && moduleIndex > 0 && !isModulePassed(courseData, moduleIndex - 1);
+    const isLocked = courseData.gated && moduleIndex > 0;
 
     return (
-        <section className="section" style={{ paddingTop: "36px" }}>
-            <div className="wrap">
-                <div className="lesson-shell">
-                    {/* Table of Contents */}
-                    <aside className="lesson-toc" aria-label="Course contents">
-                        <LessonTOC
-                            course={courseData}
-                            slug={courseSlug}
-                            currentLessonId={lessonId}
-                            isGated={courseData.gated}
-                        />
+        <section className="min-h-[calc(100vh-160px)] bg-cream py-6 sm:py-8 lg:py-10">
+            <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-4 lg:gap-8">
+                    {/* TOC - Desktop */}
+                    <aside className="hidden lg:block lg:col-span-1">
+                        <div className="sticky top-24 max-h-[calc(100vh-160px)] overflow-y-auto rounded-xl2 border border-line bg-card p-4 shadow-card">
+                            <LessonTOC
+                                course={courseData}
+                                slug={courseSlug}
+                                currentLessonId={lessonId}
+                                isGated={courseData.gated}
+                            />
+                        </div>
                     </aside>
 
-                    {/* Lesson Content */}
-                    <div className="lesson-content">
+                    {/* Main Content */}
+                    <div className="lg:col-span-3">
                         <LessonClient
                             course={courseData}
                             slug={courseSlug}
@@ -130,6 +110,8 @@ export default async function LessonPage({ params, searchParams }) {
                             prevLesson={prevLesson}
                             nextLesson={nextLesson}
                             isLocked={isLocked}
+                            allLessons={allLessons}
+                            currentIndex={currentIndex}
                         />
                     </div>
                 </div>
@@ -138,48 +120,51 @@ export default async function LessonPage({ params, searchParams }) {
     );
 }
 
-// Helper: Check if module is passed
-function isModulePassed(courseData, moduleIndex) {
-    // This will be handled on client side with localStorage
-    // For server side, we'll pass the data to client
-    return false;
-}
-
 // TOC Component
 function LessonTOC({ course, slug, currentLessonId, isGated }) {
     const modules = Array.isArray(course.modules) ? course.modules : [];
-    const typeIcon = { reading: "📖", video: "▶️", quiz: "✍️" };
+    const typeIconMap = {
+        reading: { icon: FileText, color: "text-blue-500" },
+        video: { icon: PlayCircle, color: "text-rose-500" },
+        quiz: { icon: HelpCircle, color: "text-amber-500" },
+    };
 
     return (
         <>
-            <div className="toc-head">
-                <a href={`/course/${slug}`} style={{ color: "inherit" }}>
-                    ← {course.title}
+            <div className="mb-4 border-b border-line-soft pb-3">
+                <a href={`/course/${slug}`} className="flex items-center gap-1.5 text-sm font-bold text-ink-2 transition-colors hover:text-brand-deep">
+                    <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
+                    {course.title}
                 </a>
             </div>
             {modules.map((m, mi) => {
-                const mLocked = isGated && mi > 0; // Will be checked on client
+                const mLocked = isGated && mi > 0;
                 return (
-                    <div key={m.id || mi}>
-                        <div className="toc-mod">
-                            {mLocked ? "🔒 " : ""}{m.title}
+                    <div key={m.id || mi} className="mb-3">
+                        <div className="mb-1.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted">
+                            {mLocked && <Lock className="h-3 w-3" strokeWidth={2.5} />}
+                            {m.title}
                         </div>
-                        {(m.lessons || []).map(l => {
-                            const isCurrent = l.id === currentLessonId;
-                            return (
-                                <a
-                                    key={l.id}
-                                    href={`/lesson/${slug}--${l.id}`}
-                                    className={`${isCurrent ? "current" : ""}`}
-                                >
-                                    <span className="l-done"></span>
-                                    <span style={{ flex: 1 }}>{l.title}</span>
-                                    <span style={{ fontSize: ".8rem" }}>
-                                        {typeIcon[l.type] || ""}
-                                    </span>
-                                </a>
-                            );
-                        })}
+                        <div className="space-y-0.5">
+                            {(m.lessons || []).map((l) => {
+                                const isCurrent = l.id === currentLessonId;
+                                const { icon: Icon, color } = typeIconMap[l.type] || typeIconMap.reading;
+                                return (
+                                    <a
+                                        key={l.id}
+                                        href={`/lesson/${slug}--${l.id}`}
+                                        className={`flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm transition-colors ${isCurrent
+                                                ? "bg-brand-soft font-bold text-brand-deep"
+                                                : "text-ink-2 hover:bg-cream-2 hover:text-ink"
+                                            }`}
+                                    >
+                                        <Icon className={`h-3.5 w-3.5 ${color}`} strokeWidth={2} />
+                                        <span className="flex-1 truncate">{l.title}</span>
+                                        <span className="text-xs text-muted">{l.durationMin}m</span>
+                                    </a>
+                                );
+                            })}
+                        </div>
                     </div>
                 );
             })}
