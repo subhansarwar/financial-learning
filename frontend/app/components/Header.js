@@ -26,6 +26,8 @@ const NAV_LINKS = [
     { href: "/tools", label: "Tools", icon: Wrench },
 ];
 
+
+
 export default function Header() {
     const pathname = usePathname();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -97,6 +99,8 @@ export default function Header() {
 
     const transparentBg =
         "bg-transparent";
+    const isHomePage = pathname === "/";
+    const shouldBeWhite = isHomePage && !scrolled;
 
     return (
         <header
@@ -126,27 +130,32 @@ export default function Header() {
                     <nav className="hidden items-center gap-0.5 lg:flex">
                         {NAV_LINKS.map(({ href, label, icon: Icon }) => {
                             const active = isActive(href);
+                            const isWhiteNav = href === "/research" || href === "/tools";
                             return (
                                 <Link
                                     key={href}
                                     href={href}
                                     className={`group relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${active
-                                        ? scrolled
+                                        ? scrolled || !shouldBeWhite
                                             ? "bg-brand-soft text-brand-deep"
-                                            : "bg-brand-soft text-brand-deep"
-                                        : scrolled
+                                            : "bg-white/12 text-white"
+                                        : scrolled || !shouldBeWhite
                                             ? "text-ink-2 hover:bg-cream-2 hover:text-ink"
-                                            : "text-ink-2 hover:bg-cream-2 hover:text-ink"
+                                            : isWhiteNav
+                                                ? "text-white/70 hover:bg-white/[0.08] hover:text-white"
+                                                : "text-ink-2 hover:bg-cream-2 hover:text-ink"
                                         }`}
                                 >
                                     <Icon
                                         className={`h-4 w-4 transition-colors ${active
-                                            ? scrolled
+                                            ? scrolled || !shouldBeWhite
                                                 ? "text-brand"
-                                                : "text-brand"
-                                            : scrolled
+                                                : "text-brand-light"
+                                            : scrolled || !shouldBeWhite
                                                 ? "text-muted group-hover:text-ink-2"
-                                                : "text-muted group-hover:text-ink-2"
+                                                : isWhiteNav
+                                                    ? "text-white/40 group-hover:text-white/70"
+                                                    : "text-muted group-hover:text-ink-2"
                                             }`}
                                         strokeWidth={2}
                                     />
@@ -364,6 +373,6 @@ export default function Header() {
                     </nav>
                 </div>
             </div>
-        </header>
+        </header >
     );
 }
