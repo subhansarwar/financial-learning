@@ -33,13 +33,13 @@ export default function AdminDashboard({ courses, topics, onLogout, onDataChange
         await onDataChange();
         setTimeout(() => {
             setIsRefreshing(false);
-            toast("✓ Data refreshed");
+            toast("Data refreshed");
         }, 500);
     };
 
     return (
-        <div className="min-h-[calc(100vh-160px)] bg-cream py-6 sm:py-8">
-            <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+        <div className="min-h-[calc(100vh-160px)] bg-cream my-12 mb-0 sm:py-8">
+            <div className="mx-6 px-4 sm:px-6">
                 {/* Header */}
                 <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-xl2 border border-line bg-card p-4 shadow-card sm:p-5">
                     <div className="flex items-center gap-3">
@@ -68,7 +68,6 @@ export default function AdminDashboard({ courses, topics, onLogout, onDataChange
                             className="inline-flex items-center gap-1.5 rounded-full border border-line bg-card px-3.5 py-1.5 text-sm font-bold text-ink-2 transition-colors hover:border-brand/40 hover:bg-brand-soft/30 hover:text-brand-deep disabled:opacity-60"
                         >
                             <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} strokeWidth={2} />
-                            {isRefreshing ? "Refreshing..." : "Refresh"}
                         </button>
                         <button
                             onClick={onLogout}

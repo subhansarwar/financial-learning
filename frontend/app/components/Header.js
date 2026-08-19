@@ -180,10 +180,10 @@ export default function Header() {
                                         className={`flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-sm font-semibold transition-all ${isAccountOpen
                                             ? scrolled
                                                 ? "border-brand/30 bg-brand-soft text-brand-deep"
-                                                : "border-white/40 bg-white/20 text-white"
+                                                : "border-brand/30 bg-brand-soft text-brand-deep"
                                             : scrolled
                                                 ? "border-line bg-card text-ink-2 hover:border-brand/40 hover:bg-brand-soft/30"
-                                                : "border-white/25 bg-white/10 text-white hover:border-white/40 hover:bg-white/15"
+                                                : "border-line bg-card text-ink-2 hover:border-brand/40 hover:bg-brand-soft/30"
                                             }`}
                                         aria-haspopup="menu"
                                         aria-expanded={isAccountOpen}
@@ -191,13 +191,13 @@ export default function Header() {
                                         <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-deep text-xs font-bold text-white">
                                             {getInitials(userName)}
                                         </span>
-                                        <span className={`max-w-[9ch] truncate ${scrolled ? "text-ink-2" : "text-white"
+                                        <span className={`max-w-[9ch] truncate ${scrolled ? "text-ink-2" : "text-ink-2"
                                             }`}>
                                             {userName}
                                         </span>
                                         <ChevronDown
                                             className={`h-3.5 w-3.5 transition-transform ${isAccountOpen ? "rotate-180" : ""
-                                                } ${scrolled ? "text-muted" : "text-white/70"}`}
+                                                } ${scrolled ? "text-muted" : "text-muted"}`}
                                             strokeWidth={2.5}
                                         />
                                     </button>

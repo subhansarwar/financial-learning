@@ -46,7 +46,7 @@ export default function ToolComp() {
                             "radial-gradient(600px 400px at 80% 20%, rgba(67,56,202,.06), transparent 60%), radial-gradient(500px 400px at 20% 80%, rgba(99,102,241,.05), transparent 55%)",
                     }}
                 />
-                <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="relative  mx-6 px-4 sm:px-6">
                     <div className="max-w-[48rem]">
                         <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
                             <Calculator className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -65,7 +65,7 @@ export default function ToolComp() {
 
             {/* Tools Section */}
             <section className="py-14 sm:py-[78px]">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <ToolTabs tools={TOOLS} activeTool={activeTool} onToolChange={setActiveTool} />
 
                     {activeTool === "budget" && <BudgetTool />}

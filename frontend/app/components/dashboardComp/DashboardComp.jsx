@@ -173,9 +173,9 @@ const DashboardComp = () => {
     const { rows, doneCourses, doneLessons, name, certs, byId } = dashboardData;
 
     return (
-        <>
+        <div className="min-h-[calc(100vh-200px)]">
             {/* ========== HERO SECTION ========== */}
-            <section className="relative overflow-hidden border-b border-line-soft bg-cream-2 py-12 sm:py-16 lg:py-20">
+            <section className="relative overflow-hidden border-b border-line-soft mt-3 bg-cream-2 py-12 sm:py-16 lg:py-20">
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{
@@ -183,7 +183,7 @@ const DashboardComp = () => {
                             "radial-gradient(600px 400px at 90% 20%, rgba(67,56,202,.06), transparent 60%), radial-gradient(500px 400px at 10% 80%, rgba(99,102,241,.05), transparent 55%)",
                     }}
                 />
-                <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="relative mx-6 px-4 sm:px-6">
                     <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                         <div>
                             <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
@@ -219,7 +219,7 @@ const DashboardComp = () => {
 
             {/* ========== STATS CARDS ========== */}
             <section className="py-8 sm:py-10">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                         <div className="group rounded-xl2 border border-line bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-card-lg">
                             <div className="flex items-start justify-between">
@@ -285,7 +285,7 @@ const DashboardComp = () => {
 
             {/* ========== COURSES SECTION ========== */}
             <section className="py-8 sm:py-12">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                         <div>
                             <span className="text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
@@ -398,7 +398,7 @@ const DashboardComp = () => {
             {/* ========== CERTIFICATES SECTION ========== */}
             {certs.length > 0 && (
                 <section className="py-8 sm:py-12">
-                    <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                    <div className="mx-6 px-4 sm:px-6">
                         <div className="mb-6">
                             <span className="text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
                                 Earned
@@ -453,7 +453,7 @@ const DashboardComp = () => {
 
             {/* ========== PRIVACY NOTICE ========== */}
             <section className="py-8 sm:py-12">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <div className="rounded-xl2 border border-line bg-card p-5 shadow-card sm:p-6">
                         <div className="flex items-start gap-3">
                             <div className="rounded-full bg-brand-soft p-2">
@@ -556,7 +556,7 @@ const DashboardComp = () => {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

@@ -85,8 +85,8 @@ export default async function LessonPage({ params, searchParams }) {
     const isLocked = courseData.gated && moduleIndex > 0;
 
     return (
-        <section className="min-h-[calc(100vh-160px)] bg-cream py-6 sm:py-8 lg:py-10">
-            <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+        <section className="min-h-[calc(100vh-160px)] bg-cream my-12 mb-0 sm:py-8 lg:py-10">
+            <div className="mx-6 px-4 sm:px-6">
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-4 lg:gap-8">
                     {/* TOC - Desktop */}
                     <aside className="hidden lg:block lg:col-span-1">

@@ -12,8 +12,8 @@ export default async function CatalogPage({ searchParams }) {
     };
 
     return (
-        <section className="py-10 sm:py-14 lg:py-16">
-            <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+        <section className="py-10 min-h-[calc(100vh-160px)] sm:py-14 lg:py-16">
+            <div className="mx-6 py-5 px-4 sm:px-6">
                 <span className="mb-2.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
                     Course catalog
                 </span>
