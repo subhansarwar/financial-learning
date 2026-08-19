@@ -77,7 +77,7 @@ export default async function CoursePage({ params }) {
                 style={{ background: `hsl(${topic.hue || 160} 70% 94%)` }}
             >
                 <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 20% 50%, hsl(${topic.hue || 160} 55% 42%) 0%, transparent 50%)` }} />
-                <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="relative mx-6 px-4 sm:px-6">
                     {/* Breadcrumbs */}
                     <nav className="mb-4 flex flex-wrap items-center gap-1 text-sm font-medium text-ink-2">
                         <a href="/catalog" className="hover:text-brand-deep">Catalog</a>
@@ -158,7 +158,7 @@ export default async function CoursePage({ params }) {
 
             {/* Course Content */}
             <section className="py-12 sm:py-16">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10">
                         {/* Main Content */}
                         <div className="lg:col-span-2">
@@ -207,7 +207,7 @@ export default async function CoursePage({ params }) {
 }
 
 function formatDuration(min) {
-    if (!min || min <= 0) return "—";
+    if (!min || min <= 0) return "";
     const h = Math.floor(min / 60);
     const m = min % 60;
     if (h && m) return `${h}h ${m}m`;

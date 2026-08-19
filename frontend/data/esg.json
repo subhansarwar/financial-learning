@@ -1,5 +1,5 @@
 {
-    "note": "Illustrative demo dataset for the ESG comparison tool. Scores are fictional and for teaching purposes only — replace with your own data in the admin panel.",
+    "note": "Illustrative demo dataset for the ESG comparison tool. Scores are fictional and for teaching purposes only replace with your own data in the admin panel.",
     "companies": [
         {
             "id": "greenshore-energy",

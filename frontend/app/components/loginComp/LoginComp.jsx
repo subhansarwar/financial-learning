@@ -20,8 +20,14 @@ import {
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
+import { loginSchema } from "../../validations/authValidation";
 
+// ============================================
+// FIELD COMPONENT
+// ============================================
 
 export const Field = ({
     id,
@@ -29,8 +35,8 @@ export const Field = ({
     icon: Icon,
     type,
     placeholder,
-    value,
-    onChange,
+    register,
+    error,
     field,
     focused,
     setFocused,
@@ -50,29 +56,25 @@ export const Field = ({
                 className="mb-1.5 flex items-center gap-2 text-sm font-bold text-ink-2"
             >
                 <Icon
-                    className={`h-4 w-4 ${iconColor[field] || "text-muted"
-                        }`}
+                    className={`h-4 w-4 ${iconColor[field] || "text-muted"}`}
                     strokeWidth={2}
                 />
                 {label}
             </label>
 
             <div
-                className={`relative rounded-lg border transition-all duration-200 ${focused === field
-                    ? "border-brand/50 ring-4 ring-brand/15"
-                    : "border-line"
+                className={`relative rounded-lg border transition-all duration-200 ${error
+                        ? "border-rose-500 ring-4 ring-rose-500/15"
+                        : focused === field
+                            ? "border-brand/50 ring-4 ring-brand/15"
+                            : "border-line"
                     }`}
             >
                 <input
                     id={id}
-                    type={
-                        type === "password" && showPassword
-                            ? "text"
-                            : type
-                    }
+                    type={type === "password" && showPassword ? "text" : type}
                     placeholder={placeholder}
-                    value={value}
-                    onChange={onChange}
+                    {...register(field)}
                     onFocus={() => setFocused(field)}
                     onBlur={() => setFocused(null)}
                     autoComplete={
@@ -82,115 +84,119 @@ export const Field = ({
                                 ? "email"
                                 : "name"
                     }
-                    className={`w-full rounded-lg bg-transparent px-4 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:outline-none ${type === "password" ? "pr-12" : ""
+                    className={`w-full rounded-lg bg-transparent px-4 py-2.5 text-sm font-medium text-ink placeholder:text-muted outline-none focus:outline-none focus:ring-0 ${type === "password" ? "pr-12" : ""
                         }`}
                 />
 
                 {type === "password" && (
                     <button
                         type="button"
-                        onClick={() =>
-                            setShowPassword((prev) => !prev)
-                        }
+                        onClick={() => setShowPassword((prev) => !prev)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-ink-2"
-                        aria-label={
-                            showPassword
-                                ? "Hide password"
-                                : "Show password"
-                        }
+                        aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                         {showPassword ? (
-                            <EyeOff
-                                className="h-4 w-4"
-                                strokeWidth={2}
-                            />
+                            <EyeOff className="h-4 w-4" strokeWidth={2} />
                         ) : (
-                            <Eye
-                                className="h-4 w-4"
-                                strokeWidth={2}
-                            />
+                            <Eye className="h-4 w-4" strokeWidth={2} />
                         )}
                     </button>
                 )}
             </div>
+
+            {error && (
+                <p className="mt-1.5 text-xs font-medium text-rose-600">{error}</p>
+            )}
         </div>
     );
 };
+
+// ============================================
+// MAIN LOGIN COMPONENT
+// ============================================
+
 const LoginComp = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const next = searchParams.get("next") || "dashboard";
-    const [form, setForm] = useState({
-        name: "",
-        email: "",
-        password: "",
-    });
+
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [focused, setFocused] = useState(null);
     const [mounted, setMounted] = useState(false);
+
+    // React Hook Form with Yup validation
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        setError,
+        reset,
+    } = useForm({
+        resolver: yupResolver(loginSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            password: "",
+        },
+    });
 
     useEffect(() => {
         setMounted(true);
         // Check if already logged in
         if (typeof window !== "undefined") {
             const user = localStorage.getItem("efp.user");
-            if (user) router.push(next);
+            if (user) {
+                toast.success("Welcome back!");
+                router.push(next);
+            }
         }
     }, [next, router]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    // Submit handler with validation
+    const onSubmit = async (data) => {
         setLoading(true);
 
-        const { name, email, password } = form;
+        const { name, email, password } = data;
 
-        // Validate all fields
-        if (!name.trim()) {
-            toast.error("Please enter your name");
+        try {
+            // Simulate API call
+            await new Promise((resolve) => setTimeout(resolve, 500));
+
+            // Store user data
+            if (typeof window !== "undefined") {
+                localStorage.setItem(
+                    "efp.user",
+                    JSON.stringify({
+                        name: name.trim(),
+                        email: email.trim(),
+                        password: password.trim(),
+                        at: Date.now(),
+                    })
+                );
+                localStorage.setItem(
+                    "finlearn.v1",
+                    JSON.stringify({
+                        name: name.trim(),
+                        courses: {},
+                    })
+                );
+
+                // Dispatch custom event to update header
+                window.dispatchEvent(new Event("userUpdate"));
+            }
+
+            toast.success("Welcome! Redirecting to dashboard...");
+            reset();
+
+            setTimeout(() => {
+                router.push(next);
+                setLoading(false);
+            }, 500);
+        } catch (error) {
+            toast.error("Something went wrong. Please try again.");
             setLoading(false);
-            return;
         }
-        if (!email || !email.includes("@")) {
-            toast.error("Please enter a valid email address");
-            setLoading(false);
-            return;
-        }
-        if (!password.trim()) {
-            toast.error("Please enter a password");
-            setLoading(false);
-            return;
-        }
-
-        // Store user data
-        if (typeof window !== "undefined") {
-            localStorage.setItem(
-                "efp.user",
-                JSON.stringify({
-                    name: name.trim(),
-                    email: email.trim(),
-                    password: password.trim(),
-                    at: Date.now(),
-                })
-            );
-            localStorage.setItem(
-                "finlearn.v1",
-                JSON.stringify({
-                    name: name.trim(),
-                    courses: {},
-                })
-            );
-
-            // Dispatch custom event to update header
-            window.dispatchEvent(new Event("userUpdate"));
-        }
-
-        toast.success("🎉 Welcome! Redirecting to dashboard...");
-
-        setTimeout(() => {
-            router.push(next);
-            setLoading(false);
-        }, 500);
     };
 
     const features = [
@@ -224,21 +230,34 @@ const LoginComp = () => {
         },
     ];
 
-    const inputClass = (field) =>
-        `w-full rounded-lg bg-transparent px-4 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:outline-none ${focused === field ? "border-brand/50 ring-4 ring-brand/15" : "border-line"
-        }`;
+    // Show loading state while checking auth
+    if (!mounted) {
+        return (
+            <section className="flex min-h-[calc(100vh-160px)] items-center justify-center bg-cream py-20">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-soft border-t-brand-deep" />
+                    <p className="text-sm text-muted">Loading...</p>
+                </div>
+            </section>
+        );
+    }
+
+    const isLoading = loading || isSubmitting;
+
     return (
         <section className="relative min-h-[calc(100vh-160px)] overflow-hidden bg-cream py-12 sm:py-16 lg:py-20">
             {/* Background decorations */}
             <div className="pointer-events-none absolute inset-0">
                 <div className="absolute -left-[20%] -top-[30%] h-[600px] w-[600px] rounded-full bg-gradient-radial from-brand/6 to-transparent" />
                 <div className="absolute -right-[20%] -bottom-[30%] h-[600px] w-[600px] rounded-full bg-gradient-radial from-brand/5 to-transparent" />
-                {["left-[10%] top-[15%]", "right-[15%] top-[25%]", "bottom-[30%] left-[20%]", "right-[10%] bottom-[20%]"].map((pos, i) => (
-                    <div
-                        key={i}
-                        className={`absolute h-2 w-2 rounded-full bg-brand/${i % 2 === 0 ? "20" : "15"} ${pos}`}
-                    />
-                ))}
+                {["left-[10%] top-[15%]", "right-[15%] top-[25%]", "bottom-[30%] left-[20%]", "right-[10%] bottom-[20%]"].map(
+                    (pos, i) => (
+                        <div
+                            key={i}
+                            className={`absolute h-2 w-2 rounded-full bg-brand/${i % 2 === 0 ? "20" : "15"} ${pos}`}
+                        />
+                    )
+                )}
             </div>
 
             <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6">
@@ -259,25 +278,21 @@ const LoginComp = () => {
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                            {/* Form with React Hook Form */}
+                            <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
                                 <Field
                                     id="lfName"
                                     label="Your name"
                                     icon={User}
                                     type="text"
                                     placeholder="e.g. Amina Yusuf"
-                                    value={form.name}
+                                    register={register}
+                                    error={errors.name?.message}
                                     field="name"
                                     focused={focused}
                                     setFocused={setFocused}
                                     showPassword={showPassword}
                                     setShowPassword={setShowPassword}
-                                    onChange={(e) =>
-                                        setForm((prev) => ({
-                                            ...prev,
-                                            name: e.target.value,
-                                        }))
-                                    }
                                 />
 
                                 <Field
@@ -286,18 +301,13 @@ const LoginComp = () => {
                                     icon={Mail}
                                     type="email"
                                     placeholder="you@example.org"
-                                    value={form.email}
+                                    register={register}
+                                    error={errors.email?.message}
                                     field="email"
                                     focused={focused}
                                     setFocused={setFocused}
                                     showPassword={showPassword}
                                     setShowPassword={setShowPassword}
-                                    onChange={(e) =>
-                                        setForm((prev) => ({
-                                            ...prev,
-                                            email: e.target.value,
-                                        }))
-                                    }
                                 />
 
                                 <Field
@@ -305,34 +315,29 @@ const LoginComp = () => {
                                     label="Password"
                                     icon={Lock}
                                     type="password"
-                                    placeholder="Anything you like — this is a demo login"
-                                    value={form.password}
+                                    placeholder="Anything you like this is a demo login"
+                                    register={register}
+                                    error={errors.password?.message}
                                     field="password"
                                     focused={focused}
                                     setFocused={setFocused}
                                     showPassword={showPassword}
                                     setShowPassword={setShowPassword}
-                                    onChange={(e) =>
-                                        setForm((prev) => ({
-                                            ...prev,
-                                            password: e.target.value,
-                                        }))
-                                    }
                                 />
 
                                 <button
                                     className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-deep px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#241f6b] disabled:opacity-60 disabled:cursor-not-allowed"
                                     type="submit"
-                                    disabled={loading}
+                                    disabled={isLoading}
                                 >
-                                    {loading ? (
+                                    {isLoading ? (
                                         <>
                                             <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                                         </>
                                     ) : (
                                         <>
                                             <LogIn className="h-4 w-4" strokeWidth={2.5} />
-                                            Log in — free
+                                            Log in free
                                         </>
                                     )}
                                 </button>
@@ -348,7 +353,7 @@ const LoginComp = () => {
                                 <div className="text-center text-xs text-muted">
                                     <span className="flex items-center justify-center gap-1">
                                         <Fingerprint className="h-3.5 w-3.5" strokeWidth={2} />
-                                        No password required — just sign in with any name and email
+                                        No password required just sign in with any name and email
                                     </span>
                                 </div>
                             </form>

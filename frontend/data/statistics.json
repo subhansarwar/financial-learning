@@ -106,7 +106,7 @@
     },
     "companyStats": {
         "title": "Selected institutions at a glance",
-        "note": "Figures are rounded public approximations from annual reports and public statistics pages; they change over time — treat them as orders of magnitude.",
+        "note": "Figures are rounded public approximations from annual reports and public statistics pages; they change over time treat them as orders of magnitude.",
         "source": "Organisation annual reports and public statistics pages",
         "columns": [
             "Institution",

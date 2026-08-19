@@ -2,7 +2,7 @@
     {
         "slug": "microfinance",
         "title": "Microfinance: Financial Inclusion in Action",
-        "tagline": "Microcredit, micro-savings, micro-insurance and micro-leasing — the tools that bank the unbanked.",
+        "tagline": "Microcredit, micro-savings, micro-insurance and micro-leasing the tools that bank the unbanked.",
         "topic": "microfinance",
         "level": "Intermediate",
         "lengthMin": 288,
@@ -26,7 +26,7 @@
     {
         "slug": "sustainability-finance",
         "title": "Sustainability & Finance",
-        "tagline": "How money shapes — and is shaped by — the transition to a sustainable economy.",
+        "tagline": "How money shapes and is shaped by the transition to a sustainable economy.",
         "topic": "sustainable-finance",
         "level": "Intermediate",
         "lengthMin": 360,
@@ -49,7 +49,7 @@
     {
         "slug": "personal-finance-essentials",
         "title": "Personal Finance Essentials",
-        "tagline": "Budgeting that sticks, safety nets, and getting out of debt — the core skills of money.",
+        "tagline": "Budgeting that sticks, safety nets, and getting out of debt the core skills of money.",
         "topic": "personal-finance",
         "level": "Beginner",
         "lengthMin": 60,
@@ -69,7 +69,7 @@
     {
         "slug": "investing-101",
         "title": "Investing 101",
-        "tagline": "Stocks, bonds, funds and compounding — how ordinary people build long-term wealth.",
+        "tagline": "Stocks, bonds, funds and compounding how ordinary people build long-term wealth.",
         "topic": "investing",
         "level": "Beginner",
         "lengthMin": 70,
@@ -109,7 +109,7 @@
     {
         "slug": "fintech-frontiers",
         "title": "Fintech Frontiers",
-        "tagline": "Digital payments, neobanks, open banking and blockchain — where money meets technology.",
+        "tagline": "Digital payments, neobanks, open banking and blockchain where money meets technology.",
         "topic": "fintech",
         "level": "Intermediate",
         "lengthMin": 55,
@@ -129,7 +129,7 @@
     {
         "slug": "intro-islamic-finance",
         "title": "Introduction to Islamic Finance",
-        "tagline": "Riba, risk-sharing, sukuk and takaful — the principles of Sharia-compliant finance.",
+        "tagline": "Riba, risk-sharing, sukuk and takaful the principles of Sharia-compliant finance.",
         "topic": "islamic-finance",
         "level": "Beginner",
         "lengthMin": 60,

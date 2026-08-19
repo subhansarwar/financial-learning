@@ -117,7 +117,7 @@ export default function HelpPanel() {
                         <p className="text-sm font-medium text-ink-2">
                             <span className="font-bold text-ink">Built-in content:</span> The site ships with
                             starter content. Anything you save here <span className="font-bold text-brand-deep">overrides</span>{" "}
-                            the built-in content instantly — no rebuild, no developers, no downtime.
+                            the built-in content instantly no rebuild, no developers, no downtime.
                         </p>
                     </div>
                 </div>

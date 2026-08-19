@@ -108,7 +108,7 @@ export default function BudgetTool() {
                         <div>
                             <label className="mb-1.5 flex items-center gap-2 text-sm font-bold text-ink-2">
                                 <Home className="h-4 w-4 text-indigo-500" strokeWidth={2} />
-                                Needs — rent, bills, groceries (%)
+                                Needs rent, bills, groceries (%)
                             </label>
                             <input
                                 type="number"
@@ -123,7 +123,7 @@ export default function BudgetTool() {
                         <div>
                             <label className="mb-1.5 flex items-center gap-2 text-sm font-bold text-ink-2">
                                 <Coffee className="h-4 w-4 text-amber-500" strokeWidth={2} />
-                                Wants — fun, eating out (%)
+                                Wants fun, eating out (%)
                             </label>
                             <input
                                 type="number"
@@ -239,7 +239,7 @@ export default function BudgetTool() {
                             <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" strokeWidth={2} />
                             <div className="text-sm text-ink-2">
                                 <span className="font-bold">50/30/20 rule:</span> The classic starting point.
-                                High-rent city? Trim wants first — keep the savings habit alive, even at 5%.
+                                High-rent city? Trim wants first keep the savings habit alive, even at 5%.
                             </div>
                         </div>
                     </div>

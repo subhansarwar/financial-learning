@@ -31,7 +31,7 @@ export const metadata = {
         url: "https://your-domain.com/about",
     },
     twitter: {
-        title: "About — Free Finance Education Platform",
+        title: "About Free Finance Education Platform",
         description: "Finance education should be free, clear and for everyone.",
     },
 };
@@ -106,7 +106,7 @@ export default function AboutPage() {
                         <p className="text-lg font-medium leading-relaxed text-ink-2">
                             The Finance Platform Demo is a free online school for microfinance and
                             sustainable finance. We believe the gap between people who understand
-                            money and people who don't is not about intelligence — it's about
+                            money and people who don't is not about intelligence it's about
                             access to clear, honest teaching. So we built the school we wished
                             existed.
                         </p>
@@ -124,7 +124,7 @@ export default function AboutPage() {
                         </div>
                         <p className="text-base font-medium text-ink-2">
                             Personal finance, sustainable finance, banking, investing, fintech,
-                            Islamic finance — and more topics added over time. Every course is
+                            Islamic finance and more topics added over time. Every course is
                             split into modules and bite-size lessons: short readings, videos and
                             quizzes, designed to work as well on a phone as on a desktop.
                         </p>
@@ -186,7 +186,7 @@ export default function AboutPage() {
                                     Everything on this platform is general financial education.
                                     Nothing here is financial, investment, legal or tax advice, or a
                                     recommendation of any product or provider. Money decisions depend
-                                    on your circumstances, your country and your goals — for those,
+                                    on your circumstances, your country and your goals for those,
                                     speak to a licensed professional.
                                 </p>
                             </div>
@@ -205,7 +205,7 @@ export default function AboutPage() {
                                 </h2>
                                 <p className="mt-2 text-base font-medium leading-relaxed text-ink-2">
                                     Finish a course and you can download a free certificate of
-                                    completion. It recognises your effort and learning — it is not an
+                                    completion. It recognises your effort and learning it is not an
                                     accredited qualification, and we say so on the certificate itself.
                                 </p>
                             </div>
@@ -219,7 +219,7 @@ export default function AboutPage() {
                             className="inline-flex items-center gap-2 rounded-full bg-brand-deep px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#241f6b]"
                         >
                             <GraduationCap className="h-4 w-4" strokeWidth={2.5} />
-                            Start learning — free
+                            Start learning free
                             <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
                         </Link>
                         <Link

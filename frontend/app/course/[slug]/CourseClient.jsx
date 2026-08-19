@@ -12,10 +12,11 @@ import {
     HelpCircle,
     Layers,
     Lock,
-    PlayCircle
+    PlayCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const typeIconMap = {
     reading: { icon: BookOpen, color: "text-blue-500" },
@@ -97,16 +98,7 @@ export default function CourseClient({ slug, course, topic }) {
             });
             setModuleStates(newStates);
 
-            showToast("Lesson completed! ✓");
-        }
-    };
-
-    const showToast = (msg) => {
-        const toast = document.getElementById("flToast");
-        if (toast) {
-            toast.textContent = msg;
-            toast.dataset.show = "true";
-            setTimeout(() => (toast.dataset.show = "false"), 3000);
+            toast.success("Lesson completed!");
         }
     };
 
@@ -115,7 +107,6 @@ export default function CourseClient({ slug, course, topic }) {
             <div className="flex items-center justify-center py-12">
                 <div className="flex flex-col items-center gap-3">
                     <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-soft border-t-brand-deep" />
-                    <p className="text-sm text-muted">Loading course content...</p>
                 </div>
             </div>
         );
@@ -140,20 +131,28 @@ export default function CourseClient({ slug, course, topic }) {
                 const state = moduleStates[m.id] || { locked: false, passed: false };
                 const locked = state.locked;
                 const isOpen = openModules[m.id] || false;
-                const doneCount = moduleLessons.filter((l) => completedLessons.includes(l.id)).length;
+                const doneCount = moduleLessons.filter((l) =>
+                    completedLessons.includes(l.id)
+                ).length;
                 const isComplete = doneCount === moduleLessons.length && moduleLessons.length > 0;
 
                 return (
                     <div
                         key={m.id}
-                        className={`overflow-hidden rounded-xl2 border transition-all duration-200 ${locked ? "border-line-soft opacity-60" : isComplete ? "border-emerald-200" : "border-line"
+                        className={`overflow-hidden rounded-xl2 border transition-all duration-200 ${locked
+                            ? "border-line-soft opacity-60"
+                            : isComplete
+                                ? "border-emerald-200"
+                                : "border-line"
                             } ${isOpen ? "bg-card" : "bg-cream-2/50"}`}
                     >
                         {/* Module Header */}
                         <button
                             onClick={() => {
                                 if (locked) {
-                                    showToast(`🔒 Pass the previous module's quiz at ${needPct}%+ to unlock this one`);
+                                    toast.error(
+                                        `Pass the previous module's quiz at ${needPct}%+ to unlock this one`
+                                    );
                                     return;
                                 }
                                 toggleModule(m.id);
@@ -170,7 +169,13 @@ export default function CourseClient({ slug, course, topic }) {
                                         : "bg-brand-soft text-brand-deep"
                                     }`}
                             >
-                                {locked ? <Lock className="h-3.5 w-3.5" strokeWidth={2.5} /> : isComplete ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : i + 1}
+                                {locked ? (
+                                    <Lock className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                ) : isComplete ? (
+                                    <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                                ) : (
+                                    i + 1
+                                )}
                             </div>
 
                             <div className="flex-1">
@@ -213,7 +218,8 @@ export default function CourseClient({ slug, course, topic }) {
                                 {moduleLessons.map((l) => {
                                     if (!l) return null;
                                     const done = completedLessons.includes(l.id);
-                                    const { icon: Icon, color } = typeIconMap[l.type] || typeIconMap.reading;
+                                    const { icon: Icon, color } =
+                                        typeIconMap[l.type] || typeIconMap.reading;
 
                                     return (
                                         <div
@@ -221,18 +227,25 @@ export default function CourseClient({ slug, course, topic }) {
                                             className="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-cream-2/50"
                                         >
                                             {done ? (
-                                                <CheckCircle2 className="h-4 w-4 text-emerald-500" strokeWidth={2.5} />
+                                                <CheckCircle2
+                                                    className="h-4 w-4 text-emerald-500"
+                                                    strokeWidth={2.5}
+                                                />
                                             ) : (
                                                 <Icon className={`h-4 w-4 ${color}`} strokeWidth={2} />
                                             )}
                                             <Link
                                                 href={`/lesson/${slug}--${l.id}`}
-                                                className={`flex-1 text-sm font-medium transition-colors ${done ? "text-muted line-through" : "text-ink-2 hover:text-brand-deep"
+                                                className={`flex-1 text-sm font-medium transition-colors ${done
+                                                    ? "text-muted line-through"
+                                                    : "text-ink-2 hover:text-brand-deep"
                                                     }`}
                                             >
                                                 {l.title}
                                             </Link>
-                                            <span className="text-xs text-muted">{formatDuration(l.durationMin)}</span>
+                                            <span className="text-xs text-muted">
+                                                {formatDuration(l.durationMin)}
+                                            </span>
                                             {!done && (
                                                 <button
                                                     onClick={() => markComplete(l.id)}
@@ -254,7 +267,7 @@ export default function CourseClient({ slug, course, topic }) {
 }
 
 function formatDuration(min) {
-    if (!min || min <= 0) return "—";
+    if (!min || min <= 0) return "";
     const h = Math.floor(min / 60);
     const m = min % 60;
     if (h && m) return `${h}h ${m}m`;

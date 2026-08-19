@@ -58,7 +58,7 @@ export default function PrivacyPage() {
     {
       icon: Laptop,
       label: "Never leaves your device",
-      desc: "We can't see your data — there is no server database of learners to breach.",
+      desc: "We can't see your data there is no server database of learners to breach.",
       color: "text-brand",
       bg: "bg-brand-soft",
     },
@@ -141,7 +141,7 @@ export default function PrivacyPage() {
               Your course progress, quiz scores and the name you choose for
               certificates are stored in your own browser's local storage. This
               data <span className="font-bold text-brand-deep">never leaves your device</span>{" "}
-              — we can't see it, and there is no server database of learners to
+              we can't see it, and there is no server database of learners to
               breach.
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -210,7 +210,7 @@ export default function PrivacyPage() {
                 </h2>
                 <p className="mt-2 text-base font-medium leading-relaxed text-ink-2">
                   Because we hold no personal data about you, there is nothing to
-                  request, correct or delete on our side — the delete button is in
+                  request, correct or delete on our side the delete button is in
                   your own browser settings. If you have questions about this
                   policy, contact the team through the channels listed on the{" "}
                   <a href="/about" className="font-bold text-brand-deep hover:underline">

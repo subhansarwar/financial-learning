@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Finance Platform — design tokens (Tailwind v4 @theme)
+   Finance Platform design tokens (Tailwind v4 @theme)
    Soft, modern, professional palette: cool neutral surfaces,
    a single indigo brand color, and one warm amber accent
    reserved for the "earned it" certificate moment.
@@ -42,6 +42,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   body {
@@ -75,7 +81,7 @@
 
 @layer utilities {
 
-  /* Two-stop, restrained brand gradient — used only for emphasised
+  /* Two-stop, restrained brand gradient used only for emphasised
      words in the hero, not scattered across the page. */
   .bg-brand-gradient {
     background: linear-gradient(135deg, #4338ca, #6366f1);

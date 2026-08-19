@@ -182,7 +182,7 @@ const StatisticsComp = () => {
                             "radial-gradient(600px 400px at 10% 20%, rgba(67,56,202,.06), transparent 60%), radial-gradient(500px 400px at 90% 80%, rgba(99,102,241,.05), transparent 55%)",
                     }}
                 />
-                <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="relative mx-6 px-4 sm:px-6">
                     <div className="max-w-[48rem]">
                         <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
                             <span className="h-1.5 w-1.5 rounded-full bg-brand" />
@@ -192,7 +192,7 @@ const StatisticsComp = () => {
                             Statistics
                         </h1>
                         <p className="mt-4 max-w-[55ch] text-base font-medium text-ink-2 sm:text-lg">
-                            The shape of financial inclusion and sustainable finance — by
+                            The shape of financial inclusion and sustainable finance by
                             country and by institution.
                         </p>
                     </div>
@@ -201,7 +201,7 @@ const StatisticsComp = () => {
 
             {/* ========== STATISTICS SECTION ========== */}
             <section className="py-14 sm:py-[78px]">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     {/* ========== FACT CARDS ========== */}
                     <div className="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                         {data?.facts?.map((fact, i) => {
@@ -243,7 +243,7 @@ const StatisticsComp = () => {
                                 <div className="mt-3 flex items-start gap-2 text-xs font-medium text-muted">
                                     <Info className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-brand" strokeWidth={2} />
                                     <span>
-                                        {data.countryStats.note} — Source: {data.countryStats.source}
+                                        {data.countryStats.note} Source: {data.countryStats.source}
                                     </span>
                                 </div>
                             )}
@@ -266,7 +266,7 @@ const StatisticsComp = () => {
                                 <div className="mt-3 flex items-start gap-2 text-xs font-medium text-muted">
                                     <Info className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-brand" strokeWidth={2} />
                                     <span>
-                                        {data.companyStats.note} — Source: {data.companyStats.source}
+                                        {data.companyStats.note} Source: {data.companyStats.source}
                                     </span>
                                 </div>
                             )}
@@ -291,7 +291,7 @@ const StatisticsComp = () => {
                                 <div className="mt-3 flex items-start gap-2 text-xs font-medium text-muted">
                                     <Info className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-brand" strokeWidth={2} />
                                     <span>
-                                        {data.greenStats.note} — Source: {data.greenStats.source}
+                                        {data.greenStats.note} Source: {data.greenStats.source}
                                     </span>
                                 </div>
                             )}

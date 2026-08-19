@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import {
     BookOpen,
     CheckCircle2,
@@ -110,6 +111,7 @@ const DashboardComp = () => {
             } catch (error) {
                 console.error("Failed to load dashboard:", error);
                 setLoading(false);
+                // toast.error("Failed to load dashboard data");
             }
         }
     };
@@ -126,11 +128,11 @@ const DashboardComp = () => {
                 data.name = newName.trim();
                 localStorage.setItem("finlearn.v1", JSON.stringify(data));
                 setDashboardData({ ...dashboardData, name: newName.trim() });
-                showToast("✓ Name saved successfully!");
+                toast.success("Name saved successfully!");
             }
             setShowNameModal(false);
         } else {
-            showToast("⚠️ Please enter a valid name");
+            toast.error("Please enter a valid name");
         }
     };
 
@@ -141,26 +143,20 @@ const DashboardComp = () => {
             const course = await getCourseBySlug(slug);
             if (course) {
                 downloadCertificate(slug, course);
-                showToast("📄 Certificate downloaded!");
+                toast.success("Certificate downloaded successfully!");
             }
         } catch (error) {
-            showToast("Failed to download certificate");
-        }
-    };
-
-    const showToast = (msg) => {
-        const toast = document.getElementById("flToast");
-        if (toast) {
-            toast.textContent = msg;
-            toast.dataset.show = "true";
-            setTimeout(() => (toast.dataset.show = "false"), 3000);
+            toast.error("Failed to download certificate");
         }
     };
 
     const handleLogout = () => {
         if (typeof window !== "undefined") {
             localStorage.removeItem("efp.user");
-            window.location.href = "/";
+            toast.success("Logged out successfully");
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 300);
         }
     };
 
@@ -177,9 +173,9 @@ const DashboardComp = () => {
     const { rows, doneCourses, doneLessons, name, certs, byId } = dashboardData;
 
     return (
-        <>
+        <div className="min-h-[calc(100vh-200px)]">
             {/* ========== HERO SECTION ========== */}
-            <section className="relative overflow-hidden border-b border-line-soft bg-cream-2 py-12 sm:py-16 lg:py-20">
+            <section className="relative overflow-hidden border-b border-line-soft mt-3 bg-cream-2 py-12 sm:py-16 lg:py-20">
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{
@@ -187,7 +183,7 @@ const DashboardComp = () => {
                             "radial-gradient(600px 400px at 90% 20%, rgba(67,56,202,.06), transparent 60%), radial-gradient(500px 400px at 10% 80%, rgba(99,102,241,.05), transparent 55%)",
                     }}
                 />
-                <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="relative mx-6 px-4 sm:px-6">
                     <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                         <div>
                             <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
@@ -195,12 +191,10 @@ const DashboardComp = () => {
                                 Dashboard
                             </span>
                             <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                                {name
-                                    ? `Welcome back, ${name.split(" ")[0]}`
-                                    : "My learning"}
+                                {name ? `Welcome back, ${name.split(" ")[0]} 👋` : "My learning"}
                             </h1>
                             <p className="mt-2 text-sm font-medium text-muted sm:text-base">
-                                Your progress is saved privately on this device — no account needed.
+                                Your progress is saved privately on this device no account needed.
                             </p>
                         </div>
                         <div className="flex flex-wrap items-center gap-3">
@@ -225,7 +219,7 @@ const DashboardComp = () => {
 
             {/* ========== STATS CARDS ========== */}
             <section className="py-8 sm:py-10">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                         <div className="group rounded-xl2 border border-line bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-card-lg">
                             <div className="flex items-start justify-between">
@@ -239,7 +233,13 @@ const DashboardComp = () => {
                                     <div className="text-sm font-medium text-muted">courses started</div>
                                 </div>
                                 <div className="rounded-full bg-brand-soft px-2.5 py-1 text-xs font-bold text-brand-deep">
-                                    {rows.length > 0 ? `${Math.round((doneLessons / (rows.reduce((acc, r) => acc + r.s.total, 0) || 1)) * 100)}%` : "0%"}
+                                    {rows.length > 0
+                                        ? `${Math.round(
+                                            (doneLessons /
+                                                (rows.reduce((acc, r) => acc + r.s.total, 0) || 1)) *
+                                            100
+                                        )}%`
+                                        : "0%"}
                                 </div>
                             </div>
                         </div>
@@ -273,7 +273,7 @@ const DashboardComp = () => {
                                     </div>
                                     <div className="text-sm font-medium text-muted">certificates earned</div>
                                 </div>
-                                <div className="rounded-full bg-emerald-50 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-brand-deep text-emerald-600">
+                                <div className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-600">
                                     <Trophy className="inline h-3 w-3" strokeWidth={2} />
                                     {doneCourses > 0 ? "🎓" : "Keep going"}
                                 </div>
@@ -285,7 +285,7 @@ const DashboardComp = () => {
 
             {/* ========== COURSES SECTION ========== */}
             <section className="py-8 sm:py-12">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                         <div>
                             <span className="text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
@@ -310,9 +310,7 @@ const DashboardComp = () => {
                                 <GraduationCap className="h-10 w-10 text-brand-deep" strokeWidth={1.5} />
                             </div>
                             <h3 className="text-xl font-bold text-ink">Nothing started yet</h3>
-                            <p className="mt-1 text-sm text-muted">
-                                Pick any course — they're all free.
-                            </p>
+                            <p className="mt-1 text-sm text-muted">Pick any course they're all free.</p>
                             <Link
                                 href="/catalog"
                                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-deep px-6 py-3 font-bold text-white transition-colors hover:bg-[#241f6b]"
@@ -345,9 +343,7 @@ const DashboardComp = () => {
                                                 <span className="absolute left-3 top-3 rounded-full bg-white/85 px-3 py-1 text-xs font-bold text-ink-2 backdrop-blur-sm sm:left-4 sm:top-4">
                                                     {course.level || "Beginner"}
                                                 </span>
-                                                <span className="text-4xl sm:text-5xl">
-                                                    {topic?.icon || "📚"}
-                                                </span>
+                                                <span className="text-4xl sm:text-5xl">{topic?.icon || "📚"}</span>
                                                 <span className="absolute right-3 top-3 rounded-full bg-white/85 px-2.5 py-1 text-xs font-bold text-brand-deep backdrop-blur-sm">
                                                     {s.pct}%
                                                 </span>
@@ -402,7 +398,7 @@ const DashboardComp = () => {
             {/* ========== CERTIFICATES SECTION ========== */}
             {certs.length > 0 && (
                 <section className="py-8 sm:py-12">
-                    <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                    <div className="mx-6 px-4 sm:px-6">
                         <div className="mb-6">
                             <span className="text-xs font-bold uppercase tracking-[0.16em] text-brand-deep">
                                 Earned
@@ -414,9 +410,10 @@ const DashboardComp = () => {
 
                         <div className="space-y-3">
                             {certs.map(({ slug, course }) => {
-                                const courseData = JSON.parse(
-                                    localStorage.getItem("finlearn.v1") || "{}"
-                                )?.courses?.[slug] || {};
+                                const courseData =
+                                    JSON.parse(localStorage.getItem("finlearn.v1") || "{}")?.courses?.[
+                                    slug
+                                    ] || {};
                                 const completedDate = courseData.completedAt
                                     ? new Date(courseData.completedAt).toLocaleDateString("en-GB", {
                                         day: "numeric",
@@ -456,7 +453,7 @@ const DashboardComp = () => {
 
             {/* ========== PRIVACY NOTICE ========== */}
             <section className="py-8 sm:py-12">
-                <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+                <div className="mx-6 px-4 sm:px-6">
                     <div className="rounded-xl2 border border-line bg-card p-5 shadow-card sm:p-6">
                         <div className="flex items-start gap-3">
                             <div className="rounded-full bg-brand-soft p-2">
@@ -515,10 +512,7 @@ const DashboardComp = () => {
                         </p>
 
                         <div className="mb-6">
-                            <label
-                                htmlFor="nameInput"
-                                className="mb-1.5 block text-sm font-bold text-ink-2"
-                            >
+                            <label htmlFor="nameInput" className="mb-1.5 block text-sm font-bold text-ink-2">
                                 Your full name
                             </label>
                             <div className="relative">
@@ -562,7 +556,7 @@ const DashboardComp = () => {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

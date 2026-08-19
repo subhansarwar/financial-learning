@@ -1,7 +1,7 @@
 {
   "slug": "personal-finance-essentials",
   "title": "Personal Finance Essentials",
-  "tagline": "Budgeting that sticks, safety nets, and getting out of debt — the core skills of money.",
+  "tagline": "Budgeting that sticks, safety nets, and getting out of debt the core skills of money.",
   "topic": "personal-finance",
   "level": "Beginner",
   "lengthMin": 60,
@@ -26,14 +26,14 @@
           "title": "Budgeting That Actually Works",
           "type": "reading",
           "durationMin": 9,
-          "content": "## A budget is a plan, not a punishment\n\nMost budgets fail for the same reason most diets fail: they are built on restriction instead of reality. A good budget starts by looking at where your money **already goes**, then makes deliberate choices about where it **should go**.\n\n### The 50/30/20 rule\n\nThe simplest framework that works for most people:\n\n- **50% Needs** — rent, utilities, groceries, transport, insurance, minimum debt payments.\n- **30% Wants** — eating out, streaming, hobbies, holidays, the fun stuff.\n- **20% Savings and extra debt payments** — emergency fund, investing, paying balances down faster.\n\nThese are guide rails, not laws. If your rent eats 60% in an expensive city, adjust the wants category first — never the savings habit entirely.\n\n### Make it stick\n\n1. **Track one month first.** You cannot plan what you have not measured.\n2. **Automate the 20%.** Move savings on payday, before you can spend it.\n3. **Review monthly, not daily.** A budget is a steering wheel, not a speedometer.\n\n> Try it now: the **budgeting calculator** in the Tools section turns your income into a 50/30/20 plan in seconds — and lets you customise the categories."
+          "content": "## A budget is a plan, not a punishment\n\nMost budgets fail for the same reason most diets fail: they are built on restriction instead of reality. A good budget starts by looking at where your money **already goes**, then makes deliberate choices about where it **should go**.\n\n### The 50/30/20 rule\n\nThe simplest framework that works for most people:\n\n- **50% Needs** rent, utilities, groceries, transport, insurance, minimum debt payments.\n- **30% Wants** eating out, streaming, hobbies, holidays, the fun stuff.\n- **20% Savings and extra debt payments** emergency fund, investing, paying balances down faster.\n\nThese are guide rails, not laws. If your rent eats 60% in an expensive city, adjust the wants category first never the savings habit entirely.\n\n### Make it stick\n\n1. **Track one month first.** You cannot plan what you have not measured.\n2. **Automate the 20%.** Move savings on payday, before you can spend it.\n3. **Review monthly, not daily.** A budget is a steering wheel, not a speedometer.\n\n> Try it now: the **budgeting calculator** in the Tools section turns your income into a 50/30/20 plan in seconds and lets you customise the categories."
         },
         {
           "id": "m1l2",
           "title": "Emergency Funds and Safety Nets",
           "type": "reading",
           "durationMin": 7,
-          "content": "## The buffer between you and disaster\n\nAn **emergency fund** is cash set aside for the surprises that are not really surprises: the car repair, the vet bill, the sudden job loss. It is the difference between an inconvenience and a crisis.\n\n### How much is enough?\n\nThe classic target is **3 to 6 months of essential expenses** — your needs number from the budget, not your full income. Start smaller if that feels impossible: the first $500 or $1,000 covers most common emergencies and already changes your life.\n\n### Where to keep it\n\n- **Separate from your daily account** — out of sight, out of mind.\n- **Instantly accessible** — this is insurance, not an investment. A high-yield savings account is ideal.\n- **Never invested in anything volatile.** The stock market does not care that your boiler just died.\n\n### Build it on autopilot\n\nSet an automatic transfer for the day after payday, even if it is small. The habit matters more than the amount at first. When the fund is used, refill it before resuming other goals.\n\n> **Order of operations:** small starter fund → pay off high-interest debt → full 3–6 month fund → investing. We cover the debt step next."
+          "content": "## The buffer between you and disaster\n\nAn **emergency fund** is cash set aside for the surprises that are not really surprises: the car repair, the vet bill, the sudden job loss. It is the difference between an inconvenience and a crisis.\n\n### How much is enough?\n\nThe classic target is **3 to 6 months of essential expenses** your needs number from the budget, not your full income. Start smaller if that feels impossible: the first $500 or $1,000 covers most common emergencies and already changes your life.\n\n### Where to keep it\n\n- **Separate from your daily account** out of sight, out of mind.\n- **Instantly accessible** this is insurance, not an investment. A high-yield savings account is ideal.\n- **Never invested in anything volatile.** The stock market does not care that your boiler just died.\n\n### Build it on autopilot\n\nSet an automatic transfer for the day after payday, even if it is small. The habit matters more than the amount at first. When the fund is used, refill it before resuming other goals.\n\n> **Order of operations:** small starter fund → pay off high-interest debt → full 3–6 month fund → investing. We cover the debt step next."
         },
         {
           "id": "m1l3",
@@ -53,7 +53,7 @@
                 "q": "How big should a full emergency fund be?",
                 "choices": ["Exactly $10,000", "3 to 6 months of essential expenses", "One full year of income", "Whatever is left at month end"],
                 "answer": 1,
-                "explain": "The target is 3–6 months of essential expenses — your needs number, not your income. Start with a small starter fund and build from there."
+                "explain": "The target is 3–6 months of essential expenses your needs number, not your income. Start with a small starter fund and build from there."
               },
               {
                 "q": "Where should an emergency fund live?",
@@ -81,14 +81,14 @@
           "title": "Debt, Interest and How to Escape It",
           "type": "reading",
           "durationMin": 9,
-          "content": "## Interest: working for you or against you\n\nInterest is the price of money. When you save, the bank pays it to you. When you borrow, you pay it — and on credit cards it can run above 20% a year, quietly compounding against you every single month.\n\n### Good debt, bad debt, and the honest version\n\nYou will hear debt called good or bad. The honest test is simpler: **what does it buy, and what does it cost?** A low-rate loan for an asset that grows or a skill that raises your income can make sense. A 24% credit card balance funding things you barely remember buying never does.\n\n### Two payoff strategies that work\n\n**The avalanche** — pay minimums on everything, and throw every spare dollar at the **highest interest rate** first. Mathematically optimal; saves the most money.\n\n**The snowball** — attack the **smallest balance** first for a quick win, then roll that payment into the next. Slightly more expensive, but the momentum keeps many people going.\n\nThe best method is the one you will actually finish. Pick one, automate the payments, and stop adding new debt while you dig out.\n\n> **Red flag:** if minimum payments are all you can manage, the debt is compounding faster than you are paying it. That is the moment to cut spending hard or seek free, nonprofit debt counselling — not a consolidation loan with fees."
+          "content": "## Interest: working for you or against you\n\nInterest is the price of money. When you save, the bank pays it to you. When you borrow, you pay it and on credit cards it can run above 20% a year, quietly compounding against you every single month.\n\n### Good debt, bad debt, and the honest version\n\nYou will hear debt called good or bad. The honest test is simpler: **what does it buy, and what does it cost?** A low-rate loan for an asset that grows or a skill that raises your income can make sense. A 24% credit card balance funding things you barely remember buying never does.\n\n### Two payoff strategies that work\n\n**The avalanche** pay minimums on everything, and throw every spare dollar at the **highest interest rate** first. Mathematically optimal; saves the most money.\n\n**The snowball** attack the **smallest balance** first for a quick win, then roll that payment into the next. Slightly more expensive, but the momentum keeps many people going.\n\nThe best method is the one you will actually finish. Pick one, automate the payments, and stop adding new debt while you dig out.\n\n> **Red flag:** if minimum payments are all you can manage, the debt is compounding faster than you are paying it. That is the moment to cut spending hard or seek free, nonprofit debt counselling not a consolidation loan with fees."
         },
         {
           "id": "m2l2",
           "title": "Pay Yourself First",
           "type": "reading",
           "durationMin": 7,
-          "content": "## The one habit that builds wealth\n\nMost people save what is left after spending. Savers flip it: they spend what is left after saving. **Pay yourself first** means moving money to savings the moment income arrives — before rent, before groceries, before anything fun.\n\n### Why the order matters\n\nWillpower is unreliable; systems are not. When saving is the first transaction of the month, it happens every month. When it is the last, it happens never.\n\n### Put it on rails\n\n1. **Decide the percentage.** Start with anything — even 5% — and raise it with every pay increase.\n2. **Automate a transfer** for the day after payday into a separate account.\n3. **Increase once a year.** You will not miss money you never saw.\n\n### Then let compounding work\n\nOnce your emergency fund is full, that automated money can start working harder — and that is where **compound growth** comes in. Our Investing 101 course shows exactly how small, regular amounts snowball over decades. Try the **compound interest calculator** in Tools to see your own numbers."
+          "content": "## The one habit that builds wealth\n\nMost people save what is left after spending. Savers flip it: they spend what is left after saving. **Pay yourself first** means moving money to savings the moment income arrives before rent, before groceries, before anything fun.\n\n### Why the order matters\n\nWillpower is unreliable; systems are not. When saving is the first transaction of the month, it happens every month. When it is the last, it happens never.\n\n### Put it on rails\n\n1. **Decide the percentage.** Start with anything even 5% and raise it with every pay increase.\n2. **Automate a transfer** for the day after payday into a separate account.\n3. **Increase once a year.** You will not miss money you never saw.\n\n### Then let compounding work\n\nOnce your emergency fund is full, that automated money can start working harder and that is where **compound growth** comes in. Our Investing 101 course shows exactly how small, regular amounts snowball over decades. Try the **compound interest calculator** in Tools to see your own numbers."
         },
         {
           "id": "m2l3",
@@ -102,13 +102,13 @@
                 "q": "The avalanche method targets which debt first?",
                 "choices": ["The smallest balance", "The highest interest rate", "The newest loan", "The one with the scariest letters"],
                 "answer": 1,
-                "explain": "Avalanche = highest rate first, which saves the most money. Snowball = smallest balance first, which builds momentum. Both work — pick the one you will finish."
+                "explain": "Avalanche = highest rate first, which saves the most money. Snowball = smallest balance first, which builds momentum. Both work pick the one you will finish."
               },
               {
                 "q": "What does pay yourself first actually mean?",
                 "choices": ["Buy something nice on payday", "Move money to savings the moment income arrives, before spending", "Pay all bills late", "Take a salary advance"],
                 "answer": 1,
-                "explain": "Saving is the first transaction of the month, automated, so it happens every month — not whatever is left over."
+                "explain": "Saving is the first transaction of the month, automated, so it happens every month not whatever is left over."
               },
               {
                 "q": "Why is a 24% credit card balance so dangerous?",
@@ -120,7 +120,7 @@
                 "q": "What should you do once your emergency fund is full?",
                 "choices": ["Stop saving entirely", "Redirect the automated savings toward investing and long-term goals", "Lend it all to friends", "Keep it all in a checking account forever"],
                 "answer": 1,
-                "explain": "The habit is already built — redirect the same automated money toward growth. That is the bridge from personal finance to investing."
+                "explain": "The habit is already built redirect the same automated money toward growth. That is the bridge from personal finance to investing."
               }
             ]
           }

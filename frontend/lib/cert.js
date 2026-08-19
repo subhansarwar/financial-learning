@@ -1,5 +1,5 @@
 // lib/cert.js
-// Finance Platform Demo — certificate generator (client-side PDF via jsPDF)
+// Finance Platform Demo certificate generator (client-side PDF via jsPDF)
 
 "use client";
 
