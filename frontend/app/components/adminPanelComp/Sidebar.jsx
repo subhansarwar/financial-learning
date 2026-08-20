@@ -83,42 +83,28 @@ export default function Sidebar({
             >
                 {/* ===== HEADER ===== */}
                 <div
-                    className={`flex pb-4 pt-5 ${
+                    className={`flex items-center pb-4 pt-5 ${
                         isCollapsed
-                            ? "flex-col items-center gap-3 px-2"
-                            : "items-center justify-between gap-2 px-4"
+                            ? "justify-center gap-2 px-4"
+                            : "justify-between gap-3 px-3"
                     }`}
                 >
-                    {!isCollapsed ? (
-                        <div
-                        
-                            className="flex min-w-0 items-center gap-2.5"
-                            onClick={() => onTabChange("dashboard")}
-                        >
-                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#47735B]">
-                                <LayoutDashboard
-                                    className="h-4.5 w-4.5 text-white"
-                                    strokeWidth={2.25}
-                                />
-                            </div>
+                    <div className={`flex min-w-0 items-center gap-2.5 ${isCollapsed ? "justify-center" : ""}`}>
+                        {!isCollapsed && (
+                            <>
+                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#47735B]">
+                                    <LayoutDashboard
+                                        className="h-4.5 w-4.5 text-white"
+                                        strokeWidth={2.25}
+                                    />
+                                </div>
 
-                            <span className="truncate text-base font-extrabold tracking-tight text-white">
-                                TheEcoLens<span className="text-brand-light">.</span>
-                            </span>
-                        </div>
-                    ) : (
-                        <Link
-                            href="/admin"
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#47735B]"
-                            onClick={() => onTabChange("dashboard")}
-                            aria-label="TheEcoLens"
-                        >
-                            <LayoutDashboard
-                                className="h-4.5 w-4.5 text-white"
-                                strokeWidth={2.25}
-                            />
-                        </Link>
-                    )}
+                                <span className="truncate text-base font-extrabold tracking-tight text-white">
+                                    TheEcoLens<span className="text-brand-light">.</span>
+                                </span>
+                            </>
+                        )}
+                    </div>
 
                     {/* ===== DESKTOP COLLAPSE ===== */}
                     <button
