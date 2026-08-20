@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { GraduationCap } from "lucide-react";
+import FooterWave from "../../public/assets/footerImages/PaternWaveFooter.webp";
 
-// lucide-react dropped brand/logo glyphs (Facebook, Instagram, Twitter,
-// LinkedIn) in newer releases, so these are small local SVG stand-ins 
-// same 24x24 viewBox / stroke-less fill style, sized the same as lucide icons.
+// Social Icons
 function FacebookIcon(props) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -73,43 +73,52 @@ export default function Footer() {
     ];
 
     return (
-        <footer className="relative mt-6 overflow-hidden rounded-t-[17px] bg-ink text-white sm:rounded-t-[17px]">
-            {/* Decorative wavy line-flow background, concentrated top-right,
-                fading out toward the bottom-left. Purely decorative. */}
-            <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-                <svg
-                    className="absolute -right-24 -top-24 h-[520px] w-[820px] opacity-[0.10] sm:opacity-[0.14]"
-                    viewBox="0 0 820 520"
-                    fill="none"
-                    preserveAspectRatio="xMidYMid slice"
-                >
-                    <defs>
-                        <linearGradient id="flFade" x1="1" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="white" stopOpacity="1" />
-                            <stop offset="55%" stopColor="white" stopOpacity="0.5" />
-                            <stop offset="100%" stopColor="white" stopOpacity="0" />
-                        </linearGradient>
-                        <mask id="flMask">
-                            <rect x="0" y="0" width="820" height="520" fill="url(#flFade)" />
-                        </mask>
-                    </defs>
-                    <g stroke="white" strokeWidth="1" mask="url(#flMask)">
-                        <path d="M-40 480 C 160 380, 220 300, 160 200 S 40 20, 220 -40" />
-                        <path d="M0 500 C 200 400, 260 320, 200 220 S 80 40, 260 -20" />
-                        <path d="M40 520 C 240 420, 300 340, 240 240 S 120 60, 300 0" />
-                        <path d="M80 540 C 280 440, 340 360, 280 260 S 160 80, 340 20" />
-                        <path d="M120 560 C 320 460, 380 380, 320 280 S 200 100, 380 40" />
-                        <path d="M160 580 C 360 480, 420 400, 360 300 S 240 120, 420 60" />
-                        <path d="M200 600 C 400 500, 460 420, 400 320 S 280 140, 460 80" />
-                        <path d="M240 620 C 440 520, 500 440, 440 340 S 320 160, 500 100" />
-                        <path d="M280 640 C 480 540, 540 460, 480 360 S 360 180, 540 120" />
-                        <path d="M320 660 C 520 560, 580 480, 520 380 S 400 200, 580 140" />
-                    </g>
-                </svg>
+        <footer className="relative mt-6 overflow-hidden rounded-t-[28px] bg-[#0c0c0e] text-white sm:rounded-t-[32px]">
+            {/* Wave Pattern - object-cover naturally fills the full width
+                with no horizontal cropping here (container is much wider
+                than the image), only clipping the excess height off the
+                bottom via object-top — same look as the reference. */}
+            <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-[220px] w-full overflow-hidden sm:h-[280px] md:h-[320px] lg:h-[380px]"
+                aria-hidden="true"
+            >
+                <Image
+                    src={FooterWave}
+                    alt=""
+                    fill
+                    priority={false}
+                    sizes="100vw"
+                    className="object-cover object-top invert brightness-90"
+                />
             </div>
 
-            <div className="relative mx-auto px-5 pb-8 pt-12 sm:px-8 sm:pt-16 lg:px-10">
-                <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            <div className="relative mx-6 px-5 sm:px-8 lg:px-10">
+                {/* ===== CTA ===== */}
+                <div className="mx-auto max-w-2xl pt-12 text-center sm:pt-14 md:pt-16 lg:pt-20">
+                    <h2 className="text-[1.8rem] font-extrabold leading-[1.15] tracking-tight sm:text-[2.2rem] md:text-[2.5rem] lg:text-[2.75rem]">
+                        Ready to Start Your Courses
+                        <br />
+                        and Grow Your Career
+                    </h2>
+                    <p className="mx-auto mt-3 max-w-[48ch] text-sm font-medium text-white/60 sm:text-base">
+                        Experts teach you everything from the comfort of your own home.
+                        Improve your career today by enrolling in excellent courses at
+                        affordable prices.
+                    </p>
+                    <Link
+                        href="/catalog"
+                        className="mt-6 inline-flex items-center gap-2 rounded-full bg-teal-400 px-6 py-2.5 text-sm font-bold text-ink shadow-[0_10px_28px_-8px_rgba(45,212,191,0.5)] transition-all duration-300 hover:scale-105 hover:bg-teal-300 hover:shadow-[0_14px_34px_-8px_rgba(45,212,191,0.6)] sm:px-7 sm:py-3"
+                    >
+                        Get Started
+                    </Link>
+                </div>
+
+                {/* ===== "Featured in" strip ===== */}
+                <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 pb-10 sm:mt-14 sm:pb-12 md:mt-16 md:pb-14">
+                </div>
+
+                {/* ===== Link columns ===== */}
+                <div className="grid grid-cols-1 gap-8 border-t border-white/10 pb-8 pt-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                     <div>
                         <Link
                             href="/"
@@ -120,7 +129,7 @@ export default function Footer() {
                             </span>
                             Finance Platform
                         </Link>
-                        <p className="mt-3.5 max-w-[36ch] text-sm font-medium text-white/60">
+                        <p className="mt-3 max-w-[36ch] text-sm font-medium text-white/60">
                             Free, plain-language education in microfinance and sustainable
                             finance. No paywalls, no jargon.
                         </p>
@@ -128,12 +137,12 @@ export default function Footer() {
 
                     <div>
                         <h4 className="text-xs font-bold uppercase tracking-wider text-white/40">Learn</h4>
-                        <div className="mt-4 flex flex-col gap-2.5">
+                        <div className="mt-3 flex flex-col gap-2">
                             {learnLinks.map(([label, href]) => (
                                 <Link
                                     key={href}
                                     href={href}
-                                    className="text-sm font-medium text-white/70 transition-colors hover:text-white"
+                                    className="text-sm font-medium text-white/70 transition-colors w-28 hover:text-white"
                                 >
                                     {label}
                                 </Link>
@@ -143,12 +152,12 @@ export default function Footer() {
 
                     <div>
                         <h4 className="text-xs font-bold uppercase tracking-wider text-white/40">Explore</h4>
-                        <div className="mt-4 flex flex-col gap-2.5">
+                        <div className="mt-3 flex flex-col gap-2 w-100">
                             {exploreLinks.map(([label, href]) => (
                                 <Link
                                     key={href}
                                     href={href}
-                                    className="text-sm font-medium text-white/70 transition-colors hover:text-white"
+                                    className="text-sm font-medium text-white/70 transition-colors w-28 hover:text-white"
                                 >
                                     {label}
                                 </Link>
@@ -158,12 +167,12 @@ export default function Footer() {
 
                     <div>
                         <h4 className="text-xs font-bold uppercase tracking-wider text-white/40">Platform</h4>
-                        <div className="mt-4 flex flex-col gap-2.5">
+                        <div className="mt-3 flex flex-col gap-2 w-100">
                             {platformLinks.map(([label, href]) => (
                                 <Link
                                     key={href}
                                     href={href}
-                                    className="text-sm font-medium text-white/70 transition-colors hover:text-white"
+                                    className="text-sm font-medium text-white/70 transition-colors w-30 hover:text-white"
                                 >
                                     {label}
                                 </Link>
@@ -172,19 +181,20 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-xs font-medium leading-relaxed text-white/50 sm:text-sm">
+                {/* Disclaimer */}
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-xs font-medium leading-relaxed text-white/50 sm:p-5 sm:text-sm">
                     <strong className="text-white/80">Education, not advice.</strong> The
-                    Finance Platform Demo provides general financial education only.
+                    Finance Platform provides general financial education only.
                     Nothing on this site is financial, investment, legal or tax advice,
                     and no content is a recommendation to buy or sell any product.
                     Always consider your own circumstances and, where needed, consult a
                     licensed professional in your country.
                 </div>
 
-                <div className="mt-8 flex flex-col-reverse items-center gap-5 border-t border-white/10 pt-6 sm:flex-row sm:justify-between">
+                {/* ===== Bottom bar ===== */}
+                <div className="mt-6 flex flex-col-reverse items-center gap-4 border-t border-white/10 py-5 sm:flex-row sm:justify-between">
                     <p className="text-xs font-medium text-white/45 sm:text-sm">
-                        © {currentYear} Finance Platform Demo. Free forever built for
-                        learners everywhere.
+                        ©{currentYear} Finance Platform. All rights reserved.
                     </p>
                     <div className="flex items-center gap-2">
                         {socialLinks.map(([label, href, Icon]) => (
@@ -194,9 +204,9 @@ export default function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={label}
-                                className="group grid h-9 w-9 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-white/60 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10 hover:text-white hover:shadow-[0_6px_16px_-6px_rgba(0,0,0,0.5)]"
+                                className="group grid h-8 w-8 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-white/60 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10 hover:text-white hover:shadow-[0_6px_16px_-6px_rgba(0,0,0,0.5)] sm:h-9 sm:w-9"
                             >
-                                <Icon className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
+                                <Icon className="h-3.5 w-3.5 transition-transform duration-200 group-hover:scale-110 sm:h-4 sm:w-4" />
                             </a>
                         ))}
                     </div>

@@ -1,8 +1,9 @@
-// app/admin/components/AdminLogin.jsx
+// app/components/adminPanelComp/AdminLogin.jsx
 "use client";
 
 import { useState } from "react";
 import toast from "react-hot-toast";
+import Image from "next/image";
 import {
     Shield,
     Lock,
@@ -18,15 +19,18 @@ import {
     ShieldCheck,
     LockKeyhole,
 } from "lucide-react";
+import loginBg from '../../../public/assets/loginPageImage/financial-information.webp';
 
 export default function AdminLogin({ onLogin }) {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
+        setError("");
 
         // Demo admin password
         if (password === "admin123") {
@@ -37,19 +41,35 @@ export default function AdminLogin({ onLogin }) {
                 setLoading(false);
             }, 500);
         } else {
+            setError("Invalid password. Please try again.");
             toast.error("Invalid password. Please try again.");
             setLoading(false);
         }
     };
 
     return (
-        <div className="flex min-h-[calc(100vh-160px)] items-center justify-center bg-cream py-12 sm:py-16">
-            <div className="w-full max-w-md px-4 sm:px-0">
-                <div className="rounded-xl2 border border-line bg-card p-6 shadow-card sm:p-8">
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-cream py-12 sm:py-16">
+            {/* ===== Background Image ===== */}
+            <div className="absolute inset-0 z-0">
+                <Image
+                    src={loginBg}
+                    alt="Admin Login Background"
+                    fill
+                    className="object-cover"
+                    priority
+                    quality={100}
+                />
+                {/* Dark Overlay for better readability */}
+                <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+            </div>
+
+            {/* ===== Content ===== */}
+            <div className="relative z-10 w-full max-w-md px-4 sm:px-0">
+                <div className="rounded-xl2 border border-white/10 bg-white/95 p-6 shadow-card backdrop-blur-sm sm:p-8">
                     {/* Header */}
                     <div className="mb-6 text-center">
-                        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-soft">
-                            <Shield className="h-8 w-8 text-brand-deep" strokeWidth={2} />
+                        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#47735B]-soft">
+                            <Shield className="h-8 w-8 text-[#47735B]" strokeWidth={2} />
                         </div>
                         <h1 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
                             Admin Access
@@ -94,11 +114,19 @@ export default function AdminLogin({ onLogin }) {
                             </div>
                         </div>
 
+                        {/* Error Message */}
+                        {error && (
+                            <div className="flex items-start gap-2 rounded-lg bg-rose-50 p-3">
+                                <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-rose-500" strokeWidth={2} />
+                                <p className="text-sm text-rose-700">{error}</p>
+                            </div>
+                        )}
+
                         {/* Submit Button */}
                         <button
                             type="submit"
                             disabled={loading || !password.trim()}
-                            className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-deep px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#241f6b] disabled:opacity-60 disabled:cursor-not-allowed"
+                            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#47735B] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#47735B] disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                             {loading ? (
                                 <>
