@@ -1,26 +1,32 @@
-// app/admin/components/AdminClient.jsx
+// app/components/adminPanelComp/AdminClient.jsx
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./AdminDashboard";
+import Sidebar from "./Sidebar";
 import { Loader2 } from "lucide-react";
 
 export default function AdminClient({ initialCourses, initialTopics }) {
+    const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [courses, setCourses] = useState(initialCourses);
     const [topics, setTopics] = useState(initialTopics);
+    const [activeTab, setActiveTab] = useState("dashboard");
 
     useEffect(() => {
         if (typeof window !== "undefined") {
             const token = sessionStorage.getItem("fl_admin");
             if (token) {
                 setIsAuthenticated(true);
+            } else {
+                router.push("/admin/login");
             }
         }
         setLoading(false);
-    }, []);
+    }, [router]);
 
     const handleLogin = () => {
         setIsAuthenticated(true);
@@ -31,7 +37,9 @@ export default function AdminClient({ initialCourses, initialTopics }) {
             sessionStorage.removeItem("fl_admin");
         }
         setIsAuthenticated(false);
+        // router.push("/");
     };
+
     const refreshData = async () => {
         try {
             const response = await fetch("/api/admin/refresh");
@@ -47,26 +55,36 @@ export default function AdminClient({ initialCourses, initialTopics }) {
 
     if (loading) {
         return (
-            <div className="flex min-h-[calc(100vh-160px)] items-center justify-center bg-cream py-20">
+            <div className="flex min-h-screen items-center justify-center bg-cream">
                 <div className="flex flex-col items-center gap-3">
                     <Loader2 className="h-10 w-10 animate-spin text-brand" strokeWidth={2} />
+                    <p className="text-sm text-muted">Loading admin panel...</p>
                 </div>
             </div>
         );
     }
 
+    if (!isAuthenticated) {
+        return <AdminLogin onLogin={handleLogin} />;
+    }
+
     return (
-        <>
-            {!isAuthenticated ? (
-                <AdminLogin onLogin={handleLogin} />
-            ) : (
+        <div className="flex min-h-screen w-full">
+            <Sidebar
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+                onLogout={handleLogout}
+                courses={courses}
+                topics={topics}
+            />
+            <div className="flex-1 overflow-x-hidden">
                 <AdminDashboard
+                    activeTab={activeTab}
                     courses={courses}
                     topics={topics}
-                    onLogout={handleLogout}
                     onDataChange={refreshData}
                 />
-            )}
-        </>
+            </div>
+        </div>
     );
 }

@@ -46,37 +46,33 @@
     -ms-overflow-style: none;
   }
 
-  html::-webkit-scrollbar {
+  /* ✅ Scrollbar completely hidden but still works */
+  /* For Firefox */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  /* For Chrome, Edge, Safari */
+  *::-webkit-scrollbar {
     display: none;
+    width: 0;
+    height: 0;
   }
 
-  body {
-    background-color: var(--color-cream);
-    color: var(--color-ink);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* If you want to keep scrollbar in specific areas only */
+  /* .custom-scrollbar {
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
   }
-
-  ::selection {
-    background: rgba(67, 56, 202, .18);
+  .custom-scrollbar::-webkit-scrollbar {
+    display: block;
+    width: 6px;
   }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: var(--color-cream);
-  }
-
-  ::-webkit-scrollbar-thumb {
+  .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #d6d9ec;
     border-radius: 99px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #b9bede;
-  }
+  } */
 }
 
 @layer utilities {
