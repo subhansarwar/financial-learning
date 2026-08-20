@@ -6,19 +6,16 @@ class Settings(BaseSettings):
     APP_NAME: str = "Financial Learning Platform"
     DATABASE_URL: str
     DATABASE_ECHO: bool = False
-
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     REFRESH_TOKEN_EXPIRE_DAYS: int
-
     REDIS_HOST: str
     REDIS_PORT: int
     REDIS_DB: int
     REDIS_PASSWORD: str | None = None
     REDIS_KEY_PREFIX: str
-
-
+    
     @property
     def REDIS_URL(self) -> str:
         auth = f":{quote(self.REDIS_PASSWORD)}@" if self.REDIS_PASSWORD else ""
@@ -50,6 +47,16 @@ class Settings(BaseSettings):
     SUPABASE_URL: str | None = None
     SUPABASE_SERVICE_ROLE_KEY: str | None = None
     SUPABASE_AVATAR_BUCKET: str = "avatars"
+    SUPABASE_CERTIFICATE_BUCKET: str = "certificates"
+    SUPABASE_PUBLICATION_BUCKET: str = "publications"
+
+    # Course catalog
+    COURSE_CATALOG_PAGE_SIZE: int = 20
+
+    # Student publications
+    PUBLICATION_CATALOG_PAGE_SIZE: int = 20
+    PUBLICATION_MAX_SIZE_MB: int = 20
+    PUBLICATION_ALLOWED_CONTENT_TYPES: tuple[str, ...] = ("application/pdf",)
 
     # Social login — optional, respective endpoint 503s if unset
     GOOGLE_CLIENT_ID: str | None = None

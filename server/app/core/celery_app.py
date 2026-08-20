@@ -1,6 +1,5 @@
 # app/core/celery_app.py
 import logging
-
 from celery import Celery
 from celery.schedules import crontab
 from app.core.config import settings
