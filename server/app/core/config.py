@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     REDIS_DB: int
     REDIS_PASSWORD: str | None = None
     REDIS_KEY_PREFIX: str
+
     
     @property
     def REDIS_URL(self) -> str:
