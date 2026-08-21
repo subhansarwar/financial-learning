@@ -8,7 +8,7 @@ import { emptyCaseDraft } from "./dummyCaseStudies";
 import Image from "next/image";
 
 const inputClass =
-    "w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted focus:border-brand/50 focus:outline-none focus:ring-4 focus:ring-brand/15";
+    "w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15";
 
 function Field({ label, children, required = false }) {
     return (
@@ -338,7 +338,7 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                                 ref={dropRef}
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
-                                className="relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-xl2 border-2 border-dashed border-brand/40 bg-brand-soft/20 p-8 text-center transition-colors hover:bg-brand-soft/30"
+                                className="relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-xl2 border-2 border-dashed border-[#365B50]/40 bg-[#365B50]-soft/20 p-8 text-center transition-colors hover:bg-[#365B50]-soft/30"
                                 onClick={() => fileInputRef.current?.click()}
                             >
                                 <input
@@ -349,8 +349,8 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                                     className="hidden"
                                     onChange={handleFileSelect}
                                 />
-                                <Upload className="mb-3 h-12 w-12 text-brand/60" strokeWidth={1.5} />
-                                <p className="text-base font-bold text-brand-deep">
+                                <Upload className="mb-3 h-12 w-12 text-[#365B50]/60" strokeWidth={1.5} />
+                                <p className="text-base font-bold text-[#365B50]-deep">
                                     Drag & drop images here
                                 </p>
                                 <p className="mt-1 text-sm text-muted">

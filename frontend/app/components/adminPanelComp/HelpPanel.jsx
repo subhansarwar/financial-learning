@@ -3,38 +3,26 @@
 
 import {
     Award,
+    BookMarked,
     BookOpen,
     CheckCircle2,
     Clock,
     Database,
-    Download,
+    FileCheck,
     FileText,
+    Globe,
     HelpCircle,
-    Layers,
+    ImageIcon,
+    Leaf,
     Lightbulb,
-    ListChecks,
-    PlayCircle,
-    RefreshCw,
+    PenTool,
+    Settings,
     Shield,
     Sparkles,
     Tags,
-    Zap,
-    GraduationCap,
     Users,
-    BarChart3,
-    Leaf,
-    FileCheck,
-    FolderOpen,
-    ImageIcon,
     Video,
-    PenTool,
-    Settings,
-    Globe,
-    TrendingUp,
-    ShieldCheck,
-    BookMarked,
-    ClipboardList,
-    Briefcase,
+    Zap
 } from "lucide-react";
 
 export default function HelpPanel() {
@@ -77,7 +65,7 @@ export default function HelpPanel() {
                 "Click 'New Course' to create a course",
                 "Fill in all required fields marked with *",
                 "Add modules and lessons to build curriculum",
-                "Upload images and videos for course materials"
+                "Upload images and videos for course materials",
             ],
         },
         {
@@ -87,7 +75,7 @@ export default function HelpPanel() {
                 "All fields must be filled before publishing",
                 "Publish button enables only when form is valid",
                 "Case studies are published immediately",
-                "Research papers go through approval process"
+                "Research papers go through approval process",
             ],
         },
         {
@@ -97,7 +85,7 @@ export default function HelpPanel() {
                 "View, edit, or delete any content",
                 "Search and filter through tables",
                 "Sort columns by clicking headers",
-                "View details in modal popups"
+                "View details in modal popups",
             ],
         },
     ];
@@ -132,9 +120,9 @@ export default function HelpPanel() {
     return (
         <div className="space-y-8">
             {/* ===== HEADER ===== */}
-            <div className="flex items-start gap-4 border-b border-line-soft pb-5">
-                <div className="rounded-xl bg-brand-soft p-3">
-                    <HelpCircle className="h-7 w-7 text-brand-deep" strokeWidth={2} />
+            <div className="flex items-start gap-4 border-b border-[#365B50]/10 pb-5">
+                <div className="rounded-xl bg-[#365B50]/10 p-3">
+                    <HelpCircle className="h-7 w-7 text-[#365B50]" strokeWidth={2} />
                 </div>
                 <div>
                     <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
@@ -147,16 +135,16 @@ export default function HelpPanel() {
             </div>
 
             {/* ===== OVERVIEW ===== */}
-            <div className="rounded-xl2 border border-brand/20 bg-brand-soft/20 p-5 sm:p-6">
+            <div className="rounded-xl2 border border-[#365B50]/20 bg-[#365B50]/10 p-5 sm:p-6">
                 <div className="flex items-start gap-3">
-                    <div className="rounded-full bg-brand-soft p-2">
-                        <Database className="h-5 w-5 text-brand-deep" strokeWidth={2} />
+                    <div className="rounded-full bg-[#365B50]/20 p-2">
+                        <Database className="h-5 w-5 text-[#365B50]" strokeWidth={2} />
                     </div>
                     <div>
                         <h3 className="font-bold text-ink">How Publishing Works</h3>
                         <p className="mt-1 text-sm text-ink-2">
                             The site ships with starter content. Anything you save here{" "}
-                            <span className="font-bold text-brand-deep">overrides</span> the built-in
+                            <span className="font-bold text-[#365B50]">overrides</span> the built-in
                             content instantly no rebuild, no developers, no downtime. All changes
                             are saved locally and applied immediately.
                         </p>
@@ -176,7 +164,7 @@ export default function HelpPanel() {
                         return (
                             <div
                                 key={i}
-                                className="group rounded-xl2 border border-line bg-card p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-card"
+                                className="group rounded-xl2 border border-[#365B50]/10 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#365B50]/30 hover:shadow-card"
                             >
                                 <div className="flex items-start gap-3">
                                     <div className={`rounded-full ${feature.bg} p-2.5`}>
@@ -203,18 +191,18 @@ export default function HelpPanel() {
                     {quickGuides.map((guide, i) => (
                         <div
                             key={i}
-                            className="rounded-xl2 border border-line bg-card p-4 transition-all hover:border-brand/20 hover:shadow-card"
+                            className="rounded-xl2 border border-[#365B50]/10 bg-white p-4 transition-all hover:border-[#365B50]/20 hover:shadow-card"
                         >
                             <div className="mb-3 flex items-center gap-2">
-                                <div className="rounded-full bg-brand-soft p-1.5">
-                                    <guide.icon className="h-4 w-4 text-brand-deep" strokeWidth={2} />
+                                <div className="rounded-full bg-[#365B50]/10 p-1.5">
+                                    <guide.icon className="h-4 w-4 text-[#365B50]" strokeWidth={2} />
                                 </div>
                                 <h4 className="font-bold text-ink">{guide.title}</h4>
                             </div>
                             <ul className="space-y-1.5">
                                 {guide.items.map((item, idx) => (
                                     <li key={idx} className="flex items-start gap-2 text-sm text-ink-2">
-                                        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand/50" />
+                                        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#365B50]/50" />
                                         {item}
                                     </li>
                                 ))}
@@ -227,7 +215,7 @@ export default function HelpPanel() {
             {/* ===== BEST PRACTICES ===== */}
             <div>
                 <h3 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-muted">
-                    <Lightbulb className="h-4 w-4 text-amber-500" strokeWidth={2} />
+                    <Lightbulb className="h-4 w-4 text-[#47735B]" strokeWidth={2} />
                     Best Practices
                 </h3>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -236,9 +224,9 @@ export default function HelpPanel() {
                         return (
                             <div
                                 key={i}
-                                className="flex items-start gap-3 rounded-lg border border-line-soft bg-cream-2/30 px-4 py-3 transition-all hover:border-brand/20"
+                                className="flex items-start gap-3 rounded-lg border border-[#365B50]/10 bg-[#FFF7ED] px-4 py-3 transition-all hover:border-[#365B50]/20"
                             >
-                                <Icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" strokeWidth={2} />
+                                <Icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#365B50]" strokeWidth={2} />
                                 <p className="text-sm text-ink-2">{practice.text}</p>
                             </div>
                         );
@@ -247,36 +235,36 @@ export default function HelpPanel() {
             </div>
 
             {/* ===== QUICK TIPS ===== */}
-            <div className="rounded-xl2 border border-accent-soft bg-accent-soft/20 p-5 sm:p-6">
+            <div className="rounded-xl2 border border-[#365B50]/20 bg-[#365B50]/10 p-5 sm:p-6">
                 <div className="flex items-start gap-3">
-                    <div className="rounded-full bg-accent-soft p-2.5">
-                        <Zap className="h-5 w-5 text-accent-deep" strokeWidth={2} />
+                    <div className="rounded-full bg-[#47735B]/20 p-2.5">
+                        <Zap className="h-5 w-5 text-[#47735B]" strokeWidth={2} />
                     </div>
                     <div className="flex-1">
-                        <h4 className="font-bold text-accent-deep">Pro Tips</h4>
+                        <h4 className="font-bold text-[#47735B]">Pro Tips</h4>
                         <ul className="mt-2 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                             <li className="flex items-start gap-2 text-sm text-ink-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#47735B]" />
                                 Use <span className="font-mono rounded bg-white/50 px-1.5 py-0.5 text-xs font-bold">## heading</span> for section titles
                             </li>
                             <li className="flex items-start gap-2 text-sm text-ink-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#47735B]" />
                                 Set pass marks between <span className="font-bold">60-80%</span> for quizzes
                             </li>
                             <li className="flex items-start gap-2 text-sm text-ink-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#47735B]" />
                                 Embed videos using the full <span className="font-mono rounded bg-white/50 px-1.5 py-0.5 text-xs font-bold">embed</span> URL
                             </li>
                             <li className="flex items-start gap-2 text-sm text-ink-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#47735B]" />
                                 Always include <span className="font-bold">outcomes</span> so learners know what they'll achieve
                             </li>
                             <li className="flex items-start gap-2 text-sm text-ink-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#47735B]" />
                                 Upload images in <span className="font-bold">JPG, PNG, WEBP</span> format
                             </li>
                             <li className="flex items-start gap-2 text-sm text-ink-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
+                                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#47735B]" />
                                 Use <span className="font-bold">drag & drop</span> for faster image uploads
                             </li>
                         </ul>
@@ -285,16 +273,16 @@ export default function HelpPanel() {
             </div>
 
             {/* ===== FOOTER NOTE ===== */}
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl2 border border-line bg-card p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl2 border border-[#365B50]/10 bg-white p-4">
                 <div className="flex items-center gap-2 text-xs text-muted">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" strokeWidth={2} />
+                    <CheckCircle2 className="h-4 w-4 text-[#47735B]" strokeWidth={2} />
                     <span>
                         All changes are saved locally. Use the{" "}
-                        <span className="font-bold text-ink">Download JSON</span> button to backup your work.
+                        <span className="font-bold text-[#365B50]">Download JSON</span> button to backup your work.
                     </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted">
-                    <Globe className="h-3.5 w-3.5" strokeWidth={2} />
+                    <Globe className="h-3.5 w-3.5 text-[#365B50]" strokeWidth={2} />
                     <span>Live updates no restart needed</span>
                 </div>
             </div>

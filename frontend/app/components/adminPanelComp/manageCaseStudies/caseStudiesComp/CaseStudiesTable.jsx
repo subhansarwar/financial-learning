@@ -82,7 +82,7 @@ export default function CaseStudiesTable({ caseStudies, onCreateNew, onView, onE
                                 setPage(1);
                             }}
                             placeholder="Search case studies..."
-                            className="w-full rounded-full border border-line bg-cream-2/50 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-brand/50 focus:outline-none focus:ring-4 focus:ring-brand/15 sm:w-56"
+                            className="w-full rounded-full border border-line bg-cream-2/50 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15 sm:w-56"
                         />
                     </div>
                     <button

@@ -90,7 +90,7 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
             onClick={onClose}
         >
             <div
-                className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl2 border border-line bg-card shadow-card-lg animate-in zoom-in-95 duration-200"
+                className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-xl2 border border-line bg-card shadow-card-lg animate-in zoom-in-95 duration-200"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
@@ -108,7 +108,7 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
                         onClick={onClose}
                         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-cream-2 hover:text-ink"
                     >
-                        <X className="h-5 w-5" strokeWidth={2} />
+                        <X className="h-4 w-4" strokeWidth={2} />
                     </button>
                 </div>
 

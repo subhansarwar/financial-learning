@@ -3,23 +3,85 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import apiCall from "../../api/apiClient";
 import {
-    setUser,
-    setToken,
-    setRefreshToken,
-    setSignupToken,
-    setPreferences,
-    setStats,
-    setLoading,
+    logout,
     setError,
     setInitialized,
-    logout,
+    setLoading,
+    setRefreshToken,
+    setSignupToken,
+    setToken,
+    setUser
 } from "./userSlice";
 
 // ============================================
 // AUTH ACTIONS
 // ============================================
 
-// 1. Register/Signup Action
+// 1. Google Login Action
+export const googleLogin = createAsyncThunk(
+    "user/googleLogin",
+    async (_, { dispatch }) => {
+        try {
+            dispatch(setLoading(true));
+            dispatch(setError(null));
+
+            // Simulate Google OAuth flow - will be replaced with actual backend call
+            // For now, we'll simulate a successful login with admin role
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            // Mock successful login response
+            const mockResponse = {
+                success: true,
+                token: "mock-admin-token-12345",
+                refreshToken: "mock-refresh-token-67890",
+                data: {
+                    user: {
+                        id: "admin-1",
+                        name: "Admin User",
+                        email: "admin@financeplatform.com",
+                        role: "admin",
+                        isAdmin: true,
+                        avatar: null,
+                        createdAt: new Date().toISOString(),
+                    }
+                },
+                message: "Admin login successful"
+            };
+
+            // Actual implementation will be:
+            // const res = await apiCall({
+            //     path: "/auth/google",
+            //     method: "post",
+            //     body: { 
+            //         // Google OAuth credentials will be passed here
+            //         // idToken, accessToken, etc.
+            //     },
+            // });
+
+            const res = mockResponse;
+
+            dispatch(setLoading(false));
+
+            if (res?.success === true) {
+                dispatch(setUser(res?.data?.user));
+                dispatch(setToken(res?.token));
+                dispatch(setRefreshToken(res?.refreshToken));
+                dispatch(setInitialized(true));
+                return res;
+            } else {
+                dispatch(setError(res?.message || "Google login failed. Please try again."));
+                return res;
+            }
+        } catch (error) {
+            dispatch(setLoading(false));
+            dispatch(setError(error?.message || "Something went wrong. Please try again."));
+            toast.error(error?.message || "Google login failed. Please try again.");
+            throw error;
+        }
+    }
+);
+
+// 2. Register/Signup Action
 export const registerUser = createAsyncThunk(
     "user/register",
     async (data, { dispatch }) => {
@@ -51,7 +113,7 @@ export const registerUser = createAsyncThunk(
     }
 );
 
-// 2. Login Action
+// 3. Login Action (Email/Password - kept for fallback)
 export const loginUser = createAsyncThunk(
     "user/login",
     async ({ email, password }, { dispatch }) => {
@@ -84,12 +146,12 @@ export const loginUser = createAsyncThunk(
     }
 );
 
-// 3. Logout Action
+// 4. Logout Action
 export const logoutUser = createAsyncThunk(
     "user/logout",
     async (_, { dispatch }) => {
         try {
-            dispatch(setLoading(true));
+            dispatch(setLoading(false));
 
             const res = await apiCall({
                 path: "/auth/logout",
@@ -112,7 +174,7 @@ export const logoutUser = createAsyncThunk(
     }
 );
 
-// 4. Forgot Password Action
+// 5. Forgot Password Action
 export const forgotPassword = createAsyncThunk(
     "user/forgotPassword",
     async (email, { dispatch }) => {
@@ -142,7 +204,7 @@ export const forgotPassword = createAsyncThunk(
     }
 );
 
-// 5. Reset Password Action
+// 6. Reset Password Action
 export const resetPassword = createAsyncThunk(
     "user/resetPassword",
     async ({ token, newPassword }, { dispatch }) => {
@@ -172,7 +234,7 @@ export const resetPassword = createAsyncThunk(
     }
 );
 
-// 6. Verify Email Action
+// 7. Verify Email Action
 export const verifyEmail = createAsyncThunk(
     "user/verifyEmail",
     async (token, { dispatch }) => {
@@ -202,7 +264,7 @@ export const verifyEmail = createAsyncThunk(
     }
 );
 
-// 7. Get Current User Action
+// 8. Get Current User Action
 export const getCurrentUser = createAsyncThunk(
     "user/getCurrentUser",
     async (_, { dispatch }) => {
@@ -232,7 +294,7 @@ export const getCurrentUser = createAsyncThunk(
     }
 );
 
-// 8. Update Profile Action
+// 9. Update Profile Action
 export const updateProfile = createAsyncThunk(
     "user/updateProfile",
     async (data, { dispatch }) => {
@@ -263,7 +325,7 @@ export const updateProfile = createAsyncThunk(
     }
 );
 
-// 9. Change Password Action
+// 10. Change Password Action
 export const changePassword = createAsyncThunk(
     "user/changePassword",
     async ({ currentPassword, newPassword }, { dispatch }) => {
@@ -290,5 +352,13 @@ export const changePassword = createAsyncThunk(
             toast.error(error?.message || "Something went wrong. Please try again.");
             throw error;
         }
+    }
+);
+
+// 11. Clear Error
+export const clearError = createAsyncThunk(
+    "user/clearError",
+    async (_, { dispatch }) => {
+        dispatch(setError(null));
     }
 );

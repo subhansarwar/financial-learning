@@ -26,7 +26,7 @@ function Field({ label, children, required = false, error = false, errorMessage 
 }
 
 const inputClass =
-    "w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted focus:border-brand/50 focus:outline-none focus:ring-4 focus:ring-brand/15";
+    "w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15";
 
 export default function StepOneInfo({ data, onChange, categories }) {
     const fileInputRef = useRef(null);
@@ -111,8 +111,8 @@ export default function StepOneInfo({ data, onChange, categories }) {
                         onBlur={() => handleBlur("title")}
                         placeholder="e.g. Microfinance Foundations"
                         className={`${inputClass} ${showError("title", data.title)
-                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                                : ""
+                            ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                            : ""
                             }`}
                     />
                 </Field>
@@ -130,8 +130,8 @@ export default function StepOneInfo({ data, onChange, categories }) {
                         onBlur={() => handleBlur("subtitle")}
                         placeholder="A short one-line description"
                         className={`${inputClass} ${showError("subtitle", data.subtitle)
-                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                                : ""
+                            ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                            : ""
                             }`}
                     />
                 </Field>
@@ -150,8 +150,8 @@ export default function StepOneInfo({ data, onChange, categories }) {
                         onBlur={() => handleBlur("description")}
                         placeholder="Enter description"
                         className={`${inputClass} ${showError("description", data.description)
-                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                                : ""
+                            ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                            : ""
                             }`}
                     />
                 </Field>
@@ -168,8 +168,8 @@ export default function StepOneInfo({ data, onChange, categories }) {
                             onChange={(e) => set({ language: e.target.value })}
                             onBlur={() => handleBlur("language")}
                             className={`${inputClass} ${showError("language", data.language)
-                                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                                    : ""
+                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                                : ""
                                 }`}
                         >
                             <option value="">Select Language</option>
@@ -191,8 +191,8 @@ export default function StepOneInfo({ data, onChange, categories }) {
                             onChange={(e) => set({ level: e.target.value })}
                             onBlur={() => handleBlur("level")}
                             className={`${inputClass} ${showError("level", data.level)
-                                    ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                                    : ""
+                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                                : ""
                                 }`}
                         >
                             <option value="">Select Level</option>
@@ -216,8 +216,8 @@ export default function StepOneInfo({ data, onChange, categories }) {
                         onChange={(e) => set({ category: e.target.value })}
                         onBlur={() => handleBlur("category")}
                         className={`${inputClass} ${showError("category", data.category)
-                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                                : ""
+                            ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                            : ""
                             }`}
                     >
                         <option value="">Select Category</option>
@@ -237,9 +237,9 @@ export default function StepOneInfo({ data, onChange, categories }) {
                 >
                     <div
                         className={`flex items-center rounded-lg border ${showError("price", data.price)
-                                ? "border-rose-300 focus-within:border-rose-500 focus-within:ring-rose-15"
-                                : "border-line"
-                            } bg-cream-2/50 focus-within:border-brand/50 focus-within:ring-4 focus-within:ring-brand/15`}
+                            ? "border-rose-300 focus-within:border-rose-500 focus-within:ring-rose-15"
+                            : "border-line"
+                            } bg-cream-2/50 focus-within:border-[#365B50]/50 focus-within:ring-4 focus-within:ring-[#365B50]/15`}
                     >
                         <span className="pl-3.5 text-sm font-bold text-muted">$</span>
                         <input
@@ -268,7 +268,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
                             e.preventDefault();
                             handleFile(e.dataTransfer.files?.[0]);
                         }}
-                        className="flex min-h-[220px] cursor-pointer flex-col items-center justify-center rounded-xl2 border-2 border-dashed border-brand/40 bg-brand-soft/30 p-6 text-center transition-colors hover:bg-brand-soft/50"
+                        className="flex min-h-[220px] cursor-pointer flex-col items-center justify-center rounded-xl2 border-2 border-dashed border-[#365B50]/40 bg-[#365B50]-soft/30 p-6 text-center transition-colors hover:bg-[#365B50]-soft/50"
                     >
                         <input
                             ref={fileInputRef}
@@ -284,7 +284,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
                                 className="mb-3 h-28 w-full rounded-lg object-cover"
                             />
                         ) : (
-                            <ImageIcon className="mb-3 h-8 w-8 text-brand" strokeWidth={1.5} />
+                            <ImageIcon className="mb-3 h-8 w-8 text-[#365B50]" strokeWidth={1.5} />
                         )}
                         <p className="text-sm font-bold text-brand-deep">
                             <UploadCloud className="mr-1 inline h-4 w-4" strokeWidth={2} />

@@ -53,6 +53,9 @@ const userSlice = createSlice({
         setError: (state, action) => {
             state.error = action.payload;
         },
+        clearError: (state) => {
+            state.error = null;
+        },
         setInitialized: (state, action) => {
             state.initialized = action.payload;
         },
@@ -85,6 +88,7 @@ export const {
     setStats,
     setLoading,
     setError,
+    clearError,
     setInitialized,
     logout,
     resetUser,

@@ -7,9 +7,12 @@ import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./AdminDashboard";
 import Sidebar from "./Sidebar";
 import { Loader2 } from "lucide-react";
+import { useAppDispatch } from "../../store/hooks";
+import { logoutUser } from "../../store/slices/user/userThunks";
 
 export default function AdminClient({ initialCourses, initialTopics }) {
     const router = useRouter();
+    const dispatch = useAppDispatch()
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [courses, setCourses] = useState(initialCourses);
@@ -33,9 +36,10 @@ export default function AdminClient({ initialCourses, initialTopics }) {
     };
 
     const handleLogout = () => {
-        if (typeof window !== "undefined") {
-            sessionStorage.removeItem("fl_admin");
-        }
+        dispatch(logoutUser())
+        // if (typeof window !== "undefined") {
+        //     sessionStorage.removeItem("fl_admin");
+        // }
         setIsAuthenticated(false);
         // router.push("/");
     };

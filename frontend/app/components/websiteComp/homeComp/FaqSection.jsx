@@ -1,0 +1,284 @@
+"use client";
+
+import { ChevronDown, MessageCircleQuestion, Plus } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+/* ---------- Scroll-reveal hook ---------- */
+function useInView(threshold = 0.15) {
+    const ref = useRef(null);
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        const node = ref.current;
+        if (!node) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.unobserve(node);
+                }
+            },
+            { threshold }
+        );
+        observer.observe(node);
+        return () => observer.disconnect();
+    }, [threshold]);
+
+    return [ref, inView];
+}
+
+/* ---------- Dynamic FAQ content ---------- */
+const FAQ_DATA = {
+    "Getting started": [
+        {
+            q: "How do I create my first account?",
+            a: "Sign up with your email, verify it, and you're ready to start exploring courses right away.",
+        },
+        {
+            q: "Is there an onboarding walkthrough?",
+            a: "Yes, we guide you through the dashboard the first time you log in.",
+        },
+        {
+            q: "Can I use EdTech on mobile?",
+            a: "Absolutely, the platform is fully responsive and works great on any device.",
+        },
+        {
+            q: "Do I need any prior experience?",
+            a: "No prior experience is required, our courses are built for all skill levels.",
+        },
+        {
+            q: "How long does setup take?",
+            a: "Most learners are set up and browsing courses within just a couple of minutes.",
+        },
+    ],
+    "Courses Coaches": [
+        {
+            q: "Is The Eco Len really free?",
+            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+        },
+        {
+            q: "Is The Eco Len really free?",
+            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+        },
+        {
+            q: "Is The Eco Len really free?",
+            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+        },
+        {
+            q: "Is The Eco Len really free?",
+            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+        },
+        {
+            q: "Is The Eco Len really free?",
+            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+        },
+    ],
+    "Pricing & Billing": [
+        {
+            q: "What payment methods do you accept?",
+            a: "We accept all major credit cards, debit cards, and popular digital wallets.",
+        },
+        {
+            q: "Can I cancel my subscription anytime?",
+            a: "Yes, you can cancel anytime from your account settings, no questions asked.",
+        },
+        {
+            q: "Do you offer refunds?",
+            a: "We offer a full refund within 14 days of purchase if you're not satisfied.",
+        },
+        {
+            q: "Are there any hidden fees?",
+            a: "No hidden fees, the price you see at checkout is exactly what you pay.",
+        },
+        {
+            q: "Do you offer student discounts?",
+            a: "Yes, verified students get a discount on all premium plans.",
+        },
+    ],
+    "Dashboard & Tools": [
+        {
+            q: "What tools are included in the dashboard?",
+            a: "You get access to budgeting tools, progress tracking, and scheduling features.",
+        },
+        {
+            q: "Can I customize my dashboard?",
+            a: "Yes, you can rearrange widgets and pin the tools you use most.",
+        },
+        {
+            q: "Is my data synced across devices?",
+            a: "Yes, everything syncs automatically as long as you're signed in.",
+        },
+        {
+            q: "Can I export my progress reports?",
+            a: "Yes, reports can be exported as PDF or CSV from the dashboard.",
+        },
+        {
+            q: "Do tools work offline?",
+            a: "Most tools run in your browser and work even without an internet connection.",
+        },
+    ],
+};
+
+const CATEGORIES = Object.keys(FAQ_DATA);
+
+function AccordionItem({ item, isOpen, onToggle, delay, inView }) {
+    return (
+        <div
+            className={`overflow-hidden rounded-xl bg-slate-50 transition-all duration-500 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                }`}
+            style={{ transitionDelay: inView ? `${delay}ms` : "0ms" }}
+        >
+            <button
+                type="button"
+                onClick={onToggle}
+                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6"
+            >
+                <span className="text-sm font-bold text-[#0F172A] sm:text-[15px]">
+                    {item.q}
+                </span>
+                <span className="relative grid h-5 w-5 shrink-0 place-items-center text-slate-400">
+                    <Plus
+                        className={`absolute h-4 w-4 transition-all duration-300 ${isOpen
+                                ? "rotate-90 scale-0 opacity-0"
+                                : "rotate-0 scale-100 opacity-100"
+                            }`}
+                        strokeWidth={2}
+                    />
+                    <ChevronDown
+                        className={`absolute h-4 w-4 transition-all duration-300 ${isOpen
+                                ? "rotate-0 scale-100 opacity-100"
+                                : "-rotate-90 scale-0 opacity-0"
+                            }`}
+                        strokeWidth={2}
+                    />
+                </span>
+            </button>
+
+            <div
+                className="grid transition-all duration-400 ease-out"
+                style={{
+                    gridTemplateRows: isOpen ? "1fr" : "0fr",
+                }}
+            >
+                <div className="overflow-hidden">
+                    <p className="px-5 pb-4 text-sm leading-relaxed text-slate-500 sm:px-6 sm:pb-5">
+                        {item.a}
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default function FaqSection() {
+    const [activeCategory, setActiveCategory] = useState(CATEGORIES[1]);
+    const [openIndex, setOpenIndex] = useState(0);
+    const [headerRef, headerInView] = useInView();
+    const [bodyRef, bodyInView] = useInView(0.05);
+
+    const items = FAQ_DATA[activeCategory];
+
+    const handleCategoryChange = (category) => {
+        setActiveCategory(category);
+        setOpenIndex(0);
+    };
+
+    return (
+        <section className="bg-white py-16 sm:py-20 lg:py-24">
+            <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
+                {/* ===== Header ===== */}
+                <div
+                    ref={headerRef}
+                    className={`mx-auto max-w-2xl text-center transition-all duration-700 ease-out ${headerInView
+                            ? "translate-y-0 opacity-100"
+                            : "translate-y-6 opacity-0"
+                        }`}
+                >
+                    <h2
+                        className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-3xl leading-tight text-[#0F172A] sm:text-4xl lg:text-[2.5rem]"
+                        style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
+                        <span className="font-semibold">Frequently Ask</span>
+                        <span className="grid h-9 w-9 place-items-center rounded-full bg-[#F5A623] sm:h-10 sm:w-10">
+                            <MessageCircleQuestion
+                                className="h-5 w-5 text-white sm:h-5 sm:w-5"
+                                strokeWidth={2}
+                            />
+                        </span>
+                        <span
+                            className="font-semibold text-[#6366F1]"
+                            style={{ fontFamily: "'Playfair Display', serif" }}
+                        >
+                            Questions
+                        </span>
+                    </h2>
+                    <p className="mt-3 text-sm text-slate-500 sm:text-base">
+                        everything you need to know before getting started.
+                    </p>
+                </div>
+
+                {/* ===== Body: sidebar + accordion ===== */}
+                <div
+                    ref={bodyRef}
+                    className="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-[220px_1fr] lg:gap-14"
+                >
+                    {/* Sidebar tabs */}
+                    <div
+                        className={`flex gap-2 overflow-x-auto pb-2 transition-all delay-100 duration-700 ease-out lg:flex-col lg:gap-1 lg:overflow-visible lg:border-l lg:border-slate-200 lg:pb-0 ${bodyInView
+                                ? "translate-x-0 opacity-100"
+                                : "-translate-x-4 opacity-0"
+                            }`}
+                    >
+                        {CATEGORIES.map((category) => {
+                            const isActive = category === activeCategory;
+                            return (
+                                <button
+                                    key={category}
+                                    type="button"
+                                    onClick={() => handleCategoryChange(category)}
+                                    className={`relative shrink-0 whitespace-nowrap px-3 py-2 text-left text-sm font-medium transition-colors duration-300 lg:px-5 ${isActive
+                                            ? "text-[#0F172A]"
+                                            : "text-slate-400 hover:text-slate-600"
+                                        }`}
+                                >
+                                    <span
+                                        className={`absolute left-0 top-1/2 hidden h-5 w-0.5 -translate-x-px -translate-y-1/2 rounded-full bg-[#0F172A] transition-all duration-300 lg:block ${isActive ? "opacity-100" : "opacity-0"
+                                            }`}
+                                    />
+                                    {category}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* Accordion */}
+                    <div
+                        className={`transition-all delay-150 duration-700 ease-out ${bodyInView
+                                ? "translate-y-0 opacity-100"
+                                : "translate-y-6 opacity-0"
+                            }`}
+                    >
+                        <h3 className="mb-5 text-lg font-bold text-[#0F172A] sm:text-xl">
+                            {activeCategory}
+                        </h3>
+
+                        <div className="flex flex-col gap-3">
+                            {items.map((item, idx) => (
+                                <AccordionItem
+                                    key={`${activeCategory}-${idx}`}
+                                    item={item}
+                                    isOpen={openIndex === idx}
+                                    onToggle={() =>
+                                        setOpenIndex(openIndex === idx ? -1 : idx)
+                                    }
+                                    delay={idx * 60}
+                                    inView={bodyInView}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}

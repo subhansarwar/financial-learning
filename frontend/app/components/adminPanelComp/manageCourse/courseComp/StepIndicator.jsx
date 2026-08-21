@@ -22,7 +22,7 @@ export default function StepIndicator({ step }) {
                             className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${isDone
                                     ? "bg-emerald-500 text-white"
                                     : isActive
-                                        ? "bg-brand-deep text-white"
+                                        ? "bg-[#365B50] text-white"
                                         : "bg-cream-2 text-muted"
                                 }`}
                         >

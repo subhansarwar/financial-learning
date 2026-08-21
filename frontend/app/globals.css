@@ -11,6 +11,30 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", "Arial", sans-serif;
 
+  /* ===== Primary Theme Colors (New) ===== */
+  --color-primary: #D0F6FF;
+  --color-primary-light: #E8FAFF;
+  --color-primary-dark: #A8E8F5;
+
+  /* ===== Input Colors (New) ===== */
+  --color-input-bg: #F9FAFC;
+  --color-input-border: #DDDDDD;
+
+  /* ===== Button Colors (New) ===== */
+  --color-btn-primary: #1E4D35;
+  --color-btn-primary-hover: #163D2A;
+  --color-btn-primary-light: #2A6B4A;
+
+  /* ===== Background Colors (New) ===== */
+  --color-bg-cream: #FFF7ED;
+  --color-bg-white: #FFFFFF;
+  --color-bg-light: #F5F8F7;
+
+  /* ===== Text Colors (New) ===== */
+  --color-text-dark: #1A2E2A;
+  --color-text-muted: #6B7A76;
+  --color-text-white: #FFFFFF;
+
   --color-cream: #f7f8fc;
   --color-cream-2: #eef1f9;
   --color-card: #ffffff;
@@ -46,6 +70,17 @@
     -ms-overflow-style: none;
   }
 
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(67, 56, 202, .18);
+  }
+
   /* ✅ Scrollbar completely hidden but still works */
   /* For Firefox */
   * {
@@ -60,19 +95,6 @@
     height: 0;
   }
 
-  /* If you want to keep scrollbar in specific areas only */
-  /* .custom-scrollbar {
-    scrollbar-width: thin;
-    -ms-overflow-style: auto;
-  }
-  .custom-scrollbar::-webkit-scrollbar {
-    display: block;
-    width: 6px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #d6d9ec;
-    border-radius: 99px;
-  } */
 }
 
 @layer utilities {
