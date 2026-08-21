@@ -72,3 +72,7 @@ class ApproveRequest(BaseModel):
 
 class RejectRequest(BaseModel):
     notes: str = Field(min_length=1)
+
+
+class DeleteRequest(BaseModel):
+    notes: str = Field(min_length=1)

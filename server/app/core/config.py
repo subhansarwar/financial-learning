@@ -63,9 +63,25 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_ID: str | None = None
     APPLE_CLIENT_ID: str | None = None
 
+    # Admin access — Google accounts allowed to authenticate via /api/auth/admin/google, as a
+    # comma-separated string ("a@gmail.com,b@gmail.com"). Kept as a plain str (not list[str]) so
+    # pydantic-settings doesn't try to JSON-decode it as a "complex" env value.
+    # Anyone not on this list is refused admin login even if their user row has is_admin set.
+    ADMIN_EMAILS: str = ""
+
+    @property
+    def ADMIN_EMAIL_SET(self) -> set[str]:
+        return {e.strip().lower() for e in self.ADMIN_EMAILS.split(",") if e.strip()}
+
     FRONTEND_URL: str = "http://localhost:3000"
 
-    BACKEND_CORS_ORIGINS: list[str] = ["*"]
+    BACKEND_CORS_ORIGINS: list[str] = []
+
+    @property
+    def CORS_ORIGINS(self) -> list[str]:
+        """Falls back to the configured frontend origin instead of '*' — a wildcard origin
+        combined with allow_credentials=True is rejected by browsers and is a CORS misconfig."""
+        return self.BACKEND_CORS_ORIGINS or [self.FRONTEND_URL]
 
     class Config:
         env_file = ".env"

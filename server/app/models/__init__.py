@@ -11,6 +11,7 @@ from app.models.courses.lesson_progress import LessonCompletion
 from app.models.courses.certificate import Certificate
 from app.models.publications.publication import Publication, PublicationCategory, PublicationStatus
 from app.models.publications.bookmark import PublicationBookmark
+from app.models.case_studies.case_study import CaseStudy
 
 __all__ = [
     "User",
@@ -30,4 +31,5 @@ __all__ = [
     "PublicationCategory",
     "PublicationStatus",
     "PublicationBookmark",
+    "CaseStudy",
 ]

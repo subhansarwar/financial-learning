@@ -118,6 +118,12 @@ async def _find_or_create_social_user(
 
 @router.post("/signup", response_model=SignupResponse)
 async def signup(payload: SignupRequest, db: SessionDep) -> SignupResponse:
+    if payload.email.lower() in settings.ADMIN_EMAIL_SET:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This email must sign in through the admin Google login",
+        )
+
     existing = await user_crud.get_by_email(db, payload.email)
     if existing and existing.is_verified:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email is already registered")
@@ -194,6 +200,11 @@ async def login(payload: LoginRequest, db: SessionDep, request: Request) -> Toke
     user = await user_crud.get_by_email(db, payload.email)
     if user is None or user.hashed_password is None:
         raise invalid_creds
+
+    if user.is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Admin accounts must sign in with Google"
+        )
 
     if user.locked_until and user.locked_until > datetime.now(timezone.utc):
         raise HTTPException(
@@ -321,8 +332,47 @@ async def google_login(payload: GoogleLoginRequest, db: SessionDep, request: Req
         full_name=info.full_name,
         avatar_url=info.picture,
     )
+    if user.is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Use the admin login to sign in to this account"
+        )
     if not user.is_active:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account is disabled")
+
+    tokens = await _issue_token_pair(db, user, request)
+    notify_new_login.delay(user.email, ip_address=_client_ip(request), user_agent=request.headers.get("user-agent"))
+    return tokens
+
+
+@router.post("/admin/google", response_model=TokenPair)
+async def admin_google_login(payload: GoogleLoginRequest, db: SessionDep, request: Request) -> TokenPair:
+    """Admin authentication is Google-only and restricted to settings.ADMIN_EMAILS.
+    A Google account not on that allow-list never becomes (or stays authenticated as) an admin here,
+    regardless of any is_admin flag already on the row."""
+    try:
+        info = verify_google_id_token(payload.id_token)
+    except RuntimeError:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Google login is not configured")
+    except GoogleTokenError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Google credential")
+
+    if info.email.lower() not in settings.ADMIN_EMAIL_SET:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="This Google account is not authorized for admin access"
+        )
+
+    user = await _find_or_create_social_user(
+        db,
+        provider=SocialProvider.GOOGLE,
+        subject=info.subject,
+        email=info.email,
+        full_name=info.full_name,
+        avatar_url=info.picture,
+    )
+    if not user.is_active:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account is disabled")
+
+    user = await user_crud.grant_admin(db, user)
 
     tokens = await _issue_token_pair(db, user, request)
     notify_new_login.delay(user.email, ip_address=_client_ip(request), user_agent=request.headers.get("user-agent"))
@@ -345,6 +395,10 @@ async def apple_login(payload: AppleLoginRequest, db: SessionDep, request: Reque
         email=info.email,
         full_name=payload.full_name,
     )
+    if user.is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Use the admin login to sign in to this account"
+        )
     if not user.is_active:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account is disabled")
 

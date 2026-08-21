@@ -14,9 +14,12 @@ from app.routes.users.profile import router as users_router
 from app.routes.courses.catalog import router as courses_router
 from app.routes.courses.admin import router as courses_admin_router
 from app.routes.courses.certificates import router as certificates_router
+from app.routes.courses.monitoring import router as courses_monitoring_router
 from app.routes.publications.student import router as publications_student_router
 from app.routes.publications.catalog import router as publications_catalog_router
 from app.routes.publications.admin import router as publications_admin_router
+from app.routes.case_studies.catalog import router as case_studies_router
+from app.routes.case_studies.admin import router as case_studies_admin_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,7 +41,7 @@ app = FastAPI(title=settings.APP_NAME, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,6 +52,9 @@ app.include_router(users_router, prefix="/api/users", tags=["Users"])
 app.include_router(courses_router, prefix="/api/courses", tags=["Course Catalog"])
 app.include_router(courses_admin_router, prefix="/api/admin/courses", tags=["Course Catalog - Admin"])
 app.include_router(certificates_router, prefix="/api/certificates", tags=["Certificates"])
+app.include_router(
+    courses_monitoring_router, prefix="/api/admin/monitoring", tags=["Student Monitoring - Admin"]
+)
 # Student router mounted before the catalog router: both share the "/api/publications" prefix, and its
 # literal "/me" paths must match before the catalog router's wildcard "/{publication_number}" route does.
 app.include_router(publications_student_router, prefix="/api/publications", tags=["Student Publications"])
@@ -56,6 +62,8 @@ app.include_router(publications_catalog_router, prefix="/api/publications", tags
 app.include_router(
     publications_admin_router, prefix="/api/admin/publications", tags=["Student Publications - Moderation"]
 )
+app.include_router(case_studies_router, prefix="/api/case-studies", tags=["Case Studies"])
+app.include_router(case_studies_admin_router, prefix="/api/admin/case-studies", tags=["Case Studies - Admin"])
 
 
 @app.get("/health")

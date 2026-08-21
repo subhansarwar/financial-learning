@@ -1,4 +1,5 @@
 # app/services/users/email_service.py
+import html
 import logging
 
 from app.core.celery_app import celery_app
@@ -60,3 +61,53 @@ def send_password_changed_email(email: str) -> None:
         send_email(to=email, subject="Your password was changed", html_body=html)
     except Exception as exc:
         logger.warning("Failed to send password-changed email to %s: %s", email, exc)
+
+
+@celery_app.task(name="app.services.users.email_service.send_publication_approved_email")
+def send_publication_approved_email(email: str, title: str, notes: str | None) -> None:
+    safe_title, safe_notes = html.escape(title), html.escape(notes) if notes else None
+    notes_html = f"<p><strong>Reviewer note:</strong> {safe_notes}</p>" if safe_notes else ""
+    body = f"""
+    <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+      <h2>Your paper was approved</h2>
+      <p>"{safe_title}" has been reviewed and approved. It's now visible to the public on the platform.</p>
+      {notes_html}
+    </div>
+    """
+    try:
+        send_email(to=email, subject="Your paper was approved", html_body=body)
+    except Exception as exc:
+        logger.warning("Failed to send publication-approved email to %s: %s", email, exc)
+
+
+@celery_app.task(name="app.services.users.email_service.send_publication_rejected_email")
+def send_publication_rejected_email(email: str, title: str, notes: str) -> None:
+    safe_title, safe_notes = html.escape(title), html.escape(notes)
+    body = f"""
+    <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+      <h2>Your paper was not approved</h2>
+      <p>"{safe_title}" was reviewed and was not approved for publication.</p>
+      <p><strong>Reviewer note:</strong> {safe_notes}</p>
+      <p style="color: #666;">You can edit and resubmit it for another review.</p>
+    </div>
+    """
+    try:
+        send_email(to=email, subject="Your paper was not approved", html_body=body)
+    except Exception as exc:
+        logger.warning("Failed to send publication-rejected email to %s: %s", email, exc)
+
+
+@celery_app.task(name="app.services.users.email_service.send_publication_deleted_email")
+def send_publication_deleted_email(email: str, title: str, notes: str) -> None:
+    safe_title, safe_notes = html.escape(title), html.escape(notes)
+    body = f"""
+    <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+      <h2>Your paper was removed</h2>
+      <p>"{safe_title}" has been removed from the platform by an administrator.</p>
+      <p><strong>Reason:</strong> {safe_notes}</p>
+    </div>
+    """
+    try:
+        send_email(to=email, subject="Your paper was removed", html_body=body)
+    except Exception as exc:
+        logger.warning("Failed to send publication-deleted email to %s: %s", email, exc)
