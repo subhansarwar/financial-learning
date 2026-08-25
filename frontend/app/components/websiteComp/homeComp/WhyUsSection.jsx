@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import studentLibraryImg from "@/public/assets/whyUsSectionImages/StudentLibrary.webp";
 
-/* ---------- Scroll-reveal hook ---------- */
+/* ---------- Scroll-reveal hook (modified for re-trigger) ---------- */
 function useInView(threshold = 0.2) {
     const ref = useRef(null);
     const [inView, setInView] = useState(false);
@@ -15,10 +15,7 @@ function useInView(threshold = 0.2) {
         if (!node) return;
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
-                    setInView(true);
-                    observer.unobserve(node);
-                }
+                setInView(entry.isIntersecting);
             },
             { threshold }
         );
@@ -47,21 +44,34 @@ const FEATURES = [
     },
 ];
 
-function FeatureItem({ icon: Icon, title, body, isLast, delay }) {
-    const [ref, inView] = useInView();
-
+function FeatureItem({ icon: Icon, title, body, isLast, delay, isVisible }) {
     return (
         <div
-            ref={ref}
-            className={`transition-all duration-700 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            className={`transition-all duration-700 ease-out ${isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
                 } ${!isLast ? "border-b border-slate-900/10 pb-6" : ""}`}
-            style={{ transitionDelay: inView ? `${delay}ms` : "0ms" }}
+            style={{
+                transitionDelay: isVisible ? `${delay}ms` : "0ms",
+                transitionDuration: isVisible ? "700ms" : "0ms"
+            }}
         >
-            <Icon className="h-7 w-7 text-[#0F172A]" strokeWidth={1.5} />
-            <h3 className="mt-4 text-xl font-bold text-[#0F172A] sm:text-2xl">
+            <div className={`transition-all duration-700 ${isVisible
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 -translate-x-6"
+                }`} style={{ transitionDelay: isVisible ? `${delay + 50}ms` : "0ms" }}>
+                <Icon className="h-7 w-7 text-[#0F172A]" strokeWidth={1.5} />
+            </div>
+            <h3 className={`mt-4 text-xl font-bold text-[#0F172A] sm:text-2xl transition-all duration-700 ${isVisible
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 -translate-x-8"
+                }`} style={{ transitionDelay: isVisible ? `${delay + 100}ms` : "0ms" }}>
                 {title}
             </h3>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+            <p className={`mt-2 max-w-md text-sm leading-relaxed text-slate-500 sm:text-[15px] transition-all duration-700 ${isVisible
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 -translate-x-8"
+                }`} style={{ transitionDelay: isVisible ? `${delay + 150}ms` : "0ms" }}>
                 {body}
             </p>
         </div>
@@ -69,15 +79,17 @@ function FeatureItem({ icon: Icon, title, body, isLast, delay }) {
 }
 
 export default function WhyUsSection() {
-    const [textRef, textInView] = useInView();
-    const [imgRef, imgInView] = useInView();
+    const [sectionRef, sectionInView] = useInView(0.1);
+    const [textRef, textInView] = useInView(0.1);
+    const [imgRef, imgInView] = useInView(0.1);
 
     return (
         <section
-            className="py-16 sm:py-20 lg:py-24"
+            ref={sectionRef}
+            className="py-16 sm:py-20 lg:py-24 overflow-hidden"
             style={{ backgroundColor: "#E6FBF1" }}
         >
-            <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
+            <div className="mx-6 px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
                     {/* ===== LEFT: Stacked features ===== */}
                     <div className="order-2 flex flex-col gap-6 lg:order-1">
@@ -89,6 +101,7 @@ export default function WhyUsSection() {
                                 body={f.body}
                                 isLast={idx === FEATURES.length - 1}
                                 delay={idx * 120}
+                                isVisible={sectionInView}
                             />
                         ))}
                     </div>
@@ -99,16 +112,25 @@ export default function WhyUsSection() {
                             ref={textRef}
                             className={`transition-all duration-700 ease-out ${textInView
                                     ? "translate-y-0 opacity-100"
-                                    : "translate-y-6 opacity-0"
+                                    : "translate-y-8 opacity-0"
                                 }`}
                         >
-                            <div className="mb-4 flex items-center gap-2 text-xl font-semibold text-[#0F9D6D]">
+                            <div className={`mb-4 flex items-center gap-2 text-xl font-semibold text-[#0F9D6D] transition-all duration-700 delay-100 ${textInView
+                                    ? "opacity-100 translate-x-0"
+                                    : "opacity-0 -translate-x-6"
+                                }`}>
                                 Why Us
                             </div>
-                            <h2 className="text-3xl font-bold leading-[1.15] tracking-tight text-[#0F172A] sm:text-4xl lg:text-[2.6rem]">
+                            <h2 className={`text-3xl font-bold leading-[1.15] tracking-tight text-[#0F172A] sm:text-4xl lg:text-[2.6rem] transition-all duration-700 delay-200 ${textInView
+                                    ? "opacity-100 translate-x-0"
+                                    : "opacity-0 -translate-x-8"
+                                }`}>
                                 Our Special Features We Build for You
                             </h2>
-                            <p className="mt-4 max-w-lg text-sm leading-relaxed text-slate-500 sm:text-base">
+                            <p className={`mt-4 max-w-lg text-sm leading-relaxed text-slate-500 sm:text-base transition-all duration-700 delay-300 ${textInView
+                                    ? "opacity-100 translate-x-0"
+                                    : "opacity-0 -translate-x-8"
+                                }`}>
                                 EdTech is a platform that helps students in advancing their
                                 career by providing solutions for simple and flexible online
                                 learning, allowing you to study anywhere and anytime at
@@ -120,7 +142,7 @@ export default function WhyUsSection() {
                             ref={imgRef}
                             className={`mt-8 overflow-hidden rounded-2xl shadow-lg shadow-black/5 transition-all delay-150 duration-700 ease-out ${imgInView
                                     ? "translate-y-0 scale-100 opacity-100"
-                                    : "translate-y-8 scale-[0.97] opacity-0"
+                                    : "translate-y-10 scale-[0.95] opacity-0"
                                 }`}
                         >
                             <div className="group aspect-[5/3] w-full overflow-hidden">

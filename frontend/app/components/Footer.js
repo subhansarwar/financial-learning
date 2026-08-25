@@ -40,7 +40,7 @@ export default function Footer() {
     ];
 
     return (
-        <footer className="relative mt-6 overflow-hidden rounded-t-[24px] bg-[#0c0c0e] text-white sm:rounded-t-[32px]">
+        <footer className="relative overflow-hidden rounded-t-[24px] bg-[#0c0c0e] text-white sm:rounded-t-[32px]">
 
             <div className="relative mx-5 px-5 sm:px-8 lg:px-10">
                 {/* ===== CTA ===== */}

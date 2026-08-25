@@ -48,7 +48,7 @@ export default async function HomePage() {
 
       <FeaturesSection />
       <WhyUsSection />
-      <TestimonialsSection />\
+      <TestimonialsSection />
       <FaqSection />
       {/* <section className="py-14 sm:py-[78px]">
         <div className="mx-auto lg:p-10 px-4 sm:px-6">

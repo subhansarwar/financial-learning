@@ -3,7 +3,7 @@
 import { ChevronDown, MessageCircleQuestion, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-/* ---------- Scroll-reveal hook ---------- */
+/* ---------- Scroll-reveal hook (modified for re-trigger) ---------- */
 function useInView(threshold = 0.15) {
     const ref = useRef(null);
     const [inView, setInView] = useState(false);
@@ -13,10 +13,7 @@ function useInView(threshold = 0.15) {
         if (!node) return;
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
-                    setInView(true);
-                    observer.unobserve(node);
-                }
+                setInView(entry.isIntersecting);
             },
             { threshold }
         );
@@ -124,19 +121,24 @@ const CATEGORIES = Object.keys(FAQ_DATA);
 function AccordionItem({ item, isOpen, onToggle, delay, inView }) {
     return (
         <div
-            className={`overflow-hidden rounded-xl bg-slate-50 transition-all duration-500 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            className={`overflow-hidden rounded-xl bg-slate-50 transition-all duration-700 ease-out ${inView
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-6 opacity-0"
                 }`}
-            style={{ transitionDelay: inView ? `${delay}ms` : "0ms" }}
+            style={{
+                transitionDelay: inView ? `${delay}ms` : "0ms",
+                transitionDuration: inView ? "700ms" : "0ms"
+            }}
         >
             <button
                 type="button"
                 onClick={onToggle}
-                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6"
+                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-all duration-300 hover:bg-slate-100/50 sm:px-6"
             >
                 <span className="text-sm font-bold text-[#0F172A] sm:text-[15px]">
                     {item.q}
                 </span>
-                <span className="relative grid h-5 w-5 shrink-0 place-items-center text-slate-400">
+                <span className="relative grid h-5 w-5 shrink-0 place-items-center text-slate-400 transition-transform duration-300 hover:scale-110">
                     <Plus
                         className={`absolute h-4 w-4 transition-all duration-300 ${isOpen
                                 ? "rotate-90 scale-0 opacity-0"
@@ -173,7 +175,7 @@ function AccordionItem({ item, isOpen, onToggle, delay, inView }) {
 export default function FaqSection() {
     const [activeCategory, setActiveCategory] = useState(CATEGORIES[1]);
     const [openIndex, setOpenIndex] = useState(0);
-    const [headerRef, headerInView] = useInView();
+    const [headerRef, headerInView] = useInView(0.15);
     const [bodyRef, bodyInView] = useInView(0.05);
 
     const items = FAQ_DATA[activeCategory];
@@ -184,35 +186,49 @@ export default function FaqSection() {
     };
 
     return (
-        <section className="bg-white py-16 sm:py-20 lg:py-24">
-            <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
+        <section className="bg-white h-full py-16 sm:py-20 lg:py-24 overflow-hidden">
+            <div className="mx-6 px-4 sm:px-6 lg:px-8">
                 {/* ===== Header ===== */}
                 <div
                     ref={headerRef}
                     className={`mx-auto max-w-2xl text-center transition-all duration-700 ease-out ${headerInView
                             ? "translate-y-0 opacity-100"
-                            : "translate-y-6 opacity-0"
+                            : "translate-y-8 opacity-0"
                         }`}
                 >
                     <h2
                         className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-3xl leading-tight text-[#0F172A] sm:text-4xl lg:text-[2.5rem]"
                         style={{ fontFamily: "'Playfair Display', serif" }}
                     >
-                        <span className="font-semibold">Frequently Ask</span>
-                        <span className="grid h-9 w-9 place-items-center rounded-full bg-[#F5A623] sm:h-10 sm:w-10">
+                        <span className={`font-semibold transition-all duration-700 delay-100 ${headerInView
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-6"
+                            }`}>
+                            Frequently Ask
+                        </span>
+                        <span className={`grid h-9 w-9 place-items-center rounded-full bg-[#F5A623] sm:h-10 sm:w-10 transition-all duration-700 delay-200 ${headerInView
+                                ? "opacity-100 scale-100"
+                                : "opacity-0 scale-50"
+                            }`}>
                             <MessageCircleQuestion
                                 className="h-5 w-5 text-white sm:h-5 sm:w-5"
                                 strokeWidth={2}
                             />
                         </span>
                         <span
-                            className="font-semibold text-[#6366F1]"
+                            className={`font-semibold text-[#6366F1] transition-all duration-700 delay-300 ${headerInView
+                                    ? "opacity-100 translate-x-0"
+                                    : "opacity-0 translate-x-6"
+                                }`}
                             style={{ fontFamily: "'Playfair Display', serif" }}
                         >
                             Questions
                         </span>
                     </h2>
-                    <p className="mt-3 text-sm text-slate-500 sm:text-base">
+                    <p className={`mt-3 text-sm text-slate-500 sm:text-base transition-all duration-700 delay-400 ${headerInView
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 translate-y-4"
+                        }`}>
                         everything you need to know before getting started.
                     </p>
                 </div>
@@ -226,20 +242,23 @@ export default function FaqSection() {
                     <div
                         className={`flex gap-2 overflow-x-auto pb-2 transition-all delay-100 duration-700 ease-out lg:flex-col lg:gap-1 lg:overflow-visible lg:border-l lg:border-slate-200 lg:pb-0 ${bodyInView
                                 ? "translate-x-0 opacity-100"
-                                : "-translate-x-4 opacity-0"
+                                : "-translate-x-8 opacity-0"
                             }`}
                     >
-                        {CATEGORIES.map((category) => {
+                        {CATEGORIES.map((category, idx) => {
                             const isActive = category === activeCategory;
                             return (
                                 <button
                                     key={category}
                                     type="button"
                                     onClick={() => handleCategoryChange(category)}
-                                    className={`relative shrink-0 whitespace-nowrap px-3 py-2 text-left text-sm font-medium transition-colors duration-300 lg:px-5 ${isActive
+                                    className={`relative shrink-0 whitespace-nowrap px-3 py-2 text-left text-sm font-medium transition-all duration-300 lg:px-5 hover:scale-105 ${isActive
                                             ? "text-[#0F172A]"
                                             : "text-slate-400 hover:text-slate-600"
                                         }`}
+                                    style={{
+                                        transitionDelay: bodyInView ? `${idx * 50}ms` : "0ms"
+                                    }}
                                 >
                                     <span
                                         className={`absolute left-0 top-1/2 hidden h-5 w-0.5 -translate-x-px -translate-y-1/2 rounded-full bg-[#0F172A] transition-all duration-300 lg:block ${isActive ? "opacity-100" : "opacity-0"
@@ -255,10 +274,13 @@ export default function FaqSection() {
                     <div
                         className={`transition-all delay-150 duration-700 ease-out ${bodyInView
                                 ? "translate-y-0 opacity-100"
-                                : "translate-y-6 opacity-0"
+                                : "translate-y-8 opacity-0"
                             }`}
                     >
-                        <h3 className="mb-5 text-lg font-bold text-[#0F172A] sm:text-xl">
+                        <h3 className={`mb-5 text-lg font-bold text-[#0F172A] sm:text-xl transition-all duration-700 delay-200 ${bodyInView
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-6"
+                            }`}>
                             {activeCategory}
                         </h3>
 
@@ -271,7 +293,7 @@ export default function FaqSection() {
                                     onToggle={() =>
                                         setOpenIndex(openIndex === idx ? -1 : idx)
                                     }
-                                    delay={idx * 60}
+                                    delay={idx * 60 + 100}
                                     inView={bodyInView}
                                 />
                             ))}
