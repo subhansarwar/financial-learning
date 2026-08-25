@@ -1,11 +1,11 @@
-// app/components/HeroSection.jsx
+// app/components/websiteComp/homeComp/HeroSection.jsx
 "use client";
 
 import { Search, ChevronDown, ArrowRight, Sparkle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Patern from '../../../../public/assets/homePageImages/Patern.webp';
-import rightsideImage from '../../../../public/assets/homePageImages/rightSideImage.webp';
+import InteractiveTree from './InteractiveTree';
 
 export default function HeroSection({ catalog = [], topics = [] }) {
     const [isVisible, setIsVisible] = useState(false);
@@ -37,7 +37,7 @@ export default function HeroSection({ catalog = [], topics = [] }) {
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden bg-white py-8"
+            className="relative overflow-hidden bg-[#E5E5E5] py-8"
         >
             {/* ===== Background Pattern (spans full hero, anchored top-left) ===== */}
             <div className="pointer-events-none absolute inset-0 opacity-70">
@@ -58,8 +58,8 @@ export default function HeroSection({ catalog = [], topics = [] }) {
                         {/* Heading */}
                         <h1
                             className={`font-serif text-[2.35rem] font-semibold leading-[1.15] tracking-tight text-black sm:text-[2.75rem] lg:text-[3rem] transition-all duration-700 ${isVisible
-                                    ? "opacity-100 translate-x-0"
-                                    : "opacity-0 -translate-x-12"
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-12"
                                 }`}
                         >
                             Receive the help you need
@@ -68,8 +68,8 @@ export default function HeroSection({ catalog = [], topics = [] }) {
                         {/* Description */}
                         <p
                             className={`mt-4 max-w-[420px] text-[13px] leading-relaxed text-[#616161] sm:text-sm transition-all duration-700 delay-100 ${isVisible
-                                    ? "opacity-100 translate-x-0"
-                                    : "opacity-0 -translate-x-12"
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-12"
                                 }`}
                         >
                             Two flagship 12-module programs{" "}
@@ -83,8 +83,8 @@ export default function HeroSection({ catalog = [], topics = [] }) {
                         {/* Search Form */}
                         <form
                             className={`mt-5 flex max-w-[420px] items-center gap-1 rounded-full border border-input-border bg-input-bg py-1 pl-4 pr-1 transition-all duration-700 delay-200 ${isVisible
-                                    ? "opacity-100 translate-y-0 scale-100"
-                                    : "opacity-0 translate-y-8 scale-95"
+                                ? "opacity-100 translate-y-0 scale-100"
+                                : "opacity-0 translate-y-8 scale-95"
                                 }`}
                             action="/catalog"
                             method="get"
@@ -125,8 +125,8 @@ export default function HeroSection({ catalog = [], topics = [] }) {
                         {/* Get Started */}
                         <div
                             className={`mt-5 flex items-center gap-2.5 transition-all duration-700 delay-300 ${isVisible
-                                    ? "opacity-100 translate-x-0"
-                                    : "opacity-0 -translate-x-12"
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-12"
                                 }`}
                         >
                             <span className="text-[12.5px] font-medium text-text-muted">Get Started as</span>
@@ -137,21 +137,15 @@ export default function HeroSection({ catalog = [], topics = [] }) {
                         </div>
                     </div>
 
-                    {/* ===== RIGHT IMAGE ===== */}
+                    {/* ===== RIGHT: Interactive Three.js Tree ===== */}
                     <div className="relative flex items-center justify-center py-6 lg:py-0">
                         <div
                             className={`relative aspect-square w-full max-w-[420px] transition-all duration-700 delay-150 ${isVisible
-                                    ? "opacity-100 translate-x-0 scale-100"
-                                    : "opacity-0 translate-x-12 scale-90"
+                                ? "opacity-100 translate-x-0 scale-100"
+                                : "opacity-0 translate-x-12 scale-90"
                                 }`}
                         >
-                            <Image
-                                src={rightsideImage}
-                                alt="Student learning online"
-                                fill
-                                priority
-                                className="transition-all duration-700 hover:scale-105"
-                            />
+                            <InteractiveTree />
                         </div>
                     </div>
                 </div>

@@ -142,7 +142,7 @@ export default function TestimonialsSection() {
     return (
         <section
             ref={sectionRef}
-            className="overflow-hidden bg-white py-16 sm:py-20 lg:py-24"
+            className="overflow-hidden bg-[#E5E5E5] py-16 sm:py-20 lg:py-24"
         >
             <style>{`
                 @keyframes marqueeLeft {

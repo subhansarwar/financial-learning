@@ -1,3 +1,4 @@
+// app/(user-panel)/dashboard/DashboardClient.jsx
 "use client";
 
 import {
@@ -36,9 +37,12 @@ const STATS = [
 ];
 
 const SPENT_HOURS = [
-    { day: "S", learning: 6, challenge: 3 }, { day: "M", learning: 9, challenge: 4 },
-    { day: "T", learning: 5, challenge: 8 }, { day: "W", learning: 11, challenge: 3 },
-    { day: "T", learning: 4, challenge: 9 }, { day: "F", learning: 8, challenge: 5 },
+    { day: "S", learning: 6, challenge: 3 },
+    { day: "M", learning: 9, challenge: 4 },
+    { day: "T", learning: 5, challenge: 8 },
+    { day: "W", learning: 11, challenge: 3 },
+    { day: "T", learning: 4, challenge: 9 },
+    { day: "F", learning: 8, challenge: 5 },
     { day: "S", learning: 3, challenge: 2 },
 ];
 
@@ -67,14 +71,13 @@ function CustomTooltip({ active, payload, label }) {
     );
 }
 
-export default function DashboardPreview() {
+export default function DashboardClient() {
     const [activeIndex, setActiveIndex] = useState(3);
 
     return (
         <div className="flex min-h-screen font-sans" style={{ background: MAIN_BG }}>
-
             <div className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
-                {/* ===== HERO SECTION - FIXED WITH TAILWIND CLASSES ===== */}
+                {/* ===== HERO SECTION ===== */}
                 <div className="px-4 py-6 sm:px-6 lg:px-10 lg:py-8 rounded-2xl" style={{ background: SIDEBAR }}>
                     <div className="mb-6 flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
@@ -139,7 +142,11 @@ export default function DashboardPreview() {
                                         <BarChart
                                             data={SPENT_HOURS}
                                             barGap={4}
-                                            onMouseMove={(st) => st?.activeTooltipIndex !== undefined && setActiveIndex(st.activeTooltipIndex)}
+                                            onMouseMove={(st) => {
+                                                if (st?.activeTooltipIndex !== undefined) {
+                                                    setActiveIndex(st.activeTooltipIndex);
+                                                }
+                                            }}
                                         >
                                             <XAxis
                                                 dataKey="day"

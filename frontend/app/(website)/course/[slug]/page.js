@@ -41,7 +41,7 @@ export default async function CoursePage({ params }) {
 
     if (!course) {
         return (
-            <section className="flex min-h-[60vh] items-center justify-center bg-cream py-20">
+            <section className="flex min-h-[60vh] items-center justify-center bg-[#E5E5E5] py-20">
                 <div className="text-center">
                     <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-brand-soft">
                         <BookOpen className="h-12 w-12 text-brand-deep" strokeWidth={1.5} />

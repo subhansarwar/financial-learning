@@ -334,7 +334,7 @@ function PublishedPapersRow() {
 /* ---------- Main Section ---------- */
 export default function FeaturesSection() {
     return (
-        <section className="bg-white py-16 sm:py-20 lg:py-24 overflow-hidden">
+        <section className="bg-[#E5E5E5] py-16 sm:py-20 lg:py-24 overflow-hidden">
             <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col gap-20 sm:gap-24 lg:gap-28">
                     <InteractiveToolsRow />

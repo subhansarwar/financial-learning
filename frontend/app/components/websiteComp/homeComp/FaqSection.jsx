@@ -186,7 +186,7 @@ export default function FaqSection() {
     };
 
     return (
-        <section className="bg-white h-full py-16 sm:py-20 lg:py-24 overflow-hidden">
+        <section className="bg-[#E5E5E5] h-full py-16 sm:py-20 lg:py-24 overflow-hidden">
             <div className="mx-6 px-4 sm:px-6 lg:px-8">
                 {/* ===== Header ===== */}
                 <div
