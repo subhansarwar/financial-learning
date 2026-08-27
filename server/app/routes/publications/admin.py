@@ -1,11 +1,9 @@
 # app/routes/publications/admin.py
 import uuid
-
 from fastapi import APIRouter, HTTPException, Query, status
-
 from app.core.deps import CurrentAdmin, SessionDep
 from app.crud.publications import publication as publication_crud
-from app.crud.users import user as user_crud
+from app.crud.users.user_api import get_by_id
 from app.schemas.auth.auth import MessageResponse
 from app.schemas.publications.publication import ApproveRequest, DeleteRequest, PublicationRead, RejectRequest
 from app.services.publications import publication_service
@@ -17,7 +15,6 @@ from app.services.users.email_service import (
 
 router = APIRouter()
 
-
 @router.get("/pending", response_model=list[PublicationRead])
 async def list_pending_review(
     db: SessionDep,
@@ -27,7 +24,6 @@ async def list_pending_review(
 ) -> list[PublicationRead]:
     publications = await publication_crud.list_pending_review(db, skip=skip, limit=limit)
     return [PublicationRead.model_validate(p) for p in publications]
-
 
 @router.get("/{publication_id}", response_model=PublicationRead)
 async def get_publication(publication_id: uuid.UUID, db: SessionDep, _admin: CurrentAdmin) -> PublicationRead:
@@ -50,7 +46,7 @@ async def approve_publication(
     except publication_service.InvalidStatusTransitionError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
 
-    author = await user_crud.get_by_id(db, publication.author_id)
+    author = await get_by_id(db, publication.author_id)
     if author is not None:
         send_publication_approved_email.delay(author.email, publication.title, payload.notes)
     return PublicationRead.model_validate(publication)
@@ -69,7 +65,7 @@ async def reject_publication(
     except publication_service.InvalidStatusTransitionError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
 
-    author = await user_crud.get_by_id(db, publication.author_id)
+    author = await get_by_id(db, publication.author_id)
     if author is not None:
         send_publication_rejected_email.delay(author.email, publication.title, payload.notes)
     return PublicationRead.model_validate(publication)
@@ -83,7 +79,7 @@ async def delete_publication(
     if publication is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
 
-    author = await user_crud.get_by_id(db, publication.author_id)
+    author = await get_by_id(db, publication.author_id)
     title = publication.title
     await publication_crud.delete_publication(db, publication)
 

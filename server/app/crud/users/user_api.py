@@ -1,27 +1,22 @@
 # app/crud/users/user.py
 import uuid
 from datetime import datetime, timedelta, timezone
-
 from sqlalchemy import func, or_, select
-from sqlalchemy.ext.asyncio import AsyncSession
-
+from app.core.deps import SessionDep
 from app.core.config import settings
 from app.core.security import hash_password
 from app.models.users.user import User
 
-
-async def get_by_email(db: AsyncSession, email: str) -> User | None:
+async def get_by_email(db: SessionDep, email: str) -> User | None:
     result = await db.execute(select(User).where(User.email == email.lower()))
     return result.scalar_one_or_none()
 
-
-async def get_by_id(db: AsyncSession, user_id: uuid.UUID) -> User | None:
+async def get_by_id(db: SessionDep, user_id: uuid.UUID) -> User | None:
     result = await db.execute(select(User).where(User.id == user_id))
     return result.scalar_one_or_none()
 
-
 async def create_user(
-    db: AsyncSession,
+    db: SessionDep,
     *,
     email: str,
     full_name: str,
@@ -42,17 +37,17 @@ async def create_user(
     return user
 
 
-async def set_verified(db: AsyncSession, user: User) -> None:
+async def set_verified(db: SessionDep, user: User) -> None:
     user.is_verified = True
     await db.commit()
 
 
-async def set_password(db: AsyncSession, user: User, password: str) -> None:
+async def set_password(db: SessionDep, user: User, password: str) -> None:
     user.hashed_password = hash_password(password)
     await db.commit()
 
 
-async def update_profile(db: AsyncSession, user: User, *, full_name: str | None = None) -> User:
+async def update_profile(db: SessionDep, user: User, *, full_name: str | None = None) -> User:
     if full_name is not None:
         user.full_name = full_name
     await db.commit()
@@ -60,36 +55,36 @@ async def update_profile(db: AsyncSession, user: User, *, full_name: str | None 
     return user
 
 
-async def set_avatar_url(db: AsyncSession, user: User, avatar_url: str) -> None:
+async def set_avatar_url(db: SessionDep, user: User, avatar_url: str) -> None:
     user.avatar_url = avatar_url
     await db.commit()
 
 
-async def set_email(db: AsyncSession, user: User, email: str) -> None:
+async def set_email(db: SessionDep, user: User, email: str) -> None:
     user.email = email.lower()
     await db.commit()
 
 
-async def register_failed_login(db: AsyncSession, user: User) -> None:
+async def register_failed_login(db: SessionDep, user: User) -> None:
     user.failed_login_attempts += 1
     if user.failed_login_attempts >= settings.LOGIN_MAX_FAILED_ATTEMPTS:
         user.locked_until = datetime.now(timezone.utc) + timedelta(minutes=settings.LOGIN_LOCKOUT_MINUTES)
     await db.commit()
 
 
-async def reset_failed_login(db: AsyncSession, user: User) -> None:
+async def reset_failed_login(db: SessionDep, user: User) -> None:
     if user.failed_login_attempts or user.locked_until:
         user.failed_login_attempts = 0
         user.locked_until = None
         await db.commit()
 
 
-async def invalidate_all_tokens(db: AsyncSession, user: User) -> None:
+async def invalidate_all_tokens(db: SessionDep, user: User) -> None:
     user.tokens_invalid_before = datetime.now(timezone.utc)
     await db.commit()
 
 
-async def grant_admin(db: AsyncSession, user: User) -> User:
+async def grant_admin(db: SessionDep, user: User) -> User:
     if not user.is_admin:
         user.is_admin = True
         await db.commit()
@@ -98,7 +93,7 @@ async def grant_admin(db: AsyncSession, user: User) -> User:
 
 
 async def list_students(
-    db: AsyncSession,
+    db: SessionDep,
     *,
     search: str | None = None,
     is_active: bool | None = None,

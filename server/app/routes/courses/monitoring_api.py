@@ -1,14 +1,10 @@
 # app/routes/courses/monitoring.py
-"""Admin-only visibility into student enrollment, lesson-completion activity, and
-per-student progress — every route requires CurrentAdmin."""
 import uuid
 from datetime import date, datetime, time, timedelta, timezone
-
 from fastapi import APIRouter, HTTPException, Query, status
-
 from app.core.deps import CurrentAdmin, SessionDep
-from app.crud.courses import monitoring as monitoring_crud
-from app.crud.users import user as user_crud
+from app.crud.courses import monitoring_api as monitoring_crud
+from app.crud.users.user_api import get_by_id
 from app.models.courses.enrollment import EnrollmentStatus
 from app.schemas.courses.monitoring import (
     EnrollmentActivityItem,
@@ -22,7 +18,6 @@ from app.schemas.courses.monitoring import (
 
 router = APIRouter()
 
-
 def _resolve_range(
     on_date: date | None, date_from: datetime | None, date_to: datetime | None
 ) -> tuple[datetime | None, datetime | None]:
@@ -33,7 +28,6 @@ def _resolve_range(
         end = start + timedelta(days=1)
         return start, end
     return date_from, date_to
-
 
 def _student_summary(user, enrolled_count: int, completed_count: int) -> StudentSummary:
     return StudentSummary(
@@ -46,7 +40,6 @@ def _student_summary(user, enrolled_count: int, completed_count: int) -> Student
         enrolled_courses_count=enrolled_count,
         completed_courses_count=completed_count,
     )
-
 
 def _enrollment_item(enrollment, user, course) -> EnrollmentActivityItem:
     return EnrollmentActivityItem(
@@ -62,7 +55,6 @@ def _enrollment_item(enrollment, user, course) -> EnrollmentActivityItem:
         completed_at=enrollment.completed_at,
     )
 
-
 def _lesson_completion_item(completion, user, lesson, course) -> LessonCompletionActivityItem:
     return LessonCompletionActivityItem(
         id=completion.id,
@@ -75,7 +67,6 @@ def _lesson_completion_item(completion, user, lesson, course) -> LessonCompletio
         course_title=course.title,
         completed_at=completion.completed_at,
     )
-
 
 @router.get("/students", response_model=StudentListResponse)
 async def list_students(
@@ -96,7 +87,7 @@ async def list_students(
 
 @router.get("/students/{user_id}", response_model=StudentDetailResponse)
 async def get_student_detail(user_id: uuid.UUID, db: SessionDep, _admin: CurrentAdmin) -> StudentDetailResponse:
-    student_user = await user_crud.get_by_id(db, user_id)
+    student_user = await get_by_id(db, user_id)
     if student_user is None or student_user.is_admin:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Student not found")
 

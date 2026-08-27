@@ -18,11 +18,8 @@ class LessonType(str, enum.Enum):
 
 class Lesson(Base):
     __tablename__ = "lessons"
-
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    module_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("course_modules.id", ondelete="CASCADE"), nullable=False, index=True
-    )
+    module_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("course_modules.id", ondelete="CASCADE"), nullable=False, index=True)
 
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     type: Mapped[LessonType] = mapped_column(Enum(LessonType, name="lesson_type"), nullable=False)
@@ -36,6 +33,4 @@ class Lesson(Base):
     quiz_questions: Mapped[list[dict] | None] = mapped_column(JSON, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
-    )
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)

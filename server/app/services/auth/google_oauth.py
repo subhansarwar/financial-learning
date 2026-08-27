@@ -1,6 +1,7 @@
 # app/services/auth/google_oauth.py
 from dataclasses import dataclass
 
+from fastapi.concurrency import run_in_threadpool
 from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token as google_id_token
 
@@ -43,3 +44,11 @@ def verify_google_id_token(token: str) -> GoogleUserInfo:
         full_name=claims.get("name"),
         picture=claims.get("picture"),
     )
+
+
+async def verify_google_id_token_async(token: str) -> GoogleUserInfo:
+    """verify_google_id_token does blocking I/O (fetches/validates against Google's cert
+    endpoint via the synchronous `google-auth` library) — running it directly on an async
+    route would stall the event loop for every other in-flight request, so route handlers
+    must call this threadpool-offloaded wrapper instead."""
+    return await run_in_threadpool(verify_google_id_token, token)

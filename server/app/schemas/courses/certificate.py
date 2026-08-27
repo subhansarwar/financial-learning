@@ -1,24 +1,47 @@
 # app/schemas/courses/certificate.py
 import uuid
 from datetime import datetime
-
-from pydantic import BaseModel
-
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Literal
 
 class CertificateRead(BaseModel):
     id: uuid.UUID
-    certificate_number: str
+    certificate_number: str = Field(
+        min_length=1,
+        max_length=40,
+    )
     course_id: uuid.UUID
     pdf_url: str
     issued_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
 
-class CertificateVerifyResponse(BaseModel):
-    valid: bool
+class CertificateVerifyRequest(BaseModel):
+    certificate_number: str = Field(
+        min_length=1,
+        max_length=40,
+    )
+
+
+class ValidCertificateResponse(BaseModel):
+    valid: Literal[True] = True
+
     certificate_number: str
-    course_title: str | None = None
-    holder_name: str | None = None
-    issued_at: datetime | None = None
+    course_title: str
+    holder_name: str
+    issued_at: datetime
+
+
+class InvalidCertificateResponse(BaseModel):
+    valid: Literal[False] = False
+
+    certificate_number: str
+
+
+CertificateVerifyResponse = (
+    ValidCertificateResponse
+    | InvalidCertificateResponse
+)

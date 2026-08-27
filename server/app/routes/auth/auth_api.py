@@ -1,9 +1,7 @@
 # app/routes/auth/auth.py
 from datetime import datetime, timezone
-
 from fastapi import APIRouter, HTTPException, Request, status
 from jose import JWTError, jwt
-
 from app.core.config import settings
 from app.core.deps import CurrentTokenPayload, CurrentUser, SessionDep
 from app.core.security import (
@@ -12,9 +10,9 @@ from app.core.security import (
     create_refresh_token,
     verify_password,
 )
-from app.crud.auth import refresh_token as refresh_token_crud
-from app.crud.auth import social_account as social_account_crud
-from app.crud.users import user as user_crud
+from app.crud.auth import refresh_token_api as refresh_token_crud
+from app.crud.auth import social_account_api as social_account_crud
+from app.crud.users.user_api import get_by_email, get_by_id, create_user, set_verified, set_password, update_profile, set_avatar_url, register_failed_login, reset_failed_login, invalidate_all_tokens, grant_admin
 from app.models.auth.social_account import SocialProvider
 from app.models.users.user import User
 from app.schemas.auth.auth import (
@@ -34,7 +32,7 @@ from app.schemas.auth.auth import (
 )
 from app.services.auth import otp_service
 from app.services.auth.apple_oauth import AppleTokenError, verify_apple_id_token
-from app.services.auth.google_oauth import GoogleTokenError, verify_google_id_token
+from app.services.auth.google_oauth import GoogleTokenError, verify_google_id_token_async
 from app.services.users.email_service import (
     send_otp_email,
     send_password_changed_email,
@@ -42,7 +40,7 @@ from app.services.users.email_service import (
 )
 from app.services.users.notification_service import notify_new_login
 
-router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["Authentication System"])
 
 _GENERIC_FORGOT_PASSWORD_MESSAGE = "If an account with that email exists, a password reset code has been sent."
 
@@ -90,7 +88,7 @@ async def _find_or_create_social_user(
 ) -> User:
     account = await social_account_crud.get_by_provider_subject(db, provider=provider, provider_user_id=subject)
     if account is not None:
-        user = await user_crud.get_by_id(db, account.user_id)
+        user = await get_by_id(db, account.user_id)
         if user is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Account no longer exists")
         return user
@@ -101,9 +99,9 @@ async def _find_or_create_social_user(
             detail=f"{provider.value.capitalize()} did not provide an email for this account",
         )
 
-    user = await user_crud.get_by_email(db, email)
+    user = await get_by_email(db, email)
     if user is None:
-        user = await user_crud.create_user(
+        user = await create_user(
             db,
             email=email,
             full_name=full_name or email.split("@")[0],
@@ -124,15 +122,15 @@ async def signup(payload: SignupRequest, db: SessionDep) -> SignupResponse:
             detail="This email must sign in through the admin Google login",
         )
 
-    existing = await user_crud.get_by_email(db, payload.email)
+    existing = await get_by_email(db, payload.email)
     if existing and existing.is_verified:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email is already registered")
 
     if existing:
-        await user_crud.set_password(db, existing, payload.password)
-        await user_crud.update_profile(db, existing, full_name=payload.full_name)
+        await set_password(db, existing, payload.password)
+        await update_profile(db, existing, full_name=payload.full_name)
     else:
-        await user_crud.create_user(
+        await create_user(
             db, email=payload.email, full_name=payload.full_name, password=payload.password, is_verified=False
         )
 
@@ -150,7 +148,7 @@ async def signup(payload: SignupRequest, db: SessionDep) -> SignupResponse:
 
 @router.post("/verify-otp", response_model=TokenPair)
 async def verify_otp(payload: VerifyOTPRequest, db: SessionDep, request: Request) -> TokenPair:
-    user = await user_crud.get_by_email(db, payload.email)
+    user = await get_by_email(db, payload.email)
     if user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Account not found")
     if user.is_verified:
@@ -172,14 +170,14 @@ async def verify_otp(payload: VerifyOTPRequest, db: SessionDep, request: Request
             status_code=status.HTTP_400_BAD_REQUEST, detail="Too many incorrect attempts — request a new code"
         )
 
-    await user_crud.set_verified(db, user)
+    await set_verified(db, user)
     send_welcome_email.delay(user.email, user.full_name)
     return await _issue_token_pair(db, user, request)
 
 
 @router.post("/resend-otp", response_model=MessageResponse)
 async def resend_otp(payload: ResendOTPRequest, db: SessionDep) -> MessageResponse:
-    user = await user_crud.get_by_email(db, payload.email)
+    user = await get_by_email(db, payload.email)
     if user is not None and not user.is_verified:
         try:
             code = await otp_service.generate_and_store(payload.email, "signup")
@@ -197,7 +195,7 @@ async def resend_otp(payload: ResendOTPRequest, db: SessionDep) -> MessageRespon
 async def login(payload: LoginRequest, db: SessionDep, request: Request) -> TokenPair:
     invalid_creds = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
 
-    user = await user_crud.get_by_email(db, payload.email)
+    user = await get_by_email(db, payload.email)
     if user is None or user.hashed_password is None:
         raise invalid_creds
 
@@ -212,7 +210,7 @@ async def login(payload: LoginRequest, db: SessionDep, request: Request) -> Toke
         )
 
     if not verify_password(payload.password, user.hashed_password):
-        await user_crud.register_failed_login(db, user)
+        await register_failed_login(db, user)
         raise invalid_creds
 
     if not user.is_active:
@@ -221,7 +219,7 @@ async def login(payload: LoginRequest, db: SessionDep, request: Request) -> Toke
     if not user.is_verified:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Email not verified")
 
-    await user_crud.reset_failed_login(db, user)
+    await reset_failed_login(db, user)
     tokens = await _issue_token_pair(db, user, request)
     notify_new_login.delay(user.email, ip_address=_client_ip(request), user_agent=request.headers.get("user-agent"))
     return tokens
@@ -231,14 +229,30 @@ async def login(payload: LoginRequest, db: SessionDep, request: Request) -> Toke
 async def refresh(payload: RefreshRequest, db: SessionDep, request: Request) -> TokenPair:
     token_payload = _decode_refresh_token(payload.refresh_token)
     jti = token_payload.get("jti")
+    invalid = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh token is invalid or expired")
 
     stored = await refresh_token_crud.get_by_jti(db, jti) if jti else None
-    if stored is None or not refresh_token_crud.is_usable(stored):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh token is invalid or expired")
 
-    user = await user_crud.get_by_id(db, stored.user_id)
+    if stored is not None and stored.revoked_at is not None and stored.expires_at > datetime.now(timezone.utc):
+        # This jti was already rotated out by an earlier /refresh call, yet someone just
+        # presented it again — a legitimate client never reuses a refresh token, so this is
+        # a signal the token was copied/stolen. Kill every session for the account instead of
+        # just rejecting this one request.
+        await refresh_token_crud.revoke_all_for_user(db, stored.user_id)
+        breached_user = await get_by_id(db, stored.user_id)
+        if breached_user is not None:
+            await invalidate_all_tokens(db, breached_user)
+        raise invalid
+
+    if stored is None or not refresh_token_crud.is_usable(stored):
+        raise invalid
+
+    user = await get_by_id(db, stored.user_id)
     if user is None or not user.is_active:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Account is unavailable")
+
+    if user.locked_until and user.locked_until > datetime.now(timezone.utc):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account is locked")
 
     await refresh_token_crud.revoke(db, stored)
     return await _issue_token_pair(db, user, request)
@@ -269,13 +283,13 @@ async def logout(
 @router.post("/logout-all", response_model=MessageResponse)
 async def logout_all(db: SessionDep, current_user: CurrentUser) -> MessageResponse:
     await refresh_token_crud.revoke_all_for_user(db, current_user.id)
-    await user_crud.invalidate_all_tokens(db, current_user)
+    await invalidate_all_tokens(db, current_user)
     return MessageResponse(message="Logged out of all devices")
 
 
 @router.post("/forgot-password", response_model=MessageResponse)
 async def forgot_password(payload: ForgotPasswordRequest, db: SessionDep) -> MessageResponse:
-    user = await user_crud.get_by_email(db, payload.email)
+    user = await get_by_email(db, payload.email)
     if user is not None and user.hashed_password is not None:
         try:
             code = await otp_service.generate_and_store(payload.email, "reset")
@@ -302,13 +316,19 @@ async def reset_password(payload: ResetPasswordRequest, db: SessionDep) -> Messa
             status_code=status.HTTP_400_BAD_REQUEST, detail="Too many incorrect attempts — request a new code"
         )
 
-    user = await user_crud.get_by_email(db, payload.email)
+    user = await get_by_email(db, payload.email)
     if user is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Account not found")
 
-    await user_crud.set_password(db, user, payload.new_password)
-    await user_crud.reset_failed_login(db, user)
-    await user_crud.invalidate_all_tokens(db, user)
+    if user.hashed_password and verify_password(payload.new_password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be different from your previous password",
+        )
+
+    await set_password(db, user, payload.new_password)
+    await reset_failed_login(db, user)
+    await invalidate_all_tokens(db, user)
     await refresh_token_crud.revoke_all_for_user(db, user.id)
     send_password_changed_email.delay(user.email)
 
@@ -318,7 +338,7 @@ async def reset_password(payload: ResetPasswordRequest, db: SessionDep) -> Messa
 @router.post("/google", response_model=TokenPair)
 async def google_login(payload: GoogleLoginRequest, db: SessionDep, request: Request) -> TokenPair:
     try:
-        info = verify_google_id_token(payload.id_token)
+        info = await verify_google_id_token_async(payload.id_token)
     except RuntimeError:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Google login is not configured")
     except GoogleTokenError:
@@ -350,7 +370,7 @@ async def admin_google_login(payload: GoogleLoginRequest, db: SessionDep, reques
     A Google account not on that allow-list never becomes (or stays authenticated as) an admin here,
     regardless of any is_admin flag already on the row."""
     try:
-        info = verify_google_id_token(payload.id_token)
+        info = await verify_google_id_token_async(payload.id_token)
     except RuntimeError:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Google login is not configured")
     except GoogleTokenError:
@@ -372,7 +392,7 @@ async def admin_google_login(payload: GoogleLoginRequest, db: SessionDep, reques
     if not user.is_active:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account is disabled")
 
-    user = await user_crud.grant_admin(db, user)
+    user = await grant_admin(db, user)
 
     tokens = await _issue_token_pair(db, user, request)
     notify_new_login.delay(user.email, ip_address=_client_ip(request), user_agent=request.headers.get("user-agent"))

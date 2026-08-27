@@ -18,7 +18,6 @@ class CourseLevel(str, enum.Enum):
 
 class Course(Base):
     __tablename__ = "courses"
-
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
     slug: Mapped[str] = mapped_column(String(160), unique=True, index=True, nullable=False)
@@ -38,11 +37,7 @@ class Course(Base):
     outcomes: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
 
     is_published: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    created_by: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True
-    )
+    created_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
-    )
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)

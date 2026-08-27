@@ -9,12 +9,12 @@ import app.models  # noqa: F401 — registers all models on Base before create_a
 from app.core.celery_app import check_celery_workers
 from app.core.config import settings
 from app.core.database import check_db_connection, init_db
-from app.routes.auth.auth import router as auth_router
-from app.routes.users.profile import router as users_router
-from app.routes.courses.catalog import router as courses_router
-from app.routes.courses.admin import router as courses_admin_router
-from app.routes.courses.certificates import router as certificates_router
-from app.routes.courses.monitoring import router as courses_monitoring_router
+from app.routes.auth.auth_api import router as auth_router
+from app.routes.users.profile_api import router as users_router
+from server.app.routes.courses.catalog_api import router as courses_router
+from app.routes.courses.admin_api import router as courses_admin_router
+from app.routes.courses.certificates_api import router as certificates_router
+from server.app.routes.courses.monitoring_api import router as courses_monitoring_router
 from app.routes.publications.student import router as publications_student_router
 from app.routes.publications.catalog import router as publications_catalog_router
 from app.routes.publications.admin import router as publications_admin_router
@@ -37,7 +37,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title=settings.APP_NAME, lifespan=lifespan)
+app = FastAPI(title=settings.APP_NAME, lifespan=lifespan, Version=settings.APP_VERSION, debug=settings.DEBUG)
 
 app.add_middleware(
     CORSMiddleware,
@@ -47,25 +47,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth_router, prefix="/api/auth", tags=["Authentication System"])
-app.include_router(users_router, prefix="/api/users", tags=["Users"])
-app.include_router(courses_router, prefix="/api/courses", tags=["Course Catalog"])
-app.include_router(courses_admin_router, prefix="/api/admin/courses", tags=["Course Catalog - Admin"])
-app.include_router(certificates_router, prefix="/api/certificates", tags=["Certificates"])
-app.include_router(
-    courses_monitoring_router, prefix="/api/admin/monitoring", tags=["Student Monitoring - Admin"]
-)
-# Student router mounted before the catalog router: both share the "/api/publications" prefix, and its
-# literal "/me" paths must match before the catalog router's wildcard "/{publication_number}" route does.
-app.include_router(publications_student_router, prefix="/api/publications", tags=["Student Publications"])
-app.include_router(publications_catalog_router, prefix="/api/publications", tags=["Student Publications"])
-app.include_router(
-    publications_admin_router, prefix="/api/admin/publications", tags=["Student Publications - Moderation"]
-)
-app.include_router(case_studies_router, prefix="/api/case-studies", tags=["Case Studies"])
-app.include_router(case_studies_admin_router, prefix="/api/admin/case-studies", tags=["Case Studies - Admin"])
-
-
 @app.get("/health")
 async def health() -> dict:
     return {"status": "ok"}
+
+p = settings.APP_API_VERSION
+app.include_router(auth_router, prefix=p)
+
+# STUDENT ROUTERS
+app.include_router(users_router, prefix=p)
+app.include_router(courses_router, prefix=p)
+app.include_router(certificates_router, prefix=p)
+app.include_router(publications_student_router, prefix="/api/publications", tags=["Student Publications"])
+app.include_router(publications_catalog_router, prefix="/api/publications", tags=["Student Publications"])
+app.include_router(case_studies_router, prefix="/api/case-studies", tags=["Case Studies"])
+
+# ADMIN ROUTERS
+app.include_router(courses_admin_router, prefix=p)
+app.include_router(courses_monitoring_router, prefix="/api/admin/monitoring", tags=["Student Monitoring - Admin"])
+app.include_router(publications_admin_router, prefix="/api/admin/publications", tags=["Student Publications - Moderation"])
+app.include_router(case_studies_admin_router, prefix="/api/admin/case-studies", tags=["Case Studies - Admin"])
+
+

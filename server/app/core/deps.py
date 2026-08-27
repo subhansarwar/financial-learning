@@ -102,7 +102,6 @@ async def get_current_admin(current_user: User = Depends(get_current_user)) -> U
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required")
     return current_user
 
-
 SessionDep = Annotated[AsyncSession, Depends(get_db)]
 CurrentUser = Annotated[User, Depends(get_current_user)]
 CurrentTokenPayload = Annotated[dict, Depends(get_current_token_payload)]

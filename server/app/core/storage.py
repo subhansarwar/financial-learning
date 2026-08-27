@@ -1,14 +1,10 @@
 # app/core/storage.py
 import uuid
-
 from supabase import Client, create_client
-
 from app.core.config import settings
-
 
 class StorageNotConfiguredError(Exception):
     """Raised when Supabase Storage credentials aren't set in the environment."""
-
 
 _client: Client | None = None
 

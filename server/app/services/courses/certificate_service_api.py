@@ -1,21 +1,18 @@
-# app/services/courses/certificate_service.py
+# app/services/courses/certificate_service_api.py
 import io
+from reportlab.pdfgen import canvas
 import uuid
 from datetime import datetime, timezone
-
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import landscape, A4
 from reportlab.lib.units import cm
-from reportlab.pdfgen import canvas
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.core import storage
+from app.crud.courses.certificate_api import get_certificate_by_id, get_certificate_by_user_course, create_certificate
+from app.core.deps import SessionDep
+from app.core.storage import upload_certificate
 from app.core.config import settings
-from app.crud.courses import certificate as certificate_crud
-from app.models.courses.certificate import Certificate
 from app.models.courses.course import Course
 from app.models.users.user import User
-
+from app.models.courses.certificate import Certificate
 
 def _generate_certificate_number() -> str:
     return f"FLP-{uuid.uuid4().hex[:12].upper()}"
@@ -60,10 +57,10 @@ def generate_certificate_pdf(*, holder_name: str, course_title: str, certificate
     return buffer.getvalue()
 
 
-async def issue_certificate(db: AsyncSession, *, user: User, course: Course) -> Certificate:
+async def issue_certificate(db: SessionDep, *, user: User, course: Course) -> Certificate:
     """Idempotently issues a completion certificate: reuses an existing one for
     this user/course pair, otherwise generates the PDF, uploads it, and persists it."""
-    existing = await certificate_crud.get_by_user_course(db, user_id=user.id, course_id=course.id)
+    existing = await get_certificate_by_user_course(db, user_id=user.id, course_id=course.id)
     if existing is not None:
         return existing
 
@@ -75,8 +72,8 @@ async def issue_certificate(db: AsyncSession, *, user: User, course: Course) -> 
         certificate_number=certificate_number,
         issued_at=issued_at,
     )
-    pdf_url = storage.upload_certificate(certificate_number=certificate_number, content=pdf_bytes)
+    pdf_url = upload_certificate(certificate_number=certificate_number, content=pdf_bytes)
 
-    return await certificate_crud.create(
+    return await create_certificate(
         db, user_id=user.id, course_id=course.id, certificate_number=certificate_number, pdf_url=pdf_url
     )
