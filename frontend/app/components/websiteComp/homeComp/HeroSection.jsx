@@ -170,7 +170,7 @@ export default function HeroSection() {
                     </motion.div>
 
                     {/* Heading with shade background */}
-                    <div className="relative isolate w-full max-w-4xl">
+                    <div className="relative w-full max-w-4xl">
                         {/* Green shade behind heading */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
@@ -178,12 +178,15 @@ export default function HeroSection() {
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="pointer-events-none absolute -inset-x-2 -inset-y-4 z-0 sm:-inset-x-4 sm:-inset-y-6 lg:-inset-x-6 lg:-inset-y-8"
                         >
-                            <Image
-                                src={textTopShade}
-                                alt=""
-                                fill
-                                className="object-contain"
-                                priority
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="pointer-events-none absolute -right-6 -top-8 -z-10 h-[160%] w-[70%] blur-2xl sm:-right-8 sm:w-[65%] lg:-right-10 lg:w-[60%]"
+                                style={{
+                                    background:
+                                        "radial-gradient(ellipse at center, rgba(125,255,210,0.35) 0%, rgba(125,255,210,0.18) 45%, rgba(125,255,210,0) 75%)",
+                                }}
                             />
                         </motion.div>
 
@@ -218,13 +221,6 @@ export default function HeroSection() {
                             variants={fadeInLeftVariants}
                             className="relative hidden h-8 w-8 shrink-0 sm:block sm:h-9 sm:w-9 lg:h-10 lg:w-10 xl:h-11 xl:w-11"
                         >
-                            <div
-                                className="pointer-events-none absolute -inset-2 -z-10 rounded-full blur-md sm:-inset-3"
-                                style={{
-                                    background:
-                                        "radial-gradient(circle, rgba(182,245,216,0.7) 0%, rgba(182,245,216,0) 70%)",
-                                }}
-                            />
                             <Image
                                 src={leftBtnAvatar}
                                 alt=""
