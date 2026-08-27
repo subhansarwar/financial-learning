@@ -1,4 +1,4 @@
-# app/routes/courses/monitoring.py
+# app/routes/courses/monitoring_api.py
 import uuid
 from datetime import date, datetime, time, timedelta, timezone
 from fastapi import APIRouter, HTTPException, Query, status
@@ -6,23 +6,11 @@ from app.core.deps import CurrentAdmin, SessionDep
 from app.crud.courses import monitoring_api as monitoring_crud
 from app.crud.users.user_api import get_by_id
 from app.models.courses.enrollment import EnrollmentStatus
-from app.schemas.courses.monitoring import (
-    EnrollmentActivityItem,
-    EnrollmentActivityResponse,
-    LessonCompletionActivityItem,
-    LessonCompletionActivityResponse,
-    StudentDetailResponse,
-    StudentListResponse,
-    StudentSummary,
-)
+from app.schemas.courses.monitoring import (EnrollmentActivityItem, EnrollmentActivityResponse, LessonCompletionActivityItem, LessonCompletionActivityResponse, StudentDetailResponse, StudentListResponse, StudentSummary,)
 
-router = APIRouter()
+router = APIRouter(prefix="/admin/monitoring", tags=["Student Monitoring - Admin"])
 
-def _resolve_range(
-    on_date: date | None, date_from: datetime | None, date_to: datetime | None
-) -> tuple[datetime | None, datetime | None]:
-    """A single `on_date` (e.g. "which students finished a course today") takes
-    precedence over an explicit from/to range when both are supplied."""
+def _resolve_range(on_date: date | None, date_from: datetime | None, date_to: datetime | None) -> tuple[datetime | None, datetime | None]:
     if on_date is not None:
         start = datetime.combine(on_date, time.min, tzinfo=timezone.utc)
         end = start + timedelta(days=1)
@@ -31,15 +19,15 @@ def _resolve_range(
 
 def _student_summary(user, enrolled_count: int, completed_count: int) -> StudentSummary:
     return StudentSummary(
-        id=user.id,
-        email=user.email,
-        full_name=user.full_name,
-        is_active=user.is_active,
-        is_verified=user.is_verified,
-        created_at=user.created_at,
-        enrolled_courses_count=enrolled_count,
+        id=user.id, 
+        email=user.email, 
+        full_name=user.full_name, 
+        is_active=user.is_active, 
+        is_verified=user.is_verified, 
+        created_at=user.created_at, 
+        enrolled_courses_count=enrolled_count, 
         completed_courses_count=completed_count,
-    )
+)
 
 def _enrollment_item(enrollment, user, course) -> EnrollmentActivityItem:
     return EnrollmentActivityItem(

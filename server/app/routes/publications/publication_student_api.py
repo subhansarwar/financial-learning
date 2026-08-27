@@ -2,13 +2,13 @@
 import uuid
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
-from sqlalchemy.ext.asyncio import AsyncSession
+# from sqlalchemy.ext.asyncio import SessionDep
 
 from app.core import storage
 from app.core.config import settings
 from app.core.deps import CurrentUser, SessionDep
-from app.crud.publications import bookmark as bookmark_crud
-from app.crud.publications import publication as publication_crud
+from app.crud.publications import bookmark_api as bookmark_crud
+from app.crud.publications import publication_api as publication_crud
 from app.models.publications.publication import Publication, PublicationStatus
 from app.models.users.user import User
 from app.schemas.auth.auth import MessageResponse
@@ -19,48 +19,48 @@ from app.schemas.publications.publication import (
     PublicationRead,
     PublicationUpdate,
 )
-from app.services.publications import publication_service
+from app.services.publications import publication_service_api
 
-router = APIRouter()
+router = APIRouter( prefix="/publications/student", tags=["Student Publications"])
 
 
-async def _get_owned_publication(db: AsyncSession, current_user: User, publication_id: uuid.UUID) -> Publication:
-    publication = await publication_crud.get_by_id(db, publication_id)
+async def _get_owned_publication(db: SessionDep, current_user: User, publication_id: uuid.UUID) -> Publication:
+    publication = await publication_crud.get_publication_by_id(db, publication_id)
     if publication is None or publication.author_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
     return publication
 
 
-@router.post("", response_model=PublicationRead, status_code=status.HTTP_201_CREATED)
+@router.post("/create", response_model=PublicationRead, status_code=status.HTTP_201_CREATED)
 async def create_publication(payload: PublicationCreate, db: SessionDep, current_user: CurrentUser) -> PublicationRead:
-    publication = await publication_service.create_draft(db, author=current_user, payload=payload)
+    publication = await publication_service_api.create_publication_draft(db, author=current_user, payload=payload)
     return PublicationRead.model_validate(publication)
 
 
 @router.get("/me", response_model=list[PublicationRead])
 async def list_my_publications(db: SessionDep, current_user: CurrentUser) -> list[PublicationRead]:
-    publications = await publication_crud.list_for_author(db, current_user.id)
+    publications = await publication_crud.list_publications_by_author(db, current_user.id)
     return [PublicationRead.model_validate(p) for p in publications]
 
 
-@router.get("/me/bookmarks", response_model=list[PublicationRead])
+@router.get("/me/bookmarks/all", response_model=list[PublicationRead])
 async def list_my_bookmarks(db: SessionDep, current_user: CurrentUser) -> list[PublicationRead]:
-    bookmarks = await bookmark_crud.list_for_user(db, current_user.id)
+    bookmarks = await bookmark_crud.list_bookmarks_by_user(db, current_user.id)
     publications = []
     for b in bookmarks:
-        publication = await publication_crud.get_by_id(db, b.publication_id)
+        publication = await publication_crud.get_publication_by_id(db, b.publication_id)
         if publication is not None:
             publications.append(publication)
     return [PublicationRead.model_validate(p) for p in publications]
 
 
-@router.get("/me/{publication_id}", response_model=PublicationRead)
+@router.get("/me/read/{publication_id}", response_model=PublicationRead)
 async def get_my_publication(publication_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> PublicationRead:
     publication = await _get_owned_publication(db, current_user, publication_id)
     return PublicationRead.model_validate(publication)
 
 
-@router.patch("/me/{publication_id}", response_model=PublicationRead)
+@router.patch("/me/update/{publication_id}", response_model=PublicationRead)
 async def update_my_publication(
     publication_id: uuid.UUID, payload: PublicationUpdate, db: SessionDep, current_user: CurrentUser
 ) -> PublicationRead:
@@ -75,7 +75,7 @@ async def update_my_publication(
     return PublicationRead.model_validate(publication)
 
 
-@router.delete("/me/{publication_id}", response_model=MessageResponse)
+@router.delete("/me/delete/{publication_id}", response_model=MessageResponse)
 async def delete_my_publication(publication_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> MessageResponse:
     publication = await _get_owned_publication(db, current_user, publication_id)
     if publication.status != PublicationStatus.DRAFT:
@@ -85,7 +85,7 @@ async def delete_my_publication(publication_id: uuid.UUID, db: SessionDep, curre
     return MessageResponse(message="Publication deleted")
 
 
-@router.post("/me/{publication_id}/file", response_model=PublicationFileUploadResponse)
+@router.post("/me/upload/{publication_id}/file", response_model=PublicationFileUploadResponse)
 async def upload_publication_file(
     publication_id: uuid.UUID, db: SessionDep, current_user: CurrentUser, file: UploadFile = File(...)
 ) -> PublicationFileUploadResponse:
@@ -117,23 +117,23 @@ async def upload_publication_file(
     except storage.StorageNotConfiguredError:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Publication storage is not configured")
 
-    await publication_crud.set_file_url(db, publication, file_url)
+    await publication_crud.set_publication_file_url(db, publication, file_url)
     return PublicationFileUploadResponse(file_url=file_url)
 
 
-@router.post("/me/{publication_id}/submit", response_model=PublicationRead)
+@router.post("/me/submit/{publication_id}/submit", response_model=PublicationRead)
 async def submit_publication(publication_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> PublicationRead:
     publication = await _get_owned_publication(db, current_user, publication_id)
     try:
-        publication = await publication_service.submit_for_review(db, publication)
-    except publication_service.InvalidStatusTransitionError as exc:
+        publication = await publication_service_api.submit_for_review(db, publication)
+    except publication_service_api.InvalidStatusTransitionError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
     return PublicationRead.model_validate(publication)
 
 
-@router.post("/{publication_id}/bookmark", response_model=BookmarkRead, status_code=status.HTTP_201_CREATED)
+@router.post("/bookmark/{publication_id}/bookmark", response_model=BookmarkRead, status_code=status.HTTP_201_CREATED)
 async def bookmark_publication(publication_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> BookmarkRead:
-    publication = await publication_crud.get_by_id(db, publication_id)
+    publication = await publication_crud.get_publication_by_id(db, publication_id)
     if publication is None or publication.status != PublicationStatus.PUBLISHED:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
 
@@ -145,9 +145,9 @@ async def bookmark_publication(publication_id: uuid.UUID, db: SessionDep, curren
     return BookmarkRead.model_validate(bookmark)
 
 
-@router.delete("/{publication_id}/bookmark", response_model=MessageResponse)
+@router.delete("/upbookmark/{publication_id}", response_model=MessageResponse)
 async def unbookmark_publication(publication_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> MessageResponse:
-    bookmark = await bookmark_crud.get(db, user_id=current_user.id, publication_id=publication_id)
+    bookmark = await bookmark_crud.get_bookmark(db, user_id=current_user.id, publication_id=publication_id)
     if bookmark is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Bookmark not found")
 
