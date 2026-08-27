@@ -166,7 +166,7 @@ export default function MoreCoursesSection({
     };
 
     return (
-        <section ref={sectionRef} className="py-12 sm:py-14 lg:py-16 overflow-hidden">
+        <section ref={sectionRef} className="py-8 sm:py-8 lg:py-8 bg-[#ffffff] overflow-hidden">
             <div className="mx-auto px-4 sm:px-6 lg:p-10">
                 {/* ===== HEADER ===== */}
                 <motion.div
@@ -417,7 +417,7 @@ function ExploreCourseCard({ course, delay = 0, isInView }) {
                 <div className="mb-2.5 border-t border-[#e8e3dd]" />
 
                 {/* Course Details — plain icon + label, dot-separated, matching the reference */}
-                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[11px] font-medium text-muted">
+                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] font-medium text-muted">
                     {metaItems.map((item, idx) => (
                         <div key={item.key} className="flex items-center gap-x-2.5">
                             {idx > 0 && <span className="text-line">·</span>}

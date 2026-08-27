@@ -132,28 +132,30 @@ export default function InteractiveTree({ className = "" }) {
         }
 
         // =========================================================
-        // MAIN TRUNK
+        // MAIN TRUNK — thick, straight-ish, forks at mid-height into
+        // two thick limbs (V / vase shape), matching the reference.
         // =========================================================
+
+        const FORK_POINT = new THREE.Vector3(-0.01, -0.35, 0);
 
         const trunkPoints = [
             new THREE.Vector3(0, -1.55, 0),
-            new THREE.Vector3(-0.03, -1.25, 0),
-            new THREE.Vector3(0.04, -0.85, 0),
-            new THREE.Vector3(0.02, -0.42, 0),
-            new THREE.Vector3(-0.02, 0.0, 0),
-            new THREE.Vector3(0.03, 0.3, 0),
+            new THREE.Vector3(-0.03, -1.3, 0),
+            new THREE.Vector3(0.04, -1.0, 0),
+            new THREE.Vector3(0.02, -0.65, 0),
+            FORK_POINT,
         ];
 
         createCurvedBranch({
             points: trunkPoints,
-            radiusStart: 0.15,
-            radiusEnd: 0.1,
+            radiusStart: 0.24,
+            radiusEnd: 0.14,
             material: trunkMaterial,
             radialSegments: 12,
         });
 
         // TRUNK BASE FLARE
-        const baseGeometry = new THREE.CylinderGeometry(0.19, 0.27, 0.32, 12);
+        const baseGeometry = new THREE.CylinderGeometry(0.26, 0.36, 0.36, 12);
         const baseMesh = new THREE.Mesh(baseGeometry, trunkMaterial);
         baseMesh.position.set(0, -1.45, 0);
         baseMesh.scale.x = 1.15;
@@ -161,98 +163,119 @@ export default function InteractiveTree({ className = "" }) {
         treeGroup.add(baseMesh);
 
         // =========================================================
-        // MAIN BRANCHES — exactly 3, thick, forking from the trunk.
-        // Thin stalks (dandi) sprout from these afterwards, and each
-        // stalk carries a single leaf at its tip.
+        // MAIN LIMBS — trunk forks into 2 thick limbs partway up
+        // (a "V"/vase shape). Each limb then splits into thinner
+        // secondary branches that fan out to fill a round canopy.
         // =========================================================
 
-        // 1. LEFT main branch
-        const leftBranchCurve = new THREE.CatmullRomCurve3(
-            [
-                new THREE.Vector3(0.02, 0.05, 0),
-                new THREE.Vector3(-0.3, 0.3, 0),
-                new THREE.Vector3(-0.64, 0.52, 0.01),
-                new THREE.Vector3(-0.92, 0.72, 0.02),
-                new THREE.Vector3(-1.1, 0.88, 0.02),
-            ],
-            false,
-            "catmullrom",
-            0.5
-        );
-
-        createCurvedBranch({
-            points: leftBranchCurve.points,
-            radiusStart: 0.09,
-            radiusEnd: 0.032,
-            radialSegments: 10,
-        });
-
-        // 2. CENTER main branch (splits toward the top leaves)
-        const centerBranchCurve = new THREE.CatmullRomCurve3(
-            [
-                new THREE.Vector3(0.0, 0.15, 0),
-                new THREE.Vector3(0.02, 0.5, 0),
-                new THREE.Vector3(-0.02, 0.9, 0),
-                new THREE.Vector3(0.04, 1.28, 0),
-                new THREE.Vector3(0.1, 1.55, 0),
-            ],
-            false,
-            "catmullrom",
-            0.5
-        );
-
-        createCurvedBranch({
-            points: centerBranchCurve.points,
-            radiusStart: 0.08,
-            radiusEnd: 0.028,
-            radialSegments: 10,
-        });
-
-        // 3. RIGHT main branch
-        const rightBranchCurve = new THREE.CatmullRomCurve3(
-            [
-                new THREE.Vector3(0.02, 0.1, 0),
-                new THREE.Vector3(0.34, 0.32, 0.01),
-                new THREE.Vector3(0.7, 0.55, 0.02),
-                new THREE.Vector3(1.0, 0.8, 0.03),
-                new THREE.Vector3(1.18, 1.0, 0.03),
-            ],
-            false,
-            "catmullrom",
-            0.5
-        );
-
-        createCurvedBranch({
-            points: rightBranchCurve.points,
-            radiusStart: 0.09,
-            radiusEnd: 0.032,
-            radialSegments: 10,
-        });
-
-        // =========================================================
-        // THIN STALKS (DANDI) — very thin twigs that sprout from the
-        // 3 main branches. Each stalk ends in a single leaf, matching
-        // the reference image exactly.
-        // =========================================================
-
-        function addStalkLeaf(branchCurve, tAlong, tipOffset, leafScale, leafRot, flip) {
-            const start = branchCurve.getPointAt(tAlong);
-            const end = start.clone().add(tipOffset);
-
-            // A gentle curve from branch to leaf tip.
-            const mid = start.clone().lerp(end, 0.55);
-            mid.x += (Math.random() - 0.5) * 0.03;
-            mid.y += 0.02;
+        function addSecondaryBranch(
+            parentCurve,
+            tAlong,
+            midOffset,
+            endOffset,
+            radiusStart = 0.05,
+            radiusEnd = 0.017
+        ) {
+            const start = parentCurve.getPointAt(tAlong);
+            const mid = start.clone().add(midOffset);
+            const end = start.clone().add(endOffset);
 
             createCurvedBranch({
                 points: [start, mid, end],
-                radiusStart: 0.02,
-                radiusEnd: 0.009,
-                radialSegments: 5,
+                radiusStart,
+                radiusEnd,
+                radialSegments: 8,
             });
 
-            addLeaf(end, leafScale, leafRot, flip);
+            return new THREE.CatmullRomCurve3([start, mid, end], false, "catmullrom", 0.5);
         }
+
+        // ---- LEFT main limb (thick, forks from trunk, leans left) ----
+        const leftLimbCurve = new THREE.CatmullRomCurve3(
+            [
+                FORK_POINT.clone(),
+                new THREE.Vector3(-0.26, -0.06, 0.01),
+                new THREE.Vector3(-0.46, 0.24, 0.02),
+                new THREE.Vector3(-0.56, 0.54, 0.01),
+                new THREE.Vector3(-0.6, 0.8, 0),
+            ],
+            false,
+            "catmullrom",
+            0.5
+        );
+
+        createCurvedBranch({
+            points: leftLimbCurve.points,
+            radiusStart: 0.135,
+            radiusEnd: 0.06,
+            radialSegments: 12,
+        });
+
+        // ---- RIGHT main limb (thick, forks from trunk, leans right) ----
+        const rightLimbCurve = new THREE.CatmullRomCurve3(
+            [
+                FORK_POINT.clone(),
+                new THREE.Vector3(0.23, -0.03, -0.01),
+                new THREE.Vector3(0.43, 0.27, -0.02),
+                new THREE.Vector3(0.56, 0.57, -0.01),
+                new THREE.Vector3(0.63, 0.82, 0),
+            ],
+            false,
+            "catmullrom",
+            0.5
+        );
+
+        createCurvedBranch({
+            points: rightLimbCurve.points,
+            radiusStart: 0.135,
+            radiusEnd: 0.06,
+            radialSegments: 12,
+        });
+
+        // ---- LEFT limb's secondary branches — one far-left, one
+        // mid-left, one curving up toward the center-top of the dome ----
+        const leftSecFar = addSecondaryBranch(
+            leftLimbCurve,
+            0.35,
+            new THREE.Vector3(-0.18, 0.14, 0.02),
+            new THREE.Vector3(-0.42, 0.28, 0.03)
+        );
+        const leftSecMid = addSecondaryBranch(
+            leftLimbCurve,
+            0.68,
+            new THREE.Vector3(-0.14, 0.2, 0.01),
+            new THREE.Vector3(-0.28, 0.42, 0.0)
+        );
+        const leftSecTop = addSecondaryBranch(
+            leftLimbCurve,
+            1.0,
+            new THREE.Vector3(0.1, 0.28, -0.01),
+            new THREE.Vector3(0.28, 0.62, -0.02),
+            0.045,
+            0.015
+        );
+
+        // ---- RIGHT limb's secondary branches — mirrored fan ----
+        const rightSecFar = addSecondaryBranch(
+            rightLimbCurve,
+            0.35,
+            new THREE.Vector3(0.18, 0.15, -0.02),
+            new THREE.Vector3(0.44, 0.3, -0.03)
+        );
+        const rightSecMid = addSecondaryBranch(
+            rightLimbCurve,
+            0.68,
+            new THREE.Vector3(0.14, 0.2, -0.01),
+            new THREE.Vector3(0.26, 0.44, 0.0)
+        );
+        const rightSecTop = addSecondaryBranch(
+            rightLimbCurve,
+            1.0,
+            new THREE.Vector3(-0.08, 0.3, 0.01),
+            new THREE.Vector3(-0.22, 0.66, 0.02),
+            0.045,
+            0.015
+        );
 
         // =========================================================
         // LEAF SHAPE — fuller, rounder teardrop like the reference
@@ -347,28 +370,68 @@ export default function InteractiveTree({ className = "" }) {
         }
 
         // =========================================================
-        // LEAF PLACEMENT — one thin stalk (dandi) per leaf, sprouting
-        // from the 3 main branches, exactly like the reference image.
+        // LEAF CLUSTER — 2-4 short thin stalks radiating from one
+        // branch-tip point, each ending in a leaf. This is what gives
+        // the dense, bunched look from the reference image instead of
+        // single leaves on long lonely stalks.
         // =========================================================
 
-        // ---- LEFT branch: thin stalks fanning up-left ----
-        addStalkLeaf(leftBranchCurve, 0.3, new THREE.Vector3(0.12, 0.32, 0.01), 0.55, -0.15, true);
-        addStalkLeaf(leftBranchCurve, 0.55, new THREE.Vector3(-0.28, 0.34, 0.02), 0.62, -0.9, false);
-        addStalkLeaf(leftBranchCurve, 0.78, new THREE.Vector3(-0.06, 0.38, 0.02), 0.58, -0.4, true);
-        addStalkLeaf(leftBranchCurve, 1.0, new THREE.Vector3(-0.15, 0.28, 0.02), 0.66, -1.1, false);
+        function addLeafCluster(origin, count = 3, options = {}) {
+            const {
+                spread = 0.2,
+                upBias = 0.14,
+                scaleRange = [0.5, 0.72],
+                rotRange = [-1.1, 1.1],
+            } = options;
 
-        // ---- CENTER branch: thin stalks fanning up over the top ----
-        addStalkLeaf(centerBranchCurve, 0.45, new THREE.Vector3(-0.42, 0.3, 0.01), 0.52, -0.5, true);
-        addStalkLeaf(centerBranchCurve, 0.7, new THREE.Vector3(-0.42, 0.22, 0.02), 0.72, -0.35, false);
-        addStalkLeaf(centerBranchCurve, 0.9, new THREE.Vector3(0.1, 0.28, 0.02), 0.78, -0.1, false);
-        addStalkLeaf(centerBranchCurve, 1.0, new THREE.Vector3(0.5, 0.24, 0.02), 0.66, 0.35, false);
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 0.05 + Math.random() * spread;
 
-        // ---- RIGHT branch: thin stalks fanning up-right ----
-        addStalkLeaf(rightBranchCurve, 0.18, new THREE.Vector3(-0.1, 0.28, 0.01), 0.42, 0.2, false);
-        addStalkLeaf(rightBranchCurve, 0.45, new THREE.Vector3(0.1, 0.34, 0.02), 0.55, 0.35, false);
-        addStalkLeaf(rightBranchCurve, 0.72, new THREE.Vector3(0.1, 0.26, 0.02), 0.6, 0.55, true);
-        addStalkLeaf(rightBranchCurve, 1.0, new THREE.Vector3(0.22, 0.2, 0.02), 0.6, 0.85, false);
-        addStalkLeaf(rightBranchCurve, 1.0, new THREE.Vector3(0.4, 0.12, 0.03), 0.5, 0.95, true);
+                const tip = origin.clone().add(
+                    new THREE.Vector3(
+                        Math.cos(angle) * radius,
+                        Math.abs(Math.sin(angle)) * radius * 0.6 + upBias,
+                        (Math.random() - 0.5) * 0.06
+                    )
+                );
+
+                const mid = origin.clone().lerp(tip, 0.5);
+                mid.y += 0.02;
+
+                createCurvedBranch({
+                    points: [origin, mid, tip],
+                    radiusStart: 0.016,
+                    radiusEnd: 0.007,
+                    radialSegments: 5,
+                });
+
+                const scale = THREE.MathUtils.lerp(scaleRange[0], scaleRange[1], Math.random());
+                const rot = THREE.MathUtils.lerp(rotRange[0], rotRange[1], Math.random());
+                addLeaf(tip, scale, rot, Math.random() > 0.5);
+            }
+        }
+
+        // =========================================================
+        // LEAF CLUSTERS — placed at the tips (and one mid-point) of
+        // every secondary branch, plus a center-top cluster where the
+        // two "top" branches meet, to fill out a round, full dome.
+        // =========================================================
+
+        addLeafCluster(leftSecFar.getPointAt(1), 3, { spread: 0.2, upBias: 0.12 });
+        addLeafCluster(leftSecFar.getPointAt(0.55), 2, { spread: 0.16, upBias: 0.1 });
+        addLeafCluster(leftSecMid.getPointAt(1), 3, { spread: 0.2, upBias: 0.14 });
+        addLeafCluster(leftSecTop.getPointAt(1), 4, { spread: 0.22, upBias: 0.16 });
+
+        addLeafCluster(rightSecFar.getPointAt(1), 3, { spread: 0.2, upBias: 0.12 });
+        addLeafCluster(rightSecFar.getPointAt(0.55), 2, { spread: 0.16, upBias: 0.1 });
+        addLeafCluster(rightSecMid.getPointAt(1), 3, { spread: 0.2, upBias: 0.14 });
+        addLeafCluster(rightSecTop.getPointAt(1), 4, { spread: 0.22, upBias: 0.16 });
+
+        // Center-top cluster where the two "top" secondary branches
+        // curve toward each other — fills the crown of the dome.
+        const topCenter = leftSecTop.getPointAt(1).clone().lerp(rightSecTop.getPointAt(1), 0.5);
+        addLeafCluster(topCenter, 4, { spread: 0.18, upBias: 0.2 });
 
         // =========================================================
         // INTERACTION

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Wallet, DollarSign, LayoutGrid, Heart, TrendingUp, Target, Calendar, CalendarDays, PieChart, Folder } from "lucide-react";
+import { ArrowUpRight, Wallet, DollarSign, Flag, Sparkles, ArrowRight, LayoutGrid, Heart, TrendingUp, Target, Calendar, CalendarDays, PieChart, Folder } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import interactiveToolsImg from "@/public/assets/featuresSectionImages/InteractivetoolsRightSideImage.webp";
@@ -197,42 +197,67 @@ function InteractiveToolsRow() {
 /* ---------- Row 2: Case Studies ---------- */
 function CaseStudiesMockup() {
     return (
-        <div className="w-full max-w-[440px] rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_8px_30px_rgba(15,23,42,0.08)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(15,23,42,0.15)] sm:p-5">
-            {/* fake browser bar */}
-            <div className="mb-4 flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-red-300" />
-                <span className="h-2 w-2 rounded-full bg-yellow-300" />
-                <span className="h-2 w-2 rounded-full bg-green-300" />
-                <span className="ml-3 flex-1 rounded-full bg-slate-50 px-3 py-1 text-[10px] text-slate-400">
-                    #MyResource
-                </span>
-            </div>
+        <div className="w-full max-w-[550px] rounded-2xl p-3 transition-all duration-500 ease-out hover:-translate-y-1">
+            <div className="rounded-xl border border-[#DDDDDD] bg-white p-0 sm:p-0">
+                {/* top meta row */}
+                <div className="flex items-center justify-between p-4 sm:p-4">
+                    <div className="flex items-center gap-2.5">
+                        <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-sky-50 text-sky-500">
+                            <Heart className="h-4 w-4" strokeWidth={2} />
+                        </div>
+                        <span className="text-sm font-medium text-slate-700">
+                            Microfinance
+                        </span>
+                    </div>
 
-            <div className="flex items-start gap-3">
-                <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700">
-                    <span className="text-sm font-bold">G</span>
+                    <div className="flex items-center gap-3 text-xs text-slate-400">
+                        <span className="flex items-center gap-1">
+                            <Flag className="h-3.5 w-3.5" />
+                            Bangladesh
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <Calendar className="h-3.5 w-3.5" />
+                            1977
+                        </span>
+                    </div>
                 </div>
-                <div className="flex-1">
-                    <p className="text-[11px] font-semibold text-slate-400">
+
+                {/* divider */}
+                <div className="my-0 border-t border-[#DDDDDD]" />
+                <div className="p-4 sm:p-4">
+                    {/* title with folder icon */}
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+                        <Folder className="h-3.5 w-3.5" />
                         Grameen Bank
-                    </p>
-                    <h4 className="mt-0.5 text-sm font-bold text-[#0F172A] sm:text-base">
-                        Grameen Bank: Banking on trust instead of collateral
+                    </div>
+
+                    <h4 className="mt-2 text-sm font-bold text-[#0F172A] sm:text-base">
+                        Grameen Bank: banking on trust instead of collateral
                     </h4>
+
                     <p className="mt-2 text-xs leading-relaxed text-slate-500">
-                        Community professor Muhammad Yunus lent thousands of dollars to
-                        villagers without requiring collateral — proving trust-based
-                        lending could work at scale.
+                        Economics professor Muhammad Yunus lent the equivalent of $27 from
+                        his own pocket to 42 bamboo stool makers in the village of Jobra,
+                        who were trapped buying materials from moneylenders. That
+                        experiment became Grameen Bank (1983), built on group lending,
+                        weekly meetings and the belief that the poor are creditworthy.
                     </p>
+
+                    {/* result & lesson pill */}
                     <a
                         href="#read"
-                        className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 no-underline transition-all duration-300 hover:gap-2"
+                        className="mt-4 flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2.5 no-underline transition-all duration-300 hover:bg-slate-100"
                     >
-                        Read & learn <ArrowUpRight className="h-3 w-3" />
+                        <span className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                            <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                            Result & lesson
+                            <ArrowRight className="h-3.5 w-3.5 text-slate-500 transition-transform duration-300 group-hover:translate-x-0.5" />
+                        </span>
                     </a>
+
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
@@ -334,14 +359,27 @@ function PublishedPapersRow() {
 /* ---------- Main Section ---------- */
 export default function FeaturesSection() {
     return (
-        <section className="bg-[#E5E5E5] py-16 sm:py-20 lg:py-24 overflow-hidden">
-            <div className="mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col gap-20 sm:gap-24 lg:gap-28">
+        <>
+            {/* Interactive Tools Section */}
+            <section className="bg-[#ffffff] py-10 sm:py-10 lg:py-10 overflow-hidden">
+                <div className="mx-6 px-4 sm:px-6 lg:px-8">
                     <InteractiveToolsRow />
+                </div>
+            </section>
+
+            {/* Case Studies Section - Separate with bg #EBFFF9 */}
+            <section className="bg-[#EBFFF9] py-10 sm:py-10 lg:py-10 overflow-hidden">
+                <div className="mx-6 px-4 sm:px-6 lg:px-8">
                     <CaseStudiesRow />
+                </div>
+            </section>
+
+            {/* Published Papers Section */}
+            <section className="bg-[#ffffff] py-10 sm:py-10 lg:py-10 overflow-hidden">
+                <div className="mx-6 px-4 sm:px-6 lg:px-8">
                     <PublishedPapersRow />
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }

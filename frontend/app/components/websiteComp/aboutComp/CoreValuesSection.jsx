@@ -65,7 +65,7 @@ export default function CoreValuesSection() {
     return (
         <section
             ref={sectionRef}
-            className="bg-[#72BB83] py-14 sm:py-20 lg:py-24"
+            className="bg-[#72BB83] py-12 sm:py-12 lg:py-12"
         >
             <div className="mx-6 px-4 sm:px-6 2xl:max-w-[1400px]">
                 {/* Header */}

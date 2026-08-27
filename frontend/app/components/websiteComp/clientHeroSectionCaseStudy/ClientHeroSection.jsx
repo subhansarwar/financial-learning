@@ -18,21 +18,6 @@ export default function ClientHeroSection({ cases }) {
             ref={sectionRef}
             className="relative overflow-hidden bg-[#E5E5E5] py-16 sm:py-20 lg:py-12 lg:h-[480px]"
         >
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
-                    className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#72BB83]/20 blur-3xl"
-                />
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
-                    className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-[#72BB83]/20 blur-3xl"
-                />
-            </div>
 
             <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center lg:h-[480px]">
@@ -44,7 +29,6 @@ export default function ClientHeroSection({ cases }) {
                             transition={{ duration: 0.6, ease: "easeOut" }}
                             className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-[#72BB83]"
                         >
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#72BB83]" />
                             Learn from real examples
                         </motion.span>
 
@@ -95,7 +79,7 @@ export default function ClientHeroSection({ cases }) {
                             transition={{ duration: 0.3 }}
                             className="relative w-full max-w-md lg:max-w-lg"
                         >
-                            <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                            <div className="relative overflow-hidden rounded-2xl">
                                 <Image
                                     src={caseStudy}
                                     alt="Case Study Illustration"

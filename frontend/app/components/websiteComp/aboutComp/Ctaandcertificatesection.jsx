@@ -16,7 +16,7 @@ export default function CtaAndCertificateSection() {
     return (
         <section
             ref={sectionRef}
-            className="w-full bg-[#E5E5E5] px-6 py-12 sm:px-10 lg:px-16 2xl:px-24"
+            className="w-full bg-[#ffffff] px-6 py-12 sm:px-10 lg:px-16 2xl:px-24"
         >
             <div className="mx-6 flex flex-col gap-6">
                 {/* --------------------------------------------------------------- */}

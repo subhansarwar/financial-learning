@@ -67,12 +67,15 @@ const userSlice = createSlice({
             state.isAuthenticated = false;
             state.loading = false;
             state.error = null;
+            state.initialized = false;
+
             if (typeof window !== "undefined") {
                 localStorage.removeItem("auth_token");
                 localStorage.removeItem("refresh_token");
                 localStorage.removeItem("signup_token");
                 localStorage.removeItem("efp.user");
-                localStorage.removeItem("finlearn.v1");
+                localStorage.removeItem("token_type");
+                localStorage.removeItem("expires_in");
                 window.dispatchEvent(new Event("userUpdate"));
             }
         },

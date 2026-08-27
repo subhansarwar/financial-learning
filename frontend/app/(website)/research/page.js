@@ -12,7 +12,7 @@ export default function ResearchPage() {
 
 
     return (
-        <section className="py-14 min-h-[calc(100vh-160px)] sm:py-[78px]">
+        <section className="py-14 bg-[#E5E5E5] min-h-[calc(100vh-160px)] sm:py-[78px]">
             <div className="mx-6 px-4 sm:px-6">
                 <ResearchComp />
             </div>

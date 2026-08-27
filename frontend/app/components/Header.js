@@ -97,8 +97,8 @@ export default function Header() {
     return (
         <header
             className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-in-out ${isScrolled
-                    ? "bg-transparent backdrop-blur-xl shadow-lg"
-                    : "bg-[#72BB83]"
+                ? "bg-transparent backdrop-blur-xl shadow-lg"
+                : "bg-[#72BB83]"
                 }`}
         >
             <div className="mx-5 px-4 sm:px-6 lg:px-10">
@@ -109,7 +109,7 @@ export default function Header() {
                         className={`shrink-0 no-underline hover:no-underline transition-all duration-300 ${isScrolled ? "scale-95" : "scale-100"
                             }`}
                     >
-                        <span className={`text-base font-extrabold uppercase tracking-tight transition-all duration-300 sm:text-lg lg:text-xl ${isScrolled ? "text-[#14301F]" : "text-[#151515]"
+                        <span className={`text-base font-extrabold tracking-tight transition-all duration-300 sm:text-lg lg:text-xl ${isScrolled ? "text-[#14301F]" : "text-[#151515]"
                             }`}>
                             The Eco Lens
                         </span>
@@ -126,12 +126,12 @@ export default function Header() {
                                     href={href}
                                     onClick={() => handleLinkClick(href)}
                                     className={`relative pb-1 text-[13px] font-medium tracking-wide transition-all duration-300 ${active
-                                            ? isScrolled
-                                                ? "text-[#14301F]"
-                                                : "text-[#14301F]"
-                                            : isScrolled
-                                                ? "text-gray-600 hover:text-[#14301F]"
-                                                : "text-white/90 hover:text-white"
+                                        ? isScrolled
+                                            ? "text-[#14301F]"
+                                            : "text-[#14301F]"
+                                        : isScrolled
+                                            ? "text-gray-600 hover:text-[#14301F]"
+                                            : "text-white/90 hover:text-white"
                                         } ${isClicked ? "scale-110" : "scale-100"} hover:scale-105`}
                                 >
                                     {label}
@@ -152,17 +152,17 @@ export default function Header() {
                                     <button
                                         onClick={() => setIsAccountOpen((v) => !v)}
                                         className={`flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-sm font-semibold transition-all duration-300 hover:scale-105 ${isAccountOpen
-                                                ? "border-[#14301F]/30 bg-[#14301F]/10 text-[#14301F]"
-                                                : isScrolled
-                                                    ? "border-gray-300 bg-white/50 text-gray-700 hover:bg-white/80"
-                                                    : "border-white/30 bg-white/10 text-white hover:bg-white/20"
+                                            ? "border-[#14301F]/30 bg-[#14301F]/10 text-[#14301F]"
+                                            : isScrolled
+                                                ? "border-gray-300 bg-white/50 text-gray-700 hover:bg-white/80"
+                                                : "border-white/30 bg-white/10 text-white hover:bg-white/20"
                                             }`}
                                         aria-haspopup="menu"
                                         aria-expanded={isAccountOpen}
                                     >
                                         <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-transform duration-300 hover:scale-110 ${isScrolled
-                                                ? "bg-[#14301F] text-white"
-                                                : "bg-btn-primary text-white"
+                                            ? "bg-[#14301F] text-white"
+                                            : "bg-btn-primary text-white"
                                             }`}>
                                             {getInitials(userName)}
                                         </span>
@@ -216,17 +216,17 @@ export default function Header() {
                                     <Link
                                         href="/login"
                                         className={`text-[13px] font-medium transition-all duration-300 hover:scale-105 ${isScrolled
-                                                ? "text-gray-600 hover:text-[#14301F]"
-                                                : "text-white/90 hover:text-white"
+                                            ? "text-gray-600 hover:text-[#14301F]"
+                                            : "text-white/90 hover:text-white"
                                             }`}
                                     >
                                         Sign In
                                     </Link>
                                     <Link
-                                        href="/register"
+                                        href="/signup"
                                         className={`rounded-full px-5 py-1.5 text-[11px] font-bold text-white transition-all duration-300 hover:scale-105 ${isScrolled
-                                                ? "bg-[#14301F] hover:bg-[#14301F]/80 shadow-md"
-                                                : "bg-btn-primary hover:bg-btn-primary-hover"
+                                            ? "bg-[#14301F] hover:bg-[#14301F]/80 shadow-md"
+                                            : "bg-btn-primary hover:bg-btn-primary-hover"
                                             }`}
                                     >
                                         Register Now
@@ -238,8 +238,8 @@ export default function Header() {
                         {/* Mobile Menu Toggle */}
                         <button
                             className={`grid h-9 w-9 place-items-center rounded-lg transition-all duration-300 hover:bg-white/20 lg:hidden ${isScrolled
-                                    ? "text-[#14301F] hover:bg-[#14301F]/10"
-                                    : "text-white hover:bg-white/20"
+                                ? "text-[#14301F] hover:bg-[#14301F]/10"
+                                : "text-white hover:bg-white/20"
                                 }`}
                             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                             aria-expanded={isMenuOpen}
@@ -257,8 +257,8 @@ export default function Header() {
                 {/* Mobile Navigation */}
                 <div
                     className={`overflow-hidden transition-all duration-500 ease-in-out lg:hidden ${isMenuOpen
-                            ? "max-h-[600px] opacity-100 translate-y-0"
-                            : "max-h-0 opacity-0 -translate-y-4"
+                        ? "max-h-[600px] opacity-100 translate-y-0"
+                        : "max-h-0 opacity-0 -translate-y-4"
                         }`}
                 >
                     <nav className={`flex flex-col gap-1 pb-4 pt-3 ${isScrolled ? "border-t border-gray-200" : "border-t border-white/20"
@@ -274,12 +274,12 @@ export default function Header() {
                                         handleLinkClick(href);
                                     }}
                                     className={`flex items-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${active
-                                            ? isScrolled
-                                                ? "bg-[#14301F]/10 text-[#14301F]"
-                                                : "bg-white/15 text-[#14301F]"
-                                            : isScrolled
-                                                ? "text-gray-600 hover:bg-gray-100 hover:text-[#14301F]"
-                                                : "text-white/90 hover:bg-white/10 hover:text-white"
+                                        ? isScrolled
+                                            ? "bg-[#14301F]/10 text-[#14301F]"
+                                            : "bg-white/15 text-[#14301F]"
+                                        : isScrolled
+                                            ? "text-gray-600 hover:bg-gray-100 hover:text-[#14301F]"
+                                            : "text-white/90 hover:bg-white/10 hover:text-white"
                                         } hover:scale-105`}
                                 >
                                     {label}
@@ -308,8 +308,8 @@ export default function Header() {
                                         href="/dashboard"
                                         onClick={() => setIsMenuOpen(false)}
                                         className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-300 hover:scale-105 ${isScrolled
-                                                ? "text-gray-600 hover:bg-gray-100 hover:text-[#14301F]"
-                                                : "text-white/90 hover:bg-white/10 hover:text-white"
+                                            ? "text-gray-600 hover:bg-gray-100 hover:text-[#14301F]"
+                                            : "text-white/90 hover:bg-white/10 hover:text-white"
                                             }`}
                                     >
                                         <LayoutDashboard className={`h-5 w-5 ${isScrolled ? "text-gray-400" : "text-white/60"
@@ -322,8 +322,8 @@ export default function Header() {
                                             setIsMenuOpen(false);
                                         }}
                                         className={`flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-300 hover:scale-105 ${isScrolled
-                                                ? "text-rose-600 hover:bg-rose-50"
-                                                : "text-rose-100 hover:bg-rose-500/15"
+                                            ? "text-rose-600 hover:bg-rose-50"
+                                            : "text-rose-100 hover:bg-rose-500/15"
                                             }`}
                                     >
                                         <LogOut className="h-5 w-5" strokeWidth={2} />
@@ -336,8 +336,8 @@ export default function Header() {
                                         href="/login"
                                         onClick={() => setIsMenuOpen(false)}
                                         className={`flex items-center justify-center rounded-full border px-5 py-2 text-sm font-semibold transition-all duration-300 hover:scale-105 ${isScrolled
-                                                ? "border-gray-300 text-gray-600 hover:bg-gray-100"
-                                                : "border-white/40 text-white hover:bg-white/10"
+                                            ? "border-gray-300 text-gray-600 hover:bg-gray-100"
+                                            : "border-white/40 text-white hover:bg-white/10"
                                             }`}
                                     >
                                         Sign In
@@ -346,8 +346,8 @@ export default function Header() {
                                         href="/register"
                                         onClick={() => setIsMenuOpen(false)}
                                         className={`flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:scale-105 ${isScrolled
-                                                ? "bg-[#14301F] hover:bg-[#14301F]/80"
-                                                : "bg-btn-primary hover:bg-btn-primary-hover"
+                                            ? "bg-[#14301F] hover:bg-[#14301F]/80"
+                                            : "bg-btn-primary hover:bg-btn-primary-hover"
                                             }`}
                                     >
                                         Register Now
