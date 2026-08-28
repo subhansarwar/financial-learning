@@ -27,7 +27,7 @@ export default function ClientHeroSection({ cases }) {
                             initial={{ opacity: 0, x: -30 }}
                             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                             transition={{ duration: 0.6, ease: "easeOut" }}
-                            className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-[#72BB83]"
+                            className="inline-flex items-center gap-2.5 text-md font-bold uppercase tracking-[0.16em] text-[#72BB83]"
                         >
                             Learn from real examples
                         </motion.span> */}
@@ -80,15 +80,13 @@ export default function ClientHeroSection({ cases }) {
                             transition={{ duration: 0.3 }}
                             className="relative w-full max-w-md lg:max-w-lg"
                         >
-                            <div className="relative overflow-hidden rounded-2xl">
+                            <div className="relative overflow-hidden">
                                 <Image
                                     src={caseStudy}
                                     alt="Case Study Illustration"
-                                    className="h-auto w-full object-cover transition-transform duration-500 hover:scale-105"
+                                    className="w-90 h-90 object-cover transition-transform duration-500 hover:scale-105"
                                     priority
                                 />
-                                {/* Gradient Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#72BB83]/10 to-transparent" />
                             </div>
                         </motion.div>
                     </motion.div>

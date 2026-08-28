@@ -309,7 +309,7 @@ export default function LegalPageShell({
     };
 
     return (
-        <section className="font-quicksand relative overflow-hidden bg-[#F5F8F7] pb-20 pt-28 sm:pt-32">
+        <section className="font-quicksand relative overflow-hidden bg-[#ffffff] pb-20 pt-28 sm:pt-32">
             {/* reading progress bar */}
             <div className="fixed inset-x-0 top-0 z-40 h-1 bg-transparent">
                 <div

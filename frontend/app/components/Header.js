@@ -5,6 +5,8 @@ import { ChevronDown, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch } from "../store/hooks";
+import { logoutUser } from "../store/slices/user/userThunks";
 
 const NAV_LINKS = [
     { href: "/", label: "Home" },
@@ -25,16 +27,39 @@ export default function Header() {
     const [isAccountOpen, setIsAccountOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [clickedLink, setClickedLink] = useState(null);
+    const [isNearFooter, setIsNearFooter] = useState(false);
     const accountRef = useRef(null);
+    const dispatch = useAppDispatch()
 
     // Check scroll position
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 30);
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+
+            // Check if scrolled past 20px (faster trigger)
+            setIsScrolled(scrollY > 20);
+
+            // Check if near footer - increased threshold for faster trigger
+            const scrollPosition = scrollY + windowHeight;
+            const isNearBottom = documentHeight - scrollPosition < 500; // Increased from 400 to 500
+            setIsNearFooter(isNearBottom);
         };
+
+        // Run once on mount to set initial state
+        handleScroll();
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         setIsScrolled(window.scrollY > 30);
+    //     };
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // }, []);
 
     useEffect(() => {
         const userData = localStorage.getItem("efp.user");
@@ -66,12 +91,20 @@ export default function Header() {
         return () => document.removeEventListener("mousedown", handleClick);
     }, []);
 
-    const handleLogout = () => {
-        localStorage.removeItem("efp.user");
-        setIsLoggedIn(false);
-        setUserName("");
-        setIsAccountOpen(false);
-        window.location.href = "/";
+    const handleLogout = async () => {
+        try {
+            // Dispatch logout action
+            await dispatch(logoutUser()).unwrap();
+            setIsLoggedIn(false);
+            setIsAccountOpen(false);
+            window.location.href = "/";
+        } catch (error) {
+            setIsLoggedIn(false);
+            setIsAccountOpen(false);
+            // console.error("Logout error:", error);
+            // Even if there's an error, redirect to login
+            window.location.href = "/";
+        }
     };
 
     const isActive = (href) => {
@@ -94,9 +127,11 @@ export default function Header() {
         setTimeout(() => setClickedLink(null), 300);
     };
 
+    const shouldBeTransparent = isScrolled && !isNearFooter;
+
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-in-out ${isScrolled
+            className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-in-out ${shouldBeTransparent
                 ? "bg-transparent backdrop-blur-xl shadow-lg"
                 : "bg-[#72BB83]"
                 }`}
@@ -106,10 +141,10 @@ export default function Header() {
                     {/* Logo */}
                     <Link
                         href="/"
-                        className={`shrink-0 no-underline hover:no-underline transition-all duration-300 ${isScrolled ? "scale-95" : "scale-100"
+                        className={`shrink-0 no-underline hover:no-underline transition-all duration-300 ${shouldBeTransparent ? "scale-95" : "scale-100"
                             }`}
                     >
-                        <span className={`text-base font-extrabold tracking-tight transition-all duration-300 sm:text-lg lg:text-xl ${isScrolled ? "text-[#14301F]" : "text-[#151515]"
+                        <span className={`text-base font-extrabold tracking-tight transition-all duration-300 sm:text-lg lg:text-xl ${shouldBeTransparent ? "text-[#14301F]" : "text-[#151515]"
                             }`}>
                             The Eco Lens
                         </span>

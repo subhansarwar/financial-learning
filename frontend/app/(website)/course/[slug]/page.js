@@ -75,9 +75,8 @@ export default async function CoursePage({ params }) {
             {/* Hero Section */}
             <section
                 className="relative overflow-hidden border-b border-line-soft py-12 sm:py-16 lg:py-20"
-                style={{ background: `hsl(${topic.hue || 160} 70% 94%)` }}
+                style={{ background: '#E6FBF1' }}
             >
-                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 20% 50%, hsl(${topic.hue || 160} 55% 42%) 0%, transparent 50%)` }} />
                 <div className="relative mx-6 px-4 sm:px-6">
                     {/* Breadcrumbs */}
                     <nav className="mb-4 flex flex-wrap items-center gap-1 text-sm font-medium text-ink-2">

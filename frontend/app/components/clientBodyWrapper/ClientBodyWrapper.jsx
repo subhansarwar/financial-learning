@@ -8,7 +8,7 @@ export default function ClientBodyWrapper({ children }) {
     const pathname = usePathname();
 
     // Pages with white background
-    const whiteBgPages = ["/", "/about"];
+    const whiteBgPages = ["/", "/about", "/contact", "/cookies", "/faq", "/privacy", "/terms"];
     const isWhiteBg = whiteBgPages.includes(pathname);
 
     useEffect(() => {

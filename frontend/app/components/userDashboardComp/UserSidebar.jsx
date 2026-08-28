@@ -125,7 +125,7 @@ export default function UserSidebar({
                                     <LayoutDashboard className="h-4.5 w-4.5 text-white" strokeWidth={2.25} />
                                 </div>
                                 <span className="truncate text-base font-extrabold tracking-tight text-white">
-                                    TheEcoLens<span className="text-brand-light">.</span>
+                                    The Eco Lens
                                 </span>
                             </>
                         )}

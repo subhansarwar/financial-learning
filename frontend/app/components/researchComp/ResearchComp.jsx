@@ -11,7 +11,9 @@ import {
     Search,
     User,
     Users,
-    Zap
+    Zap,
+    Upload,
+    Lightbulb
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -306,7 +308,142 @@ const ResearchComp = () => {
                     )}
                 </div>
             </div>
-        </div >
+            {/* ========== UPLOAD FORM ========== */}
+            <aside>
+                <div className="sticky top-24 rounded-xl2 border border-line bg-card p-5 sm:p-6">
+                    <div className="mb-4 flex items-center gap-2">
+                        <div className="rounded-full bg-[#E6FBF1] p-2">
+                            <Upload className="h-5 w-5 text-[#1E4D35]" strokeWidth={2} />
+                        </div>
+                        <h3 className="text-lg font-bold tracking-tight text-ink">
+                            Publish your paper
+                        </h3>
+                    </div>
+
+                    <p className="mb-4 text-sm font-medium leading-relaxed text-muted">
+                        Share your essay or research with other learners. PDF only, up to 10
+                        MB. Papers are student contributions they are{" "}
+                        <strong className="text-ink-2">not peer-reviewed</strong> by the
+                        platform.
+                    </p>
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label
+                                htmlFor="pTitle"
+                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
+                            >
+                                Paper title
+                            </label>
+                            <input
+                                id="pTitle"
+                                type="text"
+                                required
+                                maxLength="140"
+                                placeholder="e.g. Group lending and women's empowerment in rural Sindh"
+                                value={form.title}
+                                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="pAuthor"
+                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
+                            >
+                                Author name
+                            </label>
+                            <input
+                                id="pAuthor"
+                                type="text"
+                                required
+                                maxLength="80"
+                                placeholder="Your name"
+                                value={form.author}
+                                onChange={(e) => setForm({ ...form, author: e.target.value })}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="pTopic"
+                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
+                            >
+                                Topic
+                            </label>
+                            <select
+                                id="pTopic"
+                                value={form.topic}
+                                onChange={(e) => setForm({ ...form, topic: e.target.value })}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                            >
+                                <option value="microfinance">Microfinance</option>
+                                <option value="sustainability">Sustainability &amp; finance</option>
+                                <option value="green-energy">Green energy</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="pAbstract"
+                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
+                            >
+                                Abstract (2–3 sentences)
+                            </label>
+                            <textarea
+                                id="pAbstract"
+                                required
+                                maxLength="600"
+                                rows="3"
+                                placeholder="What question does the paper ask, and what does it find?"
+                                value={form.abstract}
+                                onChange={(e) => setForm({ ...form, abstract: e.target.value })}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="pFile"
+                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
+                            >
+                                PDF file
+                            </label>
+                            <div className="relative">
+                                <input
+                                    id="pFile"
+                                    type="file"
+                                    accept="application/pdf,.pdf"
+                                    required
+                                    onChange={(e) => setForm({ ...form, file: e.target.files[0] })}
+                                    className="w-full cursor-pointer rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink file:mr-3 file:rounded-full file:border-0 file:bg-[#E6FBF1] file:px-4 file:py-1.5 file:text-xs file:font-bold file:text-[#1E4D35] file:transition-colors hover:file:bg-[#E6FBF1]focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1E4D35] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#241f6b] disabled:opacity-60 disabled:cursor-not-allowed"
+                            type="submit"
+                            disabled={uploading}
+                        >
+                            {uploading ? (
+                                <>
+                                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                </>
+                            ) : (
+                                <>
+                                    <Upload className="h-4 w-4 text-[#E6FBF1]" strokeWidth={2.5} />
+                                    Upload paper
+                                </>
+                            )}
+                        </button>
+                    </form>
+                </div>
+            </aside>
+        </div>
     )
 }
 
