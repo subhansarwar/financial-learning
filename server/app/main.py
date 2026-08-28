@@ -14,10 +14,10 @@ from app.routes.users.profile_api import router as users_router
 from app.routes.courses.catalog_api import router as courses_router
 from app.routes.courses.admin_api import router as courses_admin_router
 from app.routes.courses.certificates_api import router as certificates_router
-from server.app.routes.courses.monitoring_api import router as courses_monitoring_router
-from app.routes.publications.student import router as publications_student_router
-from app.routes.publications.catalog import router as publications_catalog_router
-from app.routes.publications.admin import router as publications_admin_router
+from app.routes.courses.monitoring_api import router as courses_monitoring_router
+from app.routes.publications.publication_student_api import router as publications_student_router
+from app.routes.publications.publication_catalog_api import router as publications_catalog_router
+from app.routes.publications.publication_admin_api import router as publications_admin_router
 from app.routes.case_studies.catalog import router as case_studies_router
 from app.routes.case_studies.admin import router as case_studies_admin_router
 

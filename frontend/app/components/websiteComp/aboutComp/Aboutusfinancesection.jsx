@@ -2,13 +2,14 @@
 "use client";
 
 import {
-    CircleDollarSign,
+    CreditCard,
     Landmark,
-    Leaf,
+    Moon,
+    PiggyBank,
+    Receipt,
     ShieldCheck,
     TrendingUp,
-    Triangle,
-    Wind
+    Wallet
 } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
@@ -29,8 +30,8 @@ const Eyebrow = ({ children }) => (
 );
 
 const services = [
-    { label: "Micro Finance", icon: Wind, color: "text-indigo-500" },
-    { label: "Sustainable Finance", icon: Leaf, color: "text-emerald-600" },
+    { label: "Budgeting", icon: Wallet, color: "text-indigo-500" },
+    { label: "Saving", icon: PiggyBank, color: "text-emerald-600" },
     {
         label: "Personal Finance",
         icon: ShieldCheck,
@@ -39,9 +40,10 @@ const services = [
         iconColor: "text-white",
     },
     { label: "Investing", icon: TrendingUp, color: "text-orange-400" },
-    { label: "Banking", icon: Landmark, color: "text-amber-500" },
-    { label: "Fin Tech", icon: Triangle, color: "text-orange-500", fill: true },
-    { label: "Islamic Finance", icon: CircleDollarSign, color: "text-emerald-600" },
+    { label: "Credit & Debt", icon: CreditCard, color: "text-amber-500" },
+    { label: "Taxes", icon: Receipt, color: "text-orange-500" },
+    { label: "Retirement", icon: Landmark, color: "text-emerald-600" },
+    { label: "Islamic Finance", icon: Moon, color: "text-emerald-600" },
 ];
 
 function ServicePill({ label, icon: Icon, color, badge, badgeBg, iconColor, fill, index, inView }) {
@@ -155,8 +157,8 @@ export default function AboutUsFinanceSection() {
                                 Everything You Need. One Place.
                             </h3>
                             <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                                Smart solutions, expert guidance, and the right tools to help
-                                you take control of your financial future.
+                                Clear lessons, expert guidance, and hands-on tools that help
+                                you understand your money and make confident decisions.
                             </p>
                         </motion.div>
                     </motion.div>
@@ -191,10 +193,15 @@ export default function AboutUsFinanceSection() {
                                     />
                                 </motion.div>
                                 <h3 className="mt-4 text-base font-semibold text-slate-900">
-                                    Smart Solutions
+                                    Arya Khanna
                                 </h3>
-                                <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                                    Financial tools built to make better decisions easier.
+                                <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                                    Founder
+                                </p>
+                                <p className="mt-2 text-sm italic leading-relaxed text-slate-500">
+                                    &ldquo;I started this platform because everyone deserves to
+                                    understand their money not just the people who can afford an
+                                    advisor.&rdquo;
                                 </p>
                             </motion.div>
                         </motion.div>
@@ -222,10 +229,14 @@ export default function AboutUsFinanceSection() {
                                     />
                                 </motion.div>
                                 <h3 className="mt-4 text-base font-semibold text-slate-900">
-                                    Growth Focused
+                                    Rakhi Khanna
                                 </h3>
-                                <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                                    Strategies designed around your goals today and tomorrow.
+                                <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                                    Co-Founder
+                                </p>
+                                <p className="mt-2 text-sm italic leading-relaxed text-slate-500">
+                                    &ldquo;Good financial habits are built one small decision at a
+                                    time we just make those decisions easier to get right.&rdquo;
                                 </p>
                             </motion.div>
                         </motion.div>
@@ -256,11 +267,11 @@ export default function AboutUsFinanceSection() {
                             transition={{ duration: 0.7, delay: 0.7, ease: "easeOut" }}
                             className="mt-6 text-[15px] leading-relaxed text-slate-500"
                         >
-                            Personal finance, sustainable finance, banking, investing,
-                            fintech, Islamic finance and more topics added over time. Every
-                            course is split into modules and bite-size lessons: short
-                            readings, videos and quizzes, designed to work as well on a
-                            phone as on a desktop.
+                            Budgeting, saving, credit and debt, investing, taxes and
+                            retirement plus new topics added over time. Every course is
+                            broken into modules and bite-size lessons: short readings,
+                            videos and quizzes, built to work just as well on your phone
+                            as on a desktop.
                         </motion.p>
 
                         <div className="mt-6 flex flex-wrap justify-center gap-3">
