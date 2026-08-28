@@ -1,18 +1,19 @@
 // app/components/catalogComp/CatalogComp.jsx
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
 import { getCourses } from "@/lib/data";
-import CourseCard from "../../components/CourseCard";
+import { motion } from "framer-motion";
 import {
-    Search,
     ChevronDown,
-    SearchX,
-    X,
     Loader2,
-    Filter,
-    SlidersHorizontal,
+    Search,
+    SearchX,
+    X
 } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import certificateIcon from "../../../public/assets/aboutUsSectionImages/certificate-icon.webp";
+import CourseCard from "../../components/CourseCard";
 
 const LEVELS = ["Beginner", "Intermediate", "Advanced"];
 const LENGTHS = [
@@ -252,6 +253,60 @@ const CatalogComp = ({ topics, initialFilters }) => {
                     )}
                 </div>
             )}
+            
+            {/* --------------------------------------------------------------- */}
+            {/* CERTIFICATE STRIP - USING whileInView */}
+            {/* --------------------------------------------------------------- */}
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="mt-10 rounded-3xl bg-[#E3EFF5] px-6 py-6 sm:px-8 sm:py-8 lg:px-10"
+            >
+                <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-start gap-4 sm:items-center">
+                        {/* Circular light-blue backdrop behind the certificate icon */}
+                        <motion.span
+                            whileHover={{ scale: 1.1, rotate: 10 }}
+                            className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#A7E6FF]"
+                        >
+                            <Image
+                                src={certificateIcon}
+                                alt="Certificate icon"
+                                width={48}
+                                height={48}
+                                quality={100}
+                                className="h-6 w-6 object-contain"
+                            />
+                        </motion.span>
+                        <div>
+                            <h3 className="font-serif text-xl text-slate-900 sm:text-2xl">
+                                Certificate
+                            </h3>
+                            <p className="mt-1 max-w-xl text-sm leading-relaxed text-slate-500">
+                                Finish a course and you can download a free certificate of
+                                completion. It recognises your effort and learning it is
+                                not an accredited qualification, and we say so on the
+                                certificate itself.
+                            </p>
+                        </div>
+                    </div>
+
+                    <motion.div
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full sm:w-auto"
+                    >
+                        <button
+                            type="button"
+                            className="w-full flex-shrink-0 rounded-md bg-[#1D6E96] px-6 py-3 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#175877] sm:w-auto"
+                        >
+                            Get Today
+                        </button>
+                    </motion.div>
+                </div>
+            </motion.div>
         </>
     );
 };

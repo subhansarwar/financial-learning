@@ -1,14 +1,11 @@
 // app/components/websiteComp/homeComp/MoreCoursesSection.jsx
 "use client";
 
-import { ArrowUpRight, BarChart3, BookOpen, Clock, Layers, Star } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { BarChart3, BookOpen, Clock, Layers, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import Microfiance from "../../../../public/assets/moreCoursesSectionImages/Microfiance.webp";
-import UIUXDesignTerminology from "../../../../public/assets/moreCoursesSectionImages/UIUXDesignTerminology.webp";
-import CommonDesignPaterns from "../../../../public/assets/moreCoursesSectionImages/CommonDesignPaterns.webp";
 
 /**
  * Safely converts a field to a renderable string.
@@ -37,33 +34,26 @@ const DUMMY_TOPICS = [
 ];
 
 const DUMMY_COURSES = [
-    { slug: "micro-finance-1", title: "Micro Finance Foundations", instructor: "Prof. Elena Ruiz", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: Microfiance, topic: "micro-finance" },
-    { slug: "micro-finance-2", title: "Community Lending Models", instructor: "Prof. Elena Ruiz", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: Microfiance, topic: "micro-finance" },
-    { slug: "micro-finance-3", title: "Microcredit in Practice", instructor: "David Osei", rating: 4.7, reviewsCount: 140, duration: "45 Min", lecturesCount: 19, level: "Beginner Level", image: Microfiance, topic: "micro-finance" },
+    { id: 1, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
+    { id: 2, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
 
-    { slug: "sustainable-1", title: "Sustainable Finance Basics", instructor: "Dr. Sarah Johnson", rating: 4.9, reviewsCount: 95, duration: "45 Min", lecturesCount: 18, level: "Intermediate Level", image: CommonDesignPaterns, topic: "sustainable-finance" },
-    { slug: "sustainable-2", title: "ESG Investment Strategy", instructor: "Dr. Sarah Johnson", rating: 4.8, reviewsCount: 121, duration: "50 Min", lecturesCount: 22, level: "Advanced Level", image: CommonDesignPaterns, topic: "sustainable-finance" },
-    { slug: "sustainable-3", title: "Green Bonds Explained", instructor: "Marcus Lee", rating: 4.5, reviewsCount: 76, duration: "28 Min", lecturesCount: 12, level: "Beginner Level", image: CommonDesignPaterns, topic: "sustainable-finance" },
+    { id: 3, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
+    { id: 4, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
 
-    { slug: "personal-1", title: "Personal Finance 101", instructor: "Michael Chen", rating: 4.7, reviewsCount: 203, duration: "35 Min", lecturesCount: 15, level: "Beginner Level", image: UIUXDesignTerminology, topic: "personal-finance" },
-    { slug: "personal-2", title: "Budgeting That Sticks", instructor: "Michael Chen", rating: 4.6, reviewsCount: 168, duration: "30 Min", lecturesCount: 13, level: "Beginner Level", image: UIUXDesignTerminology, topic: "personal-finance" },
-    { slug: "personal-3", title: "Planning for Retirement", instructor: "Grace Kim", rating: 4.8, reviewsCount: 190, duration: "42 Min", lecturesCount: 20, level: "Intermediate Level", image: UIUXDesignTerminology, topic: "personal-finance" },
+    { id: 5, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
+    { id: 6, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
 
-    { slug: "investing-1", title: "Investing 101", instructor: "Emily Rodriguez", rating: 4.6, reviewsCount: 178, duration: "50 Min", lecturesCount: 24, level: "Intermediate Level", image: null, topic: "investing" },
-    { slug: "investing-2", title: "Reading the Market", instructor: "Emily Rodriguez", rating: 4.7, reviewsCount: 152, duration: "38 Min", lecturesCount: 17, level: "Intermediate Level", image: null, topic: "investing" },
-    { slug: "investing-3", title: "Options & Derivatives", instructor: "Jonathan Pierce", rating: 4.9, reviewsCount: 133, duration: "55 Min", lecturesCount: 26, level: "Advanced Level", image: null, topic: "investing" },
+    { id: 7, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
+    { id: 8, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
 
-    { slug: "banking-1", title: "Banking Fundamentals", instructor: "David Kim", rating: 4.5, reviewsCount: 156, duration: "30 Min", lecturesCount: 12, level: "Beginner Level", image: null, topic: "banking" },
-    { slug: "banking-2", title: "Retail Banking Operations", instructor: "David Kim", rating: 4.4, reviewsCount: 99, duration: "33 Min", lecturesCount: 14, level: "Beginner Level", image: null, topic: "banking" },
-    { slug: "banking-3", title: "Risk & Compliance", instructor: "Priya Nair", rating: 4.8, reviewsCount: 187, duration: "48 Min", lecturesCount: 23, level: "Advanced Level", image: null, topic: "banking" },
+    { id: 9, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
+    { id: 10, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
 
-    { slug: "fintech-1", title: "Fintech Innovation", instructor: "Amanda Patel", rating: 4.8, reviewsCount: 210, duration: "55 Min", lecturesCount: 28, level: "Advanced Level", image: null, topic: "fintech" },
-    { slug: "fintech-2", title: "Payments & Digital Wallets", instructor: "Amanda Patel", rating: 4.6, reviewsCount: 118, duration: "36 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "fintech" },
-    { slug: "fintech-3", title: "Blockchain for Finance", instructor: "Noah Weber", rating: 4.7, reviewsCount: 145, duration: "44 Min", lecturesCount: 20, level: "Intermediate Level", image: null, topic: "fintech" },
+    { id: 11, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
+    { id: 12, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
 
-    { slug: "islamic-1", title: "Islamic Finance Principles", instructor: "Dr. Yusuf Al-Amin", rating: 4.9, reviewsCount: 132, duration: "40 Min", lecturesCount: 18, level: "Beginner Level", image: null, topic: "islamic-finance" },
-    { slug: "islamic-2", title: "Sukuk & Islamic Bonds", instructor: "Dr. Yusuf Al-Amin", rating: 4.7, reviewsCount: 84, duration: "34 Min", lecturesCount: 15, level: "Intermediate Level", image: null, topic: "islamic-finance" },
-    { slug: "islamic-3", title: "Shariah-Compliant Investing", instructor: "Layla Haddad", rating: 4.8, reviewsCount: 109, duration: "37 Min", lecturesCount: 17, level: "Intermediate Level", image: null, topic: "islamic-finance" },
+    { id: 13, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
+    { id: 14, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
 ];
 
 export default function MoreCoursesSection({
@@ -181,39 +171,6 @@ export default function MoreCoursesSection({
                     >
                         More Than {courseCountLabel} Courses To Choose From
                     </motion.h2>
-
-                    <motion.div
-                        variants={rightContentVariants}
-                        className="flex flex-col gap-4 lg:items-end"
-                    >
-                        <motion.div
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="self-start lg:self-end"
-                        >
-                            <Link
-                                href="/catalog"
-                                className="group flex items-center gap-3 text-sm font-semibold text-ink no-underline"
-                            >
-                                <span>Browse all</span>
-                                <motion.span
-                                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1E4D35] text-white"
-                                    whileHover={{ rotate: 45, x: 2, y: -2 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
-                                </motion.span>
-                            </Link>
-                        </motion.div>
-                        <motion.p
-                            variants={itemVariants}
-                            className="max-w-[420px] text-sm font-medium leading-relaxed text-muted"
-                        >
-                            We provide a range of categories to help you choose courses that
-                            fit your expertise. More than {courseCountLabel} courses will
-                            guide you from basic.
-                        </motion.p>
-                    </motion.div>
                 </motion.div>
 
                 {/* ===== TABS ===== */}

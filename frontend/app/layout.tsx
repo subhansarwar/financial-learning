@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Lato } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { ReduxProvider } from "./store/Provider";
+import ClientBodyWrapper from '@/app/components/clientBodyWrapper/ClientBodyWrapper'
 import "./globals.css";
 
 const lato = Lato({
@@ -51,7 +52,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${lato.variable} font-sans`}>
-      <body className="bg-[#E5E5E5] text-ink font-medium text-[16.5px] leading-[1.65] antialiased overflow-x-hidden">
+      <body className="text-ink font-medium text-[16.5px] leading-[1.65] antialiased overflow-x-hidden">
         {/* Toaster - Available everywhere */}
         <Toaster
           position="top-right"
@@ -80,7 +81,9 @@ export default function RootLayout({
           }}
         />
         <ReduxProvider>
-          {children}
+          <ClientBodyWrapper>
+            {children}
+          </ClientBodyWrapper>
         </ReduxProvider>
       </body>
     </html>

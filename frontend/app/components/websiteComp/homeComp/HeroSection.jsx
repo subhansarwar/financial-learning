@@ -110,7 +110,7 @@ export default function HeroSection() {
             />
 
             {/* ===== Green shaded blob (right side) ===== */}
-            <motion.div
+            {/* <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                 transition={{ duration: 1, ease: "easeOut" }}
@@ -123,7 +123,7 @@ export default function HeroSection() {
                     className="object-contain"
                     priority={false}
                 />
-            </motion.div>
+            </motion.div> */}
 
             {/* ===== Sparkle / star decoration ===== */}
             <motion.div
@@ -214,7 +214,7 @@ export default function HeroSection() {
                     {/* Buttons row with side avatars */}
                     <motion.div
                         variants={itemVariants}
-                        className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:mt-5 sm:gap-3 md:mt-6 md:gap-4 lg:gap-5"
+                        className="mt-4 flex w-full items-center justify-center gap-35 sm:mt-5  sm:gap-35"
                     >
                         {/* Left avatar */}
                         <motion.div
@@ -229,33 +229,47 @@ export default function HeroSection() {
                             />
                         </motion.div>
 
-                        <a
-                            href="#courses"
-                            className="inline-flex items-center justify-center rounded-full px-4 py-2 text-[11px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
-                            style={{ backgroundColor: "#1E4D35" }}
-                        >
-                            Explore Courses
-                        </a>
+                        {/* Buttons stay close together as a tight pair */}
+                        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                            <a
+                                href="#courses"
+                                className="inline-flex items-center justify-center rounded-full px-4 py-2 text-[11px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
+                                style={{ backgroundColor: "#1E4D35" }}
+                            >
+                                Explore Courses
+                            </a>
 
-                        <a
-                            href="#contact"
-                            className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold text-[#03010D] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
-                        >
-                            Contact Us
-                        </a>
+                            <a
+                                href="#contact"
+                                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold text-[#03010D] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
+                            >
+                                Contact Us
+                            </a>
+                        </div>
 
-                        {/* Right avatar */}
+                        {/* Right avatar with soft mint glow behind it */}
                         <motion.div
                             variants={fadeInRightVariants}
                             className="relative hidden h-8 w-8 shrink-0 sm:block sm:h-9 sm:w-9 lg:h-10 lg:w-10 xl:h-11 xl:w-11"
                         >
-                            <div
-                                className="pointer-events-none absolute -inset-2 -z-10 rounded-full blur-md sm:-inset-3"
-                                style={{
-                                    background:
-                                        "radial-gradient(circle, rgba(182,245,216,0.7) 0%, rgba(182,245,216,0) 70%)",
-                                }}
-                            />
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={
+                                    isInView
+                                        ? { opacity: 1, scale: 1 }
+                                        : { opacity: 0, scale: 0.9 }
+                                }
+                                transition={{ duration: 1, ease: "easeOut" }}
+                                className="pointer-events-none absolute -right-54 -top-20 h-[250px] w-[300px] sm:-right-60 sm:-top-34 sm:h-[350px] sm:w-[400px] lg:-right-68 lg:-top-42 lg:h-[450px] lg:w-[550px] xl:-right-76 xl:-top-50 xl:h-[550px] xl:w-[650px]"
+                            >
+                                <Image
+                                    src={greenShade}
+                                    alt=""
+                                    fill
+                                    className="object-cover"
+                                    priority={false}
+                                />
+                            </motion.div>
                             <Image
                                 src={rightBtnAvatar}
                                 alt=""

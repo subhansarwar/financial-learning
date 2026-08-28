@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import CourseClient from "./CourseClient";
 
+
 export async function generateMetadata({ params }) {
     const { slug } = await params;
     const course = await getCourseBySlug(slug);

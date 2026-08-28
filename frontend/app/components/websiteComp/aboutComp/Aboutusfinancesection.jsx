@@ -137,7 +137,7 @@ export default function AboutUsFinanceSection() {
                         className="mt-35 w-full max-w-xs self-start sm:ml-10 lg:ml-16"
                     >
                         <motion.div
-                            className="rounded-2xl bg-[#F8FDFF] p-8 text-center"
+                            className="rounded-2xl hover:bg-[#F8FDFF] p-8 text-center"
                             whileHover={{ y: -4, boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
                             transition={{ duration: 0.3 }}
                         >

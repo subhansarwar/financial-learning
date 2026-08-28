@@ -54,7 +54,7 @@ export default function HowToBuySection() {
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden py-10 sm:py-10 lg:py-10"
+            className="relative overflow-hidden py-12 sm:py-16 lg:py-20"
             style={{ backgroundColor: "#FFB061" }}
         >
             <style>{`
@@ -71,36 +71,10 @@ export default function HowToBuySection() {
                     .htb-pattern { animation: none !important; }
                 }
 
-                .htb-grid {
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    grid-template-areas: "intro" "cta" "image" "accordion";
-                    column-gap: 56px;
-                    row-gap: 28px;
-                }
-                @media (min-width: 1024px) {
-                    .htb-grid {
-                        grid-template-columns: 0.92fr 1fr;
-                        grid-template-areas: "intro cta" "image accordion";
-                        row-gap: 40px;
-                    }
-                }
-                .htb-intro { 
-                    grid-area: intro;
-                    width: 100% !important; /* Full width */
-                    max-width: 100% !important; /* No max-width restriction */
-                }
-                .htb-cta { grid-area: cta; justify-self: start; align-self: start; }
-                .htb-image { grid-area: image; }
-                .htb-accordion { grid-area: accordion; }
-                @media (min-width: 1024px) {
-                    .htb-cta { justify-self: end; align-self: start; margin-top: 8px; }
-                }
-
                 .htb-panel {
                     display: grid;
                     grid-template-rows: 0fr;
-                    transition: grid-template-rows .4s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+                    transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
                     opacity: 0;
                 }
                 .htb-panel.is-open {
@@ -121,60 +95,48 @@ export default function HowToBuySection() {
                 />
             </div>
 
-            <div className="relative mx-6 px-4 sm:px-6 lg:px-8">
-                <div className="htb-grid w-full">
-                    {/* ===== INTRO - FULL WIDTH ===== */}
-                    <div className="htb-intro w-full">
-                        <div className={`mb-4 flex items-center gap-3 text-sm font-medium text-white/85 transition-all duration-700 ${isVisible
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-8"
-                            }`}>
-                            <span className="h-px w-6 bg-white/70" />
-                            How to Begin
-                        </div>
-                        <h2
-                            className={`w-full font-bold text-white sm:text-3xl lg:text-4xl xl:text-5xl transition-all duration-700 delay-100 ${isVisible
-                                    ? "opacity-100 translate-x-0"
-                                    : "opacity-0 -translate-x-12"
-                                }`}
-                            style={{
-                                maxWidth: "100%",
-                                lineHeight: "1.2",
-                                letterSpacing: "-0.02em",
-                            }}
-                        >
-                            Get the help you need to ace your classes
-                        </h2>
+            <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                {/* ===== INTRO - CENTERED ===== */}
+                <div className="w-full max-w-4xl mx-auto text-center mb-10 sm:mb-12 lg:mb-16">
+                    <div className={`mb-4 flex items-center justify-center gap-3 text-sm font-medium transition-all duration-700 ${isVisible
+                            ? "opacity-100 translate-x-0"
+                            : "opacity-0 -translate-x-8"
+                        }`}>
+                        <span className="h-px w-6 bg-white/70" />
+                        <span className="text-white">How to Begin</span>
+                        <span className="h-px w-6 bg-white/70" />
+                    </div>
 
-                        {/* ===== PARAGRAPH — full width ===== */}
-                        <p className={`mt-4 w-full max-w-3xl text-sm font-medium text-white/85 sm:text-base transition-all duration-700 delay-200 ${isVisible
+                    <h2
+                        className={`font-bold text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl transition-all duration-700 delay-100 ${isVisible
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-12"
-                            }`}>
-                            We provide a wealth of materials for developing your first course. In
-                            addition, our teacher dashboard and curriculum pages help you stay
-                            organized.
-                        </p>
-                    </div>
+                            }`}
+                        style={{
+                            lineHeight: "1.2",
+                            letterSpacing: "-0.02em",
+                        }}
+                    >
+                        Get the help you need to ace your classes
+                    </h2>
 
-                    {/* ===== CTA BUTTON ===== */}
-                    <div className="htb-cta pt-29">
-                        <a
-                            href="#catalog"
-                            className={`inline-flex items-center gap-2 rounded-full bg-[#251E4D] px-8 py-3 text-sm font-bold text-white no-underline transition-all duration-700 delay-300 hover:-translate-y-0.5 hover:bg-[#163D2A] hover:shadow-lg hover:shadow-[#1E4D35]/30 ${isVisible
-                                    ? "opacity-100 translate-y-0 scale-100"
-                                    : "opacity-0 translate-y-8 scale-95"
-                                }`}
-                        >
-                            Start now for free
-                        </a>
-                    </div>
+                    <p className={`mt-4 max-w-2xl mx-auto text-sm sm:text-base font-medium text-white/90 transition-all duration-700 delay-200 ${isVisible
+                            ? "opacity-100 translate-x-0"
+                            : "opacity-0 -translate-x-12"
+                        }`}>
+                        We provide a wealth of materials for developing your first course. In
+                        addition, our teacher dashboard and curriculum pages help you stay
+                        organized.
+                    </p>
+                </div>
 
+                {/* ===== IMAGE + ACCORDION ROW ===== */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                     {/* ===== IMAGE ===== */}
-                    <div className="htb-image">
+                    <div className="htb-image order-1 lg:order-1">
                         <div className={`group relative aspect-[4/3] w-full overflow-hidden transition-all duration-700 delay-150 ${isVisible
                                 ? "opacity-100 translate-x-0 scale-100"
-                                : "opacity-0 translate-x-12 scale-90"
+                                : "opacity-0 -translate-x-12 scale-90"
                             }`}>
                             <Image
                                 src={HowToBegin}
@@ -189,34 +151,38 @@ export default function HowToBuySection() {
                     </div>
 
                     {/* ===== ACCORDION ===== */}
-                    <div className="htb-accordion">
-                        <div className={`border-t border-white/25 transition-all duration-700 delay-200 ${isVisible
+                    <div className="htb-accordion order-2 lg:order-2">
+                        <div className={`transition-all duration-700 delay-200 ${isVisible
                                 ? "opacity-100 translate-y-0"
                                 : "opacity-0 translate-y-8"
                             }`}>
                             {ITEMS.map((item, idx) => {
                                 const isOpen = openIndex === idx;
                                 return (
-                                    <div key={item.title} className="border-b border-white/25">
+                                    <div
+                                        key={item.title}
+                                        className={`border-b border-white/30 last:border-b-0 transition-all duration-300 ${isOpen ? "" : ""
+                                            }`}
+                                    >
                                         <button
                                             type="button"
                                             onClick={() => setOpenIndex(isOpen ? -1 : idx)}
-                                            className="flex w-full items-center justify-between gap-6 py-5 text-left group"
+                                            className="flex w-full items-center justify-between gap-4 py-4 sm:py-5 text-left group  px-4 transition-all duration-300"
                                         >
                                             <span
-                                                className={`text-base font-bold transition-colors duration-300 sm:text-lg ${isOpen ? "text-white" : "text-white/90"
+                                                className={`text-base sm:text-lg font-bold transition-colors duration-300 ${isOpen ? "text-white" : "text-white/90"
                                                     }`}
                                             >
                                                 {item.title}
                                             </span>
-                                            <span className="relative grid h-5 w-5 shrink-0 place-items-center text-white transition-transform duration-300 group-hover:scale-110">
+                                            <span className="relative grid h-6 w-6 shrink-0 place-items-center text-white transition-transform duration-300 group-hover:scale-110">
                                                 <Plus
-                                                    className={`absolute h-4 w-4 transition-all duration-300 ${isOpen ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
+                                                    className={`absolute h-5 w-5 transition-all duration-300 ${isOpen ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
                                                         }`}
                                                     strokeWidth={2.5}
                                                 />
                                                 <Minus
-                                                    className={`absolute h-4 w-4 transition-all duration-300 ${isOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"
+                                                    className={`absolute h-5 w-5 transition-all duration-300 ${isOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"
                                                         }`}
                                                     strokeWidth={2.5}
                                                 />
@@ -224,7 +190,7 @@ export default function HowToBuySection() {
                                         </button>
                                         <div className={`htb-panel ${isOpen ? "is-open" : ""}`}>
                                             <div>
-                                                <p className="max-w-lg pb-5 text-sm leading-relaxed text-white/85">
+                                                <p className="max-w-lg pb-4 sm:pb-5 px-4 text-sm leading-relaxed text-white/85">
                                                     {item.body}
                                                 </p>
                                             </div>

@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import FooterImage from "../../public/assets/footerImages/FooterImage.webp";
-import FooterLogo from "../../public/assets/footerImages/Logo.webp";
-import InstagramLogoFooter from "../../public/assets/footerImages/InstagramLogoFooter.webp";
-import twitterFooter from "../../public/assets/footerImages/twitterFooterIcon.webp";
+import Link from "next/link";
 import facebookIconFooter from "../../public/assets/footerImages/facebookIconFooter.webp";
+import FooterImage from "../../public/assets/footerImages/FooterImage.webp";
+import InstagramLogoFooter from "../../public/assets/footerImages/InstagramLogoFooter.webp";
 import LinkedinLogoFooter from "../../public/assets/footerImages/LinkedinLogoFooter.webp";
+import twitterFooter from "../../public/assets/footerImages/twitterFooterIcon.webp";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -33,10 +32,10 @@ export default function Footer() {
     ];
 
     const socialLinks = [
-        ["Facebook", "https://facebook.com", facebookIconFooter],
-        ["Instagram", "https://instagram.com", InstagramLogoFooter],
-        ["Twitter", "https://twitter.com", twitterFooter],
-        ["LinkedIn", "https://linkedin.com", LinkedinLogoFooter],
+        ["Facebook", "https://facebook.com", facebookIconFooter, "#1877F2"],
+        ["Instagram", "https://instagram.com", InstagramLogoFooter, "linear-gradient(45deg, #FEDA75 0%, #FA7E1E 25%, #D62976 50%, #962FBF 75%, #4F5BD5 100%)"],
+        ["Twitter", "https://twitter.com", twitterFooter, "#1DA1F2"],
+        ["LinkedIn", "https://linkedin.com", LinkedinLogoFooter, "#0A66C2"],
     ];
 
     return (
@@ -81,14 +80,6 @@ export default function Footer() {
                             href="/"
                             className="flex items-center gap-2 text-base font-extrabold tracking-tight text-white no-underline hover:no-underline"
                         >
-                            {/* <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-md">
-                                <Image
-                                    src={FooterLogo}
-                                    alt="The Eco Lens"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </span> */}
                             The Eco Lens
                         </Link>
                         <p className="mt-3 max-w-[34ch] text-[13px] leading-relaxed font-medium text-white/50 sm:text-sm">
@@ -114,20 +105,7 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <div>
-                            <h4 className="text-[14px] font-semibold text-white">Company</h4>
-                            <div className="mt-3 flex flex-col gap-2.5">
-                                {companyLinks.map(([label, href]) => (
-                                    <Link
-                                        key={href}
-                                        href={href}
-                                        className="text-[13px] font-medium text-white/50 transition-colors hover:text-white sm:text-sm"
-                                    >
-                                        {label}
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
+
 
                         <div className="col-span-2 sm:col-span-1">
                             <h4 className="text-[14px] font-semibold text-white">Community</h4>
@@ -145,29 +123,45 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-
+                <div className="flex items-center justify-end gap-2.5">
+                    {socialLinks.map(([label, href, icon, color]) => (
+                        <a
+                            key={label}
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={label}
+                            className="group relative grid h-8 w-8 place-items-center overflow-hidden rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_16px_-6px_rgba(0,0,0,0.5)] sm:h-9 sm:w-9"
+                        >
+                            <span
+                                className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                                style={{ background: color }}
+                            />
+                            <Image
+                                src={icon}
+                                alt={label}
+                                className="h-4 w-4 object-contain transition-all duration-200 group-hover:grayscale-0 group-hover:scale-110 sm:h-[18px] sm:w-[18px]"
+                            />
+                        </a>
+                    ))}
+                </div>
                 {/* ===== Bottom bar ===== */}
                 <div className="mt-6 flex flex-col-reverse items-center gap-4 border-t border-white/10 py-5 sm:flex-row sm:justify-between">
                     <p className="text-xs font-medium text-white/40 sm:text-[13px]">
                         ©{currentYear} The Eco Lens. All rights reserved.
                     </p>
-                    <div className="flex items-center gap-2.5">
-                        {socialLinks.map(([label, href, icon]) => (
-                            <a
-                                key={label}
-                                href={href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={label}
-                                className="group relative grid h-8 w-8 place-items-center overflow-hidden rounded-full transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_16px_-6px_rgba(0,0,0,0.5)] sm:h-9 sm:w-9"
-                            >
-                                <Image
-                                    src={icon}
-                                    alt={label}
-                                    className="h-4 w-4 object-contain transition-transform duration-200 group-hover:scale-110 sm:h-[18px] sm:w-[18px]"
-                                />
-                            </a>
-                        ))}
+                    <div>
+                        <div className="mt-3 flex flex-row gap-2.5">
+                            {companyLinks.map(([label, href]) => (
+                                <Link
+                                    key={href}
+                                    href={href}
+                                    className="text-[13px] font-medium text-white/50 transition-colors hover:text-white sm:text-sm"
+                                >
+                                    {label}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

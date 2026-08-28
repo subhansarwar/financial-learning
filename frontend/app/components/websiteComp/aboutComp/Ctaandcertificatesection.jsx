@@ -3,7 +3,6 @@ import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
-import certificateIcon from "../../../../public/assets/aboutUsSectionImages/certificate-icon.webp";
 import learnerIllustration from "../../../../public/assets/aboutUsSectionImages/learner-illustration.webp";
 
 export default function CtaAndCertificateSection() {
@@ -100,74 +99,6 @@ export default function CtaAndCertificateSection() {
                                     className="h-48 w-auto object-contain sm:h-56 lg:h-64"
                                 />
                             </motion.div>
-                        </motion.div>
-                    </div>
-                </motion.div>
-
-                {/* --------------------------------------------------------------- */}
-                {/* CERTIFICATE STRIP                                               */}
-                {/* --------------------------------------------------------------- */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.95 }}
-                    transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-                    className="rounded-3xl bg-[#E3EFF5] px-8 py-8 sm:px-10"
-                >
-                    <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-start gap-4 sm:items-center">
-                            {/* Circular light-blue backdrop behind the certificate icon */}
-                            <motion.span
-                                initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-                                animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.5, rotate: -45 }}
-                                transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-                                whileHover={{ scale: 1.1, rotate: 10 }}
-                                className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#A7E6FF]"
-                            >
-                                <Image
-                                    src={certificateIcon}
-                                    alt="Certificate icon"
-                                    width={48}
-                                    height={48}
-                                    quality={100}
-                                    className="h-6 w-6 object-contain"
-                                />
-                            </motion.span>
-                            <div>
-                                <motion.h3
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                                    transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
-                                    className="font-serif text-xl text-slate-900 sm:text-2xl"
-                                >
-                                    Certificate
-                                </motion.h3>
-                                <motion.p
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                                    transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
-                                    className="mt-1 max-w-xl text-sm leading-relaxed text-slate-500"
-                                >
-                                    Finish a course and you can download a free certificate of
-                                    completion. It recognises your effort and learning it is
-                                    not an accredited qualification, and we say so on the
-                                    certificate itself.
-                                </motion.p>
-                            </div>
-                        </div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                            animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 20, scale: 0.9 }}
-                            transition={{ duration: 0.5, delay: 0.8, ease: "easeOut" }}
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <button
-                                type="button"
-                                className="w-full flex-shrink-0 rounded-md bg-[#1D6E96] px-6 py-3 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#175877] sm:w-auto"
-                            >
-                                Get Today
-                            </button>
                         </motion.div>
                     </div>
                 </motion.div>

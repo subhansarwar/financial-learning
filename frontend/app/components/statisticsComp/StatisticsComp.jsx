@@ -213,7 +213,7 @@ const StatisticsComp = () => {
     return (
         <>
             {/* ========== HERO SECTION ========== */}
-            <section className="relative overflow-hidden flex items-center min-h-[100dvh] bg-[#E5E5E5]">
+            <section className="relative overflow-hidden flex items-center min-h-[100dvh] bg-[#E6FBF1]">
                 <div className="relative mx-6 w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-0">
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
 
@@ -276,7 +276,7 @@ const StatisticsComp = () => {
             </section>
 
             {/* ========== STATISTICS SECTION ========== */}
-            <section className="relative overflow-hidden bg-[#E5E5E5] py-12 sm:py-16 lg:py-24">
+            <section className="relative overflow-hidden bg-[#E6FBF1] py-12 sm:py-16 lg:py-24">
 
                 <div className="relative mx-6 px-4 sm:px-6 lg:px-8">
                     {/* ========== FACT CARDS ========== */}

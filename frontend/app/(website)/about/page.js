@@ -1,27 +1,8 @@
 // app/(website)/about/page.jsx
-import {
-    ArrowRight,
-    Award,
-    BarChart3,
-    BookOpen,
-    Building2,
-    Eye,
-    Globe,
-    GraduationCap,
-    HandCoins,
-    Heart,
-    Leaf,
-    Lock,
-    Shield,
-    Sparkles,
-    Target,
-    Zap
-} from "lucide-react";
-import Link from "next/link";
 import AboutHeroSection from "../../components/websiteComp/aboutComp/AboutHeroSection";
-import CoreValuesSection from "../../components/websiteComp/aboutComp/CoreValuesSection";
-import AboutUsFinanceSection from "../../components/websiteComp/aboutComp/Aboutusfinancesection";
 import AboutStorySection from "../../components/websiteComp/aboutComp/AboutStorySection";
+import AboutUsFinanceSection from "../../components/websiteComp/aboutComp/Aboutusfinancesection";
+import CoreValuesSection from "../../components/websiteComp/aboutComp/CoreValuesSection";
 import CtaAndCertificateSection from "../../components/websiteComp/aboutComp/Ctaandcertificatesection";
 
 export const metadata = {

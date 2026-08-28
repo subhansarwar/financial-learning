@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /* ============================================================
@@ -9,10 +9,10 @@
    Fonts: Plus Jakarta Sans everywhere, Arial as the fallback.
    ============================================================ */
 @theme {
-  --font-sans: "Plus Jakarta Sans", "Arial", sans-serif;
-
-  /* ===== Primary Theme Colors (New) ===== */
-  --color-primary: #D0F6FF;
+  --font-sans: "Quicksand", "Arial", sans-serif;
+  --font-serif: "Playfair Display", "Georgia", serif
+    /* ===== Primary Theme Colors (New) ===== */
+    --color-primary: #D0F6FF;
   --color-primary-light: #E8FAFF;
   --color-primary-dark: #A8E8F5;
 
@@ -152,10 +152,18 @@
   }
 
   body {
-    background-color: '#ffffff';
     color: var(--color-ink);
+    font-family: "Quicksand", "Arial", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .bg-white {
+    background-color: #ffffff !important;
+  }
+
+  .bg-light-green {
+    background-color: #E6FBF1 !important;
   }
 
   ::selection {

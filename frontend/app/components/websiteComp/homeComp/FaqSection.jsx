@@ -186,8 +186,8 @@ export default function FaqSection() {
     };
 
     return (
-        <section className="bg-[#ffffff] min-h-screen py-16 sm:py-20 lg:py-24 overflow-hidden">
-            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="bg-[#ffffff] py-8 sm:py-12 lg:py-9 overflow-hidden">
+            <div className="mx-6 min-h-screen px-4 pb-0 sm:px-6 lg:px-8">
                 {/* ===== Header ===== */}
                 <div
                     ref={headerRef}
@@ -236,7 +236,7 @@ export default function FaqSection() {
                 {/* ===== Body: sidebar + accordion ===== */}
                 <div
                     ref={bodyRef}
-                    className="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-[240px_1fr] lg:gap-12"
+                    className="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-1 gap-6 lg:grid-cols-[220px_1fr] lg:gap-10"
                 >
                     {/* Sidebar tabs - Left side */}
                     <div
@@ -270,22 +270,21 @@ export default function FaqSection() {
                         })}
                     </div>
 
-                    {/* Accordion Section - Right side with FIXED WIDTH */}
+                    {/* Accordion Section - Right side */}
                     <div
                         className={`transition-all delay-150 duration-700 ease-out ${bodyInView
                                 ? "translate-y-0 opacity-100"
                                 : "translate-y-8 opacity-0"
                             }`}
                     >
-                        {/* Category Title - Courses Coaches */}
-                        <h3 className={`mb-5 text-lg font-bold text-[#0F172A] sm:text-xl transition-all duration-700 delay-200 ${bodyInView
+                        <h3 className={`mb-4 sm:mb-5 text-lg font-bold text-[#0F172A] sm:text-xl transition-all duration-700 delay-200 ${bodyInView
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-6"
                             }`}>
                             {activeCategory}
                         </h3>
 
-                        {/* Accordion Container with FIXED MAX-WIDTH */}
+                        {/* Accordion Container */}
                         <div className="w-full max-w-2xl space-y-3">
                             {items.map((item, idx) => (
                                 <AccordionItem

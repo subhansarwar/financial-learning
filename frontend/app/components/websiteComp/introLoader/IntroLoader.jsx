@@ -118,7 +118,7 @@ export default function IntroLoader({ children }) {
                             }}
                         >
                             {/* Top */}
-                            <div className={`${poppins.className} flex items-start justify-between text-[10px] font-bold uppercase tracking-[0.25em] text-white/70 sm:text-xs`}>
+                            <div className={`${poppins.className} flex items-start justify-between text-[10px] font-bold tracking-[0.25em] text-white/70 sm:text-xs`}>
                                 <span>
                                     The Eco Lens&reg;
                                 </span>

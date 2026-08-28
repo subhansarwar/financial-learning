@@ -2,12 +2,13 @@
 
 import { ArrowUpRight, Wallet, DollarSign, Flag, Sparkles, ArrowRight, LayoutGrid, Heart, TrendingUp, Target, Calendar, CalendarDays, PieChart, Folder } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import interactiveToolsImg from "@/public/assets/featuresSectionImages/InteractivetoolsRightSideImage.webp";
 import publishedPapersImg from "@/public/assets/featuresSectionImages/resarchSideImage.webp";
 
 /* ---------- Scroll-reveal hook (modified for re-trigger) ---------- */
-function useInView(threshold = 0.2) {
+function inViewScroll(threshold = 0.2) {
     const ref = useRef(null);
     const [inView, setInView] = useState(false);
 
@@ -37,15 +38,24 @@ function Eyebrow({ children }) {
 }
 
 function BrowseAllButton() {
+    const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, {
+        once: false,
+        amount: 0.1,
+    });
     return (
         <a
             href="#browse"
             className="group mt-6 inline-flex items-center gap-3 text-sm font-semibold text-[#0F172A] no-underline sm:mt-8"
         >
             Browse all
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-[#166534] text-white transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-[#14532D]">
+            <motion.span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1E4D35] text-white"
+                whileHover={{ rotate: 45, x: 2, y: -2 }}
+                transition={{ duration: 0.3 }}
+            >
                 <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
-            </span>
+            </motion.span>
         </a>
     );
 }
@@ -88,7 +98,7 @@ function BudgetMiniCard({ tag, mainIcon: MainIcon, mainIconBg, mainIconColor, ro
 }
 
 function InteractiveToolsRow() {
-    const [ref, inView] = useInView(0.15);
+    const [ref, inView] = inViewScroll(0.15);
 
     return (
         <div
@@ -262,7 +272,7 @@ function CaseStudiesMockup() {
 }
 
 function CaseStudiesRow() {
-    const [ref, inView] = useInView(0.15);
+    const [ref, inView] = inViewScroll(0.15);
 
     return (
         <div
@@ -306,7 +316,7 @@ function CaseStudiesRow() {
 
 /* ---------- Row 3: Published Papers ---------- */
 function PublishedPapersRow() {
-    const [ref, inView] = useInView(0.15);
+    const [ref, inView] = inViewScroll(0.15);
 
     return (
         <div

@@ -3,7 +3,9 @@ import { Search } from "lucide-react";
 import { Suspense } from "react";
 import CatalogComp from "./CatalogComp";
 
+
 export default async function CatalogPage({ searchParams }) {
+   
     const topics = await getTopics();
 
     const initialFilters = {
@@ -37,6 +39,7 @@ export default async function CatalogPage({ searchParams }) {
                     </Suspense>
                 </div>
             </div>
+           
         </section>
     );
 }

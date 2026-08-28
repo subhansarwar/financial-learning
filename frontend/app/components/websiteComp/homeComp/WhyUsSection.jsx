@@ -140,7 +140,7 @@ export default function WhyUsSection() {
 
                         <div
                             ref={imgRef}
-                            className={`mt-8 overflow-hidden rounded-2xl shadow-lg shadow-black/5 transition-all delay-150 duration-700 ease-out ${imgInView
+                            className={`mt-8 overflow-hidden rounded-2xl transition-all delay-150 duration-700 ease-out ${imgInView
                                     ? "translate-y-0 scale-100 opacity-100"
                                     : "translate-y-10 scale-[0.95] opacity-0"
                                 }`}

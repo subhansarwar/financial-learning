@@ -29,7 +29,7 @@ export default function ToolComp() {
             {/* ========== HERO SECTION ========== */}
             <section
                 ref={sectionRef}
-                className="relative overflow-hidden border-b border-[#14301F]/10 bg-[#E5E5E5] py-14 sm:py-20 lg:py-[88px]"
+                className="relative overflow-hidden border-b border-[#14301F]/10 bg-[#E6FBF1] py-14 sm:py-20 lg:py-[88px]"
             >
                 <div
                     className="pointer-events-none absolute inset-0"
@@ -99,7 +99,7 @@ export default function ToolComp() {
             </section>
 
             {/* ========== TOOLS SECTION ========== */}
-            <section className="bg-[#E5E5E5] py-10 sm:py-14 lg:py-[78px]">
+            <section className="bg-[#E6FBF1] py-10 sm:py-14 lg:py-[78px]">
                 <div className="mx-6 px-4 sm:px-6 lg:px-8">
                     <ToolTabs tools={TOOLS} activeTool={activeTool} onToolChange={setActiveTool} />
 
