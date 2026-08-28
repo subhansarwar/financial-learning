@@ -177,11 +177,11 @@ const DashboardComp = () => {
             {/* ========== HERO SECTION ========== */}
             <section className="relative overflow-hidden border-b border-line-soft mt-3 bg-cream-2 py-12 sm:py-16 lg:py-20">
                 <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                        background:
-                            "radial-gradient(600px 400px at 90% 20%, rgba(67,56,202,.06), transparent 60%), radial-gradient(500px 400px at 10% 80%, rgba(99,102,241,.05), transparent 55%)",
-                    }}
+                    className="pointer-events-none bg-white absolute inset-0"
+                    // style={{
+                    //     background:
+                    //         "radial-gradient(600px 400px at 90% 20%, rgba(67,56,202,.06), transparent 60%), radial-gradient(500px 400px at 10% 80%, rgba(99,102,241,.05), transparent 55%)",
+                    // }}
                 />
                 <div className="relative mx-6 px-4 sm:px-6">
                     <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
