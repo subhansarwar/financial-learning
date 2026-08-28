@@ -220,7 +220,7 @@ export default function MoreCoursesSection({
                 >
                     {filteredCourses.map((course, i) => (
                         <ExploreCourseCard
-                            key={course.slug}
+                            key={course.id}
                             course={course}
                             delay={i}
                             isInView={isInView}
