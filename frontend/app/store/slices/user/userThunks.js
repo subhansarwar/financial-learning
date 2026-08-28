@@ -283,6 +283,7 @@ export const resendOTP = createAsyncThunk(
         } catch (error) {
             console.error('Resend OTP Error:', error);
             dispatch(setLoading(false));
+            let errorMsg = error?.response?.data?.detail || "Failed to resend OTP. Please try again.";
             toast.error(errorMsg);
             throw new Error(errorMsg);
         }
