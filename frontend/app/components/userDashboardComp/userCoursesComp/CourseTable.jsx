@@ -89,13 +89,13 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
                             className="w-full rounded-full border border-line bg-cream-2/50 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15 sm:w-56"
                         />
                     </div>
-                    <button
+                    {/* <button
                         onClick={onCreateNew}
                         className="inline-flex items-center justify-center gap-2 rounded-full bg-[#47735B] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#365B50]"
                     >
                         <Plus className="h-4 w-4" strokeWidth={2.5} />
                         New Course
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
