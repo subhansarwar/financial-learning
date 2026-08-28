@@ -29,18 +29,18 @@ function useInView(threshold = 0.2) {
 const FEATURES = [
     {
         icon: MessagesSquare,
-        title: "Discussion 24/7",
-        body: "The community always there for you if you have difficult learning the course.",
+        title: "Community Discussion",
+        body: "Every lesson has a discussion thread where learners and educators help each other work through tricky concepts.",
     },
     {
         icon: Calendar,
-        title: "Schedule with Author",
-        body: "Choose an order schedule to the author to get in-depth knowledge with 1 on 1 call.",
+        title: "Live Q&A Sessions",
+        body: "Join our regular live sessions to ask questions about budgeting, investing, and anything else you're studying.",
     },
     {
         icon: ClipboardList,
         title: "Practice for Free",
-        body: "test your skills with practice tests that have been provided on our platform.",
+        body: "Check your understanding with quizzes and hands-on exercises built into every course, at no cost.",
     },
 ];
 
@@ -125,16 +125,15 @@ export default function WhyUsSection() {
                                     ? "opacity-100 translate-x-0"
                                     : "opacity-0 -translate-x-8"
                                 }`}>
-                                Our Special Features We Build for You
+                                Features Built to Help You Learn
                             </h2>
                             <p className={`mt-4 max-w-lg text-sm leading-relaxed text-slate-500 sm:text-base transition-all duration-700 delay-300 ${textInView
                                     ? "opacity-100 translate-x-0"
                                     : "opacity-0 -translate-x-8"
                                 }`}>
-                                EdTech is a platform that helps students in advancing their
-                                career by providing solutions for simple and flexible online
-                                learning, allowing you to study anywhere and anytime at
-                                affordable prices.
+                                The Eco Lens helps you build real financial confidence with
+                                free, plain-language courses and hands-on tools you can use
+                                anywhere, anytime no account or payment required.
                             </p>
                         </div>
 
