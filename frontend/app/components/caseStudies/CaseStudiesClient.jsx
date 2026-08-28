@@ -92,8 +92,8 @@ export default function CaseStudiesClient({ cases }) {
         setFilteredCases(filtered);
     }, [sector, region, cases]);
 
-    const toggleExpand = (index) => {
-        setExpandedId(expandedId === index ? null : index);
+    const toggleExpand = (id) => {
+        setExpandedId((currentId) => (currentId === id ? null : id));
     };
 
     const clearFilters = () => {
@@ -188,13 +188,13 @@ export default function CaseStudiesClient({ cases }) {
             {filteredCases.length > 0 ? (
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:gap-7">
                     {filteredCases.map((c, index) => {
-                        const isExpanded = expandedId === index;
+                        const isExpanded = expandedId === index; // Use index
                         const Icon = sectorIcon(c.sector);
                         const iconColor = sectorColor(c.sector);
 
                         return (
                             <article
-                                key={index}
+                                key={index} // Use index as key
                                 className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#E5E5E5]/60 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-[#72BB83]/40 hover:shadow-xl"
                             >
                                 {/* Premium Gradient Overlay */}
@@ -242,7 +242,7 @@ export default function CaseStudiesClient({ cases }) {
 
                                     {/* Expandable details */}
                                     <button
-                                        onClick={() => toggleExpand(index)}
+                                        onClick={() => toggleExpand(index)} // Use index
                                         className="mt-4 flex w-full items-center justify-between rounded-xl border border-[#E5E5E5]/60 bg-white px-4 py-2.5 text-sm font-bold text-[#14301F]/60 transition-all duration-300 hover:border-[#72BB83]/30 hover:bg-[#72BB83]/5 hover:text-[#14301F]"
                                     >
                                         <span className="flex items-center gap-2">

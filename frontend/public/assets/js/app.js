@@ -1,4 +1,4 @@
-/* Finance Platform Demo shared core: chrome, auth, data, progress, markdown, utils */
+/* The Eco Lens shared core: chrome, auth, data, progress, markdown, utils */
 (function () {
     "use strict";
 

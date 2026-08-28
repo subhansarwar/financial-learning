@@ -129,7 +129,7 @@ export default function HelpPanel() {
                         Admin Guide
                     </h2>
                     <p className="mt-1 text-sm text-muted">
-                        Everything you need to know about managing content on the Finance Platform
+                        Everything you need to know about managing content on the The Eco Lens
                     </p>
                 </div>
             </div>

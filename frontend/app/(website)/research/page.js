@@ -1,6 +1,6 @@
 // app/(website)/resarch/page.js
 export const metadata = {
-    title: "Research Corner Student Papers | Finance Platform Demo",
+    title: "Research Corner Student Papers | The Eco Lens",
     description: "Read and publish student research papers on microfinance, sustainability, green finance, and more. Share your knowledge with the community.",
     keywords: "research papers, student essays, microfinance research, sustainability research, publish paper",
     robots: "index, follow",

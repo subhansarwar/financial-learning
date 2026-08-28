@@ -21,7 +21,7 @@ function DashboardView() {
                     Admin Dashboard
                 </h1>
                 <p className="mt-3 text-lg text-muted">
-                    Welcome to the Finance Platform Admin Panel
+                    Welcome to the The Eco Lens Admin Panel
                 </p>
                 <p className="mt-1 text-sm text-muted">
                     Select a section from the sidebar to manage content

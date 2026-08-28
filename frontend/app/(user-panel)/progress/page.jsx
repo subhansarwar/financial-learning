@@ -1,7 +1,7 @@
 // app/(user-panel)/progress/page.jsx
 import { TrendingUp } from 'lucide-react'
 export const metadata = {
-    title: "Progress Learning Dashboard | Finance Platform",
+    title: "Progress Learning Dashboard | The Eco Lens",
     description: "Track your learning progress across all courses.",
 };
 

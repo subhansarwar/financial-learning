@@ -2,11 +2,17 @@
 import LegalPageShell from "../../components/websiteComp/legal/LegalPageShell";
 
 export const metadata = {
+<<<<<<< HEAD
     title: "Terms & Conditions | The Eco Lens",
     description:
         "The terms that govern your use of The Eco Lens free finance education platform: accounts, acceptable use, certificates, disclaimers and liability.",
     keywords:
         "terms and conditions, terms of service, disclaimer, education not advice, finance education, acceptable use",
+=======
+    title: "Terms & Disclaimer Finance Education | The Eco Lens",
+    description: "Read our terms of service and disclaimer. Education not advice. All content is for educational purposes only. Free, as-is service.",
+    keywords: "terms of service, disclaimer, education not advice, finance education, legal",
+>>>>>>> 45706cf7d18248289b1f24a92f4d9642e172f404
     robots: "index, follow",
     openGraph: {
         title: "Terms & Conditions | The Eco Lens",
@@ -259,6 +265,54 @@ const sections = [
 ];
 
 export default function TermsPage() {
+<<<<<<< HEAD
+=======
+    const sections = [
+        {
+            icon: Eye,
+            title: "Education, not advice",
+            desc: "The Eco Lens provides general financial education only. Nothing on this site constitutes financial, investment, legal, accounting or tax advice, and nothing is a recommendation or offer to buy, sell or use any financial product or service. Examples are illustrative and simplified.",
+            color: "text-blue-500",
+            bg: "bg-blue-50",
+        },
+        {
+            icon: UserCheck,
+            title: "Your decisions are yours",
+            desc: "Financial decisions depend on your personal circumstances, jurisdiction and goals. Before making significant financial decisions, consult a qualified, licensed professional in your country. You are responsible for how you use what you learn here.",
+            color: "text-purple-500",
+            bg: "bg-purple-50",
+        },
+        {
+            icon: AlertCircle,
+            title: "No guarantees",
+            desc: "We work hard to keep content accurate and current, but finance changes fast and we cannot guarantee that every figure, rule or example reflects the latest regulation or market condition. Tools show illustrations, not predictions.",
+            color: "text-amber-500",
+            bg: "bg-amber-50",
+        },
+        {
+            icon: Award,
+            title: "Certificates",
+            desc: "The Eco Lens certificates recognise completion of a free educational course. They are not accredited qualifications, carry no academic credit, and may not be accepted by employers or institutions as formal credentials.",
+            color: "text-emerald-500",
+            bg: "bg-emerald-50",
+        },
+        {
+            icon: Shield,
+            title: "Free service, as-is",
+            desc: "The Eco Lens is provided free of charge, 'as is', without warranties of any kind. We may add, change or remove courses and features over time. To the extent permitted by law, we accept no liability for losses arising from use of the site.",
+            color: "text-brand",
+            bg: "bg-brand-soft",
+        },
+        {
+            icon: Globe,
+            title: "Third-party content",
+            desc: "Embedded videos and linked sites are the responsibility of their own publishers and are covered by their own terms and policies.",
+            color: "text-cyan-500",
+            bg: "bg-cyan-50",
+        },
+    ];
+
+>>>>>>> 45706cf7d18248289b1f24a92f4d9642e172f404
     return (
         <LegalPageShell
             badge="Terms & Conditions"

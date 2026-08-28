@@ -42,7 +42,7 @@ export default function Header() {
             try {
                 const user = JSON.parse(userData);
                 setIsLoggedIn(true);
-                setUserName(user.name);
+                setUserName(user.full_name);
                 setUserEmail(user.email);
             } catch (e) {
                 setIsLoggedIn(false);

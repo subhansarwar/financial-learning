@@ -16,7 +16,7 @@ export default function ClientHeroSection({ cases }) {
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden bg-[#E5E5E5] py-16 sm:py-20 lg:py-12 lg:h-[480px]"
+            className="relative overflow-hidden bg-[#E6FBF1] py-16 sm:py-20 lg:py-12 lg:h-[480px]"
         >
 
             <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
