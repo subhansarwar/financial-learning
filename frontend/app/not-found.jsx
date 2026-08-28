@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Page Not Found Finance Platform Demo",
+  title: "Page Not Found The Eco Lens",
   description: "The page you're looking for doesn't exist. Browse our free finance courses instead.",
   robots: "noindex, follow",
 };

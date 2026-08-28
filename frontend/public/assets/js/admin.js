@@ -1,4 +1,4 @@
-/* Finance Platform Demo admin panel */
+/* The Eco Lens admin panel */
 (function () {
     "use strict";
 

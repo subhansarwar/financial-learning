@@ -25,11 +25,11 @@ import AboutStorySection from "../../components/websiteComp/aboutComp/AboutStory
 import CtaAndCertificateSection from "../../components/websiteComp/aboutComp/Ctaandcertificatesection";
 
 export const metadata = {
-    title: "About Free Finance Education Platform | Finance Platform",
+    title: "About Free Finance Education Platform | The Eco Lens",
     description:
         "Learn about our mission: free, clear, and accessible finance education for everyone. No paywalls, no accounts required, private by design.",
     keywords:
-        "about finance platform, free finance education, mission, microfinance, sustainable finance",
+        "about The Eco Lens, free finance education, mission, microfinance, sustainable finance",
     openGraph: {
         title: "About Free Finance Education Platform",
         description: "Finance education should be free, clear and for everyone.",

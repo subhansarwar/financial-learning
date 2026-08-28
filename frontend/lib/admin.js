@@ -1,5 +1,5 @@
 // lib/admin.js
-// Finance Platform Demo admin panel
+// The Eco Lens Demo admin panel
 
 "use client";
 

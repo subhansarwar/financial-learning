@@ -1,7 +1,7 @@
 import CatalogPage from "../../components/catalogComp/CatalogPage";
 
 export const metadata = {
-    title: "Course Catalog Free Finance Courses | Finance Platform",
+    title: "Course Catalog Free Finance Courses | The Eco Lens",
     description: "Browse our free course catalog. Learn microfinance, sustainable finance, investing, banking, fintech and more. All courses are 100% free with certificates.",
     keywords: "finance courses, microfinance course, sustainable finance, free finance education, investing course, fintech course",
     openGraph: {

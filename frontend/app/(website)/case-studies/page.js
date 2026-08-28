@@ -4,7 +4,7 @@ import CaseStudiesClient from "../../components/caseStudies/CaseStudiesClient";
 import ClientHeroSection from "../../components/websiteComp/clientHeroSectionCaseStudy/ClientHeroSection";
 
 export const metadata = {
-    title: "Case Studies — Real Finance Examples | Finance Platform Demo",
+    title: "Case Studies — Real Finance Examples | The Eco Lens",
     description:
         "Explore real case studies from Grameen Bank, M-Pesa, Ørsted, and more. Learn from real organizations and their impact on microfinance and sustainable finance.",
     keywords:
@@ -31,7 +31,7 @@ export default async function CaseStudiesPage() {
             <ClientHeroSection cases={cases} />
 
             {/* ========== CASES SECTION ========== */}
-            <section className="bg-[#E5E5E5] py-14 sm:py-[78px]">
+            <section className="bg-[#E6FBF1] py-14 sm:py-[78px]">
                 <div className="mx-6 px-4 sm:px-6">
                     <CaseStudiesClient cases={cases} />
                 </div>

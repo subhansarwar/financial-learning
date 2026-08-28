@@ -24,10 +24,10 @@ export const getUserProfile = createAsyncThunk(
                 method: "get",
             });
 
-            console.log("User Profile Response:", res); // Debug log
+            console.log("User Profile Response:", res);
 
             // Check if response has user data
-            if (res?.is_verified) {
+            if (res?.is_verified || res?.email) {
                 const userData = res;
                 dispatch(setUser(userData));
                 if (typeof window !== "undefined") {
@@ -37,7 +37,7 @@ export const getUserProfile = createAsyncThunk(
             } else {
                 // If no user data in response, use email from state
                 const state = getState();
-                const userEmail = state?.email || state.user?.email;
+                const userEmail = state.user?.user?.email || state.user?.email;
                 if (userEmail) {
                     const userData = { email: userEmail };
                     dispatch(setUser(userData));
@@ -74,26 +74,80 @@ export const loginUser = createAsyncThunk(
                 body: { email, password },
             });
 
+            console.log("Login Response:", res);
+
             dispatch(setLoading(false));
 
             if (res?.access_token) {
-                await dispatch(getUserProfile());
-                // Store tokens if present
+                // Step 1: Store tokens FIRST (before any other API call)
                 if (res.access_token) {
                     dispatch(setToken(res.access_token));
-                }
-                if (res.refresh_token) {
-                    dispatch(setRefreshToken(res.refresh_token));
+                    if (typeof window !== "undefined") {
+                        localStorage.setItem("auth_token", res.access_token);
+                    }
                 }
 
+                if (res.refresh_token) {
+                    dispatch(setRefreshToken(res.refresh_token));
+                    if (typeof window !== "undefined") {
+                        localStorage.setItem("refresh_token", res.refresh_token);
+                    }
+                }
+
+                // Step 2: Store basic user data (using email)
+                const basicUserData = { email };
+                dispatch(setUser(basicUserData));
+                if (typeof window !== "undefined") {
+                    localStorage.setItem("efp.user", JSON.stringify(basicUserData));
+                }
+
+                // Step 3: Try to get full profile (but don't wait for it)
+                // Use setTimeout to avoid blocking the login flow
+                setTimeout(async () => {
+                    try {
+                        await dispatch(getUserProfile()).unwrap();
+                        console.log("Profile fetched successfully after login");
+                    } catch (profileError) {
+                        console.log("Profile fetch failed, using basic user data");
+                        // User already has basic data, so this is fine
+                    }
+                }, 1000);
+
                 dispatch(setInitialized(true));
-                toast.success('Login successful!');
-                return res;
+                toast.success('Login successful! Welcome back.');
+
+                // Return success with tokens
+                return {
+                    success: true,
+                    access_token: res.access_token,
+                    refresh_token: res.refresh_token,
+                    token_type: res.token_type,
+                    expires_in: res.expires_in,
+                };
+            } else {
+                const errorMsg = res?.message || res?.detail || "Login failed. Please try again.";
+                dispatch(setError(errorMsg));
+                toast.error(errorMsg);
+                throw new Error(errorMsg);
             }
         } catch (error) {
-            console.log('error ====>', error?.response?.data?.detail)
+            console.log('Login Error:', error);
             dispatch(setLoading(false));
-            toast.error(error?.response?.data?.detail);
+
+            let errorMsg = "Something went wrong. Please try again.";
+
+            if (error?.response?.data?.detail) {
+                errorMsg = error.response.data.detail;
+            } else if (error?.response?.data?.message) {
+                errorMsg = error.response.data.message;
+            } else if (error?.response?.data?.error) {
+                errorMsg = error.response.data.error;
+            } else if (error?.message) {
+                errorMsg = error.message;
+            }
+
+            dispatch(setError(errorMsg));
+            toast.error(errorMsg);
             throw error;
         }
     }

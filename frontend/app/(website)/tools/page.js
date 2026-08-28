@@ -1,5 +1,5 @@
 export const metadata = {
-    title: "Finance Tools Calculators & Simulators | Finance Platform Demo",
+    title: "Finance Tools Calculators & Simulators | The Eco Lens",
     description: "Use our free finance tools: budgeting calculator, compound interest explorer, ESG comparison, and more. All tools run in your browser.",
     keywords: "finance tools, budgeting calculator, compound interest, ESG comparison, financial simulators",
     robots: "index, follow",

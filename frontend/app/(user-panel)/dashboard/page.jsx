@@ -2,7 +2,7 @@
 import DashboardPreview from "./DashboardClient";
 
 export const metadata = {
-    title: "Dashboard My Learning | Finance Platform",
+    title: "Dashboard My Learning | The Eco Lens",
     description: "Track your learning progress, view completed courses, and download certificates.",
 };
 

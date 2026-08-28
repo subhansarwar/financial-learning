@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 
 export const metadata = {
-    title: "Terms & Disclaimer Finance Education | Finance Platform",
+    title: "Terms & Disclaimer Finance Education | The Eco Lens",
     description: "Read our terms of service and disclaimer. Education not advice. All content is for educational purposes only. Free, as-is service.",
     keywords: "terms of service, disclaimer, education not advice, finance education, legal",
     robots: "index, follow",
@@ -32,7 +32,7 @@ export default function TermsPage() {
         {
             icon: Eye,
             title: "Education, not advice",
-            desc: "Finance Platform Demo provides general financial education only. Nothing on this site constitutes financial, investment, legal, accounting or tax advice, and nothing is a recommendation or offer to buy, sell or use any financial product or service. Examples are illustrative and simplified.",
+            desc: "The Eco Lens provides general financial education only. Nothing on this site constitutes financial, investment, legal, accounting or tax advice, and nothing is a recommendation or offer to buy, sell or use any financial product or service. Examples are illustrative and simplified.",
             color: "text-blue-500",
             bg: "bg-blue-50",
         },
@@ -53,14 +53,14 @@ export default function TermsPage() {
         {
             icon: Award,
             title: "Certificates",
-            desc: "Finance Platform Demo certificates recognise completion of a free educational course. They are not accredited qualifications, carry no academic credit, and may not be accepted by employers or institutions as formal credentials.",
+            desc: "The Eco Lens certificates recognise completion of a free educational course. They are not accredited qualifications, carry no academic credit, and may not be accepted by employers or institutions as formal credentials.",
             color: "text-emerald-500",
             bg: "bg-emerald-50",
         },
         {
             icon: Shield,
             title: "Free service, as-is",
-            desc: "Finance Platform Demo is provided free of charge, 'as is', without warranties of any kind. We may add, change or remove courses and features over time. To the extent permitted by law, we accept no liability for losses arising from use of the site.",
+            desc: "The Eco Lens is provided free of charge, 'as is', without warranties of any kind. We may add, change or remove courses and features over time. To the extent permitted by law, we accept no liability for losses arising from use of the site.",
             color: "text-brand",
             bg: "bg-brand-soft",
         },

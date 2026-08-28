@@ -1,5 +1,5 @@
 // lib/cert.js
-// Finance Platform Demo certificate generator (client-side PDF via jsPDF)
+// The Eco Lens certificate generator (client-side PDF via jsPDF)
 
 "use client";
 
@@ -55,7 +55,7 @@ export const downloadCertificate = (slug, course) => {
         doc.setFont("times", "bold");
         doc.setTextColor(13, 59, 46);
         doc.setFontSize(22);
-        doc.text("Finance Platform Demo", W / 2, 84, { align: "center" });
+        doc.text("The Eco Lens", W / 2, 84, { align: "center" });
 
         doc.setFont("helvetica", "normal");
         doc.setFontSize(11);
@@ -71,7 +71,7 @@ export const downloadCertificate = (slug, course) => {
         doc.setFont("helvetica", "normal");
         doc.setFontSize(12);
         doc.setTextColor(100, 114, 106);
-        doc.text("has successfully completed the free Finance Platform Demo course", W / 2, 222, { align: "center" });
+        doc.text("has successfully completed the free The Eco Lens course", W / 2, 222, { align: "center" });
 
         // Course title
         doc.setFont("times", "bold");
@@ -114,7 +114,7 @@ export const downloadCertificate = (slug, course) => {
         doc.setFont("helvetica", "italic");
         doc.setFontSize(9);
         doc.text(
-            "Finance Platform Demo certificates recognise completion of a free educational course. They are not accredited qualifications.",
+            "The Eco Lens certificates recognise completion of a free educational course. They are not accredited qualifications.",
             W / 2,
             520,
             { align: "center" }

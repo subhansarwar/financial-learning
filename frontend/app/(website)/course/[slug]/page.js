@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-        title: `${course.title} Free Finance Course | Finance Platform`,
+        title: `${course.title} Free Finance Course | The Eco Lens`,
         description: `${course.tagline} Learn ${course.title} with ${course.lessons} lessons. Free course with certificate.`,
         keywords: `${course.title}, ${course.level} course, finance education, ${course.topic}`,
         openGraph: {

@@ -121,7 +121,7 @@ const CATEGORIES = Object.keys(FAQ_DATA);
 function AccordionItem({ item, isOpen, onToggle, delay, inView }) {
     return (
         <div
-            className={`w-full overflow-hidden rounded-xl bg-slate-50 transition-all duration-700 ease-out ${inView
+            className={`w-full overflow-hidden rounded-xl bg-[#E6FBF1] transition-all duration-700 ease-out ${inView
                     ? "translate-y-0 opacity-100"
                     : "translate-y-6 opacity-0"
                 }`}

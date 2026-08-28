@@ -2,7 +2,7 @@
 import UpcomingClient from "./UpcomingClient";
 
 export const metadata = {
-    title: "Upcoming Tasks Learning Dashboard | Finance Platform",
+    title: "Upcoming Tasks Learning Dashboard | The Eco Lens",
     description: "View your upcoming tasks, deadlines, events, and learning milestones. Stay on track with your study schedule.",
     keywords: "upcoming tasks, learning schedule, deadlines, study plan, finance courses",
     openGraph: {

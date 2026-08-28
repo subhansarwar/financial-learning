@@ -79,16 +79,16 @@ export default function Footer() {
                     <div className="max-w-xs">
                         <Link
                             href="/"
-                            className="flex items-center gap-2 text-base font-extrabold uppercase tracking-tight text-white no-underline hover:no-underline"
+                            className="flex items-center gap-2 text-base font-extrabold tracking-tight text-white no-underline hover:no-underline"
                         >
-                            <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-md">
+                            {/* <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-md">
                                 <Image
                                     src={FooterLogo}
                                     alt="The Eco Lens"
                                     fill
                                     className="object-contain"
                                 />
-                            </span>
+                            </span> */}
                             The Eco Lens
                         </Link>
                         <p className="mt-3 max-w-[34ch] text-[13px] leading-relaxed font-medium text-white/50 sm:text-sm">

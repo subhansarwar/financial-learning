@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-        title: `${course.title} — Course Details | Finance Platform`,
+        title: `${course.title} — Course Details | The Eco Lens`,
         description: course.description || `Learn ${course.title} with detailed course content.`,
     };
 }

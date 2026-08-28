@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-    title: "Privacy Policy Private by Design | Finance Platform Demo",
+    title: "Privacy Policy Private by Design | The Eco Lens",
     description: "We don't collect your data. No accounts, no tracking, no analytics. Your progress stays on your device. Read our full privacy policy.",
     keywords: "privacy policy, data privacy, no tracking, local storage, finance education",
     robots: "index, follow",
@@ -90,7 +90,7 @@ export default function PrivacyPage() {
             Private by <span className="text-brand-gradient">design</span>.
           </h1>
           <p className="mt-4 text-base font-medium text-ink-2 sm:text-lg">
-            Finance Platform Demo is built so that learning about money doesn't
+            The Eco Lens Demo is built so that learning about money doesn't
             cost you your data. This page explains, in plain language, exactly
             what we collect and what we don't.
           </p>
@@ -222,7 +222,7 @@ export default function PrivacyPage() {
                   <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand" strokeWidth={2} />
                   <p className="text-xs text-muted">
                     <span className="font-bold text-ink-2">Last updated:</span> 2026. This
-                    policy may evolve as Finance Platform Demo grows; the principle
+                    policy may evolve as The Eco Lens grows; the principle
                     won't.
                   </p>
                 </div>
