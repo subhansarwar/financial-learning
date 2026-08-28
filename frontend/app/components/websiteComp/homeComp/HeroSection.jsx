@@ -98,7 +98,7 @@ export default function HeroSection() {
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden bg-white pb-10 pt-12 sm:pb-16 sm:pt-16 lg:pb-10 lg:pt-20"
+            className="relative isolate overflow-hidden bg-white pb-10 pt-12 sm:pb-16 sm:pt-16 lg:pb-10 lg:pt-20"
         >
             {/* ===== Faint grid background ===== */}
             <div
@@ -215,7 +215,7 @@ export default function HeroSection() {
                     {/* Buttons row with side avatars */}
                     <motion.div
                         variants={itemVariants}
-                        className="mt-4 flex w-full items-center justify-center gap-35 sm:mt-5  sm:gap-35"
+                        className="mt-4 flex w-full items-center justify-center gap-6 sm:mt-5 sm:gap-10 md:gap-16 lg:gap-24 xl:gap-[140px]"
                     >
                         {/* Left avatar */}
                         <motion.div
@@ -330,9 +330,64 @@ export default function HeroSection() {
                     variants={containerVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
+                    className="mt-8 flex w-full flex-row items-center justify-center gap-4 sm:mt-10 sm:gap-6 md:mt-12 lg:mt-14 lg:gap-8"
+                >
+                    {/* Middle: stacked cards */}
+                    <motion.div
+                        variants={fadeInUpVariants}
+                        className="mx-auto flex w-full max-w-[280px] flex-row gap-3 sm:max-w-[340px] sm:gap-4 md:max-w-[560px] lg:max-w-[600px]"
+                    >
+                        {/* Orange card */}
+                        <motion.div
+                            variants={scaleInVariants}
+                            className="flex h-[110px] flex-1 flex-col justify-between rounded-2xl p-4 sm:h-[130px] sm:p-5 md:h-[140px] lg:h-[150px]"
+                            style={{ backgroundColor: "#FFB061" }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <div className="relative h-7 w-[80px] sm:h-8 sm:w-[100px] md:h-9 md:w-[110px] lg:w-[124px]">
+                                <Image
+                                    src={users}
+                                    alt="Students"
+                                    fill
+                                    className="object-contain object-left"
+                                />
+                            </div>
+                            <p className="text-xs font-bold leading-snug text-[#03010D] sm:text-sm md:text-base">
+                                We will create Students Community.
+                            </p>
+                        </motion.div>
+
+                        {/* Green quote card */}
+                        <motion.div
+                            variants={scaleInVariants}
+                            className="flex min-h-[110px] flex-1 flex-col justify-center gap-2 rounded-2xl p-3 sm:min-h-[130px] sm:p-5 md:min-h-[140px] lg:min-h-[150px]"
+                            style={{ backgroundColor: "#7CEED0" }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <p className="text-[10px] font-semibold leading-snug text-[#03010D] sm:text-xs md:text-sm">
+                                "Believe in yourself, keep learning, and success will
+                                follow."
+                            </p>
+                            <div>
+                                <p className="text-[10px] font-bold text-[#03010D] sm:text-[11px] md:text-xs">
+                                    Arya Khanna.
+                                </p>
+                                <p className="text-[9px] text-[#616161] sm:text-[10px] md:text-[11px]">
+                                    Quote from our Founder
+                                </p>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                </motion.div>
+                {/* <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
                     className="mt-8 grid grid-cols-1 items-center gap-4 sm:mt-10 sm:gap-6 md:mt-12 lg:mt-14 lg:grid-cols-[1fr_1.1fr_1fr] lg:gap-8"
                 >
-                    {/* Left illustration */}
+                    Left illustration
                     <motion.div
                         variants={fadeInLeftVariants}
                         className="relative mx-auto aspect-square w-full max-w-[490px] sm:max-w-[350px] md:max-w-[280px] lg:max-w-[280px] xl:max-w-[320px]"
@@ -345,12 +400,12 @@ export default function HeroSection() {
                         />
                     </motion.div>
 
-                    {/* Middle: stacked cards */}
+                    Middle: stacked cards
                     <motion.div
                         variants={fadeInUpVariants}
                         className="mx-auto flex w-full max-w-[220px] flex-col gap-3 sm:max-w-[250px] sm:gap-4 md:max-w-[280px] lg:max-w-[300px]"
                     >
-                        {/* Orange card */}
+                        Orange card
                         <motion.div
                             variants={scaleInVariants}
                             className="flex h-[110px] flex-col justify-between rounded-2xl p-4 sm:h-[130px] sm:p-5 md:h-[140px] lg:h-[150px]"
@@ -371,7 +426,7 @@ export default function HeroSection() {
                             </p>
                         </motion.div>
 
-                        {/* Green quote card */}
+                        Green quote card
                         <motion.div
                             variants={scaleInVariants}
                             className="flex h-[110px] flex-col justify-center gap-2 rounded-2xl p-4 sm:h-[130px] sm:p-5 md:h-[140px] lg:h-[150px]"
@@ -394,7 +449,7 @@ export default function HeroSection() {
                         </motion.div>
                     </motion.div>
 
-                    {/* Right illustration */}
+                    Right illustration
                     <motion.div
                         variants={fadeInRightVariants}
                         className="relative mx-auto aspect-square w-full max-w-[670px] sm:max-w-[450px] md:max-w-[560px] lg:max-w-[490px] xl:max-w-[550px]"
@@ -406,7 +461,7 @@ export default function HeroSection() {
                             className="object-cover"
                         />
                     </motion.div>
-                </motion.div>
+                </motion.div> */}
             </div>
         </section>
     );
