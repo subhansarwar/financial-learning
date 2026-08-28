@@ -14,7 +14,7 @@ from app.routes.users.profile_api import router as users_router
 from app.routes.courses.catalog_api import router as courses_router
 from app.routes.courses.admin_api import router as courses_admin_router
 from app.routes.courses.certificates_api import router as certificates_router
-from app.routes.courses.monitoring_api import router as courses_monitoring_router
+from server.app.routes.courses.monitoring_api import router as courses_monitoring_router
 from app.routes.publications.student import router as publications_student_router
 from app.routes.publications.catalog import router as publications_catalog_router
 from app.routes.publications.admin import router as publications_admin_router
@@ -57,14 +57,14 @@ app.include_router(auth_router, prefix=p)
 app.include_router(users_router, prefix=p)
 app.include_router(courses_router, prefix=p)
 app.include_router(certificates_router, prefix=p)
-app.include_router(publications_student_router, prefix="/api/publications", tags=["Student Publications"])
-app.include_router(publications_catalog_router, prefix="/api/publications", tags=["Student Publications"])
+app.include_router(publications_student_router,prefix=p)
+app.include_router(publications_catalog_router, prefix=p)
 app.include_router(case_studies_router, prefix="/api/case-studies", tags=["Case Studies"])
 
 # ADMIN ROUTERS
 app.include_router(courses_admin_router, prefix=p)
-app.include_router(courses_monitoring_router, prefix="/api/admin/monitoring", tags=["Student Monitoring - Admin"])
-app.include_router(publications_admin_router, prefix="/api/admin/publications", tags=["Student Publications - Moderation"])
+app.include_router(courses_monitoring_router, prefix=p)
+app.include_router(publications_admin_router, prefix=p)
 app.include_router(case_studies_admin_router, prefix="/api/admin/case-studies", tags=["Case Studies - Admin"])
 
 

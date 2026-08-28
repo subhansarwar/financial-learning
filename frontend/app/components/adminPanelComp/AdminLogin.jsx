@@ -12,7 +12,8 @@ import toast from "react-hot-toast";
 import loginBg from '../../../public/assets/loginPageImage/financial-information.webp';
 import googlelogo from '../../../public/assets/loginPageImage/googleLogo.webp';
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { clearError, googleLogin, logoutUser } from "../../store/slices/user/userThunks";
+import { clearError } from "../../store/slices/user/userSlice";
+import { googleLogin, logoutUser } from "../../store/slices/user/userThunks";
 
 export default function AdminLogin({ onLogin }) {
     const router = useRouter();
