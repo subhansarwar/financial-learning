@@ -81,14 +81,14 @@ export default function ToolComp() {
                             initial={{ opacity: 0, x: 60, scale: 0.9 }}
                             animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: 60, scale: 0.9 }}
                             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                            className="flex justify-center lg:justify-end"
+                            className="flex justify-center lg:justify-end pt-10"
                         >
                             <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
                                 <div className="overflow-hidden">
                                     <Image
                                         src={ToolImage}
                                         alt="Interactive financial tools illustration"
-                                        className="h-auto w-full object-cover transition-transform duration-500 hover:scale-105"
+                                        className="h-80 w-80 object-cover transition-transform duration-500 hover:scale-105"
                                         priority
                                     />
                                 </div>

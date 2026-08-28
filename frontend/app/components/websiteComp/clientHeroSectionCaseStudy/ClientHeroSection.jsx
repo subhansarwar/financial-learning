@@ -20,7 +20,7 @@ export default function ClientHeroSection({ cases }) {
         >
 
             <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center lg:h-[480px]">
+                <div className="grid grid-cols-1 gap-20 lg:grid-cols-2 lg:items-center lg:h-[480px]">
                     {/* Left Content */}
                     <div className="flex flex-col justify-center py-8 lg:py-0">
                         {/* <motion.span
@@ -76,15 +76,13 @@ export default function ClientHeroSection({ cases }) {
                         className="relative flex items-center justify-center lg:justify-end"
                     >
                         <motion.div
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ duration: 0.3 }}
                             className="relative w-full max-w-md lg:max-w-lg"
                         >
                             <div className="relative overflow-hidden">
                                 <Image
                                     src={caseStudy}
                                     alt="Case Study Illustration"
-                                    className="w-90 h-90 object-cover transition-transform duration-500 hover:scale-105"
+                                    className="h-80 w-80 object-cover"
                                     priority
                                 />
                             </div>

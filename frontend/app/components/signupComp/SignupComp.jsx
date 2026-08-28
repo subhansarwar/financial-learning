@@ -299,9 +299,9 @@ const SignupComp = () => {
                         )}
 
                         <div className="mb-7 text-center lg:text-left">
-                            <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#14301F] ring-4 ring-[#72BB83]/15 ring-offset-2 ring-offset-white lg:mx-0">
+                            {/* <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#14301F] ring-4 ring-[#72BB83]/15 ring-offset-2 ring-offset-white lg:mx-0">
                                 <Image src={FooterLogo} alt="The Eco Lens" className="h-8 w-8 object-contain" />
-                            </div>
+                            </div> */}
                             <h1 className="text-[1.7rem] font-extrabold tracking-tight text-[#14301F] sm:text-[1.8rem]">
                                 Create your account
                             </h1>

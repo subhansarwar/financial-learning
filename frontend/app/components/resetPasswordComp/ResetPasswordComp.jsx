@@ -112,9 +112,9 @@ const ResetPasswordComp = () => {
 
                             {/* Header */}
                             <div className="mb-6 text-center">
-                                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#14301F]">
+                                {/* <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#14301F]">
                                     <Image src={FooterLogo} alt="Logo" className="h-9 w-9 object-contain" />
-                                </div>
+                                </div> */}
                                 <h1 className="text-2xl font-extrabold tracking-tight text-[#14301F] sm:text-[1.7rem]">
                                     Reset your password
                                 </h1>
