@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
 import learnerIllustration from "../../../../public/assets/aboutUsSectionImages/learner-illustration.webp";
+import Link from "next/link";
 
 export default function CtaAndCertificateSection() {
     const sectionRef = useRef(null);
@@ -58,8 +59,8 @@ export default function CtaAndCertificateSection() {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <button
-                                    type="button"
+                                <Link
+                                    href='/catalog'
                                     className="mt-7 inline-flex items-center gap-3 rounded-lg bg-white py-3 pl-6 pr-2 text-sm font-semibold text-emerald-800 transition-transform hover:scale-[1.02]"
                                 >
                                     Start Learning Free
@@ -74,7 +75,7 @@ export default function CtaAndCertificateSection() {
                                     >
                                         <ArrowRight className="h-4 w-4" />
                                     </motion.span>
-                                </button>
+                                </Link>
                             </motion.div>
                         </div>
 

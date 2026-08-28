@@ -258,7 +258,7 @@ export default function FaqClient({ categories, faqs }) {
     const hasFilter = activeCat !== "all" || query.trim() !== "";
 
     return (
-        <section className="font-quicksand relative overflow-hidden bg-[#F5F8F7] pb-20 pt-28 sm:pt-32">
+        <section className="font-quicksand relative overflow-hidden bg-[#ffffff] pb-20 pt-28 sm:pt-32">
             {/* background wash */}
             <div className="pointer-events-none absolute inset-0">
                 <div className="absolute -left-[15%] -top-[8%] h-[520px] w-[520px] rounded-full bg-[#72BB83]/10 blur-3xl" />

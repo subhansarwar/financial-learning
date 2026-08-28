@@ -51,7 +51,7 @@ export default function ToolComp() {
                                 initial={{ opacity: 0, x: -40 }}
                                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
                                 transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-                                className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-[#72BB83]"
+                                className="inline-flex items-center gap-2.5 text-md font-bold uppercase tracking-[0.16em] text-[#72BB83]"
                             >
                                 Interactive tools
                             </motion.span>
@@ -84,7 +84,7 @@ export default function ToolComp() {
                             className="flex justify-center lg:justify-end"
                         >
                             <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
-                                <div className="overflow-hidden rounded-2xl shadow-lg">
+                                <div className="overflow-hidden">
                                     <Image
                                         src={ToolImage}
                                         alt="Interactive financial tools illustration"

@@ -100,7 +100,7 @@ export default function Sidebar({
                                 </div>
 
                                 <span className="truncate text-base font-extrabold tracking-tight text-white">
-                                    TheEcoLens<span className="text-brand-light">.</span>
+                                    The Eco Lens
                                 </span>
                             </>
                         )}

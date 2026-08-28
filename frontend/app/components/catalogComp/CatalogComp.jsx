@@ -262,7 +262,7 @@ const CatalogComp = ({ topics, initialFilters }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
-                className="mt-10 rounded-3xl bg-[#E3EFF5] px-6 py-6 sm:px-8 sm:py-8 lg:px-10"
+                className="mt-10 rounded-3xl bg-[#ffffff] px-6 py-6 sm:px-8 sm:py-8 lg:px-10"
             >
                 <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-start gap-4 sm:items-center">

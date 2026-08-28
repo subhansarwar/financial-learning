@@ -122,7 +122,7 @@ const StatisticsComp = () => {
         );
 
         return (
-            <div className="space-y-5 sm:space-y-6">
+            <div className="space-y-2 sm:space-y-2.5">
                 {rows.map((row, i) => {
                     const value = parseFloat(row[1]) || 0;
                     const percentage = (value / maxValue) * 100;
@@ -140,39 +140,39 @@ const StatisticsComp = () => {
 
                     const getCategoryIcon = (name) => {
                         const icons = {
-                            "Green bonds": <CircleDollarSign className="h-4 w-4 text-[#72BB83]" strokeWidth={2} />,
-                            "ESG funds": <Leaf className="h-4 w-4 text-[#72BB83]" strokeWidth={2} />,
-                            "Solar investments": <Sun className="h-4 w-4 text-[#72BB83]" strokeWidth={2} />,
-                            "Wind energy": <Wind className="h-4 w-4 text-[#72BB83]" strokeWidth={2} />,
-                            "Battery storage": <Battery className="h-4 w-4 text-[#72BB83]" strokeWidth={2} />,
-                            "Recycling initiatives": <Recycle className="h-4 w-4 text-[#72BB83]" strokeWidth={2} />,
+                            "Green bonds": <CircleDollarSign className="h-3 w-3 text-[#72BB83]" strokeWidth={2} />,
+                            "ESG funds": <Leaf className="h-3 w-3 text-[#72BB83]" strokeWidth={2} />,
+                            "Solar investments": <Sun className="h-3 w-3 text-[#72BB83]" strokeWidth={2} />,
+                            "Wind energy": <Wind className="h-3 w-3 text-[#72BB83]" strokeWidth={2} />,
+                            "Battery storage": <Battery className="h-3 w-3 text-[#72BB83]" strokeWidth={2} />,
+                            "Recycling initiatives": <Recycle className="h-3 w-3 text-[#72BB83]" strokeWidth={2} />,
                         };
-                        return icons[name] || <BarChart3 className="h-4 w-4 text-[#14301F]/40" strokeWidth={2} />;
+                        return icons[name] || <BarChart3 className="h-3 w-3 text-[#14301F]/40" strokeWidth={2} />;
                     };
 
                     return (
-                        <div key={i} className="space-y-2.5">
-                            {/* Row 1 on mobile: icon + label. Row 2: value + trend (stacks below on mobile, inline on sm+) */}
-                            <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                                <span className="flex items-start gap-2 text-sm font-semibold leading-snug text-[#14301F]">
+                        <div key={i} className="space-y-1.5">
+                            {/* Compact row */}
+                            <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+                                <span className="flex items-start gap-1.5 text-[11px] font-semibold leading-snug text-[#14301F] sm:text-xs">
                                     <span className="mt-0.5 flex-shrink-0">
                                         {getCategoryIcon(row[0])}
                                     </span>
-                                    <span>{row[0]}</span>
+                                    <span className="truncate">{row[0]}</span>
                                 </span>
-                                <div className="flex flex-shrink-0 items-center gap-3 pl-6 sm:pl-0">
-                                    <span className="text-base font-bold text-[#14301F] sm:text-sm">
+                                <div className="flex flex-shrink-0 items-center gap-1.5 pl-4 sm:pl-0">
+                                    <span className="text-xs font-bold text-[#14301F] sm:text-[11px]">
                                         {row[1]}
                                     </span>
-                                    <span className={`flex items-center gap-0.5 text-xs font-medium ${trendColor}`}>
-                                        <TrendIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                    <span className={`flex items-center gap-0.5 text-[9px] font-medium ${trendColor} sm:text-[10px]`}>
+                                        <TrendIcon className="h-2.5 w-2.5" strokeWidth={2.5} />
                                         {trend.replace(/[↑↓]/g, "").trim() || ""}
                                     </span>
                                 </div>
                             </div>
 
-                            {/* Progress bar — always full width */}
-                            <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#14301F]/[0.06]">
+                            {/* Smaller Progress bar */}
+                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#14301F]/[0.06]">
                                 <div
                                     className="h-full rounded-full bg-gradient-to-r from-[#72BB83] to-[#5DA870] transition-all duration-700 ease-out"
                                     style={{ width: `${Math.min(percentage, 100)}%` }}
@@ -228,7 +228,7 @@ const StatisticsComp = () => {
                                 initial={{ opacity: 0, x: -40 }}
                                 animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
                                 transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-                                className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-[#72BB83]"
+                                className="inline-flex items-center gap-2.5 text-md font-bold uppercase tracking-[0.16em] text-[#72BB83]"
                             >
                                 Data-driven insights
                             </motion.span>
@@ -261,7 +261,7 @@ const StatisticsComp = () => {
                             className="flex justify-center lg:justify-end"
                         >
                             <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
-                                <div className="overflow-hidden rounded-2xl shadow-lg">
+                                <div className="overflow-hidden">
                                     <Image
                                         src={StatisticsImage}
                                         alt="Statistics Illustration"
@@ -277,8 +277,8 @@ const StatisticsComp = () => {
 
             {/* ========== STATISTICS SECTION ========== */}
             <section className="relative overflow-hidden bg-[#E6FBF1] py-12 sm:py-16 lg:py-24">
-
                 <div className="relative mx-6 px-4 sm:px-6 lg:px-8">
+
                     {/* ========== FACT CARDS ========== */}
                     <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-5">
                         {data?.facts?.map((fact, i) => {
@@ -288,7 +288,6 @@ const StatisticsComp = () => {
                                     key={i}
                                     className="group relative overflow-hidden rounded-2xl border border-[#14301F]/10 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#72BB83]/40 hover:shadow-xl sm:p-6"
                                 >
-                                    {/* decorative corner glow */}
                                     <div
                                         className={`absolute -right-8 -top-8 h-24 w-24 rounded-full ${bg} opacity-60 blur-2xl transition-opacity duration-300 group-hover:opacity-100`}
                                     />
@@ -337,8 +336,8 @@ const StatisticsComp = () => {
                         </StatBlock>
                     )}
 
-                    {/* ========== GREEN STATS ========== */}
-                    {data.greenStats && (
+                    {/* ========== GREEN STATS - SMALLER CARD ========== */}
+                    {/* {data.greenStats && (
                         <StatBlock
                             icon={TrendingUp}
                             title={data.greenStats.title}
@@ -346,11 +345,11 @@ const StatisticsComp = () => {
                             source={data.greenStats.source}
                             last
                         >
-                            <div className="rounded-2xl border border-[#14301F]/10 bg-white p-5 shadow-sm sm:p-6 lg:p-8">
+                            <div className="w-full max-w-2xl mx-auto rounded-2xl border border-[#14301F]/10 bg-white p-3 shadow-sm sm:p-4 lg:p-5">
                                 {renderGreenBars(data.greenStats.rows)}
                             </div>
                         </StatBlock>
-                    )}
+                    )} */}
                 </div>
             </section>
         </>

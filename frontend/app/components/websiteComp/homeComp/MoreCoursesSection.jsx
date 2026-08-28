@@ -33,27 +33,34 @@ const DUMMY_TOPICS = [
     { id: "islamic-finance", name: "Islamic Finance" },
 ];
 
+// Only 2 dummy courses - these will show on ALL tabs
 const DUMMY_COURSES = [
-    { id: 1, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
-    { id: 2, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
-
-    { id: 3, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
-    { id: 4, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
-
-    { id: 5, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
-    { id: 6, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
-
-    { id: 7, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
-    { id: 8, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
-
-    { id: 9, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
-    { id: 10, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
-
-    { id: 11, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
-    { id: 12, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
-
-    { id: 13, slug: "micro-finance-1", title: "Financial Inclusion in Action", instructor: "Dr. Priya Raman", rating: 4.8, reviewsCount: 122, duration: "40 Min", lecturesCount: 21, level: "Beginner Level", image: null, topic: "micro-finance" },
-    { id: 14, slug: "micro-finance-2", title: "Sustainable Energy Investment", instructor: "Prof. Marcus Webb", rating: 4.6, reviewsCount: 88, duration: "32 Min", lecturesCount: 16, level: "Intermediate Level", image: null, topic: "micro-finance" },
+    {
+        id: 1,
+        slug: "micro-finance-1",
+        title: "Financial Inclusion in Action",
+        instructor: "Dr. Priya Raman",
+        rating: 4.8,
+        reviewsCount: 122,
+        duration: "40 Min",
+        lecturesCount: 21,
+        level: "Beginner Level",
+        image: null,
+        topic: "micro-finance"
+    },
+    {
+        id: 2,
+        slug: "micro-finance-2",
+        title: "Sustainable Energy Investment",
+        instructor: "Prof. Marcus Webb",
+        rating: 4.6,
+        reviewsCount: 88,
+        duration: "32 Min",
+        lecturesCount: 16,
+        level: "Intermediate Level",
+        image: null,
+        topic: "micro-finance"
+    },
 ];
 
 export default function MoreCoursesSection({
@@ -73,10 +80,11 @@ export default function MoreCoursesSection({
 
     useEffect(() => setMounted(true), []);
 
+    // IMPORTANT: Show all courses (the 2 dummy courses) on EVERY tab
     const filteredCourses = useMemo(() => {
-        const list = activeTopic ? catalog.filter((c) => c.topic === activeTopic) : catalog;
-        return list.slice(0, 3);
-    }, [catalog, activeTopic]);
+        // Show all courses regardless of active topic
+        return catalog.slice(0, 2);
+    }, [catalog]);
 
     const measureUnderline = () => {
         const idx = topics.findIndex((t) => t.id === activeTopic);
@@ -107,32 +115,8 @@ export default function MoreCoursesSection({
         }
     };
 
-    const itemVariants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.7,
-                ease: "easeOut"
-            }
-        }
-    };
-
     const headingVariants = {
         hidden: { opacity: 0, x: -40 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                duration: 0.7,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    const rightContentVariants = {
-        hidden: { opacity: 0, x: 40 },
         visible: {
             opacity: 1,
             x: 0,
@@ -210,13 +194,13 @@ export default function MoreCoursesSection({
                     </motion.div>
                 )}
 
-                {/* ===== CARDS GRID ===== */}
+                {/* ===== CARDS GRID - Shows 2 cards on ALL tabs ===== */}
                 <motion.div
                     key={activeTopic}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
                     variants={containerVariants}
-                    className="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 lg:grid-cols-3 lg:gap-x-5"
+                    className="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 max-w-3xl mx-6"
                 >
                     {filteredCourses.map((course, i) => (
                         <ExploreCourseCard

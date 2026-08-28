@@ -44,12 +44,12 @@ export default function AboutStorySection() {
                         initial={{ opacity: 0, x: -50, scale: 0.9 }}
                         animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: -50, scale: 0.9 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="relative aspect-[3/2] w-full overflow-hidden rounded-[20px] shadow-sm"
+                        className="relative aspect-[3/2] w-full overflow-hidden"
                     >
                         <motion.div
                             whileHover={{ scale: 1.03 }}
                             transition={{ duration: 0.3 }}
-                            className="relative aspect-[3/2] w-full overflow-hidden rounded-[20px] shadow-sm"
+                            className="relative aspect-[3/2] w-full overflow-hidden"
                         >
                             <Image
                                 src={aboutStoryImage}

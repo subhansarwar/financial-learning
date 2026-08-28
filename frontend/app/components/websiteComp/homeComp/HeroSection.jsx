@@ -25,6 +25,7 @@ import readingIllustrationImg from '@/public/assets/homePageImages/readingIllust
 
 // Orange card - overlapping avatars (already merged into ONE image)
 import users from '@/public/assets/homePageImages/users.webp';
+import Link from "next/link";
 
 export default function HeroSection() {
     const sectionRef = useRef(null);
@@ -231,20 +232,20 @@ export default function HeroSection() {
 
                         {/* Buttons stay close together as a tight pair */}
                         <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                            <a
-                                href="#courses"
+                            <Link
+                                href="/catalog"
                                 className="inline-flex items-center justify-center rounded-full px-4 py-2 text-[11px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
                                 style={{ backgroundColor: "#1E4D35" }}
                             >
                                 Explore Courses
-                            </a>
+                            </Link>
 
-                            <a
-                                href="#contact"
+                            <Link
+                                href="/contact"
                                 className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold text-[#03010D] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
                             >
                                 Contact Us
-                            </a>
+                            </Link>
                         </div>
 
                         {/* Right avatar with soft mint glow behind it */}

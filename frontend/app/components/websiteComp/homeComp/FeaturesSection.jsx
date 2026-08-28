@@ -6,6 +6,7 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import interactiveToolsImg from "@/public/assets/featuresSectionImages/InteractivetoolsRightSideImage.webp";
 import publishedPapersImg from "@/public/assets/featuresSectionImages/resarchSideImage.webp";
+import Link from "next/link";
 
 /* ---------- Scroll-reveal hook (modified for re-trigger) ---------- */
 function inViewScroll(threshold = 0.2) {
@@ -37,26 +38,31 @@ function Eyebrow({ children }) {
     );
 }
 
-function BrowseAllButton() {
+function BrowseAllButton({ href = '' }) {
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, {
         once: false,
         amount: 0.1,
     });
     return (
-        <a
+        <div
             href="#browse"
             className="group mt-6 inline-flex items-center gap-3 text-sm font-semibold text-[#0F172A] no-underline sm:mt-8"
         >
             Browse all
-            <motion.span
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1E4D35] text-white"
-                whileHover={{ rotate: 45, x: 2, y: -2 }}
-                transition={{ duration: 0.3 }}
+            <Link
+                href={href}
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1E4D35] text-white cursor-pointer transition-all duration-300 hover:bg-[#163D2A]"
             >
-                <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
-            </motion.span>
-        </a>
+                <motion.span
+                    className="flex h-full w-full items-center justify-center"
+                    whileHover={{ rotate: 45, x: 2, y: -2 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
+                </motion.span>
+            </Link>
+        </div>
     );
 }
 
@@ -197,7 +203,7 @@ function InteractiveToolsRow() {
 
                 <div className={`transition-all duration-700 delay-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                     }`}>
-                    <BrowseAllButton />
+                    <BrowseAllButton href="/tools" />
                 </div>
             </div>
         </div>
@@ -299,7 +305,7 @@ function CaseStudiesRow() {
                 </p>
                 <div className={`transition-all duration-700 delay-500 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                     }`}>
-                    <BrowseAllButton />
+                    <BrowseAllButton href="/catalog" />
                 </div>
             </div>
 
@@ -359,7 +365,7 @@ function PublishedPapersRow() {
                 </p>
                 <div className={`transition-all duration-700 delay-500 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                     }`}>
-                    <BrowseAllButton />
+                    <BrowseAllButton href="/research" />
                 </div>
             </div>
         </div>
