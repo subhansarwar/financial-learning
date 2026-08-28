@@ -11,10 +11,10 @@ from app.core.config import settings
 from app.core.database import check_db_connection, init_db
 from app.routes.auth.auth_api import router as auth_router
 from app.routes.users.profile_api import router as users_router
-from server.app.routes.courses.catalog_api import router as courses_router
+from app.routes.courses.catalog_api import router as courses_router
 from app.routes.courses.admin_api import router as courses_admin_router
 from app.routes.courses.certificates_api import router as certificates_router
-from server.app.routes.courses.monitoring_api import router as courses_monitoring_router
+from app.routes.courses.monitoring_api import router as courses_monitoring_router
 from app.routes.publications.student import router as publications_student_router
 from app.routes.publications.catalog import router as publications_catalog_router
 from app.routes.publications.admin import router as publications_admin_router
@@ -35,7 +35,6 @@ async def lifespan(app: FastAPI):
 
     check_celery_workers()
     yield
-
 
 app = FastAPI(title=settings.APP_NAME, lifespan=lifespan, Version=settings.APP_VERSION, debug=settings.DEBUG)
 
