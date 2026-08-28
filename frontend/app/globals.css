@@ -188,6 +188,47 @@
 
 @layer utilities {
 
+  /* Quicksand — rounded, friendly sans used on the legal / policy pages.
+     Scoped via .font-quicksand rather than swapped globally. */
+  .font-quicksand {
+    font-family: "Quicksand", "Plus Jakarta Sans", "Arial", sans-serif;
+    letter-spacing: 0.005em;
+  }
+
+  /* Smooth accordion open/close for the legal page sections. */
+  @keyframes legal-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-legal-fade-in {
+    animation: legal-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Smooth answer reveal for the FAQ accordion. */
+  @keyframes faq-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-faq-reveal {
+    animation: faq-reveal 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
   /* Two-stop, restrained brand gradient used only for emphasised
      words in the hero, not scattered across the page. */
   .bg-brand-gradient {

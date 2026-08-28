@@ -1,6 +1,5 @@
 // app/components/caseStudies/CaseStudiesClient.jsx
 "use client";
-
 import { useState, useEffect } from "react";
 import {
     Briefcase,
