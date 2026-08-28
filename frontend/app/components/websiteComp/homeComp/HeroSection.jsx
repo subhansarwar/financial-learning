@@ -1,154 +1,397 @@
 // app/components/websiteComp/homeComp/HeroSection.jsx
 "use client";
 
-import { Search, ChevronDown, ArrowRight, Sparkle } from "lucide-react";
+import { Search, ChevronDown } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import Patern from '../../../../public/assets/homePageImages/Patern.webp';
-import InteractiveTree from './InteractiveTree';
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-export default function HeroSection({ catalog = [], topics = [] }) {
-    const [isVisible, setIsVisible] = useState(false);
+// Background
+import greenShade from '@/public/assets/homePageImages/greenshade.webp';
+import textTopShade from '@/public/assets/homePageImages/textGreenShade.webp'
+
+// Corner floating badges
+import topLeftAvatar from '@/public/assets/homePageImages/topLeftAvatar.webp';
+import topRightAvatar from '@/public/assets/homePageImages/topRightAvatar.webp';
+import star from '@/public/assets/homePageImages/star.webp';
+
+// Small avatars beside buttons
+import leftBtnAvatar from '@/public/assets/homePageImages/leftBtnAvatar.webp';
+import rightBtnAvatar from '@/public/assets/homePageImages/rightBtnAvatar.webp';
+
+// Bottom illustrations
+import financialLiteracyImg from '@/public/assets/homePageImages/financialLiteracy.webp';
+import readingIllustrationImg from '@/public/assets/homePageImages/readingIllustration.webp';
+
+// Orange card - overlapping avatars (already merged into ONE image)
+import users from '@/public/assets/homePageImages/users.webp';
+
+export default function HeroSection() {
     const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, {
+        once: false,
+        amount: 0.1,
+    });
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                // Set isVisible based on whether section is intersecting
-                setIsVisible(entry.isIntersecting);
+    // Animation variants for staggered children
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.1,
             },
-            {
-                threshold: 0.15,
-                // Remove triggerOnce to allow animation to replay
-            }
-        );
+        },
+    };
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.7, ease: "easeOut" },
+        },
+    };
 
-        return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
-            }
-        };
-    }, []);
+    const fadeInLeftVariants = {
+        hidden: { opacity: 0, x: -40, scale: 0.9 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            transition: { duration: 0.8, ease: "easeOut" },
+        },
+    };
+
+    const fadeInRightVariants = {
+        hidden: { opacity: 0, x: 40, scale: 0.9 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            transition: { duration: 0.8, ease: "easeOut" },
+        },
+    };
+
+    const fadeInUpVariants = {
+        hidden: { opacity: 0, y: 50, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.7, ease: "easeOut" },
+        },
+    };
+
+    const scaleInVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: { duration: 0.8, ease: "easeOut" },
+        },
+    };
 
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden bg-[#E5E5E5] py-8"
+            className="relative overflow-hidden bg-white pb-10 pt-12 sm:pb-16 sm:pt-16 lg:pb-10 lg:pt-20"
         >
-            {/* ===== Background Pattern (spans full hero, anchored top-left) ===== */}
-            <div className="pointer-events-none absolute inset-0 opacity-70">
+            {/* ===== Faint grid background ===== */}
+            <div
+                className="pointer-events-none absolute inset-0 opacity-[0.35]"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(#f1f1f1 1px, transparent 1px), linear-gradient(90deg, #f1f1f1 1px, transparent 1px)",
+                    backgroundSize: "40px 40px",
+                }}
+            />
+
+            {/* ===== Green shaded blob (right side) ===== */}
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="pointer-events-none absolute -right-16 -top-16 h-[250px] w-[300px] sm:-right-20 sm:-top-20 sm:h-[350px] sm:w-[400px] lg:-right-24 lg:-top-24 lg:h-[450px] lg:w-[550px] xl:h-[550px] xl:w-[650px]"
+            >
                 <Image
-                    src={Patern}
+                    src={greenShade}
                     alt=""
                     fill
-                    sizes="100vw"
-                    className="object-cover object-left-top"
+                    className="object-contain"
                     priority={false}
                 />
-            </div>
+            </motion.div>
 
-            <div className="relative mx-6 px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 lg:py-14">
-                    {/* ===== LEFT CONTENT ===== */}
-                    <div className="relative flex flex-col justify-center py-10 sm:py-14 lg:py-0">
-                        {/* Heading */}
-                        <h1
-                            className={`font-serif text-[2.35rem] font-semibold leading-[1.15] tracking-tight text-black sm:text-[2.75rem] lg:text-[3rem] transition-all duration-700 ${isVisible
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-12"
-                                }`}
-                        >
-                            Receive the help you need
-                        </h1>
+            {/* ===== Sparkle / star decoration ===== */}
+            <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
+                className="pointer-events-none absolute right-[4%] top-[15%] h-4 w-4 sm:right-[5%] sm:top-[18%] sm:h-5 sm:w-5 lg:right-[6%] lg:top-[20%] lg:h-6 lg:w-6 xl:right-[8%]"
+            >
+                <Image src={star} alt="" fill className="object-contain" />
+            </motion.div>
 
-                        {/* Description */}
-                        <p
-                            className={`mt-4 max-w-[420px] text-[13px] leading-relaxed text-[#616161] sm:text-sm transition-all duration-700 delay-100 ${isVisible
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-12"
-                                }`}
-                        >
-                            Two flagship 12-module programs{" "}
-                            <span className="font-semibold">Microfinance</span> and{" "}
-                            <span className="font-semibold">Sustainability &amp; Finance</span>{" "}
-                            plus case studies, country statistics and{" "}
-                            <span className="italic">a student research corner</span>. Pass each module
-                            at 70% to unlock the next, and earn your certificate.
-                        </p>
+            <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                {/* ===== TOP: Heading block ===== */}
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                    className="relative flex flex-col items-center text-center"
+                >
+                    {/* Top-left floating avatar badge */}
+                    <motion.div
+                        variants={fadeInLeftVariants}
+                        className="absolute -left-2 top-0 hidden h-10 w-10 sm:block sm:h-14 sm:w-14 lg:-left-4 lg:h-[72px] lg:w-[72px] xl:-left-6"
+                    >
+                        <Image
+                            src={topLeftAvatar}
+                            alt=""
+                            fill
+                            className="object-contain"
+                        />
+                    </motion.div>
 
-                        {/* Search Form */}
-                        <form
-                            className={`mt-5 flex max-w-[420px] items-center gap-1 rounded-full border border-input-border bg-input-bg py-1 pl-4 pr-1 transition-all duration-700 delay-200 ${isVisible
-                                ? "opacity-100 translate-y-0 scale-100"
-                                : "opacity-0 translate-y-8 scale-95"
-                                }`}
-                            action="/catalog"
-                            method="get"
-                            role="search"
+                    {/* Top-right floating avatar badge */}
+                    <motion.div
+                        variants={fadeInRightVariants}
+                        className="absolute -right-2 top-2 hidden h-10 w-10 sm:block sm:h-14 sm:w-14 lg:-right-4 lg:h-[72px] lg:w-[72px] xl:-right-6"
+                    >
+                        <Image
+                            src={topRightAvatar}
+                            alt=""
+                            fill
+                            className="object-contain"
+                        />
+                    </motion.div>
+
+                    {/* Heading with shade background */}
+                    <div className="relative w-full max-w-4xl">
+                        {/* Green shade behind heading */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="pointer-events-none absolute -inset-x-2 -inset-y-4 z-0 sm:-inset-x-4 sm:-inset-y-6 lg:-inset-x-6 lg:-inset-y-8"
                         >
-                            <input
-                                type="search"
-                                name="q"
-                                placeholder="Search course, event or author"
-                                aria-label="Search courses"
-                                className="min-w-0 flex-1 bg-transparent py-2 text-[12.5px] text-text-dark placeholder:text-text-muted focus:outline-none"
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="pointer-events-none absolute -right-6 -top-8 -z-10 h-[160%] w-[70%] blur-2xl sm:-right-8 sm:w-[65%] lg:-right-10 lg:w-[60%]"
+                                style={{
+                                    background:
+                                        "radial-gradient(ellipse at center, rgba(125,255,210,0.35) 0%, rgba(125,255,210,0.18) 45%, rgba(125,255,210,0) 75%)",
+                                }}
                             />
+                        </motion.div>
 
-                            <div className="h-4 w-px shrink-0 bg-input-border" />
+                        <motion.h1
+                            variants={itemVariants}
+                            className="relative z-10 font-serif text-[1.6rem] font-extrabold leading-[1.15] tracking-tight sm:text-[2.2rem] md:text-[2.6rem] lg:text-[3rem] xl:text-[3.5rem]"
+                        >
+                            <span className="text-[#03010D]">Learn and Grow with</span>
+                            <br />
+                            <span className="text-[#03010D]">Top </span>
+                            <span className="text-[#FFB061]">Online Courses</span>
+                        </motion.h1>
+                    </div>
 
-                            <div className="relative flex shrink-0 items-center">
-                                <select
-                                    className="cursor-pointer appearance-none bg-transparent py-2 pl-3 pr-3 text-[12.5px] font-medium text-text-dark transition-colors hover:text-btn-primary focus:outline-none"
-                                    defaultValue="courses"
-                                >
-                                    <option value="courses">Courses</option>
-                                    <option value="case-studies">Case Studies</option>
-                                    <option value="statistics">Statistics</option>
-                                    <option value="research">Research</option>
-                                </select>
-                                <ChevronDown className="pointer-events-none absolute right-5 top-1/2 h-3 w-3 -translate-y-1/2 text-text-muted" strokeWidth={2} />
-                            </div>
+                    {/* Description */}
+                    <motion.p
+                        variants={itemVariants}
+                        className="mx-auto mt-3 max-w-[280px] text-[11px] leading-relaxed text-[#616161] sm:mt-4 sm:max-w-md sm:text-[12px] md:max-w-lg md:text-[13px] lg:text-sm"
+                    >
+                        Discover top online courses to upgrade your Financial skills and
+                        stay ahead. Learn from experts and enhance your expertise at your
+                        own pace.
+                    </motion.p>
 
-                            <button
-                                type="submit"
-                                aria-label="Search"
-                                className="flex h-7 w-8 shrink-0 items-center justify-center rounded-full bg-btn-primary text-white transition-all duration-300 hover:bg-btn-primary-hover hover:scale-110 active:scale-95"
+                    {/* Buttons row with side avatars */}
+                    <motion.div
+                        variants={itemVariants}
+                        className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:mt-5 sm:gap-3 md:mt-6 md:gap-4 lg:gap-5"
+                    >
+                        {/* Left avatar */}
+                        <motion.div
+                            variants={fadeInLeftVariants}
+                            className="relative hidden h-8 w-8 shrink-0 sm:block sm:h-9 sm:w-9 lg:h-10 lg:w-10 xl:h-11 xl:w-11"
+                        >
+                            <Image
+                                src={leftBtnAvatar}
+                                alt=""
+                                fill
+                                className="object-contain"
+                            />
+                        </motion.div>
+
+                        <a
+                            href="#courses"
+                            className="inline-flex items-center justify-center rounded-full px-4 py-2 text-[11px] font-semibold text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
+                            style={{ backgroundColor: "#1E4D35" }}
+                        >
+                            Explore Courses
+                        </a>
+
+                        <a
+                            href="#contact"
+                            className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-[11px] font-semibold text-[#03010D] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:px-5 sm:py-2.5 sm:text-xs md:text-sm"
+                        >
+                            Contact Us
+                        </a>
+
+                        {/* Right avatar */}
+                        <motion.div
+                            variants={fadeInRightVariants}
+                            className="relative hidden h-8 w-8 shrink-0 sm:block sm:h-9 sm:w-9 lg:h-10 lg:w-10 xl:h-11 xl:w-11"
+                        >
+                            <div
+                                className="pointer-events-none absolute -inset-2 -z-10 rounded-full blur-md sm:-inset-3"
+                                style={{
+                                    background:
+                                        "radial-gradient(circle, rgba(182,245,216,0.7) 0%, rgba(182,245,216,0) 70%)",
+                                }}
+                            />
+                            <Image
+                                src={rightBtnAvatar}
+                                alt=""
+                                fill
+                                className="object-contain"
+                            />
+                        </motion.div>
+                    </motion.div>
+
+                    {/* Search Form */}
+                    <motion.form
+                        variants={fadeInUpVariants}
+                        className="mt-4 flex w-full max-w-[340px] items-center gap-1 rounded-full border border-input-border bg-input-bg py-1 pl-3 pr-1 sm:mt-5 sm:max-w-[400px] sm:pl-4 md:max-w-[440px] md:pl-5 lg:max-w-[480px]"
+                        action="/catalog"
+                        method="get"
+                        role="search"
+                    >
+                        <input
+                            type="search"
+                            name="q"
+                            placeholder="Search course, event or author"
+                            aria-label="Search courses"
+                            className="min-w-0 flex-1 bg-transparent py-2 text-[11px] text-text-dark placeholder:text-text-muted focus:outline-none sm:py-2.5 sm:text-[12px] md:text-[13px]"
+                        />
+
+                        <div className="h-3 w-px shrink-0 bg-input-border sm:h-4" />
+
+                        <div className="relative flex shrink-0 items-center">
+                            <select
+                                className="cursor-pointer appearance-none bg-transparent py-2 pl-2 pr-5 text-[11px] font-medium text-text-dark transition-colors hover:text-btn-primary focus:outline-none sm:py-2.5 sm:pl-3 sm:pr-6 sm:text-[12px] md:text-[13px]"
+                                defaultValue="courses"
                             >
-                                <Search className="h-3.5 w-3.5" strokeWidth={2.5} />
-                            </button>
-                        </form>
-
-                        {/* Get Started */}
-                        <div
-                            className={`mt-5 flex items-center gap-2.5 transition-all duration-700 delay-300 ${isVisible
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-12"
-                                }`}
-                        >
-                            <span className="text-[12.5px] font-medium text-text-muted">Get Started as</span>
-                            <ArrowRight className="h-3.5 w-3.5 text-text-muted transition-transform duration-300 group-hover:translate-x-1" strokeWidth={2} />
-                            <span className="inline-flex items-center rounded-full bg-btn-primary px-4 py-1 text-[10px] font-bold tracking-wide text-white transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                                STUDENT
-                            </span>
+                                <option value="courses">Courses</option>
+                                <option value="case-studies">Case Studies</option>
+                                <option value="statistics">Statistics</option>
+                                <option value="research">Research</option>
+                            </select>
+                            <ChevronDown
+                                className="pointer-events-none absolute right-1 top-1/2 h-3 w-3 -translate-y-1/2 text-text-muted sm:h-3.5 sm:w-3.5"
+                                strokeWidth={2}
+                            />
                         </div>
-                    </div>
 
-                    {/* ===== RIGHT: Interactive Three.js Tree ===== */}
-                    <div className="relative flex items-center justify-center py-6 lg:py-0">
-                        <div
-                            className={`relative aspect-square w-full max-w-[420px] transition-all duration-700 delay-150 ${isVisible
-                                ? "opacity-100 translate-x-0 scale-100"
-                                : "opacity-0 translate-x-12 scale-90"
-                                }`}
+                        <button
+                            type="submit"
+                            aria-label="Search"
+                            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white transition-all duration-300 hover:scale-110 active:scale-95 sm:h-8 sm:w-8 md:h-9 md:w-9"
+                            style={{ backgroundColor: "#1E4D35" }}
                         >
-                            <InteractiveTree />
-                        </div>
-                    </div>
-                </div>
+                            <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2.5} />
+                        </button>
+                    </motion.form>
+                </motion.div>
+
+                {/* ===== BOTTOM: 3-column illustration + cards ===== */}
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                    className="mt-8 grid grid-cols-1 items-center gap-4 sm:mt-10 sm:gap-6 md:mt-12 lg:mt-14 lg:grid-cols-[1fr_1.1fr_1fr] lg:gap-8"
+                >
+                    {/* Left illustration */}
+                    <motion.div
+                        variants={fadeInLeftVariants}
+                        className="relative mx-auto aspect-square w-full max-w-[490px] sm:max-w-[350px] md:max-w-[280px] lg:max-w-[280px] xl:max-w-[320px]"
+                    >
+                        <Image
+                            src={financialLiteracyImg}
+                            alt="Financial literacy illustration"
+                            fill
+                            className="object-cover"
+                        />
+                    </motion.div>
+
+                    {/* Middle: stacked cards */}
+                    <motion.div
+                        variants={fadeInUpVariants}
+                        className="mx-auto flex w-full max-w-[220px] flex-col gap-3 sm:max-w-[250px] sm:gap-4 md:max-w-[280px] lg:max-w-[300px]"
+                    >
+                        {/* Orange card */}
+                        <motion.div
+                            variants={scaleInVariants}
+                            className="flex h-[110px] flex-col justify-between rounded-2xl p-4 sm:h-[130px] sm:p-5 md:h-[140px] lg:h-[150px]"
+                            style={{ backgroundColor: "#FFB061" }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <div className="relative h-7 w-[80px] sm:h-8 sm:w-[100px] md:h-9 md:w-[110px] lg:w-[124px]">
+                                <Image
+                                    src={users}
+                                    alt="Students"
+                                    fill
+                                    className="object-contain object-left"
+                                />
+                            </div>
+                            <p className="text-xs font-bold leading-snug text-[#03010D] sm:text-sm md:text-base">
+                                We will create Students Community.
+                            </p>
+                        </motion.div>
+
+                        {/* Green quote card */}
+                        <motion.div
+                            variants={scaleInVariants}
+                            className="flex h-[110px] flex-col justify-center gap-2 rounded-2xl p-4 sm:h-[130px] sm:p-5 md:h-[140px] lg:h-[150px]"
+                            style={{ backgroundColor: "#7CEED0" }}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <p className="text-[11px] font-semibold leading-snug text-[#03010D] sm:text-xs md:text-sm">
+                                "Believe in yourself, keep learning, and success will
+                                follow."
+                            </p>
+                            <div>
+                                <p className="text-[10px] font-bold text-[#03010D] sm:text-[11px] md:text-xs">
+                                    Arya Khanna.
+                                </p>
+                                <p className="text-[9px] text-[#616161] sm:text-[10px] md:text-[11px]">
+                                    Quote from our Founder
+                                </p>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* Right illustration */}
+                    <motion.div
+                        variants={fadeInRightVariants}
+                        className="relative mx-auto aspect-square w-full max-w-[670px] sm:max-w-[450px] md:max-w-[560px] lg:max-w-[490px] xl:max-w-[550px]"
+                    >
+                        <Image
+                            src={readingIllustrationImg}
+                            alt="Reading illustration"
+                            fill
+                            className="object-cover"
+                        />
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

@@ -24,7 +24,7 @@ export default function AboutStorySection() {
     return (
         <section
             ref={sectionRef}
-            className="bg-[#EBFFF9] py-14 sm:py-20 lg:py-24"
+            className="bg-[#EBFFF9] py-12 sm:py-12 lg:py-12"
         >
             <div className="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
                 {/* Heading */}

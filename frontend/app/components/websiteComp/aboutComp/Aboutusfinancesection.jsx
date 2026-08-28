@@ -81,7 +81,7 @@ export default function AboutUsFinanceSection() {
     return (
         <section
             ref={sectionRef}
-            className="w-full border-t-4 border-[#72BB83] bg-[#E5E5E5] px-6 py-16 sm:px-10 lg:px-16 xl:py-24 2xl:px-24"
+            className="w-full bg-[#ffffff] px-6 py-17 sm:px-10 lg:px-16 xl:py-17 2xl:px-24"
         >
             <div className="mx-6 grid grid-cols-1 gap-x-12 gap-y-16 lg:grid-cols-2 lg:gap-x-16 xl:gap-x-24">
                 {/* ---------------------------------------------------------------- */}

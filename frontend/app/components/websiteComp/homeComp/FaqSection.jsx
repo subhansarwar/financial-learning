@@ -54,20 +54,20 @@ const FAQ_DATA = {
             a: "Yes. The Eco Len is always free for students, teachers, and families.",
         },
         {
-            q: "Is The Eco Len really free?",
-            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+            q: "What courses do you offer?",
+            a: "We offer a wide range of financial and business courses for all skill levels.",
         },
         {
-            q: "Is The Eco Len really free?",
-            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+            q: "How do I become a coach?",
+            a: "Apply through our coach program and get verified by our team.",
         },
         {
-            q: "Is The Eco Len really free?",
-            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+            q: "Are there live sessions?",
+            a: "Yes, we offer live coaching sessions every week.",
         },
         {
-            q: "Is The Eco Len really free?",
-            a: "Yes. The Eco Len is always free for students, teachers, and families.",
+            q: "Can I access course materials offline?",
+            a: "Yes, you can download materials for offline access.",
         },
     ],
     "Pricing & Billing": [
@@ -121,19 +121,19 @@ const CATEGORIES = Object.keys(FAQ_DATA);
 function AccordionItem({ item, isOpen, onToggle, delay, inView }) {
     return (
         <div
-            className={`overflow-hidden rounded-xl bg-slate-50 transition-all duration-700 ease-out ${inView
+            className={`w-full overflow-hidden rounded-xl bg-slate-50 transition-all duration-700 ease-out ${inView
                     ? "translate-y-0 opacity-100"
                     : "translate-y-6 opacity-0"
                 }`}
             style={{
                 transitionDelay: inView ? `${delay}ms` : "0ms",
-                transitionDuration: inView ? "700ms" : "0ms"
+                transitionDuration: inView ? "700ms" : "0ms",
             }}
         >
             <button
                 type="button"
                 onClick={onToggle}
-                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-all duration-300 hover:bg-slate-100/50 sm:px-6"
+                className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left transition-all duration-300 hover:bg-slate-100/50 sm:px-5 sm:py-4"
             >
                 <span className="text-sm font-bold text-[#0F172A] sm:text-[15px]">
                     {item.q}
@@ -163,7 +163,7 @@ function AccordionItem({ item, isOpen, onToggle, delay, inView }) {
                 }}
             >
                 <div className="overflow-hidden">
-                    <p className="px-5 pb-4 text-sm leading-relaxed text-slate-500 sm:px-6 sm:pb-5">
+                    <p className="px-4 pb-3 text-sm leading-relaxed text-slate-500 sm:px-5 sm:pb-4">
                         {item.a}
                     </p>
                 </div>
@@ -186,12 +186,12 @@ export default function FaqSection() {
     };
 
     return (
-        <section className="bg-[#E5E5E5] h-full py-16 sm:py-20 lg:py-24 overflow-hidden">
-            <div className="mx-6 px-4 sm:px-6 lg:px-8">
+        <section className="bg-[#ffffff] min-h-screen py-16 sm:py-20 lg:py-24 overflow-hidden">
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* ===== Header ===== */}
                 <div
                     ref={headerRef}
-                    className={`mx-auto max-w-2xl text-center transition-all duration-700 ease-out ${headerInView
+                    className={`text-center transition-all duration-700 ease-out ${headerInView
                             ? "translate-y-0 opacity-100"
                             : "translate-y-8 opacity-0"
                         }`}
@@ -236,9 +236,9 @@ export default function FaqSection() {
                 {/* ===== Body: sidebar + accordion ===== */}
                 <div
                     ref={bodyRef}
-                    className="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-[220px_1fr] lg:gap-14"
+                    className="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-[240px_1fr] lg:gap-12"
                 >
-                    {/* Sidebar tabs */}
+                    {/* Sidebar tabs - Left side */}
                     <div
                         className={`flex gap-2 overflow-x-auto pb-2 transition-all delay-100 duration-700 ease-out lg:flex-col lg:gap-1 lg:overflow-visible lg:border-l lg:border-slate-200 lg:pb-0 ${bodyInView
                                 ? "translate-x-0 opacity-100"
@@ -270,13 +270,14 @@ export default function FaqSection() {
                         })}
                     </div>
 
-                    {/* Accordion */}
+                    {/* Accordion Section - Right side with FIXED WIDTH */}
                     <div
                         className={`transition-all delay-150 duration-700 ease-out ${bodyInView
                                 ? "translate-y-0 opacity-100"
                                 : "translate-y-8 opacity-0"
                             }`}
                     >
+                        {/* Category Title - Courses Coaches */}
                         <h3 className={`mb-5 text-lg font-bold text-[#0F172A] sm:text-xl transition-all duration-700 delay-200 ${bodyInView
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-6"
@@ -284,7 +285,8 @@ export default function FaqSection() {
                             {activeCategory}
                         </h3>
 
-                        <div className="flex flex-col gap-3">
+                        {/* Accordion Container with FIXED MAX-WIDTH */}
+                        <div className="w-full max-w-2xl space-y-3">
                             {items.map((item, idx) => (
                                 <AccordionItem
                                     key={`${activeCategory}-${idx}`}

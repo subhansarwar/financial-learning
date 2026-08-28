@@ -54,8 +54,8 @@ export default function HowToBuySection() {
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden py-16 sm:py-20 lg:py-24"
-            style={{ backgroundColor: "#72BB83" }}
+            className="relative overflow-hidden py-10 sm:py-10 lg:py-10"
+            style={{ backgroundColor: "#FFB061" }}
         >
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -85,7 +85,11 @@ export default function HowToBuySection() {
                         row-gap: 40px;
                     }
                 }
-                .htb-intro { grid-area: intro; }
+                .htb-intro { 
+                    grid-area: intro;
+                    width: 100% !important; /* Full width */
+                    max-width: 100% !important; /* No max-width restriction */
+                }
                 .htb-cta { grid-area: cta; justify-self: start; align-self: start; }
                 .htb-image { grid-area: image; }
                 .htb-accordion { grid-area: accordion; }
@@ -117,10 +121,10 @@ export default function HowToBuySection() {
                 />
             </div>
 
-            <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
-                <div className="htb-grid">
-                    {/* ===== INTRO ===== */}
-                    <div className="htb-intro">
+            <div className="relative mx-6 px-4 sm:px-6 lg:px-8">
+                <div className="htb-grid w-full">
+                    {/* ===== INTRO - FULL WIDTH ===== */}
+                    <div className="htb-intro w-full">
                         <div className={`mb-4 flex items-center gap-3 text-sm font-medium text-white/85 transition-all duration-700 ${isVisible
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-8"
@@ -129,15 +133,21 @@ export default function HowToBuySection() {
                             How to Begin
                         </div>
                         <h2
-                            className={`text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl lg:text-[2.75rem] transition-all duration-700 delay-100 ${isVisible
+                            className={`w-full font-bold text-white sm:text-3xl lg:text-4xl xl:text-5xl transition-all duration-700 delay-100 ${isVisible
                                     ? "opacity-100 translate-x-0"
                                     : "opacity-0 -translate-x-12"
                                 }`}
-                            style={{ fontFamily: "'Playfair Display', serif" }}
+                            style={{
+                                maxWidth: "100%",
+                                lineHeight: "1.2",
+                                letterSpacing: "-0.02em",
+                            }}
                         >
                             Get the help you need to ace your classes
                         </h2>
-                        <p className={`mt-4 max-w-md text-sm font-medium leading-relaxed text-white/85 sm:text-base transition-all duration-700 delay-200 ${isVisible
+
+                        {/* ===== PARAGRAPH — full width ===== */}
+                        <p className={`mt-4 w-full max-w-3xl text-sm font-medium text-white/85 sm:text-base transition-all duration-700 delay-200 ${isVisible
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-12"
                             }`}>
@@ -148,31 +158,32 @@ export default function HowToBuySection() {
                     </div>
 
                     {/* ===== CTA BUTTON ===== */}
-                    <div className="htb-cta">
+                    <div className="htb-cta pt-29">
                         <a
                             href="#catalog"
-                            className={`inline-flex items-center gap-2 rounded-full bg-[#1E4D35] px-8 py-3 text-sm font-bold text-white no-underline transition-all duration-700 delay-300 hover:-translate-y-0.5 hover:bg-[#163D2A] hover:shadow-lg hover:shadow-[#1E4D35]/30 ${isVisible
+                            className={`inline-flex items-center gap-2 rounded-full bg-[#251E4D] px-8 py-3 text-sm font-bold text-white no-underline transition-all duration-700 delay-300 hover:-translate-y-0.5 hover:bg-[#163D2A] hover:shadow-lg hover:shadow-[#1E4D35]/30 ${isVisible
                                     ? "opacity-100 translate-y-0 scale-100"
                                     : "opacity-0 translate-y-8 scale-95"
                                 }`}
                         >
                             Start now for free
-                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={2.5} />
                         </a>
                     </div>
 
                     {/* ===== IMAGE ===== */}
                     <div className="htb-image">
-                        <div className={`group aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#5AA36B] to-[#3E7E52] shadow-xl shadow-black/10 transition-all duration-700 delay-150 ${isVisible
+                        <div className={`group relative aspect-[4/3] w-full overflow-hidden transition-all duration-700 delay-150 ${isVisible
                                 ? "opacity-100 translate-x-0 scale-100"
                                 : "opacity-0 translate-x-12 scale-90"
                             }`}>
                             <Image
                                 src={HowToBegin}
-                                alt=""
+                                alt="How to begin illustration"
                                 fill
-                                className="object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105"
+                                className="object-contain rounded-2xl transition-transform duration-700 group-hover:scale-105"
                                 priority={false}
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                quality={100}
                             />
                         </div>
                     </div>

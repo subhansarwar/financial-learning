@@ -13,25 +13,25 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Finance Platform Free finance education for everyone",
+  title: "The Eco Lens Free finance education for everyone",
   description:
     "Free courses in microfinance and sustainable finance: microcredit, micro-savings, micro-insurance, micro-leasing, green energy, ESG and more.",
   keywords:
     "finance education, microfinance, sustainable finance, free courses, ESG, financial inclusion",
-  authors: [{ name: "Finance Platform Demo" }],
+  authors: [{ name: "The Eco Lens" }],
   openGraph: {
-    title: "Finance Platform Free finance education",
+    title: "The Eco Lens finance education",
     description:
       "Learn microfinance and sustainable finance for free. Complete courses, earn certificates.",
     url: "https://your-domain.com",
-    siteName: "Finance Platform Demo",
+    siteName: "The Eco Lens",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Finance Platform Demo",
+    title: "The Eco Lens",
     description: "Free finance education for everyone.",
     images: ["/og-image.png"],
   },
@@ -51,35 +51,35 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${lato.variable} font-sans`}>
-      <body className="bg-cream text-ink font-medium text-[16.5px] leading-[1.65] antialiased overflow-x-hidden">
-        <ReduxProvider>
-          {/* Toaster - Available everywhere */}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
+      <body className="bg-[#E5E5E5] text-ink font-medium text-[16.5px] leading-[1.65] antialiased overflow-x-hidden">
+        {/* Toaster - Available everywhere */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#fff",
+              color: "#1c2033",
+              borderRadius: "12px",
+              padding: "14px 18px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+              fontSize: "14px",
+              fontWeight: "500",
+              maxWidth: "420px",
+            },
+            success: {
               style: {
-                background: "#fff",
-                color: "#1c2033",
-                borderRadius: "12px",
-                padding: "14px 18px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                fontSize: "14px",
-                fontWeight: "500",
-                maxWidth: "420px",
+                borderLeft: "4px solid #10b981",
               },
-              success: {
-                style: {
-                  borderLeft: "4px solid #10b981",
-                },
+            },
+            error: {
+              style: {
+                borderLeft: "4px solid #ef4444",
               },
-              error: {
-                style: {
-                  borderLeft: "4px solid #ef4444",
-                },
-              },
-            }}
-          />
+            },
+          }}
+        />
+        <ReduxProvider>
           {children}
         </ReduxProvider>
       </body>

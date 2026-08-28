@@ -86,7 +86,7 @@ export default function WhyUsSection() {
     return (
         <section
             ref={sectionRef}
-            className="py-16 sm:py-20 lg:py-24 overflow-hidden"
+            className="py-10 sm:py-10 lg:py-10 overflow-hidden"
             style={{ backgroundColor: "#E6FBF1" }}
         >
             <div className="mx-6 px-4 sm:px-6 lg:px-8">

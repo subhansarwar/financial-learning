@@ -17,7 +17,7 @@ export default function AboutHeroSection() {
     return (
         <section
             ref={sectionRef}
-            className="relative overflow-hidden bg-[#E5E5E5] py-14 sm:py-20 lg:py-24 xl:py-28"
+            className="relative overflow-hidden bg-[#ffffff] py-0 "
         >
             {/* Background decorations */}
             <div className="pointer-events-none absolute inset-0">

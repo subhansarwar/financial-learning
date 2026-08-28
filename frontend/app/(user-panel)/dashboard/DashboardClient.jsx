@@ -22,6 +22,7 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 // ===== CONSTANTS =====
 const SIDEBAR = "#365B50";
@@ -73,7 +74,8 @@ function CustomTooltip({ active, payload, label }) {
 
 export default function DashboardClient() {
     const [activeIndex, setActiveIndex] = useState(3);
-
+    const dispatch = useAppDispatch()
+    const userData = useAppSelector(state => state.user?.user)
     return (
         <div className="flex min-h-screen font-sans" style={{ background: MAIN_BG }}>
             <div className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
@@ -83,7 +85,7 @@ export default function DashboardClient() {
                         <div className="flex items-center gap-3">
                             <div>
                                 <h1 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl lg:text-[26px]">
-                                    Welcome back, Giovani 👋
+                                    Welcome back, {userData?.full_name?.split(" ")[0] || "User"}
                                 </h1>
                                 <p className="mt-1 text-xs text-white/55 sm:text-sm">
                                     Here's an overview of your study progress this week.

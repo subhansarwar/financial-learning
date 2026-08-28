@@ -7,13 +7,6 @@ import { commonRules } from "./commonValidation";
 // ============================================
 
 export const loginSchema = yup.object({
-    name: yup
-        .string()
-        .required("Name is required")
-        .min(2, "Name must be at least 2 characters")
-        .max(50, "Name must be at most 50 characters")
-        .trim()
-        .matches(/^[a-zA-Z\s-']+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
     email: commonRules.email,
     password: commonRules.password,
 });
@@ -22,15 +15,30 @@ export const loginSchema = yup.object({
 // REGISTER VALIDATION SCHEMA
 // ============================================
 
-export const registerSchema = yup.object({
-    name: commonRules.name,
-    email: commonRules.email,
-    password: commonRules.password,
-    confirmPassword: commonRules.confirmPassword,
-    terms: yup
-        .boolean()
-        .required("You must accept the terms and conditions")
-        .oneOf([true], "You must accept the terms and conditions"),
+export const signupSchema = yup.object().shape({
+    full_name: yup
+        .string()
+        .min(2, "Full name must be at least 2 characters")
+        .max(50, "Full name cannot exceed 50 characters")
+        .required("Full name is required")
+        .matches(/^[a-zA-Z\s]+$/, "Full name can only contain letters and spaces"),
+    email: yup
+        .string()
+        .email("Please enter a valid email address")
+        .required("Email is required"),
+    password: yup
+        .string()
+        .min(8, "Password must be at least 8 characters")
+        .max(32, "Password cannot exceed 32 characters")
+        .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+            "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+        )
+        .required("Password is required"),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords must match")
+        .required("Please confirm your password"),
 });
 
 // ============================================
@@ -46,8 +54,31 @@ export const forgotPasswordSchema = yup.object({
 // ============================================
 
 export const resetPasswordSchema = yup.object({
-    password: commonRules.password,
-    confirmPassword: commonRules.confirmPassword,
+    email: yup
+        .string()
+        .trim()
+        .email("Please enter a valid email address")
+        .required("Email is required"),
+    code: yup
+        .string()
+        .trim()
+        .required("Verification code is required")
+        .min(4, "Code must be at least 4 characters")
+        .max(8, "Code cannot exceed 8 characters")
+        .matches(/^\d+$/, "Code must contain only numbers"),
+    new_password: yup
+        .string()
+        .min(8, "Password must be at least 8 characters")
+        .max(32, "Password cannot exceed 32 characters")
+        .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+            "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+        )
+        .required("New password is required"),
+    confirm_password: yup
+        .string()
+        .required("Please confirm your new password")
+        .oneOf([yup.ref("new_password"), null], "Passwords must match"),
 });
 
 // ============================================

@@ -11,7 +11,7 @@ export default function ToolsPage() {
 
 
     return (
-        <div className="min-h-[calc(100vh-160px)]">
+        <div className="min-h-[calc(100vh-160px)] bg-[#E5E5E5]">
             <ToolComp />
         </div>
     );

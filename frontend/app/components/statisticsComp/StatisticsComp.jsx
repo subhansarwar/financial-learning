@@ -11,7 +11,6 @@ import {
     CircleDollarSign,
     DollarSign,
     Globe,
-    Info,
     Landmark,
     Leaf,
     Minus,
@@ -21,13 +20,18 @@ import {
     Users,
     Wind
 } from "lucide-react";
-import { useState } from "react";
-import StatisticsImage from '../../../public/assets/statistics/Statistics.webp';
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import StatisticsImage from '../../../public/assets/statistics/Statistics.webp';
 
 const StatisticsComp = () => {
     const [data] = useState(statisticsData);
-
+    const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, {
+        once: false,
+        amount: 0.1,
+    });
     // Helper to render tables
     // Helper to render tables — responsive: cards on mobile, table on larger screens
     const renderTable = (block) => {
@@ -212,39 +216,67 @@ const StatisticsComp = () => {
             <section className="relative overflow-hidden flex items-center min-h-[100dvh] bg-[#E5E5E5]">
                 <div className="relative mx-6 w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-0">
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
-                        {/* Left Content */}
-                        <div>
-                            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-[#72BB83]">
+
+                        {/* ===== LEFT CONTENT - Slide from Left ===== */}
+                        <motion.div
+                            ref={sectionRef}
+                            initial={{ opacity: 0, x: -60 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                        >
+                            <motion.span
+                                initial={{ opacity: 0, x: -40 }}
+                                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+                                transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                                className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-[#72BB83]"
+                            >
                                 Data-driven insights
-                            </span>
-                            <h1 className="mt-4 text-[2rem] font-extrabold leading-[1.1] tracking-tight text-[#14301F] sm:text-[2.5rem] lg:text-[3.2rem]">
+                            </motion.span>
+
+                            <motion.h1
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+                                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+                                className="mt-4 text-[2rem] font-extrabold leading-[1.1] tracking-tight text-[#14301F] sm:text-[2.5rem] lg:text-[3.2rem]"
+                            >
                                 Statistics
-                            </h1>
-                            <p className="mt-3 max-w-[55ch] text-sm font-medium text-[#14301F]/70 sm:text-base lg:text-lg">
+                            </motion.h1>
+
+                            <motion.p
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+                                transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+                                className="mt-3 max-w-[55ch] text-sm font-medium text-[#14301F]/70 sm:text-base lg:text-lg"
+                            >
                                 The shape of financial inclusion and sustainable finance by
                                 country and by institution.
-                            </p>
-                        </div>
+                            </motion.p>
+                        </motion.div>
 
-                        {/* Right Image */}
-                        <div className="flex justify-center lg:justify-end">
+                        {/* ===== RIGHT IMAGE - Slide from Right ===== */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 60, scale: 0.9 }}
+                            animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: 60, scale: 0.9 }}
+                            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                            className="flex justify-center lg:justify-end"
+                        >
                             <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
                                 <div className="overflow-hidden rounded-2xl shadow-lg">
                                     <Image
                                         src={StatisticsImage}
                                         alt="Statistics Illustration"
-                                        className="h-auto w-full object-cover"
+                                        className="h-auto w-full object-cover transition-transform duration-500 hover:scale-105"
                                         priority
                                     />
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
             {/* ========== STATISTICS SECTION ========== */}
-            <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-24">
+            <section className="relative overflow-hidden bg-[#E5E5E5] py-12 sm:py-16 lg:py-24">
 
                 <div className="relative mx-6 px-4 sm:px-6 lg:px-8">
                     {/* ========== FACT CARDS ========== */}
