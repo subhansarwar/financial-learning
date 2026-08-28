@@ -131,10 +131,10 @@ function InteractiveToolsRow() {
                 className={`order-2 transition-all delay-100 duration-700 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
                     }`}
             >
-                <div className={`transition-all duration-700 delay-150 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
+                {/* <div className={`transition-all duration-700 delay-150 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
                     }`}>
                     <Eyebrow>interactive tools</Eyebrow>
-                </div>
+                </div> */}
                 <h2 className={`text-3xl font-bold leading-tight tracking-tight text-[#0F172A] sm:text-4xl lg:text-[2.5rem] transition-all duration-700 delay-200 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                     }`}>
                     Turn theory into numbers
@@ -160,7 +160,7 @@ function InteractiveToolsRow() {
                             ],
                         },
                         {
-                            tag: "Your monthly budget",
+                            tag: "Compound interest",
                             mainIcon: TrendingUp,
                             mainIconBg: "#D1FAE5",
                             mainIconColor: "#10B981",
@@ -171,13 +171,13 @@ function InteractiveToolsRow() {
                             ],
                         },
                         {
-                            tag: "Your monthly budget",
+                            tag: "ESG comparison",
                             mainIcon: PieChart,
                             mainIconBg: "#FEF3C7",
                             mainIconColor: "#D97706",
                             rows: [
-                                { icon: Folder, color: "#3B82F6", label: "Company A" },
-                                { icon: Folder, color: "#F59E0B", label: "Company B" },
+                                { icon: Folder, color: "#3B82F6", label: "Company A ESG score" },
+                                { icon: Folder, color: "#F59E0B", label: "Company B ESG score" },
                             ],
                         },
                     ].map((card, idx) => (
@@ -290,18 +290,19 @@ function CaseStudiesRow() {
                 className={`order-2 transition-all duration-700 ease-out lg:order-1 ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
                     }`}
             >
-                <div className={`transition-all duration-700 delay-150 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
+                {/* <div className={`transition-all duration-700 delay-150 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
                     }`}>
                     <Eyebrow>Learn from real examples</Eyebrow>
-                </div>
+                </div> */}
                 <h2 className={`text-3xl font-bold leading-tight tracking-tight text-[#0F172A] sm:text-4xl lg:text-[2.5rem] transition-all duration-700 delay-200 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                     }`}>
-                    Case studies
+                    Learn from real case studies
                 </h2>
                 <p className={`mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:text-base transition-all duration-700 delay-300 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                     }`}>
-                    Real organisations, real numbers, real lessons from Grameen's
-                    village groups to Ørsted's wind-farm pivot.
+                    Real people, real budgets, and real financial decisions
+                    broken down step by step so you can see how the concepts
+                    play out beyond the classroom.
                 </p>
                 <div className={`transition-all duration-700 delay-500 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                     }`}>
@@ -349,19 +350,19 @@ function PublishedPapersRow() {
                 className={`order-2 transition-all delay-100 duration-700 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
                     }`}
             >
-                <div className={`transition-all duration-700 delay-150 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
+                {/* <div className={`transition-all duration-700 delay-150 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
                     }`}>
                     <Eyebrow>Published papers</Eyebrow>
-                </div>
+                </div> */}
                 <h2 className={`text-3xl font-bold leading-tight tracking-tight text-[#0F172A] sm:text-4xl lg:text-[2.5rem] transition-all duration-700 delay-200 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                     }`}>
-                    Research
+                    Learn in the open
                 </h2>
                 <p className={`mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:text-base transition-all duration-700 delay-300 ${inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                     }`}>
-                    Share your essay or research with other learners. PDF only, up to
-                    10 MB. Papers are student contributions they are not peer-reviewed
-                    by the platform.
+                    Publish your own analysis and read what other learners have
+                    written. Everything here is written by students to help each
+                    other understand money it is not formal financial advice.
                 </p>
                 <div className={`transition-all duration-700 delay-500 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                     }`}>

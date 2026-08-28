@@ -153,7 +153,7 @@ export default function MoreCoursesSection({
                         variants={headingVariants}
                         className="font-serif text-[1.75rem] font-semibold leading-[1.15] tracking-tight text-ink sm:text-[2.1rem] md:text-[2.5rem] lg:text-[2.75rem]"
                     >
-                        More Than {courseCountLabel} Courses To Choose From
+                        Expert-Led Finance Courses To Grow Your Money Skills
                     </motion.h2>
                 </motion.div>
 

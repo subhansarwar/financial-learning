@@ -23,14 +23,14 @@ export default function ClientHeroSection({ cases }) {
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center lg:h-[480px]">
                     {/* Left Content */}
                     <div className="flex flex-col justify-center py-8 lg:py-0">
-                        <motion.span
+                        {/* <motion.span
                             initial={{ opacity: 0, x: -30 }}
                             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                             transition={{ duration: 0.6, ease: "easeOut" }}
                             className="inline-flex items-center gap-2.5 text-md font-bold uppercase tracking-[0.16em] text-[#72BB83]"
                         >
                             Learn from real examples
-                        </motion.span>
+                        </motion.span> */}
 
                         <motion.h1
                             initial={{ opacity: 0, x: -40 }}
@@ -47,8 +47,9 @@ export default function ClientHeroSection({ cases }) {
                             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                             className="mt-4 max-w-[55ch] text-base font-medium text-[#14301F]/70 sm:text-lg"
                         >
-                            Real organisations, real numbers, real lessons from Grameen's
-                            village groups to Ørsted's wind-farm pivot.
+                            Real people, real budgets, and real financial decisions
+                            broken down step by step so you can see how the concepts
+                            play out beyond the classroom.
                         </motion.p>
 
                         <motion.div

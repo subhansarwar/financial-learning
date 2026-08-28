@@ -53,7 +53,7 @@ export default function ToolComp() {
                                 transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
                                 className="inline-flex items-center gap-2.5 text-md font-bold uppercase tracking-[0.16em] text-[#72BB83]"
                             >
-                                Interactive tools
+                                {/* Interactive tools */}
                             </motion.span>
 
                             <motion.h1

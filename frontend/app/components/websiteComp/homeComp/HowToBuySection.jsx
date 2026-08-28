@@ -8,16 +8,20 @@ import HowToBegin from '@/public/assets/howToBySectionImages/HowToBeginImage.web
 
 const ITEMS = [
     {
-        title: "Class Lectures and Teacher",
-        body: "You begin with your enthusiasm and knowledge. Then, using our Marketplace Insights tool, select a promising topic. It is entirely up to you how you teach and what you bring to the table. We provide a wealth of materials for developing your first course. In addition, our teacher dashboard and curriculum pages help you stay organized.",
+        title: "Expert-Led Lessons",
+        body: "Start with structured video lessons taught by finance professionals. Each module breaks down budgeting, saving, investing, credit, and taxes into clear, practical steps you can apply right away. Learn at your own pace and revisit any lesson whenever you need a refresher.",
     },
     {
-        title: "Midterm and Final Practice",
-        body: "You begin with your enthusiasm and knowledge. Then, using our Marketplace Insights tool, select a promising topic. It is entirely up to you how you teach and what you bring to the table. We provide a wealth of materials for developing your first course. In addition, our teacher dashboard and curriculum pages help you stay organized.",
+        title: "Quizzes and Real-World Practice",
+        body: "Test what you have learned with short quizzes and scenario-based exercises. Build a mock budget, compare investment options, and work through real financial decisions in a safe environment so the concepts stick long after the lesson ends.",
     },
     {
-        title: "Personalized Notes",
-        body: "You begin with your enthusiasm and knowledge. Then, using our Marketplace Insights tool, select a promising topic. It is entirely up to you how you teach and what you bring to the table. We provide a wealth of materials for developing your first course. In addition, our teacher dashboard and curriculum pages help you stay organized.",
+        title: "Personalized Notes and Progress Tracking",
+        body: "Save your own notes alongside each lesson and track your progress from your dashboard. Set financial goals, monitor completed modules, and get tailored recommendations for what to learn next based on where you are in your journey.",
+    },
+    {
+        title: "Community Support and Mentorship",
+        body: "Join a community of learners working toward financial confidence. Ask questions in discussion threads, attend live Q&A sessions, and connect with mentors who can review your plans and share guidance drawn from real experience.",
     },
 ];
 
@@ -117,14 +121,14 @@ export default function HowToBuySection() {
                             letterSpacing: "-0.02em",
                         }}
                     >
-                        Get the help you need to ace your classes
+                        Get the help you need to ace your finances
                     </h2>
 
                     <p className={`mt-4 max-w-2xl mx-auto text-sm sm:text-base font-medium text-white/90 transition-all duration-700 delay-200 ${isVisible
                             ? "opacity-100 translate-x-0"
                             : "opacity-0 -translate-x-12"
                         }`}>
-                        We provide a wealth of materials for developing your first course. In
+                        We provide a wealth of materials for developing your financial literacy. In
                         addition, our teacher dashboard and curriculum pages help you stay
                         organized.
                     </p>

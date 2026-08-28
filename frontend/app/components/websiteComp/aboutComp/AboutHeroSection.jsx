@@ -114,7 +114,7 @@ export default function AboutHeroSection() {
                                 href="/tools"
                                 className="rounded-full border-2 border-[#3F8A56] bg-white px-7 py-3 font-serif text-sm font-bold text-ink transition-colors hover:bg-[#F1F8F3]"
                             >
-                                Explore Our Services
+                                Explore Our Tools
                             </Link>
                         </motion.div>
                     </motion.div>

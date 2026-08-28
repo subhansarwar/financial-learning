@@ -28,90 +28,90 @@ function useInView(threshold = 0.15) {
 const FAQ_DATA = {
     "Getting started": [
         {
-            q: "How do I create my first account?",
-            a: "Sign up with your email, verify it, and you're ready to start exploring courses right away.",
+            q: "Do I need an account to start learning?",
+            a: "No. You can browse every course and open the interactive tools without signing up. An account only adds progress tracking and certificates.",
         },
         {
-            q: "Is there an onboarding walkthrough?",
-            a: "Yes, we guide you through the dashboard the first time you log in.",
+            q: "Do I need any finance background?",
+            a: "None at all. Courses start from the basics of budgeting, saving, and credit, and build up gradually to investing and beyond.",
         },
         {
-            q: "Can I use EdTech on mobile?",
-            a: "Absolutely, the platform is fully responsive and works great on any device.",
+            q: "Where should I begin?",
+            a: "Start with the Personal Finance track for everyday money skills, then move into Investing or Sustainable Finance once you're comfortable.",
         },
         {
-            q: "Do I need any prior experience?",
-            a: "No prior experience is required, our courses are built for all skill levels.",
+            q: "Can I learn on my phone?",
+            a: "Yes. Lessons, videos, quizzes, and the tools are fully responsive and work the same on phone, tablet, and desktop.",
         },
         {
-            q: "How long does setup take?",
-            a: "Most learners are set up and browsing courses within just a couple of minutes.",
-        },
-    ],
-    "Courses Coaches": [
-        {
-            q: "Is The Eco Len really free?",
-            a: "Yes. The Eco Len is always free for students, teachers, and families.",
-        },
-        {
-            q: "What courses do you offer?",
-            a: "We offer a wide range of financial and business courses for all skill levels.",
-        },
-        {
-            q: "How do I become a coach?",
-            a: "Apply through our coach program and get verified by our team.",
-        },
-        {
-            q: "Are there live sessions?",
-            a: "Yes, we offer live coaching sessions every week.",
-        },
-        {
-            q: "Can I access course materials offline?",
-            a: "Yes, you can download materials for offline access.",
+            q: "How much time does a course take?",
+            a: "Most courses are split into short modules of 5 to 10 minutes, so you can finish a lesson in a single sitting and pick up where you left off.",
         },
     ],
-    "Pricing & Billing": [
+    "Courses & Coaches": [
         {
-            q: "What payment methods do you accept?",
-            a: "We accept all major credit cards, debit cards, and popular digital wallets.",
+            q: "Is The Eco Lens really free?",
+            a: "Yes. Every course, lesson, and tool on The Eco Lens is free for students, teachers, and families with no premium tier.",
         },
         {
-            q: "Can I cancel my subscription anytime?",
-            a: "Yes, you can cancel anytime from your account settings, no questions asked.",
+            q: "What topics do you cover?",
+            a: "Budgeting, saving, credit and debt, investing, taxes, retirement, sustainable finance, and Islamic finance, with new topics added over time.",
         },
         {
-            q: "Do you offer refunds?",
-            a: "We offer a full refund within 14 days of purchase if you're not satisfied.",
+            q: "Who creates the courses?",
+            a: "Courses are built by finance educators and reviewed for accuracy before they are published.",
         },
         {
-            q: "Are there any hidden fees?",
-            a: "No hidden fees, the price you see at checkout is exactly what you pay.",
+            q: "Can I get help if I'm stuck on a concept?",
+            a: "Yes. Each lesson has a discussion thread, and we run regular live Q&A sessions where you can ask questions directly.",
         },
         {
-            q: "Do you offer student discounts?",
-            a: "Yes, verified students get a discount on all premium plans.",
+            q: "Can I download lessons for offline study?",
+            a: "Lesson readings and worksheets can be downloaded as PDFs so you can review them without an internet connection.",
         },
     ],
-    "Dashboard & Tools": [
+    "Certificates & Progress": [
         {
-            q: "What tools are included in the dashboard?",
-            a: "You get access to budgeting tools, progress tracking, and scheduling features.",
+            q: "Do I get a certificate for finishing a course?",
+            a: "Yes. Complete all modules and pass the final quiz to earn a free certificate you can download and share.",
         },
         {
-            q: "Can I customize my dashboard?",
-            a: "Yes, you can rearrange widgets and pin the tools you use most.",
+            q: "How is my progress tracked?",
+            a: "When you're signed in, completed lessons and quiz scores are saved automatically so you always see what's left.",
         },
         {
-            q: "Is my data synced across devices?",
-            a: "Yes, everything syncs automatically as long as you're signed in.",
+            q: "Can I retake a quiz?",
+            a: "Yes. Quizzes can be retaken as many times as you need, and only your best score is kept.",
         },
         {
-            q: "Can I export my progress reports?",
-            a: "Yes, reports can be exported as PDF or CSV from the dashboard.",
+            q: "Is there any cost for the certificate?",
+            a: "No. Certificates are completely free, just like the courses.",
         },
         {
-            q: "Do tools work offline?",
-            a: "Most tools run in your browser and work even without an internet connection.",
+            q: "Can I export a record of what I've completed?",
+            a: "Yes. You can export your progress and completed courses as a PDF or CSV from your dashboard.",
+        },
+    ],
+    "Tools & Privacy": [
+        {
+            q: "What interactive tools are included?",
+            a: "A monthly budgeting planner, a compound interest calculator, and an ESG comparison tool, all free and open to everyone.",
+        },
+        {
+            q: "Do the tools work without signing in?",
+            a: "Yes. Every tool runs entirely in your browser, so you can use them without an account.",
+        },
+        {
+            q: "What happens to the numbers I enter?",
+            a: "They stay on your device. Your inputs are never uploaded to our servers.",
+        },
+        {
+            q: "Is my learning data shared with anyone?",
+            a: "No. We don't sell or share your data, and progress tracking is only used to power your dashboard.",
+        },
+        {
+            q: "Do the tools work offline?",
+            a: "Once the page has loaded, the calculators keep working even if your connection drops.",
         },
     ],
 };
@@ -204,7 +204,7 @@ export default function FaqSection() {
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-6"
                             }`}>
-                            Frequently Ask
+                            Frequently Asked
                         </span>
                         <span className={`grid h-9 w-9 place-items-center rounded-full bg-[#F5A623] sm:h-10 sm:w-10 transition-all duration-700 delay-200 ${headerInView
                                 ? "opacity-100 scale-100"
