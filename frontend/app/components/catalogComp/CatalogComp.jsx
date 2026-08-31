@@ -1,7 +1,11 @@
 // app/components/catalogComp/CatalogComp.jsx
 "use client";
 
-import { getCourses } from "@/lib/data";
+import {
+    clearFilters,
+    setFilter
+} from "../../store/website/websiteCourseSlice";
+import { getAllCourses } from "../../store/website/websiteCourseThunks";
 import { motion } from "framer-motion";
 import {
     ChevronDown,
@@ -11,9 +15,10 @@ import {
     X
 } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import certificateIcon from "../../../public/assets/aboutUsSectionImages/certificate-icon.webp";
 import CourseCard from "../../components/CourseCard";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const LEVELS = ["Beginner", "Intermediate", "Advanced"];
 const LENGTHS = [
@@ -27,70 +32,159 @@ const selectClasses =
 
 const labelClasses = "mb-1.5 block text-xs font-bold uppercase tracking-wide text-[#14301F]/60";
 
-const CatalogComp = ({ topics, initialFilters }) => {
-    const [filters, setFilters] = useState({
+const CatalogComp = ({ initialFilters }) => {
+    const dispatch = useAppDispatch();
+
+    const {
+        courses,
+        pagination,
+        filters,
+        topics,
+        loading,
+        error
+    } = useAppSelector((state) => state.websiteCourse);
+    console.log('📊 Courses:', courses);
+
+    const [localFilters, setLocalFilters] = useState({
         q: initialFilters?.q || "",
         topic: initialFilters?.topic || "",
         level: "",
         length: "",
     });
-    const [courses, setCourses] = useState([]);
-    const [loading, setLoading] = useState(true);
 
+    // Debounce timer ref
+    const debounceTimerRef = useRef(null);
+    // Track if initial load has happened
+    const initialLoadDone = useRef(false);
+
+    // Load courses on mount - ONLY ONCE
     useEffect(() => {
-        async function loadData() {
-            try {
-                const coursesData = await getCourses();
-                setCourses(coursesData);
-            } catch (error) {
-                console.error("Error loading courses:", error);
-            } finally {
-                setLoading(false);
-            }
+        if (!initialLoadDone.current) {
+            console.log('🟢 Initial load...');
+            dispatch(getAllCourses({
+                skip: 0,
+                limit: pagination.limit,
+            }));
+            initialLoadDone.current = true;
         }
-        loadData();
+    }, []); // Empty dependency array - runs only once
+
+    // Debounced search function
+    const debouncedSearch = useCallback((searchValue) => {
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+
+        debounceTimerRef.current = setTimeout(() => {
+            console.log('🟢 Debounced search:', searchValue);
+            dispatch(setFilter({ key: 'search', value: searchValue }));
+        }, 500);
+    }, [dispatch]);
+
+    // Handle search input change with debounce
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setLocalFilters(prev => ({ ...prev, q: value }));
+        debouncedSearch(value);
+    };
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+        return () => {
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current);
+            }
+        };
     }, []);
 
+    // Handle filter changes (topic, level) - with debounce
+    useEffect(() => {
+        // Skip if initial load is not done yet
+        if (!initialLoadDone.current) return;
+
+        const topicChanged = localFilters.topic !== filters.topic;
+        const levelChanged = localFilters.level !== filters.level;
+
+        if (topicChanged || levelChanged) {
+            // Clear existing debounce timer
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current);
+            }
+
+            // Debounce filter changes too
+            debounceTimerRef.current = setTimeout(() => {
+                console.log('🟢 Filter changed - topic:', localFilters.topic, 'level:', localFilters.level);
+
+                // Update Redux filters
+                if (topicChanged) {
+                    dispatch(setFilter({ key: 'topic', value: localFilters.topic || '' }));
+                }
+                if (levelChanged) {
+                    dispatch(setFilter({ key: 'level', value: localFilters.level || '' }));
+                }
+            }, 300);
+        }
+    }, [localFilters.topic, localFilters.level]);
+
+    // Fetch courses when Redux filters change (only for search, topic, level)
+    useEffect(() => {
+        // Skip if initial load is not done yet
+        if (!initialLoadDone.current) return;
+
+        // Skip if filters are empty (initial state)
+        const hasFilters = filters.topic || filters.level || filters.search;
+        if (!hasFilters) return;
+
+        console.log('🟢 Fetching courses with filters:', filters);
+        dispatch(getAllCourses({
+            skip: pagination.skip,
+            limit: pagination.limit,
+            topic: filters.topic,
+            level: filters.level,
+            search: filters.search
+        }));
+    }, [filters.topic, filters.level, filters.search]); // Only when these change
+
+    // Apply length filter locally
     const filtered = useMemo(() => {
         let result = [...courses];
 
-        if (filters.q) {
-            const q = filters.q.toLowerCase();
-            result = result.filter(
-                (c) =>
-                    c.title?.toLowerCase().includes(q) ||
-                    c.tagline?.toLowerCase().includes(q) ||
-                    c.instructor?.name?.toLowerCase().includes(q)
-            );
-        }
-
-        if (filters.topic) {
-            result = result.filter((c) => c.topic === filters.topic);
-        }
-
-        if (filters.level) {
-            result = result.filter((c) => c.level === filters.level);
-        }
-
-        if (filters.length === "short") {
-            result = result.filter((c) => c.lengthMin < 60);
-        } else if (filters.length === "mid") {
-            result = result.filter((c) => c.lengthMin >= 60 && c.lengthMin <= 120);
-        } else if (filters.length === "long") {
-            result = result.filter((c) => c.lengthMin > 120);
+        if (localFilters.length) {
+            if (localFilters.length === "short") {
+                result = result.filter((c) => c.lengthMin < 60);
+            } else if (localFilters.length === "mid") {
+                result = result.filter((c) => c.lengthMin >= 60 && c.lengthMin <= 120);
+            } else if (localFilters.length === "long") {
+                result = result.filter((c) => c.lengthMin > 120);
+            }
         }
 
         return result;
-    }, [filters, courses]);
+    }, [courses, localFilters.length]);
 
-    const hasActiveFilters = !!(filters.q || filters.topic || filters.level || filters.length);
-    const clearFilters = () => setFilters({ q: "", topic: "", level: "", length: "" });
+    const hasActiveFilters = !!(localFilters.q || localFilters.topic || localFilters.level || localFilters.length);
 
-    if (loading) {
+    const clearAllFilters = () => {
+        setLocalFilters({ q: "", topic: "", level: "", length: "" });
+        dispatch(clearFilters());
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+    };
+
+    if (loading && courses.length === 0) {
         return (
             <div className="flex items-center justify-center rounded-2xl border border-[#E5E5E5] bg-white px-5 py-12">
                 <Loader2 className="h-6 w-6 animate-spin text-[#72BB83]" strokeWidth={2.5} />
-                <span className="ml-3 text-sm font-medium text-[#14301F]/60">Loading courses...</span>
+            </div>
+        );
+    }
+
+    if (error && courses.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-[#E5E5E5] bg-white px-5 py-12">
+                <SearchX className="h-8 w-8 text-red-500" strokeWidth={1.5} />
+                <span className="mt-3 text-sm font-medium text-[#14301F]/60">{error}</span>
             </div>
         );
     }
@@ -112,8 +206,8 @@ const CatalogComp = ({ topics, initialFilters }) => {
                             <input
                                 type="search"
                                 id="fQ"
-                                value={filters.q}
-                                onChange={(e) => setFilters({ ...filters, q: e.target.value })}
+                                value={localFilters.q}
+                                onChange={handleSearchChange}
                                 placeholder="Title, instructor, keyword…"
                                 className="w-full rounded-lg border border-[#E5E5E5] bg-white py-2.5 pl-9.5 pr-3.5 text-sm font-medium text-[#14301F] placeholder:text-[#14301F]/40 focus:border-[#72BB83] focus:outline-none focus:ring-4 focus:ring-[#72BB83]/20"
                             />
@@ -127,14 +221,14 @@ const CatalogComp = ({ topics, initialFilters }) => {
                         <div className="relative">
                             <select
                                 id="fTopic"
-                                value={filters.topic}
-                                onChange={(e) => setFilters({ ...filters, topic: e.target.value })}
+                                value={localFilters.topic}
+                                onChange={(e) => setLocalFilters({ ...localFilters, topic: e.target.value })}
                                 className={selectClasses}
                             >
                                 <option value="">All topics</option>
                                 {topics?.map((t) => (
                                     <option key={t.id} value={t.id}>
-                                        {t.name}
+                                        {t.icon} {t.name}
                                     </option>
                                 ))}
                             </select>
@@ -152,8 +246,8 @@ const CatalogComp = ({ topics, initialFilters }) => {
                         <div className="relative">
                             <select
                                 id="fLevel"
-                                value={filters.level}
-                                onChange={(e) => setFilters({ ...filters, level: e.target.value })}
+                                value={localFilters.level}
+                                onChange={(e) => setLocalFilters({ ...localFilters, level: e.target.value })}
                                 className={selectClasses}
                             >
                                 <option value="">All levels</option>
@@ -177,8 +271,8 @@ const CatalogComp = ({ topics, initialFilters }) => {
                         <div className="relative">
                             <select
                                 id="fLen"
-                                value={filters.length}
-                                onChange={(e) => setFilters({ ...filters, length: e.target.value })}
+                                value={localFilters.length}
+                                onChange={(e) => setLocalFilters({ ...localFilters, length: e.target.value })}
                                 className={selectClasses}
                             >
                                 <option value="">Any length</option>
@@ -206,17 +300,17 @@ const CatalogComp = ({ topics, initialFilters }) => {
                     </span>
                     {hasActiveFilters && (
                         <span className="rounded-full bg-[#72BB83]/10 px-2.5 py-0.5 text-xs font-medium text-[#72BB83]">
-                            {filters.q ? "Search" : ""}
-                            {filters.topic ? "Topic" : ""}
-                            {filters.level ? "Level" : ""}
-                            {filters.length ? "Length" : ""}
+                            {localFilters.q ? "Search" : ""}
+                            {localFilters.topic ? "Topic" : ""}
+                            {localFilters.level ? "Level" : ""}
+                            {localFilters.length ? "Length" : ""}
                         </span>
                     )}
                 </div>
                 {hasActiveFilters && (
                     <button
                         type="button"
-                        onClick={clearFilters}
+                        onClick={clearAllFilters}
                         className="flex items-center gap-1.5 text-sm font-medium text-[#14301F]/60 transition-colors hover:text-[#14301F]"
                     >
                         <X className="h-4 w-4" strokeWidth={2.5} />
@@ -230,7 +324,7 @@ const CatalogComp = ({ topics, initialFilters }) => {
                 <div className="mt-5 grid grid-cols-1 gap-6 sm:mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
                     {filtered.map((course) => {
                         const topic = topics?.find((t) => t.id === course.topic);
-                        return <CourseCard key={course.slug} course={course} topic={topic} progress={null} />;
+                        return <CourseCard key={course.slug || course.id} course={course} topic={topic} progress={null} />;
                     })}
                 </div>
             ) : (
@@ -245,7 +339,7 @@ const CatalogComp = ({ topics, initialFilters }) => {
                     {hasActiveFilters && (
                         <button
                             type="button"
-                            onClick={clearFilters}
+                            onClick={clearAllFilters}
                             className="mt-4 rounded-full bg-[#72BB83] px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-[#72BB83]/80 hover:shadow-md"
                         >
                             Clear all filters
@@ -253,10 +347,8 @@ const CatalogComp = ({ topics, initialFilters }) => {
                     )}
                 </div>
             )}
-            
-            {/* --------------------------------------------------------------- */}
-            {/* CERTIFICATE STRIP - USING whileInView */}
-            {/* --------------------------------------------------------------- */}
+
+            {/* ========== CERTIFICATE STRIP ========== */}
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -266,7 +358,6 @@ const CatalogComp = ({ topics, initialFilters }) => {
             >
                 <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-start gap-4 sm:items-center">
-                        {/* Circular light-blue backdrop behind the certificate icon */}
                         <motion.span
                             whileHover={{ scale: 1.1, rotate: 10 }}
                             className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#A7E6FF]"

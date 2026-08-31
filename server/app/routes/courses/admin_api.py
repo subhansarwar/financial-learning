@@ -57,7 +57,7 @@ async def delete_course(course_id: uuid.UUID, db: SessionDep) -> MessageResponse
 
 @router.post("/create-modules/{course_id}", response_model=ModuleRead, status_code=status.HTTP_201_CREATED)
 async def create_module(course_id: uuid.UUID, payload: ModuleCreate, db: SessionDep) -> ModuleRead:    # , _admin: CurrentAdmin
-    course = await course_crud.get_by_id(db, course_id)
+    course = await course_crud.get_course_by_id(db, course_id)
     if course is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
 

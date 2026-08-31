@@ -63,7 +63,6 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
         );
         setPage(1);
     };
-
     return (
         <div className="rounded-xl2 border border-line bg-card p-4 shadow-card sm:p-6">
             {/* Header */}
@@ -148,7 +147,7 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">{course.enrollments}</td>
                                     <td className="whitespace-nowrap px-4 py-3">
-                                        <StatusBadge status={course.status} />
+                                        <StatusBadge status={course.is_published} />
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <div className="flex items-center gap-1">

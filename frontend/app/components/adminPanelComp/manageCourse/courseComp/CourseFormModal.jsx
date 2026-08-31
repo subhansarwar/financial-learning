@@ -9,7 +9,7 @@ import StepOneInfo from "./StepOneInfo";
 import StepTwoCurriculum from "./StepTwoCurriculum";
 import { emptyCourseDraft } from "./dummyCourses";
 
-export default function CourseFormModal({ isOpen, mode, initialData, categories, onClose, onSave }) {
+export default function CourseFormModal({ isOpen, mode, initialData, categories, onClose, onSave, courseId }) {
     const [step, setStep] = useState(1);
     const [data, setData] = useState(emptyCourseDraft());
 
@@ -25,25 +25,36 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
     // Check if Step 1 is valid
     const isStepOneValid = () => {
         return (
-            data.title.trim() !== "" &&
-            data.subtitle.trim() !== "" &&
-            data.description.trim() !== "" &&
-            data.category.trim() !== "" &&
-            data.level.trim() !== "" &&
-            data.language.trim() !== "" &&
-            data.price >= 0
+            data?.title?.trim() !== "" &&
+            data?.subtitle?.trim() !== "" &&
+            data?.description?.trim() !== "" &&
+            data?.category?.trim() !== "" &&
+            data?.level?.trim() !== "" &&
+            data?.language?.trim() !== "" &&
+            data?.price >= 0
         );
     };
 
     // Check if Step 2 is valid
     const isStepTwoValid = () => {
+        // Check if curriculum exists and is an array
+        if (!data?.curriculum || !Array.isArray(data?.curriculum) || data?.curriculum?.length === 0) {
+            return false;
+        }
+
         // Check if all sections have names and at least one lecture with a name
         let hasValidLecture = false;
         let allSectionsValid = true;
 
         for (const section of data.curriculum) {
             // Section name must be filled
-            if (!section.name.trim()) {
+            if (!section?.name?.trim()) {
+                allSectionsValid = false;
+                break;
+            }
+
+            // Check if section has lectures
+            if (!section?.lectures || !Array.isArray(section?.lectures) || section?.lectures?.length === 0) {
                 allSectionsValid = false;
                 break;
             }
@@ -51,7 +62,7 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
             // Check lectures in this section
             let sectionHasValidLecture = false;
             for (const lecture of section.lectures) {
-                if (lecture.name.trim() !== "") {
+                if (lecture?.name?.trim() !== "") {
                     sectionHasValidLecture = true;
                     hasValidLecture = true;
                     break;
@@ -121,8 +132,9 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
                         <StepOneInfo data={data} onChange={setData} categories={categories} />
                     ) : (
                         <StepTwoCurriculum
-                            sections={data.curriculum}
+                            sections={data?.curriculum}
                             onChange={(curriculum) => setData({ ...data, curriculum })}
+                            courseId={courseId}
                         />
                     )}
                 </div>
@@ -151,8 +163,8 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
                             onClick={goNext}
                             disabled={!isStepOneValid()}
                             className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors ${isStepOneValid()
-                                    ? "bg-[#47735B] hover:bg-[#47735B]"
-                                    : "bg-muted cursor-not-allowed opacity-60"
+                                ? "bg-[#47735B] hover:bg-[#47735B]"
+                                : "bg-muted cursor-not-allowed opacity-60"
                                 }`}
                         >
                             Continue
@@ -163,8 +175,8 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
                             onClick={handlePublish}
                             disabled={!isStepTwoValid()}
                             className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors ${isStepTwoValid()
-                                    ? "bg-[#47735B] hover:bg-[#47735B]"
-                                    : "bg-muted cursor-not-allowed opacity-60"
+                                ? "bg-[#47735B] hover:bg-[#47735B]"
+                                : "bg-muted cursor-not-allowed opacity-60"
                                 }`}
                         >
                             <Send className="h-4 w-4" strokeWidth={2.5} />

@@ -14,7 +14,9 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 import userReducer from "./slices/user/userSlice";
 import commonReducer from "./slices/common/commonSlice";
-// import courseReducer from "./slices/courses/courseSlice";
+import courseReducer from "./slices/courses/courseSlice";
+import adminCoursesReducer from "./admin/adminCourses/adminCoursesSlice";
+import websiteCourseReducer from "./website/websiteCourseSlice";
 
 
 // ============================================
@@ -64,13 +66,29 @@ const coursePersistConfig = {
     whitelist: ["courses", "initialized"],
 };
 
+const adminCoursesPersistConfig = {
+    key: "adminCourses",
+    storage,
+    whitelist: ["courses", "pagination"],
+};
+
+const websiteCoursePersistConfig = {
+    key: "websiteCourse",
+    storage,
+    whitelist: ["courses", "totalCourses", "topics", "filters", "pagination"],
+};
+
 // ============================================
 // PERSISTED REDUCERS
 // ============================================
 
 const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
 const persistedCommonReducer = persistReducer(commonPersistConfig, commonReducer);
-// const persistedCourseReducer = persistReducer(coursePersistConfig, courseReducer);
+const persistedCourseReducer = persistReducer(coursePersistConfig, courseReducer);
+const persistedAdminCoursesReducer = persistReducer(adminCoursesPersistConfig, adminCoursesReducer);
+const persistedWebsiteCourseReducer = persistReducer(websiteCoursePersistConfig, websiteCourseReducer);
+
+
 
 // ============================================
 // ROOT REDUCER
@@ -79,7 +97,9 @@ const persistedCommonReducer = persistReducer(commonPersistConfig, commonReducer
 const rootReducer = combineReducers({
     user: persistedUserReducer,
     common: persistedCommonReducer,
-    // courses: persistedCourseReducer,
+    courses: persistedCourseReducer,
+    adminCourses: persistedAdminCoursesReducer,
+    websiteCourse: persistedWebsiteCourseReducer,
 });
 
 // ============================================

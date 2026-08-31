@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react";
 import { ImageIcon, UploadCloud } from "lucide-react";
-import { CATEGORY_OPTIONS, LANGUAGE_OPTIONS, LEVEL_OPTIONS } from "./dummyCourses";
+import { CATEGORY_OPTIONS, LEVEL_OPTIONS } from "./dummyCourses";
 import Image from "next/image";
 
 const NAME_MAX = 60;
@@ -35,10 +35,10 @@ export default function StepOneInfo({ data, onChange, categories }) {
         title: false,
         subtitle: false,
         description: false,
-        language: false,
         level: false,
         category: false,
-        price: false,
+        instructor_name: false,
+        instructor_title: false,
     });
 
     const categoryOptions = categories?.length ? categories : CATEGORY_OPTIONS;
@@ -59,19 +59,19 @@ export default function StepOneInfo({ data, onChange, categories }) {
     const isFieldValid = (field, value) => {
         switch (field) {
             case "title":
-                return value.trim() !== "";
+                return value?.trim() !== "";
             case "subtitle":
-                return value.trim() !== "";
+                return value?.trim() !== "";
             case "description":
-                return value.trim() !== "";
-            case "language":
-                return value !== "";
+                return value?.trim() !== "";
             case "level":
                 return value !== "";
             case "category":
                 return value !== "";
-            case "price":
-                return value >= 0;
+            case "instructor_name":
+                return value?.trim() !== "";
+            case "instructor_title":
+                return value?.trim() !== "";
             default:
                 return true;
         }
@@ -86,10 +86,10 @@ export default function StepOneInfo({ data, onChange, categories }) {
             title: "Course name is required",
             subtitle: "Course subtitle is required",
             description: "Course description is required",
-            language: "Please select a language",
             level: "Please select a level",
             category: "Please select a category",
-            price: "Price cannot be negative",
+            instructor_name: "Instructor name is required",
+            instructor_title: "Instructor title is required",
         };
         return messages[field] || "This field is required";
     };
@@ -99,18 +99,18 @@ export default function StepOneInfo({ data, onChange, categories }) {
             {/* Left: course information */}
             <div className="space-y-4">
                 <Field
-                    label={`Course Name (${data.title.length}/${NAME_MAX})`}
+                    label={`Course Name (${data?.title?.length}/${NAME_MAX})`}
                     required
-                    error={showError("title", data.title)}
+                    error={showError("title", data?.title)}
                     errorMessage={getErrorMessage("title")}
                 >
                     <input
-                        value={data.title}
+                        value={data?.title || ""}
                         maxLength={NAME_MAX}
-                        onChange={(e) => set({ title: e.target.value })}
+                        onChange={(e) => set({ title: e?.target?.value })}
                         onBlur={() => handleBlur("title")}
                         placeholder="e.g. Microfinance Foundations"
-                        className={`${inputClass} ${showError("title", data.title)
+                        className={`${inputClass} ${showError("title", data?.title)
                             ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
                             : ""
                             }`}
@@ -118,18 +118,18 @@ export default function StepOneInfo({ data, onChange, categories }) {
                 </Field>
 
                 <Field
-                    label={`Course Subtitle (${data.subtitle.length}/${SUBTITLE_MAX})`}
+                    label={`Course Subtitle (${data?.subtitle?.length}/${SUBTITLE_MAX})`}
                     required
-                    error={showError("subtitle", data.subtitle)}
+                    error={showError("subtitle", data?.subtitle)}
                     errorMessage={getErrorMessage("subtitle")}
                 >
                     <input
-                        value={data.subtitle}
+                        value={data?.subtitle || ""}
                         maxLength={SUBTITLE_MAX}
                         onChange={(e) => set({ subtitle: e.target.value })}
                         onBlur={() => handleBlur("subtitle")}
                         placeholder="A short one-line description"
-                        className={`${inputClass} ${showError("subtitle", data.subtitle)
+                        className={`${inputClass} ${showError("subtitle", data?.subtitle)
                             ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
                             : ""
                             }`}
@@ -137,19 +137,19 @@ export default function StepOneInfo({ data, onChange, categories }) {
                 </Field>
 
                 <Field
-                    label={`Course Description (${data.description.length}/${DESC_MAX})`}
+                    label={`Course Description (${data?.description?.length}/${DESC_MAX})`}
                     required
-                    error={showError("description", data.description)}
+                    error={showError("description", data?.description)}
                     errorMessage={getErrorMessage("description")}
                 >
                     <textarea
                         rows={4}
-                        value={data.description}
+                        value={data?.description || ""}
                         maxLength={DESC_MAX}
-                        onChange={(e) => set({ description: e.target.value })}
+                        onChange={(e) => set({ description: e?.target?.value })}
                         onBlur={() => handleBlur("description")}
                         placeholder="Enter description"
-                        className={`${inputClass} ${showError("description", data.description)
+                        className={`${inputClass} ${showError("description", data?.description)
                             ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
                             : ""
                             }`}
@@ -158,39 +158,16 @@ export default function StepOneInfo({ data, onChange, categories }) {
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <Field
-                        label="Course Language"
-                        required
-                        error={showError("language", data.language)}
-                        errorMessage={getErrorMessage("language")}
-                    >
-                        <select
-                            value={data.language}
-                            onChange={(e) => set({ language: e.target.value })}
-                            onBlur={() => handleBlur("language")}
-                            className={`${inputClass} ${showError("language", data.language)
-                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                                : ""
-                                }`}
-                        >
-                            <option value="">Select Language</option>
-                            {LANGUAGE_OPTIONS.map((l) => (
-                                <option key={l} value={l}>
-                                    {l}
-                                </option>
-                            ))}
-                        </select>
-                    </Field>
-                    <Field
                         label="Course Level"
                         required
-                        error={showError("level", data.level)}
+                        error={showError("level", data?.level)}
                         errorMessage={getErrorMessage("level")}
                     >
                         <select
-                            value={data.level}
-                            onChange={(e) => set({ level: e.target.value })}
+                            value={data?.level || ""}
+                            onChange={(e) => set({ level: e?.target?.value })}
                             onBlur={() => handleBlur("level")}
-                            className={`${inputClass} ${showError("level", data.level)
+                            className={`${inputClass} ${showError("level", data?.level)
                                 ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
                                 : ""
                                 }`}
@@ -203,55 +180,67 @@ export default function StepOneInfo({ data, onChange, categories }) {
                             ))}
                         </select>
                     </Field>
+                    <Field
+                        label="Course Category"
+                        required
+                        error={showError("category", data?.category)}
+                        errorMessage={getErrorMessage("category")}
+                    >
+                        <select
+                            value={data?.category || ""}
+                            onChange={(e) => set({ category: e?.target?.value })}
+                            onBlur={() => handleBlur("category")}
+                            className={`${inputClass} ${showError("category", data?.category)
+                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                                : ""
+                                }`}
+                        >
+                            <option value="">Select Category</option>
+                            {categoryOptions.map((c) => (
+                                <option key={c} value={c}>
+                                    {c}
+                                </option>
+                            ))}
+                        </select>
+                    </Field>
                 </div>
 
-                <Field
-                    label="Course Category"
-                    required
-                    error={showError("category", data.category)}
-                    errorMessage={getErrorMessage("category")}
-                >
-                    <select
-                        value={data.category}
-                        onChange={(e) => set({ category: e.target.value })}
-                        onBlur={() => handleBlur("category")}
-                        className={`${inputClass} ${showError("category", data.category)
-                            ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                            : ""
-                            }`}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <Field
+                        label="Instructor Name"
+                        required
+                        error={showError("instructor_name", data?.instructor_name)}
+                        errorMessage={getErrorMessage("instructor_name")}
                     >
-                        <option value="">Select Category</option>
-                        {categoryOptions.map((c) => (
-                            <option key={c} value={c}>
-                                {c}
-                            </option>
-                        ))}
-                    </select>
-                </Field>
-
-                <Field
-                    label="Price"
-                    required
-                    error={showError("price", data.price)}
-                    errorMessage={getErrorMessage("price")}
-                >
-                    <div
-                        className={`flex items-center rounded-lg border ${showError("price", data.price)
-                            ? "border-rose-300 focus-within:border-rose-500 focus-within:ring-rose-15"
-                            : "border-line"
-                            } bg-cream-2/50 focus-within:border-[#365B50]/50 focus-within:ring-4 focus-within:ring-[#365B50]/15`}
-                    >
-                        <span className="pl-3.5 text-sm font-bold text-muted">$</span>
                         <input
-                            type="number"
-                            min={0}
-                            value={data.price}
-                            onChange={(e) => set({ price: Number(e.target.value) || 0 })}
-                            onBlur={() => handleBlur("price")}
-                            className="w-full bg-transparent px-2.5 py-2.5 text-sm text-ink focus:outline-none"
+                            value={data?.instructor_name || ""}
+                            onChange={(e) => set({ instructor_name: e?.target?.value })}
+                            onBlur={() => handleBlur("instructor_name")}
+                            placeholder="e.g. John Doe"
+                            className={`${inputClass} ${showError("instructor_name", data?.instructor_name)
+                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                                : ""
+                                }`}
                         />
-                    </div>
-                </Field>
+                    </Field>
+                    <Field
+                        label="Instructor Title"
+                        required
+                        error={showError("instructor_title", data?.instructor_title)}
+                        errorMessage={getErrorMessage("instructor_title")}
+                    >
+                        <input
+                            value={data?.instructor_title || ""}
+                            onChange={(e) => set({ instructor_title: e?.target?.value })}
+                            onBlur={() => handleBlur("instructor_title")}
+                            placeholder="e.g. Senior Instructor"
+                            className={`${inputClass} ${showError("instructor_title", data?.instructor_title)
+                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                                : ""
+                                }`}
+                        />
+                    </Field>
+                </div>
             </div>
 
             {/* Right: cover image */}
@@ -263,10 +252,10 @@ export default function StepOneInfo({ data, onChange, categories }) {
                     </p>
                     <div
                         onClick={() => fileInputRef.current?.click()}
-                        onDragOver={(e) => e.preventDefault()}
+                        onDragOver={(e) => e?.preventDefault()}
                         onDrop={(e) => {
-                            e.preventDefault();
-                            handleFile(e.dataTransfer.files?.[0]);
+                            e?.preventDefault();
+                            handleFile(e?.dataTransfer?.files?.[0]);
                         }}
                         className="flex min-h-[220px] cursor-pointer flex-col items-center justify-center rounded-xl2 border-2 border-dashed border-[#365B50]/40 bg-[#365B50]-soft/30 p-6 text-center transition-colors hover:bg-[#365B50]-soft/50"
                     >
@@ -275,7 +264,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
                             type="file"
                             accept="image/*"
                             className="hidden"
-                            onChange={(e) => handleFile(e.target.files?.[0])}
+                            onChange={(e) => handleFile(e?.target.files?.[0])}
                         />
                         {previewUrl ? (
                             <img
@@ -286,14 +275,14 @@ export default function StepOneInfo({ data, onChange, categories }) {
                         ) : (
                             <ImageIcon className="mb-3 h-8 w-8 text-[#365B50]" strokeWidth={1.5} />
                         )}
-                        <p className="text-sm font-bold text-brand-deep">
-                            <UploadCloud className="mr-1 inline h-4 w-4" strokeWidth={2} />
-                            Click to replace <span className="font-medium text-ink-2">or drag and drop</span>
+                        <p className="text-sm font-bold text-[#14301F]">
+                            <UploadCloud className="mr-1 inline h-4 w-4 text-[#365B50]" strokeWidth={2} />
+                            Click to replace <span className="font-medium text-[#14301F]">or drag and drop</span>
                         </p>
                         <p className="mt-1 text-xs text-muted">SVG, PNG, JPG or (max. 1280 x 720px)</p>
-                        {data.coverImageName && (
+                        {data?.coverImageName && (
                             <p className="mt-2 truncate text-xs font-semibold text-ink-2">
-                                {data.coverImageName}
+                                {data?.coverImageName}
                             </p>
                         )}
                     </div>
