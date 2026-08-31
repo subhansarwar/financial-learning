@@ -36,6 +36,7 @@ async def list_all_courses(
     topic: str | None = None,
     level: str | None = None,
     search: str | None = None,
+    name: str | None = None,
     skip: int = 0, limit: int = 20,) -> tuple[list[Course], int]:
 
     if skip < 0:
@@ -55,6 +56,8 @@ async def list_all_courses(
     if search:
         like = f"%{search}%"
         filters.append(or_(Course.title.ilike(like), Course.tagline.ilike(like)))
+    if name:
+        filters.append(Course.title.ilike(f"%{name.strip()}%"))
 
     try:
         count_stmt = select(func.count()).select_from(Course)

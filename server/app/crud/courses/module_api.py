@@ -23,7 +23,7 @@ async def list_for_course(db: SessionDep, course_id: uuid.UUID) -> list[Module]:
         logger.exception( "Failed to list modules for course: course_id=%s", course_id, ) 
         raise
 
-async def create_module(db: SessionDep, *, course_id: uuid.UUID, fields: dict[str, Any],) -> Module:
+async def create_module(db: SessionDep, *, course_id: uuid.UUID, **fields: Any) -> Module:
     module = Module(course_id=course_id, **fields)
     try:
         db.add(module)
@@ -41,7 +41,7 @@ async def create_module(db: SessionDep, *, course_id: uuid.UUID, fields: dict[st
         logger.exception( "Database error creating module: course_id=%s", course_id, ) 
         raise
 
-async def update_module(db: SessionDep, module: Module,  fields: dict[str, Any]) -> Module:
+async def update_module(db: SessionDep, module: Module, **fields: Any) -> Module:
 
     try:
         for key, value in fields.items():
@@ -62,10 +62,10 @@ async def update_module(db: SessionDep, module: Module,  fields: dict[str, Any])
         raise
 
 async def delete_module(db: SessionDep, module: Module) -> None:
-    try: 
-        await db.delete(module) 
-        await db.flush() 
-    except SQLAlchemyError: 
-        await db.rollback() 
-        logger.exception( "Database error deleting module: module_id=%s", module.id, ) 
+    try:
+        await db.delete(module)
+        await db.commit()
+    except SQLAlchemyError:
+        await db.rollback()
+        logger.exception( "Database error deleting module: module_id=%s", module.id, )
         raise

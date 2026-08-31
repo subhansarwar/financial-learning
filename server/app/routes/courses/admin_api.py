@@ -15,8 +15,28 @@ from app.schemas.courses.module import ModuleCreate, ModuleRead, ModuleUpdate
 router = APIRouter(prefix="/admin/courses", tags=["Course Catalog - Admin"])
 
 @router.get("/all", response_model=list[CourseRead])
-async def list_courses(db: SessionDep, skip: int = Query(default=0, ge=0), limit: int = Query(default=50, ge=1, le=200),) -> list[CourseRead]:   # _admin: CurrentAdmin,
-    courses, _ = await course_crud.list_all_courses(db, published_only=False, skip=skip, limit=limit)
+async def list_courses(
+    db: SessionDep,
+    name: str | None = Query(default=None, description="Filter by course name (case-insensitive, partial match)"),
+    skip: int = Query(default=0, ge=0),
+    limit: int = Query(default=50, ge=1, le=200),
+) -> list[CourseRead]:   # _admin: CurrentAdmin,
+    courses, _ = await course_crud.list_all_courses(
+        db, published_only=False, name=name, skip=skip, limit=limit
+    )
+    return [CourseRead.model_validate(c) for c in courses]
+
+
+@router.get("/search", response_model=list[CourseRead])
+async def search_courses_by_name(
+    db: SessionDep,
+    name: str = Query(min_length=1, description="Course name to search for (case-insensitive, partial match)"),
+    skip: int = Query(default=0, ge=0),
+    limit: int = Query(default=50, ge=1, le=200),
+) -> list[CourseRead]:   # _admin: CurrentAdmin,
+    courses, _ = await course_crud.list_all_courses(
+        db, published_only=False, name=name, skip=skip, limit=limit
+    )
     return [CourseRead.model_validate(c) for c in courses]
 
 
@@ -67,7 +87,7 @@ async def create_module(course_id: uuid.UUID, payload: ModuleCreate, db: Session
 
 @router.patch("/update-modules/{module_id}", response_model=ModuleRead)
 async def update_module(module_id: uuid.UUID, payload: ModuleUpdate, db: SessionDep) -> ModuleRead:    # , _admin: CurrentAdmin
-    module = await module_crud.get_by_id(db, module_id)
+    module = await module_crud.get_by_module_id(db, module_id)
     if module is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Module not found")
 
@@ -77,7 +97,7 @@ async def update_module(module_id: uuid.UUID, payload: ModuleUpdate, db: Session
 
 @router.delete("/delete-modules/{module_id}", response_model=MessageResponse)
 async def delete_module(module_id: uuid.UUID, db: SessionDep) -> MessageResponse: # , _admin: CurrentAdmin
-    module = await module_crud.get_by_id(db, module_id)
+    module = await module_crud.get_by_module_id(db, module_id)
     if module is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Module not found")
 
@@ -97,7 +117,7 @@ async def create_lesson(module_id: uuid.UUID, payload: LessonCreate, db: Session
 
 @router.patch("/update-lessons/{lesson_id}", response_model=LessonRead)
 async def update_lesson(lesson_id: uuid.UUID, payload: LessonUpdate, db: SessionDep) -> LessonRead:  # , _admin: CurrentAdmin
-    lesson = await lesson_crud.get_by_id(db, lesson_id)
+    lesson = await lesson_crud.get_lesson_by_id(db, lesson_id)
     if lesson is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found")
 
@@ -108,7 +128,7 @@ async def update_lesson(lesson_id: uuid.UUID, payload: LessonUpdate, db: Session
 
 @router.delete("/delete-lessons/{lesson_id}", response_model=MessageResponse)
 async def delete_lesson(lesson_id: uuid.UUID, db: SessionDep) -> MessageResponse:   # , _admin: CurrentAdmin
-    lesson = await lesson_crud.get_by_id(db, lesson_id)
+    lesson = await lesson_crud.get_lesson_by_id(db, lesson_id)
     if lesson is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found")
 
