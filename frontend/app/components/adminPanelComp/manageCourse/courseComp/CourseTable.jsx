@@ -9,7 +9,6 @@ import TablePagination from "./TablePagination";
 const COLUMNS = [
     { key: "title", label: "Course Name", sortable: true },
     { key: "creationDate", label: "Creation Date", sortable: true },
-    { key: "sales", label: "Sales", sortable: false },
     { key: "enrollments", label: "Enrollments", sortable: false },
     { key: "status", label: "Status", sortable: false },
 ];
@@ -54,6 +53,16 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
         (currentPage - 1) * rowsPerPage,
         currentPage * rowsPerPage
     );
+
+    const formatDate = (dateString) => {
+        if (!dateString) return "N/A";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+        });
+    };
 
     const toggleSort = (key) => {
         setSort((prev) =>
@@ -141,10 +150,7 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="whitespace-nowrap px-4 py-3">{course.creationDate}</td>
-                                    <td className="whitespace-nowrap px-4 py-3">
-                                        ${Number(course.sales || 0).toFixed(2)}
-                                    </td>
+                                    <td className="whitespace-nowrap px-4 py-3">{formatDate(course.created_at)}</td>
                                     <td className="whitespace-nowrap px-4 py-3">{course.enrollments}</td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <StatusBadge status={course.is_published} />

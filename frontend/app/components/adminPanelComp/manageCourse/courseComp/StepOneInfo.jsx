@@ -33,7 +33,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
     const [previewUrl, setPreviewUrl] = useState(null);
     const [touched, setTouched] = useState({
         title: false,
-        subtitle: false,
+        tagline: false,
         description: false,
         level: false,
         category: false,
@@ -60,7 +60,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
         switch (field) {
             case "title":
                 return value?.trim() !== "";
-            case "subtitle":
+            case "tagline":
                 return value?.trim() !== "";
             case "description":
                 return value?.trim() !== "";
@@ -84,7 +84,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
     const getErrorMessage = (field) => {
         const messages = {
             title: "Course name is required",
-            subtitle: "Course subtitle is required",
+            tagline: "Course tagline is required",
             description: "Course description is required",
             level: "Please select a level",
             category: "Please select a category",
@@ -118,20 +118,20 @@ export default function StepOneInfo({ data, onChange, categories }) {
                 </Field>
 
                 <Field
-                    label={`Course Subtitle (${data?.subtitle?.length}/${SUBTITLE_MAX})`}
+                    label={`Course Tagline (${data?.tagline?.length || 0}/${SUBTITLE_MAX})`}
                     required
-                    error={showError("subtitle", data?.subtitle)}
-                    errorMessage={getErrorMessage("subtitle")}
+                    error={showError("tagline", data?.tagline)}
+                    errorMessage={getErrorMessage("tagline")}
                 >
                     <input
-                        value={data?.subtitle || ""}
+                        value={data?.tagline || ""}
                         maxLength={SUBTITLE_MAX}
-                        onChange={(e) => set({ subtitle: e.target.value })}
-                        onBlur={() => handleBlur("subtitle")}
-                        placeholder="A short one-line description"
-                        className={`${inputClass} ${showError("subtitle", data?.subtitle)
-                            ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
-                            : ""
+                        onChange={(e) => set({ tagline: e.target.value })}
+                        onBlur={() => handleBlur("tagline")}
+                        placeholder="Enter course tagline"
+                        className={`${inputClass} ${showError("tagline", data?.tagline)
+                                ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15"
+                                : ""
                             }`}
                     />
                 </Field>

@@ -31,19 +31,23 @@ export const getAllCourses = createAsyncThunk(
             const params = new URLSearchParams();
             params.append("skip", skip);
             params.append("limit", limit);
+
+            // 🔥 IMPORTANT: Use 'name' instead of 'search' for API
+            if (search) params.append("name", search);
             if (topic) params.append("topic", topic);
             if (level) params.append("level", level);
-            if (search) params.append("search", search);
 
             const res = await apiCall({
                 path: `v1/admin/courses/all?${params.toString()}`,
                 method: "get",
             });
-            console.log('res website course ===>', res)
+
+            console.log('✅ API Response:', res);
+            console.log('✅ API URL:', `v1/admin/courses/all?${params.toString()}`);
+
             dispatch(setLoading(false));
 
             if (res) {
-
                 let courses = [];
                 let total = 0;
 
@@ -57,8 +61,11 @@ export const getAllCourses = createAsyncThunk(
                     courses = res.data;
                     total = res.total || courses.length;
                 }
-                console.log('res ===>', res)
-                dispatch(setCourses(res));
+
+                console.log('✅ Processed courses:', courses);
+                console.log('✅ Total:', total);
+
+                dispatch(setCourses(courses));
                 dispatch(setPagination({ skip, limit, total }));
                 dispatch(setFilters({ topic, level, search }));
 
@@ -67,8 +74,6 @@ export const getAllCourses = createAsyncThunk(
             throw new Error("No courses found");
         } catch (error) {
             dispatch(setLoading(false));
-            const errorMsg = error?.response?.data?.detail || error?.detail || "Failed to fetch courses. Please try again.";
-            // toast.error(errorMsg);
             throw error;
         }
     }

@@ -155,20 +155,23 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
         try {
             setLoading(true);
             const result = await dispatch(createModule({
-                courseId,
+                courseId, // Real course ID
                 data: {
                     title: "New Module",
                     order_index: safeSections.length,
                 }
             })).unwrap();
 
+            // Result se real ID lo
             const newModule = {
-                id: result.id,
+                id: result.id, // REAL ID from API
                 name: result.title,
                 lectures: result.lessons || [],
+                order_index: result.order_index,
             };
             onChange([...safeSections, newModule]);
         } catch (error) {
+            toast.error(error?.message || "Failed to create module");
         } finally {
             setLoading(false);
         }
@@ -187,7 +190,9 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             );
             onChange(updatedSections);
             setEditingModule(null);
+            toast.success("Module updated successfully!");
         } catch (error) {
+            toast.error(error?.message || "Failed to update module");
         } finally {
             setLoading(false);
         }
@@ -199,7 +204,9 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             setLoading(true);
             await dispatch(deleteModule(moduleId)).unwrap();
             onChange(safeSections.filter(s => s.id !== moduleId));
+            toast.success("Module deleted successfully!");
         } catch (error) {
+            toast.error(error?.message || "Failed to delete module");
         } finally {
             setLoading(false);
         }
@@ -210,14 +217,25 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
         try {
             setLoading(true);
             const result = await dispatch(createLesson({
-                moduleId,
+                moduleId, // Real module ID
                 data: lessonData
             })).unwrap();
 
+            // Result se real ID lo
             const updatedSections = safeSections.map(s =>
                 s.id === moduleId ? {
                     ...s,
-                    lectures: [...(s.lectures || []), result]
+                    lectures: [...(s.lectures || []), {
+                        id: result.id, // REAL ID from API
+                        title: result.title,
+                        type: result.type,
+                        duration_min: result.duration_min,
+                        order_index: result.order_index,
+                        content: result.content,
+                        video_url: result.video_url,
+                        quiz_pass_pct: result.quiz_pass_pct,
+                        quiz_questions: result.quiz_questions || [],
+                    }]
                 } : s
             );
             onChange(updatedSections);
@@ -246,7 +264,9 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             );
             onChange(updatedSections);
             setEditingLesson(null);
+            toast.success("Lesson updated successfully!");
         } catch (error) {
+            toast.error(error?.message || "Failed to update lesson");
         } finally {
             setLoading(false);
         }
@@ -265,7 +285,9 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
                 } : s
             );
             onChange(updatedSections);
+            toast.success("Lesson deleted successfully!");
         } catch (error) {
+            toast.error(error?.message || "Failed to delete lesson");
         } finally {
             setLoading(false);
         }
@@ -281,7 +303,7 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
                 </div>
             ) : (
                 safeSections?.map((section) => (
-                    <div key={section?.id || `section-${Math.random()}`} className="rounded-xl2 border border-line bg-cream-2/30 p-4 sm:p-5">
+                    <div key={section?.id} className="rounded-xl2 border border-line bg-cream-2/30 p-4 sm:p-5">
                         <div className="mb-4 flex items-center justify-between gap-3">
                             <div className="flex flex-1 items-center gap-2">
                                 <button
@@ -358,7 +380,7 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
                                     </div>
                                 ) : (
                                     (section?.lectures || [])?.map((lecture) => (
-                                        <div key={lecture?.id || `lecture-${Math.random()}`} className="rounded-lg border border-line-soft bg-card p-3">
+                                        <div key={lecture?.id} className="rounded-lg border border-line-soft bg-card p-3">
                                             {editingLesson === lecture?.id ? (
                                                 <LessonForm
                                                     lesson={lecture}

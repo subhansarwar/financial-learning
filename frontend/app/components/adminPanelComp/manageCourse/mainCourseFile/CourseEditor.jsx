@@ -1,22 +1,22 @@
 // app/components/adminPanelComp/manageCourse/CourseEditor.jsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    clearCurrentCourse,
-    clearError
-} from '../../../../store/admin/adminCourses/adminCoursesSlice';
-import {
-    createCourse,
-    deleteCourseById,
-    getAllCourses,
-    updateCourse,
-} from "../../../../store/admin/adminCourses/adminCoursesThunks";
-import CourseFormModal from "../courseComp/CourseFormModal";
 import CourseTable from "../courseComp/CourseTable";
 import CourseViewModal from "../courseComp/CourseViewModal";
+import CourseFormModal from "../courseComp/CourseFormModal";
 import DeleteConfirmModal from "../courseComp/DeleteConfirmModal";
+import {
+    getAllCourses,
+    createCourse,
+    updateCourse,
+    deleteCourseById,
+} from "../../../../store/admin/adminCourses/adminCoursesThunks";
+import {
+    clearCurrentCourse,
+    clearError,
+} from '../../../../store/admin/adminCourses/adminCoursesSlice';
 
 export default function CourseEditor({ topics, onDataChange }) {
     const dispatch = useDispatch();
@@ -29,16 +29,14 @@ export default function CourseEditor({ topics, onDataChange }) {
         loadingUpdate,
         loadingDelete,
     } = useSelector((state) => state.adminCourses);
-    console.log('courses ===>', courses)
-
 
     const [viewCourse, setViewCourse] = useState(null);
     const [formState, setFormState] = useState({ open: false, mode: "create", course: null });
     const [deleteCourse, setDeleteCourse] = useState(null);
+    const [createdCourseId, setCreatedCourseId] = useState(null); // Store created course ID
 
     const categories = topics?.length ? topics.map((t) => t.name) : undefined;
 
-    // Fetch courses on mount and when pagination changes
     useEffect(() => {
         dispatch(getAllCourses({
             skip: pagination.skip || 0,
@@ -46,7 +44,6 @@ export default function CourseEditor({ topics, onDataChange }) {
         }));
     }, [dispatch, pagination.skip, pagination.limit]);
 
-    // Cleanup on unmount
     useEffect(() => {
         return () => {
             dispatch(clearError());
@@ -54,81 +51,80 @@ export default function CourseEditor({ topics, onDataChange }) {
         };
     }, [dispatch]);
 
-    const openCreate = () => setFormState({ open: true, mode: "create", course: null });
+    const openCreate = () => {
+        setCreatedCourseId(null); // Reset course ID
+        setFormState({ open: true, mode: "create", course: null });
+    };
+
     const openEdit = (course) => {
         setViewCourse(null);
+        setCreatedCourseId(course?.id); // Set course ID for edit mode
         setFormState({ open: true, mode: "edit", course });
     };
+
     const closeForm = () => setFormState((s) => ({ ...s, open: false }));
-    // app/components/adminPanelComp/manageCourse/CourseEditor.jsx
 
-    const handleSave = async (data) => {
+    const prepareCourseData = (data, isEdit = false) => {
+        const topicValue = data?.category?.trim() || "General";
+        const slugValue = data?.slug || data?.title?.toLowerCase().replace(/\s+/g, '-');
+        console.log('data ===>', data)
+        return {
+            slug: isEdit ? slugValue : slugValue + '-' + Date.now(),
+            title: data?.title || "",
+            tagline: data?.tagline,
+            description: data?.description || "",
+            topic: topicValue,
+            level: data?.level || "Beginner",
+            length_min: 0,
+            thumbnail_url: data?.coverImageName || "",
+            instructor_name: data?.instructor_name || "Instructor Name",
+            instructor_title: data?.instructor_title || "Instructor Title",
+            instructor_bio: "Instructor Bio",
+            outcomes: [],
+            is_published: data?.status === "Published" ? true : false,
+        };
+    };
+
+    const handleSave = async (data, isCreateMode = false) => {
         try {
-            if (formState.mode === "create") {
-                // Check if category is empty, use a default value
-                const topicValue = data?.category?.trim() || "General";
+            if (isCreateMode || formState.mode === "create") {
+                const courseData = prepareCourseData(data, false);
+                const result = await dispatch(createCourse(courseData)).unwrap();
+                setCreatedCourseId(result?.id);
 
-                const courseData = {
-                    slug: data.slug || data.title.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now(),
-                    title: data.title,
-                    tagline: data.subtitle || "",
-                    description: data.description || "",
-                    topic: topicValue, // Use validated topic
-                    level: data.level || "Beginner",
-                    length_min: 0,
-                    thumbnail_url: data.coverImageName || "",
-                    instructor_name: "Instructor Name",
-                    instructor_title: "Instructor Title",
-                    instructor_bio: "Instructor Bio",
-                    outcomes: [],
-                    is_published: data.status === "Published" ? true : false,
-                };
-                await dispatch(createCourse(courseData)).unwrap();
-                // Refresh the list after creation
+                // Agar create mode hai toh sirf ID return karo
+                if (isCreateMode) {
+                    return result;
+                }
+
                 await dispatch(getAllCourses({
                     skip: pagination.skip || 0,
                     limit: pagination.limit || 50,
                 })).unwrap();
             } else {
-                // Check if category is empty, use a default value
-                const topicValue = data?.category?.trim() || "General";
-
-                const updateData = {
-                    slug: data.slug || data.title.toLowerCase().replace(/\s+/g, '-'),
-                    title: data.title,
-                    tagline: data.subtitle || "",
-                    description: data.description || "",
-                    topic: topicValue, // Use validated topic
-                    level: data.level || "Beginner",
-                    length_min: 0,
-                    thumbnail_url: data.coverImageName || "",
-                    instructor_name: "Instructor Name",
-                    instructor_title: "Instructor Title",
-                    instructor_bio: "Instructor Bio",
-                    outcomes: [],
-                    is_published: data.status === "Published" ? true : false,
-                };
+                const updateData = prepareCourseData(data, true);
                 await dispatch(updateCourse({
-                    courseId: data.id,
+                    courseId: data?.id,
                     updateData,
                 })).unwrap();
-                // Refresh the list after update
+
                 await dispatch(getAllCourses({
                     skip: pagination.skip || 0,
                     limit: pagination.limit || 50,
                 })).unwrap();
             }
+
             onDataChange?.();
             closeForm();
+            return data;
         } catch (error) {
-            // console.error('Error saving course:', error);
+            throw error;
         }
     };
 
     const handleDeleteConfirm = async () => {
         try {
             await dispatch(deleteCourseById(deleteCourse.id)).unwrap();
-            // Refresh the list after deletion
             await dispatch(getAllCourses({
                 skip: pagination.skip || 0,
                 limit: pagination.limit || 50,
@@ -137,6 +133,7 @@ export default function CourseEditor({ topics, onDataChange }) {
             onDataChange?.();
         } catch (error) {
             console.error('Error deleting course:', error);
+            toast.error(error?.response?.data?.detail || "Failed to delete course");
         }
     };
 
@@ -165,7 +162,7 @@ export default function CourseEditor({ topics, onDataChange }) {
                 onClose={closeForm}
                 onSave={handleSave}
                 isLoading={loadingCreate || loadingUpdate}
-                courseId={formState?.course?.id}
+                courseId={createdCourseId || formState.course?.id} // Pass course ID
             />
 
             <DeleteConfirmModal
