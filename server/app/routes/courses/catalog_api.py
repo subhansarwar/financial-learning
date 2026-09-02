@@ -12,7 +12,16 @@ from app.schemas.courses.course import CourseDetail, CourseListItem, CourseRead
 from app.schemas.courses.enrollment import CourseProgressResponse, EnrollmentRead
 from app.schemas.courses.lesson import LessonRead
 from app.schemas.courses.module import ModuleRead
-from app.services.courses import progress_service_api
+from app.schemas.courses.quiz import (
+    CourseQuizResults,
+    QuizAttemptRead,
+    QuizResult,
+    QuizSubmission,
+    QuizView,
+)
+from app.crud.courses import quiz_attempt_api as quiz_crud
+from app.models.courses.lesson import LessonType
+from app.services.courses import progress_service_api, quiz_service_api
 
 router = APIRouter(prefix="/courses", tags=["Course Catalog"])
 
@@ -78,7 +87,68 @@ async def complete_lesson(lesson_id: uuid.UUID, db: SessionDep, current_user: Cu
     lesson = await lesson_crud.get_lesson_by_id(db, lesson_id)
     if lesson is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found")
+    if quiz_service_api.is_quiz_lesson(lesson):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This is a quiz lesson — submit it via /courses/lessons/{lesson_id}/quiz/submit to complete it",
+        )
     try:
         return await progress_service_api.complete_lesson(db, user=current_user, lesson_id=lesson_id)
     except progress_service_api.CourseNotFoundForLessonError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found")
+
+
+# --- Quizzes -------------------------------------------------------------------
+
+async def _get_quiz_lesson_or_404(db: SessionDep, lesson_id: uuid.UUID):
+    lesson = await lesson_crud.get_lesson_by_id(db, lesson_id)
+    if lesson is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found")
+    if not quiz_service_api.is_quiz_lesson(lesson):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="This lesson has no quiz")
+    return lesson
+
+
+@router.get("/lessons/{lesson_id}/quiz", response_model=QuizView)
+async def get_lesson_quiz(lesson_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> QuizView:
+    """The module quiz for this lesson (questions without the answer key), plus the
+    student's best score and pass mark so far."""
+    lesson = await _get_quiz_lesson_or_404(db, lesson_id)
+    return await quiz_service_api.get_quiz_view(db, user=current_user, lesson=lesson)
+
+
+@router.post("/lessons/{lesson_id}/quiz/submit", response_model=QuizResult)
+async def submit_lesson_quiz(
+    lesson_id: uuid.UUID, payload: QuizSubmission, db: SessionDep, current_user: CurrentUser
+) -> QuizResult:
+    """Grade a quiz submission immediately. Scoring >= the pass mark (default 70%)
+    marks the quiz lesson complete and advances course progress."""
+    lesson = await _get_quiz_lesson_or_404(db, lesson_id)
+    try:
+        return await quiz_service_api.submit_quiz(
+            db, user=current_user, lesson=lesson, answers=payload.answers
+        )
+    except quiz_service_api.QuizError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
+
+
+@router.get("/lessons/{lesson_id}/quiz/attempts", response_model=list[QuizAttemptRead])
+async def list_lesson_quiz_attempts(
+    lesson_id: uuid.UUID, db: SessionDep, current_user: CurrentUser
+) -> list[QuizAttemptRead]:
+    """This student's past attempts for the quiz, newest first."""
+    await _get_quiz_lesson_or_404(db, lesson_id)
+    attempts = await quiz_crud.list_attempts_for_lesson(db, user_id=current_user.id, lesson_id=lesson_id)
+    return [QuizAttemptRead.model_validate(a) for a in attempts]
+
+
+@router.get("/{course_id}/quiz-results", response_model=CourseQuizResults)
+async def get_course_quiz_results(
+    course_id: uuid.UUID, db: SessionDep, current_user: CurrentUser
+) -> CourseQuizResults:
+    """Per-module quiz standing for this student across the whole course: best mark,
+    attempts, pass mark, and whether each module's quiz is passed."""
+    course = await course_crud.get_course_by_id(db, course_id)
+    if course is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
+    return await quiz_service_api.get_course_quiz_results(db, user=current_user, course_id=course_id)

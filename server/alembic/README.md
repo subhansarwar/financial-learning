@@ -44,3 +44,20 @@ alembic revision --autogenerate -m "short description"
 
 Review the generated file in `versions/` before committing — autogenerate does not
 detect every change (e.g. server defaults, some type changes).
+
+## Important: `create_all` still runs at startup
+
+`init_db()` runs `Base.metadata.create_all()` every time the app boots. If you add a
+model/column and start the app before running the migration, the DB object already
+exists and a plain `op.create_table` / `op.add_column` will fail with
+"relation ... already exists" / "column ... already exists".
+
+Two ways to cope:
+
+1. **Write migrations defensively** — check with `inspect(op.get_bind())` and create
+   only what's missing (see `0002` and `0003` for the pattern). Preferred.
+2. **`alembic stamp <rev>`** — if a migration's objects were already built by
+   `create_all` and match the model, just stamp past it.
+
+Long-term, consider dropping `create_all` from `init_db()` so Alembic is the single
+source of truth (needs a full baseline migration + `alembic stamp` on existing DBs).

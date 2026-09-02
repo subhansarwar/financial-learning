@@ -8,6 +8,7 @@ from app.models.courses.module import Module
 from app.models.courses.lesson import Lesson, LessonType
 from app.models.courses.enrollment import CourseEnrollment, EnrollmentStatus
 from app.models.courses.lesson_progress import LessonCompletion
+from app.models.courses.quiz_attempt import QuizAttempt
 from app.models.courses.certificate import Certificate
 from app.models.publications.publication import Publication, PublicationCategory, PublicationStatus
 from app.models.publications.bookmark import PublicationBookmark
@@ -27,6 +28,7 @@ __all__ = [
     "CourseEnrollment",
     "EnrollmentStatus",
     "LessonCompletion",
+    "QuizAttempt",
     "Certificate",
     "Publication",
     "PublicationCategory",

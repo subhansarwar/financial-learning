@@ -84,6 +84,10 @@ class Settings(BaseSettings):
     # Course catalog
     COURSE_CATALOG_PAGE_SIZE: int = 20
 
+    # Quizzes — a student passes a module quiz at this score or above. A lesson may
+    # override it with its own quiz_pass_pct.
+    QUIZ_DEFAULT_PASS_PCT: int = 70
+
     # Student publications
     PUBLICATION_CATALOG_PAGE_SIZE: int = 20
     PUBLICATION_MAX_SIZE_MB: int = 20
