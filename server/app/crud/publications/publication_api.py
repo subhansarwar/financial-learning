@@ -143,7 +143,7 @@ async def update_publication(db: SessionDep, publication: Publication, fields: d
 async def delete_publication(db: SessionDep, publication: Publication) -> None:
     try: 
         await db.delete(publication) 
-        await db.flush() 
+        await db.commit() 
     except SQLAlchemyError: 
         await db.rollback() 
         logger.exception( "Database error deleting publication: " 

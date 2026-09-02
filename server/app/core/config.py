@@ -55,9 +55,31 @@ class Settings(BaseSettings):
     SUPABASE_URL: str 
     SUPABASE_SERVICE_ROLE_KEY: str
     SUPABASE_AVATAR_BUCKET: str
-    SUPABASE_COURSE_MATERIALS_BUCKET: str 
-    SUPABASE_CERTIFICATE_BUCKET: str 
+    SUPABASE_COURSE_MATERIALS_BUCKET: str
+    SUPABASE_CERTIFICATE_BUCKET: str
     SUPABASE_PUBLICATION_BUCKET: str
+
+    # Media library (images & videos for Website / Course Material / Case Studies) — a single
+    # Supabase Storage bucket, laid out as "<container>/<image|video>/<asset_id>.<ext>".
+    # Endpoints 503 if Supabase isn't configured.
+    SUPABASE_MEDIA_BUCKET: str = "media"
+
+    MEDIA_IMAGE_MAX_SIZE_MB: int = 15
+    MEDIA_IMAGE_ALLOWED_CONTENT_TYPES: tuple[str, ...] = (
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif",
+        "image/svg+xml",
+        "image/avif",
+    )
+    MEDIA_VIDEO_MAX_SIZE_MB: int = 512
+    MEDIA_VIDEO_ALLOWED_CONTENT_TYPES: tuple[str, ...] = (
+        "video/mp4",
+        "video/webm",
+        "video/ogg",
+        "video/quicktime",
+    )
 
     # Course catalog
     COURSE_CATALOG_PAGE_SIZE: int = 20

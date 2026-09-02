@@ -20,6 +20,8 @@ from app.routes.publications.publication_catalog_api import router as publicatio
 from app.routes.publications.publication_admin_api import router as publications_admin_router
 from app.routes.case_studies.catalog import router as case_studies_router
 from app.routes.case_studies.admin import router as case_studies_admin_router
+from app.routes.media.media_api import images_router as media_images_router
+from app.routes.media.media_api import videos_router as media_videos_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -35,8 +37,8 @@ async def lifespan(app: FastAPI):
 
     check_celery_workers()
     yield
-
-app = FastAPI(title=settings.APP_NAME, lifespan=lifespan, Version=settings.APP_VERSION, debug=settings.DEBUG)
+    
+app = FastAPI(title=settings.APP_NAME, lifespan=lifespan, version=settings.APP_VERSION, debug=settings.DEBUG)
 
 app.add_middleware(
     CORSMiddleware,
@@ -66,5 +68,7 @@ app.include_router(courses_admin_router, prefix=p)
 app.include_router(courses_monitoring_router, prefix=p)
 app.include_router(publications_admin_router, prefix=p)
 app.include_router(case_studies_admin_router, prefix="/api/admin/case-studies", tags=["Case Studies - Admin"])
+app.include_router(media_images_router, prefix=p)
+app.include_router(media_videos_router, prefix=p)
 
 

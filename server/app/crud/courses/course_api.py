@@ -117,7 +117,7 @@ async def update_course(db: SessionDep, course: Course, **fields) -> Course:
 async def delete_course(db: SessionDep, course: Course) -> None:
     try:
         await db.delete(course)
-        await db.flush()
+        await db.commit()
     except SQLAlchemyError:
         await db.rollback()
         logger.exception("Database error deleting course: course_id=%s", course.id,)

@@ -12,6 +12,7 @@ from app.models.courses.certificate import Certificate
 from app.models.publications.publication import Publication, PublicationCategory, PublicationStatus
 from app.models.publications.bookmark import PublicationBookmark
 from app.models.case_studies.case_study import CaseStudy
+from app.models.media.media_asset import MediaAsset, MediaContainer, MediaKind
 
 __all__ = [
     "User",
@@ -32,4 +33,7 @@ __all__ = [
     "PublicationStatus",
     "PublicationBookmark",
     "CaseStudy",
+    "MediaAsset",
+    "MediaContainer",
+    "MediaKind",
 ]

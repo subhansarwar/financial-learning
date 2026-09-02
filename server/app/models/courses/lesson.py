@@ -29,6 +29,12 @@ class Lesson(Base):
     content: Mapped[str | None] = mapped_column(Text, nullable=True)
     video_url: Mapped[str | None] = mapped_column(String(1024), nullable=True)
 
+    # Added fields — rich lesson body. Existing columns above are unchanged.
+    summary: Mapped[str | None] = mapped_column(Text, nullable=True)
+    learning_objectives: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
+    # List of ordered paragraph blocks: [{"paragraph": str, "order_index": int}, ...]
+    content_blocks: Mapped[list[dict] | None] = mapped_column(JSON, nullable=True)
+
     quiz_pass_pct: Mapped[int | None] = mapped_column(Integer, nullable=True)
     quiz_questions: Mapped[list[dict] | None] = mapped_column(JSON, nullable=True)
 

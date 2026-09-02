@@ -12,6 +12,17 @@ from app.schemas.courses.course import CourseCreate, CourseRead, CourseUpdate
 from app.schemas.courses.lesson import LessonCreate, LessonRead, LessonUpdate
 from app.schemas.courses.module import ModuleCreate, ModuleRead, ModuleUpdate
 
+
+async def _build_module_read(db: SessionDep, module) -> ModuleRead:
+    lessons = await lesson_crud.list_lessons_by_module(db, module.id)
+    return ModuleRead(
+        id=module.id,
+        course_id=module.course_id,
+        title=module.title,
+        order_index=module.order_index,
+        lessons=[LessonRead.model_validate(l) for l in lessons],
+    )
+
 router = APIRouter(prefix="/admin/courses", tags=["Course Catalog - Admin"])
 
 @router.get("/all", response_model=list[CourseRead])
@@ -73,6 +84,25 @@ async def delete_course(course_id: uuid.UUID, db: SessionDep) -> MessageResponse
 
     await course_crud.delete_course(db, course)
     return MessageResponse(message="Course deleted")
+
+
+@router.get("/list-modules/{course_id}", response_model=list[ModuleRead])
+async def list_modules(course_id: uuid.UUID, db: SessionDep) -> list[ModuleRead]:    # , _admin: CurrentAdmin
+    course = await course_crud.get_course_by_id(db, course_id)
+    if course is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
+
+    modules = await module_crud.list_for_course(db, course_id)
+    return [await _build_module_read(db, m) for m in modules]
+
+
+@router.get("/read-modules/{module_id}", response_model=ModuleRead)
+async def get_module(module_id: uuid.UUID, db: SessionDep) -> ModuleRead:    # , _admin: CurrentAdmin
+    module = await module_crud.get_by_module_id(db, module_id)
+    if module is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Module not found")
+
+    return await _build_module_read(db, module)
 
 
 @router.post("/create-modules/{course_id}", response_model=ModuleRead, status_code=status.HTTP_201_CREATED)
