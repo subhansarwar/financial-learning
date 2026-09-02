@@ -1,20 +1,28 @@
 // app/components/userDashboardComp/userCoursesComp/CourseTable.jsx
 "use client";
 
+import { ArrowUpDown, BookOpen, Eye, Pencil, Search, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Search, Plus, ArrowUpDown, Eye, Pencil, Trash2, BookOpen } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import TablePagination from "./TablePagination";
 
 const COLUMNS = [
     { key: "title", label: "Course Name", sortable: true },
     { key: "creationDate", label: "Created", sortable: true },
-    { key: "sales", label: "Sales", sortable: false },
-    { key: "enrollments", label: "Students", sortable: false },
+    { key: "topic", label: "Topic", sortable: false },
+    { key: "level", label: "Level", sortable: false },
     { key: "status", label: "Status", sortable: false },
 ];
 
-export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDelete }) {
+export default function CourseTable({
+    courses,
+    onCreateNew,
+    onView,
+    onEdit,
+    onDelete,
+    pagination,
+    loading
+}) {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState({ key: "creationDate", dir: "desc" });
     const [page, setPage] = useState(1);
@@ -27,7 +35,8 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
             : courses.filter(
                 (c) =>
                     c.title.toLowerCase().includes(term) ||
-                    c.category?.toLowerCase().includes(term)
+                    c.category?.toLowerCase().includes(term) ||
+                    c.instructor_name?.toLowerCase().includes(term)
             );
 
         list = [...list].sort((a, b) => {
@@ -64,16 +73,35 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
         setPage(1);
     };
 
+    const getLevelColor = (level) => {
+        const colors = {
+            Beginner: "bg-green-100 text-green-700",
+            Intermediate: "bg-yellow-100 text-yellow-700",
+            Advanced: "bg-red-100 text-red-700",
+        };
+        return colors[level] || "bg-gray-100 text-gray-700";
+    };
+
+    if (loading) {
+        return (
+            <div className="rounded-2xl border border-line bg-white p-4 shadow-card sm:p-6">
+                <div className="flex items-center justify-center py-12">
+                    <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-[#72BB83]/20 border-t-[#72BB83]" />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="rounded-2xl border border-line bg-white p-4 shadow-card sm:p-6">
             {/* Header */}
             <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                        My Courses
+                        All Courses
                     </h2>
                     <p className="text-sm text-muted">
-                        Create and manage your courses.
+                        View and manage all available courses.
                     </p>
                 </div>
                 <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
@@ -93,7 +121,7 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
                         onClick={onCreateNew}
                         className="inline-flex items-center justify-center gap-2 rounded-full bg-[#47735B] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#365B50]"
                     >
-                        <Plus className="h-4 w-4" strokeWidth={2.5} />
+                        <BookOpen className="h-4 w-4" strokeWidth={2.5} />
                         New Course
                     </button> */}
                 </div>
@@ -101,7 +129,7 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
 
             {/* Table */}
             <div className="-mx-4 overflow-x-auto sm:mx-0">
-                <table className="w-full min-w-[720px] border-collapse text-left">
+                <table className="w-full min-w-[800px] border-collapse text-left">
                     <thead>
                         <tr className="border-b border-line-soft text-xs font-bold uppercase tracking-wide text-muted">
                             {COLUMNS.map((col) => (
@@ -126,7 +154,7 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
                         {pageItems.length === 0 ? (
                             <tr>
                                 <td colSpan={6} className="px-4 py-12 text-center text-sm text-muted">
-                                    No courses match your search.
+                                    No courses found.
                                 </td>
                             </tr>
                         ) : (
@@ -145,15 +173,23 @@ export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDe
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate font-bold text-ink">{course.title}</p>
-                                                <p className="truncate text-xs text-muted">{course.category}</p>
+                                                <p className="truncate text-xs text-muted">
+                                                    {course.instructor_name}
+                                                </p>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">{course.creationDate}</td>
-                                    <td className="whitespace-nowrap px-4 py-3 font-medium text-ink">
-                                        ${Number(course.sales || 0).toFixed(2)}
+                                    <td className="whitespace-nowrap px-4 py-3">
+                                        <span className="text-xs font-medium text-[#14301F]/70">
+                                            {course.category}
+                                        </span>
                                     </td>
-                                    <td className="whitespace-nowrap px-4 py-3">{course.enrollments}</td>
+                                    <td className="whitespace-nowrap px-4 py-3">
+                                        <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${getLevelColor(course.level)}`}>
+                                            {course.level}
+                                        </span>
+                                    </td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <StatusBadge status={course.status} />
                                     </td>

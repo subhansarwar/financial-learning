@@ -239,7 +239,7 @@ const LoginComp = () => {
                         </div>
 
                         <p className="relative border-t border-white/10 pt-5 text-xs font-medium italic text-white/40">
-                            Small, consistent lessons compound — just like good habits.
+                            Small, consistent lessons compound just like good habits.
                         </p>
                     </div>
 

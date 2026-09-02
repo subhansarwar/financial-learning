@@ -58,7 +58,7 @@ export default function Sidebar({
     const toggleMobile = () => setIsMobileOpen(!isMobileOpen);
 
     return (
-        <div className="bg-white">
+        <div className="bg-[#FFF7ED]">
             {/* ===== MOBILE OVERLAY ===== */}
             {isMobileOpen && (
                 <div

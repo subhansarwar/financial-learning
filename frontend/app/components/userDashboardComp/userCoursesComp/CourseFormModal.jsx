@@ -4,12 +4,16 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { X, ArrowLeft, ArrowRight, Send } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { createCourse, updateCourse } from "../../../store/slices/courses/courseThunks";
 import StepIndicator from "./StepIndicator";
 import StepOneInfo from "./StepOneInfo";
 import StepTwoCurriculum from "./StepTwoCurriculum";
 import { emptyCourseDraft } from "./dummyCourses";
 
 export default function CourseFormModal({ isOpen, mode, initialData, categories, onClose, onSave }) {
+    const dispatch = useAppDispatch();
+    const { loadingCreate, loadingUpdate } = useAppSelector((state) => state.course);
     const [step, setStep] = useState(1);
     const [data, setData] = useState(emptyCourseDraft());
 
@@ -66,13 +70,45 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
         setStep(2);
     };
 
-    const handlePublish = () => {
+    const handlePublish = async () => {
         if (!isStepTwoValid()) {
             toast.error("Please fill in all required curriculum fields before publishing");
             return;
         }
-        onSave(data);
+
+        const payload = {
+            title: data.title,
+            tagline: data.subtitle,
+            description: data.description,
+            topic: data.category,
+            level: data.level,
+            language: data.language,
+            price: data.price,
+            // curriculum: data.curriculum, // Add curriculum structure as per API
+        };
+
+        try {
+            let result;
+            if (mode === "edit" && initialData?.id) {
+                result = await dispatch(updateCourse({
+                    courseId: initialData.id,
+                    courseData: payload,
+                })).unwrap();
+            } else {
+                result = await dispatch(createCourse(payload)).unwrap();
+            }
+
+            if (result?.id) {
+                toast.success(mode === "edit" ? "Course updated successfully!" : "Course created successfully!");
+                onSave(result);
+                onClose();
+            }
+        } catch (error) {
+            console.error("Error saving course:", error);
+        }
     };
+
+    const isLoading = mode === "edit" ? loadingUpdate : loadingCreate;
 
     return (
         <div
@@ -150,14 +186,20 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
                     ) : (
                         <button
                             onClick={handlePublish}
-                            disabled={!isStepTwoValid()}
-                            className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors ${isStepTwoValid()
+                            disabled={!isStepTwoValid() || isLoading}
+                            className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors ${isStepTwoValid() && !isLoading
                                     ? "bg-[#47735B] hover:bg-[#365B50]"
                                     : "bg-muted cursor-not-allowed opacity-60"
                                 }`}
                         >
-                            <Send className="h-4 w-4" strokeWidth={2.5} />
-                            Publish
+                            {isLoading ? (
+                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                            ) : (
+                                <>
+                                    <Send className="h-4 w-4" strokeWidth={2.5} />
+                                    {mode === "edit" ? "Update" : "Publish"}
+                                </>
+                            )}
                         </button>
                     )}
                 </div>
