@@ -84,43 +84,79 @@ export default function CourseEditor({ topics, onDataChange }) {
             is_published: data?.status === "Published" ? true : false,
         };
     };
+    const handleSaveStepOne = async (data) => {
+        if (formState.mode === "edit" && data?.id) {
+            const updateData = prepareCourseData(data, true);
+            const result = await dispatch(updateCourse({
+                courseId: data.id,
+                updateData,
+            })).unwrap();
+            setCreatedCourseId(data.id);
+            return { ...updateData, id: data.id, ...result };
+        }
 
-    const handleSave = async (data, isCreateMode = false) => {
+        const courseData = prepareCourseData(data, false);
+        const result = await dispatch(createCourse(courseData)).unwrap();
+        setCreatedCourseId(result?.id);
+        return result;
+    };
+
+    const handlePublish = async (data) => {
         try {
-            if (isCreateMode || formState.mode === "create") {
-                const courseData = prepareCourseData(data, false);
-                const result = await dispatch(createCourse(courseData)).unwrap();
-                setCreatedCourseId(result?.id);
+            const updateData = prepareCourseData(data, true);
+            await dispatch(updateCourse({
+                courseId: data?.id,
+                updateData,
+            })).unwrap();
 
-                // Agar create mode hai toh sirf ID return karo
-                if (isCreateMode) {
-                    return result;
-                }
-
-                await dispatch(getAllCourses({
-                    skip: pagination.skip || 0,
-                    limit: pagination.limit || 50,
-                })).unwrap();
-            } else {
-                const updateData = prepareCourseData(data, true);
-                await dispatch(updateCourse({
-                    courseId: data?.id,
-                    updateData,
-                })).unwrap();
-
-                await dispatch(getAllCourses({
-                    skip: pagination.skip || 0,
-                    limit: pagination.limit || 50,
-                })).unwrap();
-            }
+            await dispatch(getAllCourses({
+                skip: pagination.skip || 0,
+                limit: pagination.limit || 50,
+            })).unwrap();
 
             onDataChange?.();
             closeForm();
-            return data;
         } catch (error) {
             throw error;
         }
     };
+
+    // const handleSave = async (data, isCreateMode = false) => {
+    //     try {
+    //         if (isCreateMode || formState.mode === "create") {
+    //             const courseData = prepareCourseData(data, false);
+    //             const result = await dispatch(createCourse(courseData)).unwrap();
+    //             setCreatedCourseId(result?.id);
+
+    //             // Agar create mode hai toh sirf ID return karo
+    //             if (isCreateMode) {
+    //                 return result;
+    //             }
+
+    //             await dispatch(getAllCourses({
+    //                 skip: pagination.skip || 0,
+    //                 limit: pagination.limit || 50,
+    //             })).unwrap();
+    //         } else {
+    //             const updateData = prepareCourseData(data, true);
+    //             await dispatch(updateCourse({
+    //                 courseId: data?.id,
+    //                 updateData,
+    //             })).unwrap();
+
+    //             await dispatch(getAllCourses({
+    //                 skip: pagination.skip || 0,
+    //                 limit: pagination.limit || 50,
+    //             })).unwrap();
+    //         }
+
+    //         onDataChange?.();
+    //         closeForm();
+    //         return data;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // };
 
     const handleDeleteConfirm = async () => {
         try {
@@ -132,8 +168,6 @@ export default function CourseEditor({ topics, onDataChange }) {
             setDeleteCourse(null);
             onDataChange?.();
         } catch (error) {
-            console.error('Error deleting course:', error);
-            toast.error(error?.response?.data?.detail || "Failed to delete course");
         }
     };
 
@@ -160,7 +194,8 @@ export default function CourseEditor({ topics, onDataChange }) {
                 initialData={formState.course}
                 categories={categories}
                 onClose={closeForm}
-                onSave={handleSave}
+                onSaveStepOne={handleSaveStepOne}
+                onPublish={handlePublish}
                 isLoading={loadingCreate || loadingUpdate}
                 courseId={createdCourseId || formState.course?.id} // Pass course ID
             />

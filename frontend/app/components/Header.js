@@ -5,7 +5,7 @@ import { ChevronDown, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { logoutUser } from "../store/slices/user/userThunks";
 
 const NAV_LINKS = [
@@ -30,6 +30,8 @@ export default function Header() {
     const [isNearFooter, setIsNearFooter] = useState(false);
     const accountRef = useRef(null);
     const dispatch = useAppDispatch()
+    const { isAuthenticated, user, loading } = useAppSelector((state) => state.user);
+
 
     // Check scroll position
     useEffect(() => {
@@ -61,19 +63,19 @@ export default function Header() {
     //     return () => window.removeEventListener("scroll", handleScroll);
     // }, []);
 
-    useEffect(() => {
-        const userData = localStorage.getItem("efp.user");
-        if (userData) {
-            try {
-                const user = JSON.parse(userData);
-                setIsLoggedIn(true);
-                setUserName(user.full_name);
-                setUserEmail(user.email);
-            } catch (e) {
-                setIsLoggedIn(false);
-            }
-        }
-    }, []);
+    // useEffect(() => {
+    //     const userData = localStorage.getItem("efp.user");
+    //     if (userData) {
+    //         try {
+    //             const user = JSON.parse(userData);
+    //             setIsLoggedIn(true);
+    //             setUserName(user.full_name);
+    //             setUserEmail(user.email);
+    //         } catch (e) {
+    //             setIsLoggedIn(false);
+    //         }
+    //     }
+    // }, []);
 
     useEffect(() => {
         setIsMenuOpen(false);
@@ -183,7 +185,7 @@ export default function Header() {
                         <div className="flex items-center gap-3">
                             {/* User Section - Desktop */}
                             <div className="hidden items-center gap-3 lg:flex" ref={accountRef}>
-                                {isLoggedIn ? (
+                                {isAuthenticated && user ? (
                                     <div className="relative">
                                         <button
                                             onClick={() => setIsAccountOpen((v) => !v)}
@@ -200,11 +202,11 @@ export default function Header() {
                                                 ? "bg-[#14301F] text-white"
                                                 : "bg-btn-primary text-white"
                                                 }`}>
-                                                {getInitials(userName)}
+                                                {getInitials(user?.full_name || user?.name || user?.email)}
                                             </span>
                                             <span className={`max-w-[9ch] truncate ${isScrolled ? "text-gray-700" : "text-white"
                                                 }`}>
-                                                {userName}
+                                                {user?.full_name || user?.name || user?.email?.split('@')[0] || 'User'}
                                             </span>
                                             <ChevronDown
                                                 className={`h-3.5 w-3.5 transition-all duration-300 ${isAccountOpen ? "rotate-180" : ""
@@ -220,11 +222,11 @@ export default function Header() {
                                             >
                                                 <div className="flex items-center gap-3 border-b border-gray-100 bg-gray-50/50 px-4 py-3.5">
                                                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#14301F]/10 text-sm font-bold text-[#14301F]">
-                                                        {getInitials(userName)}
+                                                        {getInitials(user?.full_name || user?.name || user?.email)}
                                                     </span>
                                                     <div className="min-w-0">
-                                                        <p className="truncate font-bold text-ink">{userName}</p>
-                                                        <p className="truncate text-xs text-gray-500">{userEmail}</p>
+                                                        <p className="truncate font-bold text-ink">{user?.full_name || user?.name || 'User'}</p>
+                                                        <p className="truncate text-xs text-gray-500"> {user?.email || ''}</p>
                                                     </div>
                                                 </div>
                                                 <div className="p-1.5">
