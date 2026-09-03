@@ -385,18 +385,18 @@ export default function FeaturesSection() {
             </section>
 
             {/* Case Studies Section - Separate with bg #EBFFF9 */}
-            <section className="bg-[#EBFFF9] py-10 sm:py-10 lg:py-10 overflow-hidden">
+            {/* <section className="bg-[#EBFFF9] py-10 sm:py-10 lg:py-10 overflow-hidden">
                 <div className="mx-6 px-4 sm:px-6 lg:px-8">
                     <CaseStudiesRow />
                 </div>
-            </section>
+            </section> */}
 
             {/* Published Papers Section */}
-            <section className="bg-[#ffffff] py-10 sm:py-10 lg:py-10 overflow-hidden">
+            {/* <section className="bg-[#ffffff] py-10 sm:py-10 lg:py-10 overflow-hidden">
                 <div className="mx-6 px-4 sm:px-6 lg:px-8">
                     <PublishedPapersRow />
                 </div>
-            </section>
+            </section> */}
         </>
     );
 }
