@@ -28,32 +28,37 @@ export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [clickedLink, setClickedLink] = useState(null);
     const [isNearFooter, setIsNearFooter] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const accountRef = useRef(null);
     const dispatch = useAppDispatch()
     const { isAuthenticated, user, loading } = useAppSelector((state) => state.user);
-
+    const lastScrollY = useRef(0);
 
     // Check scroll position
     useEffect(() => {
         const handleScroll = () => {
-            const scrollY = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
+            const currentScrollY = window.scrollY;
 
-            // Check if scrolled past 20px (faster trigger)
-            setIsScrolled(scrollY > 20);
+            setIsScrolled(currentScrollY > 20);
 
-            // Check if near footer - increased threshold for faster trigger
-            const scrollPosition = scrollY + windowHeight;
-            const isNearBottom = documentHeight - scrollPosition < 500; // Increased from 400 to 500
-            setIsNearFooter(isNearBottom);
+            if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+                setIsVisible(false);
+                setIsOpen(false);
+            } else {
+                setIsVisible(true);
+            }
+
+            lastScrollY.current = currentScrollY;
         };
 
-        // Run once on mount to set initial state
-        handleScroll();
+        window.addEventListener("scroll", handleScroll, {
+            passive: true,
+        });
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
     }, []);
     // useEffect(() => {
     //     const handleScroll = () => {
@@ -138,6 +143,11 @@ export default function Header() {
                     ? "bg-transparent backdrop-blur-xl shadow-lg"
                     : "bg-[#72BB83]"
                     }`}
+                style={{
+                    transform: isVisible
+                        ? "translateY(0)"
+                        : "translateY(-100%)",
+                }}
             >
                 <div className="mx-5 px-4 sm:px-6 lg:px-10">
                     <div className="flex h-14 items-center justify-between gap-4 sm:h-16">

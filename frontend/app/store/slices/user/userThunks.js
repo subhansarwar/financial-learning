@@ -446,7 +446,7 @@ export const refreshToken = createAsyncThunk(
         try {
             const refreshToken = localStorage.getItem("refresh_token");
             if (!refreshToken) {
-                throw new Error("No refresh token available");
+                // throw new Error("No refresh token available");
             }
 
             const res = await apiCall({

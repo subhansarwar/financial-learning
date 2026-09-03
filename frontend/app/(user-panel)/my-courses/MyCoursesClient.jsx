@@ -13,7 +13,6 @@ export default function MyCoursesClient() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { courses, loading, pagination, filters } = useAppSelector((state) => state.courses);
-
     const [deleteCourseData, setDeleteCourseData] = useState(null);
 
     // Fetch courses on mount and when filters/pagination change

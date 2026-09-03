@@ -8,6 +8,7 @@ import StepIndicator from "./StepIndicator";
 import StepOneInfo from "./StepOneInfo";
 import StepTwoCurriculum from "./StepTwoCurriculum";
 import { emptyCourseDraft } from "./dummyCourses";
+import { normalizeCurriculum } from "../../../../../lib/curriculum";
 
 export default function CourseFormModal({
     isOpen,
@@ -42,7 +43,7 @@ export default function CourseFormModal({
                 instructor_bio: initialData.instructor_bio || "",
                 outcomes: Array.isArray(initialData.outcomes) ? initialData.outcomes : [],
                 coverImageName: initialData.thumbnail_url || "",
-                curriculum: initialData.curriculum || [],
+                curriculum: normalizeCurriculum(initialData.curriculum),
                 status: initialData.is_published ? "Published" : "Draft",
                 slug: initialData.slug || "",
             });
@@ -65,7 +66,8 @@ export default function CourseFormModal({
             data?.instructor_title?.trim() !== ""
         );
     };
-
+    console.log("initialData received:", initialData);
+    console.log("curriculum in initialData:", initialData?.curriculum);
     // Check if Step 2 is valid
     const isStepTwoValid = () => {
         if (!data?.curriculum || !Array.isArray(data?.curriculum) || data?.curriculum?.length === 0) {

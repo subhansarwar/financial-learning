@@ -173,7 +173,7 @@ const SignupComp = () => {
 
         if (result?.payload?.success) {
             setSignupSuccess(true);
-            toast.success("Account created successfully! Please verify your email.");
+            // toast.success("Account created successfully! Please verify your email.");
 
             // Redirect to OTP verification with email
             const email = result.payload.email || data.email;

@@ -354,7 +354,7 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                                     Drag & drop images here
                                 </p>
                                 <p className="mt-1 text-sm text-muted">
-                                    or <span className="font-bold text-brand-deep">browse</span> from your computer
+                                    or <span className="font-bold text-[#72BB83]">browse</span> from your computer
                                 </p>
                                 <p className="mt-2 text-xs text-muted">
                                     Supports: JPG, PNG, WEBP, SVG

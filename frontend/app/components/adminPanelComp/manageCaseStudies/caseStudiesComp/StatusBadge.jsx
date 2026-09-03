@@ -1,36 +1,30 @@
 // app/components/adminPanelComp/manageCaseStudies/caseStudiesComp/StatusBadge.jsx
 "use client";
 
-export default function StatusBadge({ status }) {
-    const configs = {
-        Draft: {
-            bg: "bg-slate-50",
-            text: "text-slate-700",
-            dot: "bg-slate-500",
-        },
-        "Pending Review": {
-            bg: "bg-amber-50",
-            text: "text-amber-700",
-            dot: "bg-amber-500",
-        },
-        Published: {
-            bg: "bg-emerald-50",
-            text: "text-emerald-700",
-            dot: "bg-emerald-500",
-        },
-        Archived: {
-            bg: "bg-rose-50",
-            text: "text-rose-700",
-            dot: "bg-rose-500",
-        },
-    };
+const STYLES = {
+    true: "bg-emerald-100 text-emerald-700",
+    false: "bg-gray-100 text-gray-600",
+    Published: "bg-emerald-100 text-emerald-700",
+    Draft: "bg-gray-100 text-gray-600",
+    Archived: "bg-amber-100 text-amber-700",
+};
 
-    const config = configs[status] || configs.Draft;
+const STATUS_MAP = {
+    true: "Published",
+    false: "Draft",
+    Published: "Published",
+    Draft: "Draft",
+    Archived: "Archived",
+};
+
+export default function StatusBadge({ status }) {
+    const statusKey = typeof status === 'boolean' ? String(status) : status;
+    const statusText = STATUS_MAP[statusKey] || "Draft";
+    const style = STYLES[statusText] || STYLES.Draft;
 
     return (
-        <span className={`inline-flex items-center gap-1.5 rounded-full ${config.bg} px-2.5 py-1 text-xs font-bold ${config.text}`}>
-            <span className={`h-1.5 w-1.5 rounded-full ${config.dot}`} />
-            {status}
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${style}`}>
+            {statusText}
         </span>
     );
 }

@@ -1,22 +1,24 @@
 // app/components/adminPanelComp/manageCourse/CourseEditor.jsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CourseTable from "../courseComp/CourseTable";
-import CourseViewModal from "../courseComp/CourseViewModal";
-import CourseFormModal from "../courseComp/CourseFormModal";
-import DeleteConfirmModal from "../courseComp/DeleteConfirmModal";
-import {
-    getAllCourses,
-    createCourse,
-    updateCourse,
-    deleteCourseById,
-} from "../../../../store/admin/adminCourses/adminCoursesThunks";
+import { normalizeCurriculum } from "../../../../../lib/curriculum";
 import {
     clearCurrentCourse,
     clearError,
 } from '../../../../store/admin/adminCourses/adminCoursesSlice';
+import {
+    createCourse,
+    deleteCourseById,
+    getAllCourses,
+    getModulesByCourse,
+    updateCourse,
+} from "../../../../store/admin/adminCourses/adminCoursesThunks";
+import CourseFormModal from "../courseComp/CourseFormModal";
+import CourseTable from "../courseComp/CourseTable";
+import CourseViewModal from "../courseComp/CourseViewModal";
+import DeleteConfirmModal from "../courseComp/DeleteConfirmModal";
 
 export default function CourseEditor({ topics, onDataChange }) {
     const dispatch = useDispatch();
@@ -34,6 +36,7 @@ export default function CourseEditor({ topics, onDataChange }) {
     const [formState, setFormState] = useState({ open: false, mode: "create", course: null });
     const [deleteCourse, setDeleteCourse] = useState(null);
     const [createdCourseId, setCreatedCourseId] = useState(null); // Store created course ID
+    const [loadingModules, setLoadingModules] = useState(false);
 
     const categories = topics?.length ? topics.map((t) => t.name) : undefined;
 
@@ -56,10 +59,23 @@ export default function CourseEditor({ topics, onDataChange }) {
         setFormState({ open: true, mode: "create", course: null });
     };
 
-    const openEdit = (course) => {
+    const openEdit = async (course) => {
         setViewCourse(null);
         setCreatedCourseId(course?.id); // Set course ID for edit mode
-        setFormState({ open: true, mode: "edit", course });
+        setLoadingModules(true);
+        try {
+            const modulesRes = await dispatch(getModulesByCourse(course.id)).unwrap();
+            console.log("modules response ===>", modulesRes); // shape check karne ke liye
+            const curriculum = normalizeCurriculum(modulesRes);
+            setFormState({ open: true, mode: "edit", course: { ...course, curriculum } });
+        } catch (error) {
+            // Modules fetch fail ho jaye to bhi form khul jaye, khaali curriculum ke saath
+            setFormState({ open: true, mode: "edit", course: { ...course, curriculum: [] } });
+        } finally {
+            setLoadingModules(false);
+        }
+
+        // setFormState({ open: true, mode: "edit", course });
     };
 
     const closeForm = () => setFormState((s) => ({ ...s, open: false }));
@@ -121,42 +137,6 @@ export default function CourseEditor({ topics, onDataChange }) {
         }
     };
 
-    // const handleSave = async (data, isCreateMode = false) => {
-    //     try {
-    //         if (isCreateMode || formState.mode === "create") {
-    //             const courseData = prepareCourseData(data, false);
-    //             const result = await dispatch(createCourse(courseData)).unwrap();
-    //             setCreatedCourseId(result?.id);
-
-    //             // Agar create mode hai toh sirf ID return karo
-    //             if (isCreateMode) {
-    //                 return result;
-    //             }
-
-    //             await dispatch(getAllCourses({
-    //                 skip: pagination.skip || 0,
-    //                 limit: pagination.limit || 50,
-    //             })).unwrap();
-    //         } else {
-    //             const updateData = prepareCourseData(data, true);
-    //             await dispatch(updateCourse({
-    //                 courseId: data?.id,
-    //                 updateData,
-    //             })).unwrap();
-
-    //             await dispatch(getAllCourses({
-    //                 skip: pagination.skip || 0,
-    //                 limit: pagination.limit || 50,
-    //             })).unwrap();
-    //         }
-
-    //         onDataChange?.();
-    //         closeForm();
-    //         return data;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // };
 
     const handleDeleteConfirm = async () => {
         try {
@@ -180,6 +160,7 @@ export default function CourseEditor({ topics, onDataChange }) {
                 onEdit={openEdit}
                 onDelete={setDeleteCourse}
                 loading={loading}
+                editLoading={loadingModules}
             />
 
             <CourseViewModal

@@ -23,7 +23,7 @@ const typeIconMap = {
     quiz: { icon: HelpCircle, color: "text-amber-500" },
 };
 
-export default function CourseClient({ slug, course, topic, onLessonClick }) {
+export default function CourseClient({ slug, course, topic, onLessonClick, completedLessonIds = [] }) {
     const [mounted, setMounted] = useState(false);
     const [completedLessons, setCompletedLessons] = useState([]);
     const [moduleStates, setModuleStates] = useState({});
@@ -36,26 +36,41 @@ export default function CourseClient({ slug, course, topic, onLessonClick }) {
     useEffect(() => {
         setMounted(true);
         if (!course || modules.length === 0) return;
-
-        const prog = JSON.parse(localStorage.getItem("finlearn.v1") || "{}");
-        const done = prog?.courses?.[slug]?.done || [];
+        // Use completedLessonIds from props if available
+        const done = completedLessonIds.length > 0 ? completedLessonIds : [];
         setCompletedLessons(done);
 
         const states = {};
         course.modules?.forEach((m, i) => {
-            const locked = gated && isModuleLocked(slug, course, i, done);
+            const locked = gated && isModuleLocked(i, done);
             states[m.id] = { locked, passed: false };
         });
         setModuleStates(states);
 
-        if (modules.length > 0) {
+        // Find and open the first incomplete module
+        let firstIncompleteModuleIndex = 0;
+        for (let i = 0; i < modules.length; i++) {
+            const moduleLessons = modules[i]?.lessons || [];
+            const moduleLessonIds = moduleLessons.map(l => l.id);
+            const allCompleted = moduleLessonIds.every(id => done.includes(id));
+            if (!allCompleted && moduleLessonIds.length > 0) {
+                firstIncompleteModuleIndex = i;
+                break;
+            }
+        }
+
+        // Open the module where user left off
+        const moduleToOpen = modules[firstIncompleteModuleIndex]?.id;
+        if (moduleToOpen) {
+            setOpenModules({ [moduleToOpen]: true });
+        } else if (modules.length > 0) {
             setOpenModules({ [modules[0].id]: true });
         }
     }, [slug, course, gated]);
 
-    const isModuleLocked = (slug, course, moduleIndex, done) => {
+    const isModuleLocked = (moduleIndex, done) => {
         if (moduleIndex === 0) return false;
-        const prevModule = course.modules?.[moduleIndex - 1];
+        const prevModule = modules[moduleIndex - 1];
         if (!prevModule) return false;
         const prevLessonIds = prevModule.lessons?.map((l) => l.id) || [];
         const allDone = prevLessonIds.every((id) => done.includes(id));
@@ -147,9 +162,7 @@ export default function CourseClient({ slug, course, topic, onLessonClick }) {
                         <button
                             onClick={() => {
                                 if (locked) {
-                                    toast.error(
-                                        `Pass the previous module's quiz at ${needPct}%+ to unlock this one`
-                                    );
+                                
                                     return;
                                 }
                                 toggleModule(m.id);
@@ -244,14 +257,6 @@ export default function CourseClient({ slug, course, topic, onLessonClick }) {
                                             <span className="text-xs text-[#14301F]/40">
                                                 {formatDuration(l.duration_min)}
                                             </span>
-                                            {!done && (
-                                                <button
-                                                    onClick={() => markComplete(l.id)}
-                                                    className="rounded-full bg-[#72BB83]/10 px-3 py-0.5 text-xs font-bold text-[#14301F] opacity-0 transition-opacity group-hover:opacity-100 hover:bg-[#72BB83]/20"
-                                                >
-                                                    Mark done
-                                                </button>
-                                            )}
                                         </div>
                                     );
                                 })}

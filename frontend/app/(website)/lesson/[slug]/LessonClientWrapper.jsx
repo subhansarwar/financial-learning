@@ -143,7 +143,6 @@ export default function LessonClientWrapper() {
                     }
                 })
                 .catch((err) => {
-                    console.error('❌ Error fetching course:', err);
                     setLoading(false);
                 });
         }
@@ -375,9 +374,6 @@ function LessonTOC({ course, slug, currentLessonId, isGated, completedLessonIds 
                                         <span className={`text-xs ${!isClickable ? 'text-[#14301F]/20' : 'text-[#14301F]/40'}`}>
                                             {l.duration_min || 0}m
                                         </span>
-                                        {isCompleted && (
-                                            <span className="text-[10px] font-bold text-[#72BB83]">✓</span>
-                                        )}
                                         {!isClickable && !isCompleted && (
                                             <Lock className="h-3 w-3 text-[#14301F]/20" strokeWidth={2} />
                                         )}

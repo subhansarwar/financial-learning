@@ -42,6 +42,7 @@ export default function CoursePageClient({ slug }) {
     const [courseProgress, setCourseProgress] = useState(null);
     const [completedLessonIds, setCompletedLessonIds] = useState([]);
     const [progressLoading, setProgressLoading] = useState(true);
+    const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
 
     useEffect(() => {
         if (slug) {
@@ -70,7 +71,11 @@ export default function CoursePageClient({ slug }) {
             console.log('📊 Course Progress:', progress);
             setCourseProgress(progress);
             setCompletedLessonIds(progress?.completed_lesson_ids || []);
+            if (progress?.status === "in_progress" || progress?.status === "completed") {
+                setIsAlreadyEnrolled(true);
+            }
         } catch (error) {
+            setIsAlreadyEnrolled(false);
             // console.error('Failed to fetch progress:', error);
             // Fallback to localStorage
             const completed = getCompletedFromLocalStorage(slug);
@@ -91,7 +96,10 @@ export default function CoursePageClient({ slug }) {
 
     const handleEnrollAndStart = async () => {
         if (!course) return;
-
+        if (isAlreadyEnrolled) {
+            navigateToLesson();
+            return;
+        }
         setIsEnrolling(true);
         try {
             const result = await dispatch(enrollInCourse(course.id)).unwrap();
@@ -126,6 +134,64 @@ export default function CoursePageClient({ slug }) {
         }
     };
 
+    const navigateToLesson = () => {
+        const modules = Array.isArray(course?.modules) ? course.modules : [];
+        const lessons = modules.flatMap((m) => m?.lessons || []) || [];
+
+        // Find first incomplete lesson
+        let firstLesson = null;
+        for (const lesson of lessons) {
+            if (!completedLessonIds.includes(lesson.id)) {
+                firstLesson = lesson;
+                break;
+            }
+        }
+
+        // If all lessons are completed, go to first lesson
+        if (!firstLesson && lessons.length > 0) {
+            firstLesson = lessons[0];
+        }
+
+        if (firstLesson) {
+            router.push(`/lesson/${slug}--${firstLesson.id}`);
+        } else {
+            toast.error("No lessons available in this course");
+        }
+    };
+
+    // Fixed: Using isPageLoading instead of loading
+    if (isPageLoading || loadingDetail) {
+        return (
+            <section className="flex min-h-[60vh] items-center justify-center bg-[#E6FBF1] py-20">
+                <LoadingSpinner />
+            </section>
+        );
+    }
+
+    if (errorDetail || !course) {
+        return (
+            <section className="flex min-h-[60vh] items-center justify-center bg-[#E6FBF1] py-20">
+                <div className="text-center">
+                    <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#72BB83]/10">
+                        <BookOpen className="h-12 w-12 text-[#14301F]" strokeWidth={1.5} />
+                    </div>
+                    <h1 className="text-3xl font-extrabold text-[#14301F] sm:text-4xl">
+                        {errorDetail || 'Course not found'}
+                    </h1>
+                    <p className="mt-2 text-[#14301F]/60">
+                        {errorDetail || "The course you're looking for doesn't exist."}
+                    </p>
+                    <a
+                        href="/catalog"
+                        className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#14301F] px-6 py-3 font-bold text-white hover:bg-[#14301F]/80"
+                    >
+                        <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
+                        Browse courses
+                    </a>
+                </div>
+            </section>
+        );
+    }
     // Fixed: Using isPageLoading instead of loading
     if (isPageLoading || loadingDetail) {
         return (
@@ -182,7 +248,7 @@ export default function CoursePageClient({ slug }) {
         <>
             {/* Hero Section */}
             <section
-                className="relative overflow-hidden border-b border-[#E5E5E5] py-12 sm:py-16 lg:py-20"
+                className="relative overflow-hidden border-b border-[#E5E5E5] py-4 sm:py-4 lg:py-4 mt-12"
                 style={{ background: '#E6FBF1' }}
             >
                 <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

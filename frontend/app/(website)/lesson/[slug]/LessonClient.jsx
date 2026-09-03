@@ -21,13 +21,43 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAppDispatch } from "../../../store/hooks";
-import { completeLesson } from "../../../store/website/websiteCourseThunks";
+import { completeLesson, downloadCertificate, getCertificate, getQuizAttempts, submitQuiz } from "../../../store/website/websiteCourseThunks";
+import CertificateModal from "../../../components/CertificateModal";
 
 const typeIconMap = {
     reading: { icon: BookOpen, color: "text-blue-500", label: "Reading" },
     video: { icon: PlayCircle, color: "text-rose-500", label: "Video" },
     quiz: { icon: HelpCircle, color: "text-amber-500", label: "Quiz" },
 };
+
+function LessonSummaryBlock({ summary }) {
+    if (!summary) return null;
+    return (
+        <div className="mt-4 rounded-lg border border-[#72BB83]/20 bg-[#72BB83]/5 p-4">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#72BB83]">Summary</p>
+            <p className="mt-1.5 text-sm leading-relaxed text-[#14301F]/80">{summary}</p>
+        </div>
+    );
+}
+
+function LessonContentBlocks({ blocks }) {
+    if (!Array.isArray(blocks) || blocks.length === 0) return null;
+    const sorted = [...blocks].sort((a, b) => (a.order_index || 0) - (b.order_index || 0));
+    return (
+        <div className="mt-6 space-y-5">
+            {sorted.map((block, i) => (
+                <div key={i}>
+                    {block.paragraph_title && (
+                        <h3 className="text-lg font-bold text-[#14301F]">{block.paragraph_title}</h3>
+                    )}
+                    {block.paragraph && (
+                        <p className="mt-1.5 text-base leading-relaxed text-[#14301F]/80">{block.paragraph}</p>
+                    )}
+                </div>
+            ))}
+        </div>
+    );
+}
 
 export default function LessonClient({
     course,
@@ -48,13 +78,17 @@ export default function LessonClient({
     const [isLocked, setIsLocked] = useState(initialIsLocked);
 
     // Use mark_as_completed from API instead of local state
-    const [isComplete, setIsComplete] = useState(lesson?.mark_as_completed || false);
+    const [isComplete, setIsComplete] = useState(
+        initialCompletedIds?.includes(lesson?.id) || false
+    );
     const [isCompleting, setIsCompleting] = useState(false);
     const [quizSubmitted, setQuizSubmitted] = useState(false);
     const [quizPassed, setQuizPassed] = useState(false);
     const [quizScore, setQuizScore] = useState(0);
     const [correctCount, setCorrectCount] = useState(0);
     const [mounted, setMounted] = useState(false);
+    const [showCertificate, setShowCertificate] = useState(false);
+    const [isDownloadingCert, setIsDownloadingCert] = useState(false);
     const [completedLessonIds, setCompletedLessonIds] = useState(initialCompletedIds);
     const [courseProgress, setCourseProgress] = useState({
         done: initialCompletedIds,
@@ -64,37 +98,63 @@ export default function LessonClient({
 
     useEffect(() => {
         setMounted(true);
+        const isCompletedFromApi = initialCompletedIds?.includes(lesson?.id);
+        setIsComplete(isCompletedFromApi);
 
-        if (typeof window !== "undefined") {
-            const data = JSON.parse(localStorage.getItem("finlearn.v1") || "{}");
-            const done = data?.courses?.[slug]?.done || [];
+        // 🔥 For quiz, check if completed from API
+        if (lesson.type === "quiz") {
+            const isQuizCompleted = initialCompletedIds.includes(lesson.id);
 
-            // Check if lesson is completed from API or localStorage
-            const isCompletedFromApi = lesson?.mark_as_completed || false;
-            const isCompletedFromLocal = done.includes(lesson.id);
-            setIsComplete(isCompletedFromApi || isCompletedFromLocal);
+            if (isQuizCompleted) {
+                // ✅ Quiz completed from API
+                setQuizSubmitted(true);
+                setQuizPassed(true);
+                setQuizScore(100);
+            } else {
+                // ❌ Quiz not completed - Reset all quiz states
+                setQuizSubmitted(false);
+                setQuizPassed(false);
+                setQuizScore(0);
+                setCorrectCount(0);
 
-            if (lesson.type === "quiz") {
-                const scores = data?.courses?.[slug]?.quizScores || {};
-                const score = scores[lesson.id];
-                if (score) {
-                    setQuizSubmitted(true);
-                    setQuizPassed(score.passed);
-                    setQuizScore(score.pct);
+                // 🔥 DON'T use localStorage as primary source
+                // Only use localStorage as fallback if API data is empty
+                if (typeof window !== "undefined" && initialCompletedIds.length === 0) {
+                    const data = JSON.parse(localStorage.getItem("finlearn.v1") || "{}");
+                    const scores = data?.courses?.[slug]?.quizScores || {};
+                    const score = scores[lesson.id];
+
+                    // 🔥 Only use localStorage if API says not completed
+                    // AND localStorage says completed
+                    if (score && score.passed && !isQuizCompleted) {
+                        // This is a sync issue - API and localStorage mismatch
+                        // 🔥 Force sync - clear localStorage for this lesson
+                        if (typeof window !== "undefined") {
+                            const data = JSON.parse(localStorage.getItem("finlearn.v1") || "{}");
+                            if (data?.courses?.[slug]?.quizScores) {
+                                delete data.courses[slug].quizScores[lesson.id];
+                            }
+                            if (data?.courses?.[slug]?.done) {
+                                data.courses[slug].done = data.courses[slug].done.filter(id => id !== lesson.id);
+                            }
+                            localStorage.setItem("finlearn.v1", JSON.stringify(data));
+                        }
+                    }
                 }
             }
-
-            const completedIds = initialCompletedIds.length > 0 ? initialCompletedIds : done;
-            setCompletedLessonIds(completedIds);
-            const totalLessons = allLessons?.length || 0;
-            const progressPct = initialCourseProgress?.progress_pct ||
-                (totalLessons > 0 ? Math.round((completedIds.length / totalLessons) * 100) : 0);
-            setCourseProgress({
-                done: completedIds,
-                total: totalLessons,
-                pct: progressPct,
-            });
         }
+
+        // Update progress from API
+        const completedIds = initialCompletedIds.length > 0 ? initialCompletedIds : [];
+        setCompletedLessonIds(completedIds);
+        const totalLessons = allLessons?.length || 0;
+        const progressPct = initialCourseProgress?.progress_pct || 0; // 🔥 Use API progress_pct
+
+        setCourseProgress({
+            done: completedIds,
+            total: totalLessons,
+            pct: progressPct,
+        });
     }, [slug, lesson, allLessons]);
 
     const getYouTubeEmbedUrl = (url) => {
@@ -125,7 +185,31 @@ export default function LessonClient({
             return "";
         }
     };
+    const handleDownloadCertificate = async () => {
+        if (!course?.id) {
+            toast.error("Course ID not available");
+            return;
+        }
 
+        setIsDownloadingCert(true);
+        try {
+            // First get the certificate
+            const certResult = await dispatch(getCertificate(course.id)).unwrap();
+            console.log(' Certificate fetched:', certResult);
+
+            if (certResult?.pdf_url) {
+                // Then download the PDF
+                await dispatch(downloadCertificate(certResult.pdf_url)).unwrap();
+            } else {
+                // toast.error("Certificate PDF URL not available");
+            }
+        } catch (error) {
+            // console.error('❌ Certificate download failed:', error);
+            // toast.error(error?.message || "Failed to download certificate");
+        } finally {
+            setIsDownloadingCert(false);
+        }
+    };
     // FIXED: markComplete with API call
     const markComplete = async () => {
         if (isLocked) {
@@ -180,6 +264,13 @@ export default function LessonClient({
         }
     };
 
+    const handleQuizReset = () => {
+        setQuizSubmitted(false);
+        setQuizPassed(false);
+        setQuizScore(0);
+        setCorrectCount(0);
+    };
+
     const handleQuizSubmit = async (correct, total, passed) => {
         const pct = Math.round((correct / total) * 100);
         setCorrectCount(correct);
@@ -199,20 +290,20 @@ export default function LessonClient({
         if (passed) {
             setIsCompleting(true);
             try {
-                const result = await dispatch(completeLesson(lesson.id)).unwrap();
-                console.log('✅ Quiz completion result:', result);
-                setIsComplete(true);
+                // const result = await dispatch(completeLesson(lesson.id)).unwrap();
+                // console.log('✅ Quiz completion result:', result);
+                // setIsComplete(true);
 
-                if (result.progress) {
-                    const totalLessons = allLessons?.length || 0;
-                    const completedCount = result.progress.completed_lessons ||
-                        result.progress.completed_lesson_ids?.length || 0;
-                    setCourseProgress({
-                        done: result.progress.completed_lesson_ids || [],
-                        total: totalLessons,
-                        pct: totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0,
-                    });
-                }
+                // if (result.progress) {
+                //     const totalLessons = allLessons?.length || 0;
+                //     const completedCount = result.progress.completed_lessons ||
+                //         result.progress.completed_lesson_ids?.length || 0;
+                //     setCourseProgress({
+                //         done: result.progress.completed_lesson_ids || [],
+                //         total: totalLessons,
+                //         pct: totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0,
+                //     });
+                // }
 
                 if (typeof window !== "undefined") {
                     const data = JSON.parse(localStorage.getItem("finlearn.v1") || "{}");
@@ -229,7 +320,7 @@ export default function LessonClient({
                 setIsCompleting(false);
             }
         } else {
-            toast.error(`Score: ${pct}% need ${lesson.quiz_pass_pct || 70}% to pass`);
+            // toast.error(`Score: ${pct}% need ${lesson.quiz_pass_pct || 70}% to pass`);
         }
     };
 
@@ -279,13 +370,16 @@ export default function LessonClient({
                 </p>
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                     <button
-                        onClick={() => {
-                            toast.success("Certificate downloaded!");
-                        }}
+                        onClick={handleDownloadCertificate}
+                        disabled={isDownloadingCert}
                         className="inline-flex items-center gap-2 rounded-full bg-[#72BB83] px-6 py-3 font-bold text-white transition-colors hover:bg-[#72BB83]/80"
                     >
+                        {isDownloadingCert ? (
+                        <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
+                    ) : (
                         <Download className="h-4 w-4" strokeWidth={2.5} />
-                        Download Certificate (PDF)
+                    )}
+                    {isDownloadingCert ? "" : "Download Certificate (PDF)"}
                     </button>
                     <Link
                         href={`/course/${slug}`}
@@ -301,7 +395,7 @@ export default function LessonClient({
     const renderContent = () => {
         const { icon: Icon, color, label } = typeIconMap[lesson.type] || typeIconMap.reading;
 
-        const Navigation = ({ extra }) => (
+        const Navigation = ({ extra, disableNext = false, hideNext = false }) => (
             <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-[#E5E5E5] pt-6">
                 <div className="flex flex-wrap items-center gap-2">
                     {prevLesson ? (
@@ -317,22 +411,34 @@ export default function LessonClient({
 
                 <div className="flex flex-wrap items-center gap-2">
                     {extra}
-                    {nextLesson ? (
-                        <Link
-                            href={`/lesson/${slug}--${nextLesson.id}`}
-                            className="inline-flex items-center gap-1.5 rounded-full bg-[#14301F] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#14301F]/80"
-                        >
-                            Next
-                            <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-                        </Link>
-                    ) : (
-                        <Link
-                            href={`/course/${slug}`}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E5E5] bg-white px-4 py-2 text-sm font-bold text-[#14301F]/60 transition-colors hover:border-[#72BB83]/40 hover:text-[#14301F]"
-                        >
-                            <BookOpen className="h-4 w-4" strokeWidth={2.5} />
-                            Back to course
-                        </Link>
+                    {!hideNext && (
+                        nextLesson ? (
+                            disableNext ? (
+                                <span
+                                    title="Complete this lesson to continue"
+                                    className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-full bg-[#14301F]/30 px-4 py-2 text-sm font-bold text-white opacity-60"
+                                >
+                                    Next
+                                    <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+                                </span>
+                            ) : (
+                                <Link
+                                    href={`/lesson/${slug}--${nextLesson.id}`}
+                                    className="inline-flex items-center gap-1.5 rounded-full bg-[#14301F] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#14301F]/80"
+                                >
+                                    Next
+                                    <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+                                </Link>
+                            )
+                        ) : (
+                            <Link
+                                href={`/course/${slug}`}
+                                className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E5E5] bg-white px-4 py-2 text-sm font-bold text-[#14301F]/60 transition-colors hover:border-[#72BB83]/40 hover:text-[#14301F]"
+                            >
+                                <BookOpen className="h-4 w-4" strokeWidth={2.5} />
+                                Back to course
+                            </Link>
+                        )
                     )}
                 </div>
             </div>
@@ -380,6 +486,7 @@ export default function LessonClient({
                                 </button>
                             )
                         }
+                        disableNext={!isComplete}
                     />
                 </>
             );
@@ -414,6 +521,8 @@ export default function LessonClient({
                             />
                         </div>
                     )}
+                    <LessonContentBlocks blocks={lesson.content_blocks} />
+                    <LessonSummaryBlock summary={lesson.summary} />
                     <Navigation
                         extra={
                             isComplete ? (
@@ -436,6 +545,7 @@ export default function LessonClient({
                                 </button>
                             )
                         }
+                        disableNext={!isComplete}
                     />
                 </>
             );
@@ -445,7 +555,7 @@ export default function LessonClient({
         if (lesson.type === "quiz") {
             const quizQuestions = lesson.quiz_questions || [];
             const passPct = lesson.quiz_pass_pct || 70;
-
+            const isQuizFailed = quizSubmitted && !quizPassed;
             return (
                 <>
                     <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -478,16 +588,25 @@ export default function LessonClient({
                         slug={slug}
                         lessonId={lesson.id}
                         onQuizSubmit={handleQuizSubmit}
+                        onQuizReset={handleQuizReset}
                         isSubmitted={quizSubmitted}
                         isPassed={quizPassed}
                         score={quizScore}
                         correctCount={correctCount}
                         nextLesson={nextLesson}
                         isCompleting={isCompleting}
+                        lessonType={lesson.type}
                         isComplete={isComplete}
                         markComplete={markComplete}
+                        onProgressUpdate={onProgressUpdate}
                     />
-                    <Navigation extra={null} />
+                    <Navigation extra={null} disableNext={!isComplete} hideNext={isQuizFailed} />
+                    <CertificateModal
+                        isOpen={showCertificate}
+                        onClose={() => setShowCertificate(false)}
+                        courseId={course.id}
+                        courseTitle={course.title}
+                    />
                 </>
             );
         }
@@ -512,6 +631,7 @@ export default function LessonClient({
             </div>
 
             {renderContent()}
+
         </div>
     );
 }
@@ -532,13 +652,31 @@ function QuizRenderer({
     isCompleting: parentIsCompleting,
     isComplete,
     markComplete,
+    lessonType,
+    onQuizReset,
+    onProgressUpdate,
 }) {
+    const dispatch = useAppDispatch();
     const [answers, setAnswers] = useState([]);
     const [selected, setSelected] = useState({});
     const [showResults, setShowResults] = useState(false);
     const [isMarkingComplete, setIsMarkingComplete] = useState(false);
     const [isSubmittingQuiz, setIsSubmittingQuiz] = useState(false);
     const [showAnswers, setShowAnswers] = useState(false); // For viewing answers
+    const [quizResult, setQuizResult] = useState(null);
+    const [isQuizSubmitted, setIsQuizSubmitted] = useState(isSubmitted);
+    const [isQuizPassed, setIsQuizPassed] = useState(isPassed);
+    const [quizScore, setQuizScore] = useState(score)
+    // const [attempts, setAttempts] = useState([]);
+    // const [loadingAttempts, setLoadingAttempts] = useState(true);
+
+    console.log('🔍 QuizRenderer Props:', {
+        isSubmitted,
+        isPassed,
+        score,
+        isComplete,
+        quizQuestionsLength: quizQuestions?.length
+    });
 
     useEffect(() => {
         if (quizQuestions && quizQuestions.length > 0) {
@@ -548,8 +686,17 @@ function QuizRenderer({
         }
     }, [quizQuestions]);
 
+    // useEffect(() => {
+    //     if (!lessonId) return;
+    //     dispatch(getQuizAttempts(lessonId))
+    //         .unwrap()
+    //         .then((res) => setAttempts(res?.attempts || res || []))
+    //         .catch(() => { })
+    //         .finally(() => setLoadingAttempts(false));
+    // }, [lessonId, dispatch]);
+
     const handleOptionSelect = (questionIndex, optionIndex) => {
-        if (showResults || isSubmitted || isComplete) return;
+        if (isQuizSubmitted || isComplete) return;
         const newAnswers = [...answers];
         newAnswers[questionIndex] = optionIndex;
         setAnswers(newAnswers);
@@ -559,7 +706,6 @@ function QuizRenderer({
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isComplete) {
-            // If already complete, just show answers
             setShowAnswers(!showAnswers);
             return;
         }
@@ -571,16 +717,43 @@ function QuizRenderer({
 
         setIsSubmittingQuiz(true);
         try {
-            let correct = 0;
-            quizQuestions.forEach((q, i) => {
-                if (answers[i] === q.answer) correct++;
-            });
+            //Call the quiz submission API
+            const result = await dispatch(submitQuiz({
+                lessonId: lessonId,
+                answers: answers,
+            })).unwrap();
+
+            console.log('Quiz submission result:', result);
+
+            setQuizResult(result);
+            const passed = result.passed || false;
+            const scorePct = result.score_pct || 0;
+            setIsQuizSubmitted(true);
+            setIsQuizPassed(passed);
+            setQuizScore(scorePct);
+
+            // Update parent state
+            onQuizSubmit(
+                result.correct_count || 0,
+                result.total_questions || quizQuestions.length,
+                result.passed
+            );
 
             setShowResults(true);
-            await onQuizSubmit(correct, quizQuestions.length, (correct / quizQuestions.length) * 100 >= passPct);
+
+            // If quiz passed, show success state
+            if (passed) {
+                if (result.progress && onProgressUpdate) {
+                    const completedIds = result.progress.completed_lesson_ids || [];
+                    onProgressUpdate(completedIds);
+                }
+
+                if (markComplete && !isComplete) {
+                    await markComplete();
+                }
+            }
+
         } catch (error) {
-            console.error('Quiz submission error:', error);
-            toast.error("Failed to submit quiz");
         } finally {
             setIsSubmittingQuiz(false);
         }
@@ -591,19 +764,39 @@ function QuizRenderer({
         setAnswers(new Array(quizQuestions.length).fill(null));
         setSelected({});
         setShowAnswers(false);
+        setIsQuizSubmitted(false);
+        setIsQuizPassed(false);
+        setQuizScore(0);
+        setQuizResult(null);
+        onQuizReset();
     };
-
     const handleMarkComplete = async () => {
+        console.log('🔵 handleMarkComplete called:', {
+            isComplete,
+            isQuizSubmitted,
+            isQuizPassed,
+            quizScore,
+            passPct
+        });
+        // Agar already complete hai toh
         if (isComplete) {
             toast.success("Quiz already completed!");
             return;
         }
 
-        if (!allQuestionsAnswered) {
-            toast.error("Please answer all questions first");
+        // Agar quiz submit nahi hui toh
+        if (!isQuizSubmitted) {
+            toast.error("Please submit the quiz first by clicking 'Check answers'");
             return;
         }
 
+        // Agar quiz fail hui toh
+        // if (!isQuizPassed) {
+        //     toast.error(`You need ${passPct}% to pass. Your score: ${quizScore}%. Please retry.`);
+        //     return;
+        // }
+
+        // Agar sab sahi hai toh markComplete call karo
         setIsMarkingComplete(true);
         try {
             await markComplete();
@@ -612,6 +805,25 @@ function QuizRenderer({
             setIsMarkingComplete(false);
         }
     };
+    // const handleMarkComplete = async () => {
+    //     if (isComplete) {
+    //         toast.success("Quiz already completed!");
+    //         return;
+    //     }
+
+    //     if (!allQuestionsAnswered) {
+    //         toast.error("Please answer all questions first");
+    //         return;
+    //     }
+
+    //     setIsMarkingComplete(true);
+    //     try {
+    //         await markComplete();
+    //     } catch (error) {
+    //     } finally {
+    //         setIsMarkingComplete(false);
+    //     }
+    // };
 
     // Toggle show answers
     const toggleShowAnswers = () => {
@@ -719,7 +931,7 @@ function QuizRenderer({
     }
 
     // If quiz is submitted and passed
-    if (isSubmitted && isPassed) {
+    if (isQuizSubmitted && isQuizPassed) {
         return (
             <div className="mt-6 rounded-xl border border-[#72BB83]/30 bg-[#72BB83]/5 p-6 text-center sm:p-8">
                 <div className="mb-3 flex items-center justify-center gap-3">
@@ -727,7 +939,7 @@ function QuizRenderer({
                         <Award className="h-8 w-8 text-[#72BB83]" strokeWidth={2} />
                     </div>
                     <div>
-                        <div className="text-4xl font-extrabold text-[#72BB83]">{score}%</div>
+                        <div className="text-4xl font-extrabold text-[#72BB83]">{quizScore}%</div>
                         <div className="text-sm text-[#14301F]/60">Passed</div>
                     </div>
                 </div>
@@ -737,7 +949,7 @@ function QuizRenderer({
                 </p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
                     <button
-                        onClick={() => setShowAnswers(!showAnswers)}
+                        onClick={toggleShowAnswers}
                         className="inline-flex items-center gap-2 rounded-full border border-[#72BB83] bg-white px-6 py-2.5 text-sm font-bold text-[#72BB83] transition-colors hover:bg-[#72BB83]/10"
                     >
                         {showAnswers ? "Hide Answers" : "View Answers"}
@@ -800,7 +1012,7 @@ function QuizRenderer({
         );
     }
 
-    if (isSubmitted && !isPassed) {
+    if (isQuizSubmitted && !isQuizPassed) {
         return (
             <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50/30 p-6 text-center sm:p-8">
                 <div className="mb-3 flex items-center justify-center gap-3">
@@ -808,7 +1020,7 @@ function QuizRenderer({
                         <AlertCircle className="h-8 w-8 text-amber-600" strokeWidth={2} />
                     </div>
                     <div>
-                        <div className="text-4xl font-extrabold text-amber-600">{score}%</div>
+                        <div className="text-4xl font-extrabold text-amber-600">{quizScore}%</div>
                         <div className="text-sm text-[#14301F]/60">Not passed</div>
                     </div>
                 </div>
@@ -870,8 +1082,7 @@ function QuizRenderer({
                     <button
                         type="submit"
                         className="inline-flex items-center gap-2 rounded-full bg-[#14301F] px-8 py-3 font-bold text-white transition-colors hover:bg-[#14301F]/80 disabled:opacity-60"
-                        disabled={answers.includes(null)}
-                    >
+                        disabled={answers.includes(null) || isSubmittingQuiz}>
                         {isSubmittingQuiz ? (
                             <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
                         ) : (
@@ -879,30 +1090,33 @@ function QuizRenderer({
                         )}
                         {isSubmittingQuiz ? "" : "Check answers"}
                     </button>
+                    {lessonType !== "quiz" && (
 
-                    <button
-                        type="button"
-                        onClick={handleMarkComplete}
-                        disabled={!allQuestionsAnswered || isMarkingComplete || isSubmittingQuiz || isComplete}
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-6 py-3 text-sm font-bold transition-colors disabled:opacity-50 ${!allQuestionsAnswered
-                            ? "border-[#E5E5E5] bg-gray-100 text-[#14301F]/40 cursor-not-allowed"
-                            : "border-[#E5E5E5] bg-white text-[#14301F]/60 hover:border-[#72BB83]/40 hover:text-[#14301F]"
-                            }`}
-                    >
-                        {isMarkingComplete ? (
-                            <>
-                                <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
-                            </>
-                        ) : (
-                            <>
-                                <Check className="h-4 w-4" strokeWidth={2.5} />
-                                {!allQuestionsAnswered
-                                    ? `Answer all questions (${answers.filter(a => a !== null).length}/${quizQuestions.length})`
-                                    : "Mark complete"
-                                }
-                            </>
-                        )}
-                    </button>
+                        <button
+                            type="button"
+                            onClick={handleMarkComplete}
+                            disabled={!allQuestionsAnswered || isMarkingComplete || isSubmittingQuiz || isComplete}
+                            // disabled={!allQuestionsAnswered || isMarkingComplete || isSubmittingQuiz || isComplete}
+                            className={`inline-flex items-center gap-1.5 rounded-full border px-6 py-3 text-sm font-bold transition-colors disabled:opacity-50 ${!allQuestionsAnswered
+                                ? "border-[#E5E5E5] bg-gray-100 text-[#14301F]/40 cursor-not-allowed"
+                                : "border-[#E5E5E5] bg-white text-[#14301F]/60 hover:border-[#72BB83]/40 hover:text-[#14301F]"
+                                }`}
+                        >
+                            {isMarkingComplete ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
+                                </>
+                            ) : (
+                                <>
+                                    <Check className="h-4 w-4" strokeWidth={2.5} />
+                                    {!allQuestionsAnswered
+                                        ? `Answer all questions (${answers.filter(a => a !== null).length}/${quizQuestions.length})`
+                                        : "Mark complete"
+                                    }
+                                </>
+                            )}
+                        </button>
+                    )}
                 </div>
             </form>
         </div>

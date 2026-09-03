@@ -2,22 +2,36 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, Plus, ArrowUpDown, Eye, Pencil, Trash2, FileText, CheckCircle, XCircle, Clock } from "lucide-react";
+import { Search, Plus, ArrowUpDown, Eye, Pencil, Trash2, FileText, Loader2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import TablePagination from "./TablePagination";
 
 const COLUMNS = [
     { key: "title", label: "Case Study", sortable: true },
-    { key: "author", label: "Author", sortable: true },
-    { key: "createdAt", label: "Created", sortable: true },
-    { key: "updatedAt", label: "Updated", sortable: true },
+    { key: "industry", label: "Industry", sortable: true },
+    { key: "is_published", label: "Status", sortable: false },
+    { key: "created_at", label: "Created", sortable: true },
 ];
 
-export default function CaseStudiesTable({ caseStudies, onCreateNew, onView, onEdit, onDelete }) {
+export default function CaseStudiesTable({ caseStudies, onCreateNew, onView, onEdit, onDelete, loading }) {
     const [search, setSearch] = useState("");
-    const [sort, setSort] = useState({ key: "createdAt", dir: "desc" });
+    const [sort, setSort] = useState({ key: "created_at", dir: "desc" });
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(6);
+
+    const formatDate = (dateString) => {
+        if (!dateString) return "N/A";
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+            });
+        } catch {
+            return dateString;
+        }
+    };
 
     const filtered = useMemo(() => {
         const term = search.trim().toLowerCase();
@@ -25,15 +39,15 @@ export default function CaseStudiesTable({ caseStudies, onCreateNew, onView, onE
             ? caseStudies
             : caseStudies.filter(
                 (c) =>
-                    c.title.toLowerCase().includes(term) ||
-                    c.author.toLowerCase().includes(term) ||
-                    c.shortDescription.toLowerCase().includes(term)
+                    c?.title?.toLowerCase().includes(term) ||
+                    c?.industry?.toLowerCase().includes(term) ||
+                    c?.summary?.toLowerCase().includes(term)
             );
 
         list = [...list].sort((a, b) => {
             let av = a[sort.key];
             let bv = b[sort.key];
-            if (sort.key === "createdAt" || sort.key === "updatedAt") {
+            if (sort.key === "created_at") {
                 av = new Date(av).getTime();
                 bv = new Date(bv).getTime();
             } else if (typeof av === "string") {
@@ -87,7 +101,7 @@ export default function CaseStudiesTable({ caseStudies, onCreateNew, onView, onE
                     </div>
                     <button
                         onClick={onCreateNew}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#47735B] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#47735B]"
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#47735B] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#3a5f4a]"
                     >
                         <Plus className="h-4 w-4" strokeWidth={2.5} />
                         New Case Study
@@ -119,10 +133,16 @@ export default function CaseStudiesTable({ caseStudies, onCreateNew, onView, onE
                         </tr>
                     </thead>
                     <tbody>
-                        {pageItems.length === 0 ? (
+                        {loading ? (
+                            <tr>
+                                <td colSpan={6} className="px-4 py-12 text-center">
+                                    <Loader2 className="mx-auto h-8 w-8 animate-spin text-[#72BB83]" />
+                                </td>
+                            </tr>
+                        ) : pageItems.length === 0 ? (
                             <tr>
                                 <td colSpan={6} className="px-4 py-12 text-center text-sm text-muted">
-                                    No case studies match your search.
+                                    No case studies found. Create your first case study!
                                 </td>
                             </tr>
                         ) : (
@@ -143,13 +163,14 @@ export default function CaseStudiesTable({ caseStudies, onCreateNew, onView, onE
                                         </div>
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">
-                                        <p className="font-medium text-ink-2">{caseStudy.author}</p>
+                                        <span className="text-sm text-ink-2">{caseStudy.industry || "—"}</span>
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">
-                                        <StatusBadge status={caseStudy.status} />
+                                        <StatusBadge status={caseStudy.is_published} />
                                     </td>
-                                    <td className="whitespace-nowrap px-4 py-3">{caseStudy.createdAt}</td>
-                                    <td className="whitespace-nowrap px-4 py-3">{caseStudy.updatedAt}</td>
+                                    <td className="whitespace-nowrap px-4 py-3">
+                                        {formatDate(caseStudy.created_at)}
+                                    </td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <div className="flex items-center gap-1">
                                             <button

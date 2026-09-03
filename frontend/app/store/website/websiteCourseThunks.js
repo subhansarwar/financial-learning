@@ -14,7 +14,9 @@ import {
     setLoadingDetail,
     setLoadingTopics,
     setPagination,
-    setTopics
+    setTopics,
+    setCertificate,
+    clearCertificate,
 } from "./websiteCourseSlice";
 
 // ============================================
@@ -186,11 +188,11 @@ export const completeLesson = createAsyncThunk(
 
         } catch (error) {
             dispatch(setLoading(false));
-            const errorMsg = error?.response?.data?.detail ||
-                error?.detail ||
-                error?.message ||
-                "Failed to complete lesson. Please try again.";
-            toast.error(errorMsg);
+            // const errorMsg = error?.response?.data?.detail ||
+            //     error?.detail ||
+            //     error?.message ||
+            //     "Failed to complete lesson. Please try again.";
+            // toast.error(errorMsg);
             throw error;
         }
     }
@@ -346,6 +348,191 @@ export const getEnrolledCourses = createAsyncThunk(
             dispatch(setLoading(false));
             const errorMsg = error?.response?.data?.detail || error?.detail || "Failed to fetch enrolled courses";
             toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
+// ============================================
+// QUIZ SUBMISSION
+// ============================================
+
+// Submit quiz answers
+export const submitQuiz = createAsyncThunk(
+    "websiteCourse/submitQuiz",
+    async ({ lessonId, answers }, { dispatch }) => {
+        try {
+            dispatch(setLoading(true));
+            dispatch(clearError());
+
+            console.log('🔵 Submitting quiz for lesson:', lessonId);
+            console.log('📝 Quiz answers:', answers);
+
+            const res = await apiCall({
+                path: `v1/courses/lessons/${lessonId}/quiz/submit`,
+                method: "post",
+                body: { answers },
+            });
+
+            console.log('🟢 Quiz Submission Response:', res);
+
+            dispatch(setLoading(false));
+
+            // If quiz passed, also call complete lesson
+            if (res?.passed) {
+                toast.success(`Quiz passed! Score: ${res.score_pct}%`);
+                // Optionally call completeLesson here if not already done
+            } else {
+                toast.error(`Quiz failed! Score: ${res.score_pct}%. Need ${res.pass_pct}% to pass.`);
+            }
+
+            return res;
+        } catch (error) {
+            dispatch(setLoading(false));
+            // const errorMsg = error?.response?.data?.detail ||
+            //     error?.detail ||
+            //     error?.message ||
+            //     "Failed to submit quiz. Please try again.";
+            // toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
+// Get quiz attempts for a lesson
+export const getQuizAttempts = createAsyncThunk(
+    "websiteCourse/getQuizAttempts",
+    async (lessonId, { dispatch }) => {
+        try {
+            dispatch(setLoadingDetail(true));
+            dispatch(clearError());
+
+            console.log('🔵 Fetching quiz attempts for lesson:', lessonId);
+
+            const res = await apiCall({
+                path: `v1/courses/lessons/${lessonId}/quiz/attempts`,
+                method: "get",
+            });
+
+            console.log('🟢 Quiz Attempts Response:', res);
+
+            dispatch(setLoadingDetail(false));
+            return res;
+        } catch (error) {
+            dispatch(setLoadingDetail(false));
+            // const errorMsg = error?.response?.data?.detail ||
+            //     error?.detail ||
+            //     error?.message ||
+            //     "Failed to fetch quiz attempts";
+            // toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
+// Get course quiz results
+export const getCourseQuizResults = createAsyncThunk(
+    "websiteCourse/getCourseQuizResults",
+    async (courseId, { dispatch }) => {
+        try {
+            dispatch(setLoadingDetail(true));
+            dispatch(clearError());
+
+            console.log('🔵 Fetching quiz results for course:', courseId);
+
+            const res = await apiCall({
+                path: `v1/courses/${courseId}/quiz-results`,
+                method: "get",
+            });
+
+            console.log('🟢 Course Quiz Results Response:', res);
+
+            dispatch(setLoadingDetail(false));
+            if (res) {
+                dispatch(setCertificate(res));
+                return res;
+            }
+            return res;
+        } catch (error) {
+            dispatch(setLoadingDetail(false));
+            // const errorMsg = error?.response?.data?.detail ||
+            //     error?.detail ||
+            //     error?.message ||
+            //     "Failed to fetch quiz results";
+            // toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
+
+// ============================================
+// CERTIFICATE
+// ============================================
+
+// Get certificate by course ID
+export const getCertificate = createAsyncThunk(
+    "websiteCourse/getCertificate",
+    async (courseId, { dispatch }) => {
+        try {
+            dispatch(setLoadingDetail(true));
+            dispatch(clearError());
+
+            console.log('🔵 Fetching certificate for course:', courseId);
+
+            const res = await apiCall({
+                path: `v1/certificates/read/${courseId}`,
+                method: "get",
+            });
+
+            console.log('🟢 Certificate Response:', res);
+
+            dispatch(setLoadingDetail(false));
+
+            if (res) {
+                return res;
+            }
+            throw new Error("Certificate not found");
+        } catch (error) {
+            dispatch(setLoadingDetail(false));
+            // console.error('❌ Certificate fetch error:', error);
+            // dispatch(setLoadingDetail(false));
+            // const errorMsg = error?.response?.data?.detail ||
+            //     error?.detail ||
+            //     error?.message ||
+            //     "Failed to fetch certificate";
+            // dispatch(setErrorDetail(errorMsg));
+            // toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
+// Download certificate (open PDF in new tab)
+export const downloadCertificate = createAsyncThunk(
+    "websiteCourse/downloadCertificate",
+    async (pdfUrl, { dispatch }) => {
+        try {
+            dispatch(setLoading(true));
+            dispatch(clearError());
+
+            console.log('Downloading certificate from:', pdfUrl);
+
+            if (!pdfUrl) {
+                throw new Error("PDF URL not available");
+            }
+
+            // Open PDF in new tab for download
+            window.open(pdfUrl, '_blank');
+
+            dispatch(setLoading(false));
+            toast.success("Certificate downloaded successfully!");
+            return pdfUrl;
+        } catch (error) {
+            // console.error('❌ Certificate download error:', error);
+            // dispatch(setLoading(false));
+            // const errorMsg = error?.message || "Failed to download certificate";
+            // toast.error(errorMsg);
             throw error;
         }
     }

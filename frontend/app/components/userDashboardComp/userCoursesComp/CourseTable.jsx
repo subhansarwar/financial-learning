@@ -23,6 +23,7 @@ export default function CourseTable({
     pagination,
     loading
 }) {
+    console.log("CourseTable rendering with courses:", courses);
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState({ key: "creationDate", dir: "desc" });
     const [page, setPage] = useState(1);
@@ -72,6 +73,15 @@ export default function CourseTable({
         );
         setPage(1);
     };
+    const formatDate = (dateString) => {
+        if (!dateString) return "N/A";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+        });
+    };
 
     const getLevelColor = (level) => {
         const colors = {
@@ -117,13 +127,6 @@ export default function CourseTable({
                             className="w-full rounded-full border border-line bg-cream-2/50 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15 sm:w-56"
                         />
                     </div>
-                    {/* <button
-                        onClick={onCreateNew}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#47735B] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#365B50]"
-                    >
-                        <BookOpen className="h-4 w-4" strokeWidth={2.5} />
-                        New Course
-                    </button> */}
                 </div>
             </div>
 
@@ -179,7 +182,7 @@ export default function CourseTable({
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="whitespace-nowrap px-4 py-3">{course.creationDate}</td>
+                                    <td className="whitespace-nowrap px-4 py-3">{formatDate(course.created_at)}</td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <span className="text-xs font-medium text-[#14301F]/70">
                                             {course.category}

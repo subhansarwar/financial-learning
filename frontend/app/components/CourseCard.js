@@ -1,18 +1,18 @@
 // app/components/website/courses/CourseCard.jsx
 "use client";
 
-import { BookOpen, User } from "lucide-react";
+import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
 import { useAppSelector } from "../store/hooks";
-import toast from "react-hot-toast";
-import { useState } from "react";
 import AuthModal from "./auth/AuthModal";
 
 export default function CourseCard({ course }) {
     console.log('course ===>', course)
     const router = useRouter();
+    const pathname = usePathname();
     const [showAuthModal, setShowAuthModal] = useState(false);
 
 
@@ -21,6 +21,14 @@ export default function CourseCard({ course }) {
 
     console.log('course ===>', course);
     console.log('isAuthenticated ===>', isAuthenticated);
+
+    const getRandomIcon = useMemo(() => {
+        // Use course id or slug to deterministically pick an icon
+        const seed = course?.id || course?.slug || '';
+        const hash = seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const icons = ['📚', '🌱', '🎓'];
+        return icons[hash % icons.length];
+    }, [course?.id, course?.slug]);
 
     const getLevelColor = (level) => {
         const colors = {
@@ -85,8 +93,8 @@ export default function CourseCard({ course }) {
                                 className="object-cover transition-transform duration-300 group-hover:scale-105"
                             />
                         ) : (
-                            <div className="flex h-full items-center justify-center bg-gradient-to-br from-[#72BB83]/20 to-[#14301F]/20">
-                                <BookOpen className="h-12 w-12 text-[#14301F]/20" />
+                            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#72BB83]/10 to-[#14301F]/5 transition-transform duration-300 group-hover:scale-105">
+                                <span className="text-6xl">{getRandomIcon}</span>
                             </div>
                         )}
 
@@ -129,6 +137,7 @@ export default function CourseCard({ course }) {
             <AuthModal
                 isOpen={showAuthModal}
                 onClose={() => setShowAuthModal(false)}
+                redirectPath={pathname}
             />
         </>
     );

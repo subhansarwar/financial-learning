@@ -176,8 +176,8 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
                             onClick={goNext}
                             disabled={!isStepOneValid()}
                             className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors ${isStepOneValid()
-                                    ? "bg-[#47735B] hover:bg-[#365B50]"
-                                    : "bg-muted cursor-not-allowed opacity-60"
+                                ? "bg-[#47735B] hover:bg-[#365B50]"
+                                : "bg-muted cursor-not-allowed opacity-60"
                                 }`}
                         >
                             Continue
@@ -188,8 +188,8 @@ export default function CourseFormModal({ isOpen, mode, initialData, categories,
                             onClick={handlePublish}
                             disabled={!isStepTwoValid() || isLoading}
                             className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors ${isStepTwoValid() && !isLoading
-                                    ? "bg-[#47735B] hover:bg-[#365B50]"
-                                    : "bg-muted cursor-not-allowed opacity-60"
+                                ? "bg-[#47735B] hover:bg-[#365B50]"
+                                : "bg-muted cursor-not-allowed opacity-60"
                                 }`}
                         >
                             {isLoading ? (

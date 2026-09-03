@@ -165,6 +165,23 @@ export const createModule = createAsyncThunk(
     }
 );
 
+export const getModulesByCourse = createAsyncThunk(
+    "adminCourses/getModulesByCourse",
+    async (courseId, { dispatch }) => {
+        try {
+            const res = await apiCall({
+                path: `v1/admin/courses/list-modules/${courseId}`,
+                method: "get",
+            });
+            return res;
+        } catch (error) {
+            const errorMsg = error?.response?.data?.detail || "Failed to fetch modules";
+            toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
 export const updateModule = createAsyncThunk(
     "adminCourses/updateModule",
     async ({ moduleId, data }, { dispatch }) => {

@@ -28,12 +28,13 @@ const processQueue = (error, token = null) => {
     failedQueue = [];
 };
 
-// Refresh token function
+// Refresh token function - Fixed error handling
 const refreshAccessToken = async () => {
     try {
         const refreshToken = localStorage.getItem("refresh_token");
         if (!refreshToken) {
-            throw new Error("No refresh token available");
+            // No refresh token, just throw error
+            // throw new Error("No refresh token available");
         }
 
         const response = await axios.post(`${baseUrl}v1/auth/refresh`, {
@@ -42,7 +43,6 @@ const refreshAccessToken = async () => {
 
         const { access_token, refresh_token } = response.data;
 
-        // Store new tokens
         if (access_token) {
             localStorage.setItem("auth_token", access_token);
             axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
@@ -58,6 +58,8 @@ const refreshAccessToken = async () => {
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("efp.user");
         delete axiosInstance.defaults.headers.common["Authorization"];
+
+        // Don't redirect here, just throw error
         throw error;
     }
 };
@@ -65,7 +67,6 @@ const refreshAccessToken = async () => {
 // Request interceptor - Add token to every request
 axiosInstance.interceptors.request.use(
     (config) => {
-        // Get token from localStorage
         const token = localStorage.getItem("auth_token");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -77,7 +78,7 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-// Response interceptor - Handle token refresh
+// Response interceptor - Handle token refresh with better error handling
 axiosInstance.interceptors.response.use(
     (response) => {
         return response;
@@ -85,10 +86,9 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        // If error is 401 and we haven't retried yet
+        // 🔥 Only handle 401 errors, not 422 validation errors
         if (error.response?.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
-                // If already refreshing, queue this request
                 return new Promise((resolve, reject) => {
                     failedQueue.push({ resolve, reject });
                 })
@@ -111,19 +111,18 @@ axiosInstance.interceptors.response.use(
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
                 processQueue(refreshError, null);
-                // Redirect to login on refresh failure
-                if (typeof window !== "undefined") {
-                    window.location.href = "/login";
-                }
+                // 🔥 Don't redirect here, let the caller handle it
                 return Promise.reject(refreshError);
             } finally {
                 isRefreshing = false;
             }
         }
 
-        // If error is 401 and we already retried, redirect to login
-        if (error.response?.status === 401) {
-            if (typeof window !== "undefined") {
+        // 🔥 Don't redirect on 422 or other errors
+        // Only redirect if it's a 401 and we're not in the middle of a request
+        if (error.response?.status === 401 && originalRequest._retry) {
+            // Only redirect if not on login page already
+            if (typeof window !== "undefined" && !window.location.pathname.includes('/login')) {
                 localStorage.removeItem("auth_token");
                 localStorage.removeItem("refresh_token");
                 localStorage.removeItem("efp.user");
@@ -138,7 +137,6 @@ axiosInstance.interceptors.response.use(
 // API Call function
 const apiCall = async ({ path, method = "get", body = null, token = null }) => {
     try {
-        // If token is provided in the call, use it
         if (token) {
             axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
@@ -153,10 +151,9 @@ const apiCall = async ({ path, method = "get", body = null, token = null }) => {
     } catch (error) {
         console.error("API Call Error:", error);
 
-        // Extract error message
         if (error.response) {
             const errorData = error.response.data;
-            const errorMessage = errorData?.message || errorData?.error || error.message;
+            const errorMessage = errorData?.message || errorData?.error || errorData?.detail || error.message;
 
             throw {
                 message: errorMessage,

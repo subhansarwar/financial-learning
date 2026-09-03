@@ -57,12 +57,12 @@ export default function LoginModal({ isOpen, onClose, redirectPath }) {
         };
     }, [isOpen]);
 
-    useEffect(() => {
-        if (error) {
-            toast.error(error);
-            dispatch(clearError());
-        }
-    }, [error, dispatch]);
+    // useEffect(() => {
+    //     if (error) {
+    //         toast.error(error);
+    //         dispatch(clearError());
+    //     }
+    // }, [error, dispatch]);
 
     if (!mounted) return null;
 
@@ -83,7 +83,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath }) {
             }
         } catch (error) {
             // Error is already handled in thunk
-            console.error("Login error:", error);
+            // console.error("Login error:", error);
         } finally {
             setIsSubmitting(false);
         }

@@ -32,6 +32,9 @@ const initialState = {
     error: null,
     errorDetail: null,
     errorTopics: null,
+    //Certificate
+    certificate: null,
+
 };
 
 const websiteCourseSlice = createSlice({
@@ -117,7 +120,13 @@ const websiteCourseSlice = createSlice({
         clearCurrentCourse: (state) => {
             state.currentCourse = null;
         },
+        setCertificate: (state, action) => {
+            state.certificate = action.payload;
+        },
 
+        clearCertificate: (state) => {
+            state.certificate = null;
+        },
         // Course list mutation actions
         addCourse: (state, action) => {
             state.courses = [action.payload, ...state.courses];
@@ -161,6 +170,8 @@ export const {
     updateCourseInList,
     removeCourse,
     resetWebsiteCourseState,
+    setCertificate,
+    clearCertificate,
 } = websiteCourseSlice.actions;
 
 export default websiteCourseSlice.reducer;

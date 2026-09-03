@@ -31,7 +31,6 @@ export default async function CatalogPage({ searchParams }) {
                         fallback={
                             <div className="flex items-center gap-2 rounded-xl2 border border-line bg-card px-5 py-8 text-sm font-semibold text-muted">
                                 <Search className="h-4 w-4 animate-pulse" strokeWidth={2.25} />
-                                Loading filters…
                             </div>
                         }
                     >
