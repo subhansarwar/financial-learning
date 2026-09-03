@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from app.core.deps import SessionDep
 from app.core.security import logger
-from app.models.courses.certificate import Certificate
+from app.models.students.certificate import Certificate
 
 async def get_certificate_by_user_course(db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UUID) -> Certificate | None:
     try:

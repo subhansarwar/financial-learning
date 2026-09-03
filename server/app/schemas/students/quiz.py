@@ -4,7 +4,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-from app.schemas.courses.enrollment import CourseProgressResponse
+from app.schemas.students.enrollment import CourseProgressResponse
 
 
 class QuizQuestionPublic(BaseModel):

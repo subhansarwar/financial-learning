@@ -18,7 +18,7 @@ class MediaAssetRead(BaseModel):
     file_url: str
     content_type: str
     size_bytes: int
-    uploaded_by: uuid.UUID | None
+    uploaded_by: uuid.UUID | None = None
     created_at: datetime
     updated_at: datetime
 

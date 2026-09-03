@@ -11,10 +11,10 @@ from app.core.config import settings
 from app.core.database import check_db_connection, init_db
 from app.routes.auth.auth_api import router as auth_router
 from app.routes.users.profile_api import router as users_router
-from app.routes.courses.catalog_api import router as courses_router
-from app.routes.courses.admin_api import router as courses_admin_router
-from app.routes.courses.certificates_api import router as certificates_router
-from app.routes.courses.monitoring_api import router as courses_monitoring_router
+from app.routes.students.catalog_api import router as courses_router
+from app.routes.courses.course_api import router as courses_admin_router
+from app.routes.students.certificates_api import router as certificates_router
+from app.routes.students.monitoring_api import router as courses_monitoring_router
 from app.routes.publications.publication_student_api import router as publications_student_router
 from app.routes.publications.publication_catalog_api import router as publications_catalog_router
 from app.routes.publications.publication_admin_api import router as publications_admin_router

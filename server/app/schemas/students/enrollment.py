@@ -4,7 +4,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from app.models.courses.enrollment import EnrollmentStatus
+from app.models.students.enrollment import EnrollmentStatus
 
 
 class EnrollmentRead(BaseModel):

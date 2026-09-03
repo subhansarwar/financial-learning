@@ -1,12 +1,14 @@
 # app/schemas/courses/course.py
+import enum
 import uuid
 from datetime import datetime
-
 from pydantic import BaseModel, Field
-
-from app.models.courses.course import CourseLevel
 from app.schemas.courses.module import ModuleRead
 
+class CourseLevel(str, enum.Enum):
+    BEGINNER = "Beginner"
+    INTERMEDIATE = "Intermediate"
+    ADVANCED = "Advanced"
 
 class CourseListItem(BaseModel):
     id: uuid.UUID
@@ -22,7 +24,6 @@ class CourseListItem(BaseModel):
 
     class Config:
         from_attributes = True
-
 
 class CourseRead(BaseModel):
     id: uuid.UUID
@@ -45,10 +46,8 @@ class CourseRead(BaseModel):
     class Config:
         from_attributes = True
 
-
 class CourseDetail(CourseRead):
     modules: list[ModuleRead] = []
-
 
 class CourseCreate(BaseModel):
     slug: str = Field(min_length=1, max_length=160, pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -64,7 +63,6 @@ class CourseCreate(BaseModel):
     instructor_bio: str | None = None
     outcomes: list[str] = []
     is_published: bool = False
-
 
 class CourseUpdate(BaseModel):
     slug: str | None = Field(default=None, min_length=1, max_length=160, pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")

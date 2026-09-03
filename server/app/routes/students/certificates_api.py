@@ -2,10 +2,10 @@
 import uuid
 from fastapi import APIRouter, HTTPException, status
 from app.core.deps import CurrentUser, SessionDep
-from app.crud.courses.certificate_api import list_all_certificate, get_certificate_by_id, get_certificate_by_user_course
+from app.crud.students.certificate_api import list_all_certificate, get_certificate_by_id, get_certificate_by_user_course
 from app.crud.courses import course_api as course_crud
 from app.crud.users.user_api import get_by_id
-from app.schemas.courses.certificate import (
+from app.schemas.students.certificate import (
     CertificateRead,
     CertificateVerifyResponse,
     ValidCertificateResponse,

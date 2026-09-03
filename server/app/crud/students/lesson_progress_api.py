@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from app.core.deps import SessionDep
 from app.models.courses.lesson import Lesson
-from app.models.courses.lesson_progress import LessonCompletion
+from app.models.students.lesson_progress import LessonCompletion
 from app.models.courses.module import Module
 from app.core.security import logger
 

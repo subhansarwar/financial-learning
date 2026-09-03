@@ -8,7 +8,7 @@ from app.core.deps import SessionDep
 from app.core.security import logger
 from app.models.courses.lesson import Lesson
 from app.models.courses.module import Module
-from app.models.courses.quiz_attempt import QuizAttempt
+from app.models.students.quiz_attempt import QuizAttempt
 
 
 async def count_attempts(db: SessionDep, *, user_id: uuid.UUID, lesson_id: uuid.UUID) -> int:

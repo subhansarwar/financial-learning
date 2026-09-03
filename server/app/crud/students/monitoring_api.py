@@ -7,9 +7,9 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.core.deps import SessionDep
 
 from app.models.courses.course import Course
-from app.models.courses.enrollment import CourseEnrollment, EnrollmentStatus
+from app.models.students.enrollment import CourseEnrollment, EnrollmentStatus
 from app.models.courses.lesson import Lesson
-from app.models.courses.lesson_progress import LessonCompletion
+from app.models.students.lesson_progress import LessonCompletion
 from app.models.courses.module import Module
 from app.models.users.user import User
 from app.core.security import logger

@@ -1,8 +1,6 @@
-# app/routes/courses/admin_api.py
+# app/routes/courses/course_api.py
 import uuid
-
 from fastapi import APIRouter, HTTPException, Query, status
-
 from app.core.deps import CurrentAdmin, SessionDep
 from app.crud.courses import course_api as course_crud
 from app.crud.courses import lesson_api as lesson_crud
@@ -11,7 +9,6 @@ from app.schemas.auth.auth import MessageResponse
 from app.schemas.courses.course import CourseCreate, CourseRead, CourseUpdate
 from app.schemas.courses.lesson import LessonCreate, LessonRead, LessonUpdate
 from app.schemas.courses.module import ModuleCreate, ModuleRead, ModuleUpdate
-
 
 async def _build_module_read(db: SessionDep, module) -> ModuleRead:
     lessons = await lesson_crud.list_lessons_by_module(db, module.id)

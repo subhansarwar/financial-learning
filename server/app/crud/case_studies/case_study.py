@@ -1,21 +1,16 @@
 # app/crud/case_studies/case_study.py
 import uuid
-
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.models.case_studies.case_study import CaseStudy
-
 
 async def get_by_id(db: AsyncSession, case_study_id: uuid.UUID) -> CaseStudy | None:
     result = await db.execute(select(CaseStudy).where(CaseStudy.id == case_study_id))
     return result.scalar_one_or_none()
 
-
 async def get_by_slug(db: AsyncSession, slug: str) -> CaseStudy | None:
     result = await db.execute(select(CaseStudy).where(CaseStudy.slug == slug))
     return result.scalar_one_or_none()
-
 
 async def list_case_studies(
     db: AsyncSession,
@@ -44,7 +39,6 @@ async def list_case_studies(
     total = (await db.execute(count_stmt)).scalar_one()
     case_studies = (await db.execute(list_stmt)).scalars().all()
     return list(case_studies), total
-
 
 async def create_case_study(db: AsyncSession, *, created_by: uuid.UUID, **fields) -> CaseStudy:
     case_study = CaseStudy(created_by=created_by, **fields)

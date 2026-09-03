@@ -1,31 +1,27 @@
 # app/services/courses/progress_service_api.py
 import uuid
 from datetime import datetime, timezone
-
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-
 from app.core.deps import SessionDep
 from app.core.security import logger
 from app.crud.courses import module_api as module_crud
 from app.crud.courses.course_api import get_course_by_id
-from app.crud.courses.enrollment_api import create_enrollement, get_enrollment_by_user_and_course
+from app.crud.students.enrollment_api import create_enrollement, get_enrollment_by_user_and_course
 from app.crud.courses.lesson_api import (
     count_lessons_for_course,
     get_course_id_for_lesson,
     list_lessons_by_module,
 )
-from app.crud.courses.lesson_progress_api import list_completed_lesson_ids_for_course
-from app.models.courses.enrollment import EnrollmentStatus
-from app.models.courses.lesson_progress import LessonCompletion
+from app.crud.students.lesson_progress_api import list_completed_lesson_ids_for_course
+from app.models.students.enrollment import EnrollmentStatus
+from app.models.students.lesson_progress import LessonCompletion
 from app.models.users.user import User
-from app.schemas.courses.enrollment import CourseProgressResponse, ModuleProgress
-from app.services.courses.certificate_service_api import issue_certificate
-
+from app.schemas.students.enrollment import CourseProgressResponse, ModuleProgress
+from app.services.students.certificate_service_api import issue_certificate
 
 class CourseNotFoundForLessonError(Exception):
     """Raised when a lesson doesn't belong to any known course (orphaned FK chain)."""
-
 
 async def _build_module_progress(
     db: SessionDep, *, course_id: uuid.UUID, completed_lesson_ids: list[uuid.UUID]

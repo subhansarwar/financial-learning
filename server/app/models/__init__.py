@@ -6,10 +6,10 @@ from app.models.auth.social_account import SocialAccount, SocialProvider
 from app.models.courses.course import Course, CourseLevel
 from app.models.courses.module import Module
 from app.models.courses.lesson import Lesson, LessonType
-from app.models.courses.enrollment import CourseEnrollment, EnrollmentStatus
-from app.models.courses.lesson_progress import LessonCompletion
-from app.models.courses.quiz_attempt import QuizAttempt
-from app.models.courses.certificate import Certificate
+from app.models.students.enrollment import CourseEnrollment, EnrollmentStatus
+from app.models.students.lesson_progress import LessonCompletion
+from app.models.students.quiz_attempt import QuizAttempt
+from app.models.students.certificate import Certificate
 from app.models.publications.publication import Publication, PublicationCategory, PublicationStatus
 from app.models.publications.bookmark import PublicationBookmark
 from app.models.case_studies.case_study import CaseStudy

@@ -15,11 +15,11 @@ from app.core.config import settings
 from app.core.deps import SessionDep
 from app.core.security import logger
 from app.crud.courses import module_api as module_crud
-from app.crud.courses import quiz_attempt_api as quiz_crud
+from app.crud.students import quiz_attempt_api as quiz_crud
 from app.crud.courses.lesson_api import get_course_id_for_lesson, list_lessons_by_module
 from app.models.courses.lesson import Lesson
 from app.models.users.user import User
-from app.schemas.courses.quiz import (
+from app.schemas.students.quiz import (
     CourseQuizResults,
     ModuleQuizStanding,
     ModuleQuizSummary,
@@ -28,7 +28,7 @@ from app.schemas.courses.quiz import (
     QuizResult,
     QuizView,
 )
-from app.services.courses import progress_service_api
+from app.services.students import progress_service_api
 
 
 class QuizError(Exception):

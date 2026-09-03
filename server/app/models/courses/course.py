@@ -1,20 +1,11 @@
-# app/models/courses/course.py
-import enum
+# app/models/courses/admin_course.py
 import uuid
 from datetime import datetime
-
 from sqlalchemy import JSON, Boolean, DateTime, Enum, ForeignKey, Integer, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
-
 from app.core.database import Base
-
-
-class CourseLevel(str, enum.Enum):
-    BEGINNER = "Beginner"
-    INTERMEDIATE = "Intermediate"
-    ADVANCED = "Advanced"
-
+from app.schemas.courses.course import CourseLevel
 
 class Course(Base):
     __tablename__ = "courses"

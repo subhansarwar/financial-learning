@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from app.core.deps import SessionDep
-from app.models.courses.enrollment import CourseEnrollment, EnrollmentStatus
+from app.models.students.enrollment import CourseEnrollment, EnrollmentStatus
 from app.core.security import logger
 
 async def get_enrollment_by_user_and_course(db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UUID) -> CourseEnrollment | None:

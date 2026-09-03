@@ -6,13 +6,13 @@ from datetime import datetime, timezone
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import landscape, A4
 from reportlab.lib.units import cm
-from app.crud.courses.certificate_api import get_certificate_by_id, get_certificate_by_user_course, create_certificate
+from app.crud.students.certificate_api import get_certificate_by_id, get_certificate_by_user_course, create_certificate
 from app.core.deps import SessionDep
 from app.core.storage import upload_certificate
 from app.core.config import settings
 from app.models.courses.course import Course
 from app.models.users.user import User
-from app.models.courses.certificate import Certificate
+from app.models.students.certificate import Certificate
 
 def _generate_certificate_number() -> str:
     return f"FLP-{uuid.uuid4().hex[:12].upper()}"

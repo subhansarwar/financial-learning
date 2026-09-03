@@ -3,10 +3,10 @@ import uuid
 from datetime import date, datetime, time, timedelta, timezone
 from fastapi import APIRouter, HTTPException, Query, status
 from app.core.deps import CurrentAdmin, SessionDep
-from app.crud.courses import monitoring_api as monitoring_crud
+from app.crud.students import monitoring_api as monitoring_crud
 from app.crud.users.user_api import get_by_id
-from app.models.courses.enrollment import EnrollmentStatus
-from app.schemas.courses.monitoring import (EnrollmentActivityItem, EnrollmentActivityResponse, LessonCompletionActivityItem, LessonCompletionActivityResponse, StudentDetailResponse, StudentListResponse, StudentSummary,)
+from app.models.students.enrollment import EnrollmentStatus
+from app.schemas.students.monitoring import (EnrollmentActivityItem, EnrollmentActivityResponse, LessonCompletionActivityItem, LessonCompletionActivityResponse, StudentDetailResponse, StudentListResponse, StudentSummary,)
 
 router = APIRouter(prefix="/admin/monitoring", tags=["Student Monitoring - Admin"])
 
@@ -71,7 +71,6 @@ async def list_students(
         limit=limit,
         students=[_student_summary(user, enrolled, completed) for user, enrolled, completed in rows],
     )
-
 
 @router.get("/students/{user_id}", response_model=StudentDetailResponse)
 async def get_student_detail(user_id: uuid.UUID, db: SessionDep, _admin: CurrentAdmin) -> StudentDetailResponse:

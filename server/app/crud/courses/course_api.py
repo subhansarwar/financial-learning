@@ -1,4 +1,4 @@
-# app/crud/courses/course_api.py
+# app/crud/courses/admin_course_api.py
 import uuid
 from sqlalchemy import func, or_, select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
@@ -28,7 +28,6 @@ async def get_course_by_slug(db: SessionDep, slug: str) -> Course | None:
         raise
 
 
-    
 async def list_all_courses(
     db: SessionDep,
     *,

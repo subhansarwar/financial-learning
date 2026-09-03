@@ -4,24 +4,24 @@ from fastapi import APIRouter, HTTPException, Query, status
 from app.core.config import settings
 from app.core.deps import CurrentUser, SessionDep
 from app.crud.courses import course_api as course_crud
-from app.crud.courses import enrollment_api as enrollment_crud
+from app.crud.students import enrollment_api as enrollment_crud
 from app.crud.courses import lesson_api as lesson_crud
 from app.crud.courses import module_api as module_crud
 from app.models.courses.course import Course, CourseLevel
 from app.schemas.courses.course import CourseDetail, CourseListItem, CourseRead
-from app.schemas.courses.enrollment import CourseProgressResponse, EnrollmentRead
+from app.schemas.students.enrollment import CourseProgressResponse, EnrollmentRead
 from app.schemas.courses.lesson import LessonRead
 from app.schemas.courses.module import ModuleRead
-from app.schemas.courses.quiz import (
+from app.schemas.students.quiz import (
     CourseQuizResults,
     QuizAttemptRead,
     QuizResult,
     QuizSubmission,
     QuizView,
 )
-from app.crud.courses import quiz_attempt_api as quiz_crud
+from app.crud.students import quiz_attempt_api as quiz_crud
 from app.models.courses.lesson import LessonType
-from app.services.courses import progress_service_api, quiz_service_api
+from app.services.students import progress_service_api, quiz_service_api
 
 router = APIRouter(prefix="/courses", tags=["Course Catalog"])
 
