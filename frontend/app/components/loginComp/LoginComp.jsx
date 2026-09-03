@@ -109,7 +109,7 @@ const LoginComp = () => {
     const { loading: authLoading, error, isAuthenticated, user } = useAppSelector(
         (state) => state.user
     );
-    const next = searchParams.get("next") || "dashboard";
+    const next = searchParams.get("next") || "/";
 
     const [isGoogleLoading, setIsGoogleLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -134,7 +134,7 @@ const LoginComp = () => {
         if (typeof window !== "undefined") {
             const user = localStorage.getItem("efp.user");
             if (user) {
-                router.push(next);
+                router.push("/");
             }
         }
     }, [next, router]);
@@ -142,7 +142,7 @@ const LoginComp = () => {
     useEffect(() => {
         if (isAuthenticated && user) {
             setTimeout(() => {
-                router.push(next);
+                router.push("/");
             }, 500);
         }
         if (error) {
@@ -158,7 +158,9 @@ const LoginComp = () => {
             if (result?.access_token) {
                 // Reset form
                 reset();
-
+                setTimeout(() => {
+                    router.push('/');
+                }, 500);
                 // Redirect to dashboard
                 setTimeout(() => {
                     router.push(next);

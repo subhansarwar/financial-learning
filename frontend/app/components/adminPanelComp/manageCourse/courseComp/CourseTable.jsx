@@ -14,6 +14,7 @@ const COLUMNS = [
 ];
 
 export default function CourseTable({ courses, onCreateNew, onView, onEdit, onDelete }) {
+    console.log('courses ===>', courses)
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState({ key: "creationDate", dir: "desc" });
     const [page, setPage] = useState(1);

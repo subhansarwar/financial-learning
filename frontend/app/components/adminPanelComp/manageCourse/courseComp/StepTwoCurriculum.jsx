@@ -46,11 +46,51 @@ function LessonForm({ lesson, onSave, onCancel, moduleId }) {
             toast.error("Lesson title is required");
             return;
         }
+        if (!formData.content?.trim()) {
+            toast.error("Lesson content is required");
+            return;
+        }
+        // Video URL validation - agar type reading hai toh video_url empty bhejo
+        if (formData.type === "reading") {
+            formData.video_url = "";
+        }
         onSave(formData);
+    };
+
+    // Quiz Questions handlers
+    const addQuestion = () => {
+        const questions = [...(formData.quiz_questions || [])];
+        questions.push({
+            q: "",
+            choices: ["", "", "", ""],
+            answer: 0,
+            explain: ""
+        });
+        setFormData({ ...formData, quiz_questions: questions });
+    };
+
+    const updateQuestion = (index, field, value) => {
+        const questions = [...(formData.quiz_questions || [])];
+        questions[index] = { ...questions[index], [field]: value };
+        setFormData({ ...formData, quiz_questions: questions });
+    };
+
+    const updateChoice = (qIndex, cIndex, value) => {
+        const questions = [...(formData.quiz_questions || [])];
+        const choices = [...(questions[qIndex].choices || [])];
+        choices[cIndex] = value;
+        questions[qIndex] = { ...questions[qIndex], choices };
+        setFormData({ ...formData, quiz_questions: questions });
+    };
+
+    const removeQuestion = (index) => {
+        const questions = (formData.quiz_questions || []).filter((_, i) => i !== index);
+        setFormData({ ...formData, quiz_questions: questions });
     };
 
     return (
         <div className="rounded-lg border border-line-soft bg-cream-2/30 p-4 space-y-3">
+            {/* Row 1: Lesson Title + Type */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Lesson Title" required>
                     <input
@@ -67,11 +107,12 @@ function LessonForm({ lesson, onSave, onCancel, moduleId }) {
                         className={inputClass}
                     >
                         <option value="reading">Reading</option>
-                        <option value="video">Video</option>
                         <option value="quiz">Quiz</option>
                     </select>
                 </Field>
             </div>
+
+            {/* Row 2: Duration + Order Index */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Duration (minutes)">
                     <input
@@ -92,26 +133,137 @@ function LessonForm({ lesson, onSave, onCancel, moduleId }) {
                     />
                 </Field>
             </div>
-            <Field label="Content">
+
+            {/* Content */}
+            <Field label="Content" required>
                 <textarea
-                    rows={3}
+                    rows={5}
                     value={formData.content || ""}
                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                    placeholder="Lesson content"
+                    placeholder={
+                        formData.type === "reading"
+                            ? "Enter lesson content here..."
+                            : "Enter quiz instructions or description..."
+                    }
                     className={inputClass}
                 />
+                {!formData.content?.trim() && (
+                    <p className="mt-1 text-xs text-rose-500">Content is required</p>
+                )}
             </Field>
-            {formData.type === "video" && (
-                <Field label="Video URL">
-                    <input
-                        value={formData.video_url || ""}
-                        onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-                        placeholder="https://example.com/video.mp4"
-                        className={inputClass}
-                    />
-                </Field>
+
+            {/* Video URL - Always visible, user can add if needed */}
+            <Field label="Video URL (Optional)">
+                <input
+                    value={formData.video_url || ""}
+                    onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                    placeholder="https://www.youtube.com/watch?v=xyz"
+                    className={inputClass}
+                />
+                <p className="mt-1 text-xs text-muted">Add a video URL if you want to include a video with this lesson.</p>
+            </Field>
+
+            {/* ============ QUIZ SECTION ============ */}
+            {formData.type === "quiz" && (
+                <div className="border-t border-line-soft pt-4 mt-2">
+                    <div className="flex items-center justify-between mb-3">
+                        <Field label="Quiz Pass Percentage">
+                            <input
+                                type="number"
+                                min={0}
+                                max={100}
+                                value={formData.quiz_pass_pct || 100}
+                                onChange={(e) => setFormData({ ...formData, quiz_pass_pct: Number(e.target.value) || 100 })}
+                                className={`${inputClass} max-w-[150px]`}
+                            />
+                        </Field>
+                        <span className="text-xs text-muted">%</span>
+                    </div>
+
+                    <div className="space-y-3">
+                        <p className="text-xs font-bold uppercase tracking-wider text-muted">
+                            Quiz Questions ({formData.quiz_questions?.length || 0})
+                        </p>
+
+                        {(formData.quiz_questions || []).map((q, qIndex) => (
+                            <div key={qIndex} className="rounded-lg border border-line-soft bg-white/50 p-3 space-y-2">
+                                {/* Question */}
+                                <div className="flex items-start gap-2">
+                                    <span className="text-xs font-bold text-brand mt-2">Q{qIndex + 1}.</span>
+                                    <input
+                                        value={q.q || ""}
+                                        onChange={(e) => updateQuestion(qIndex, "q", e.target.value)}
+                                        placeholder={`Question ${qIndex + 1}`}
+                                        className={inputClass}
+                                    />
+                                    <button
+                                        onClick={() => removeQuestion(qIndex)}
+                                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-rose-500 transition-colors hover:bg-rose-50"
+                                        type="button"
+                                    >
+                                        <X className="h-4 w-4" strokeWidth={2} />
+                                    </button>
+                                </div>
+
+                                {/* Choices */}
+                                <div className="grid grid-cols-2 gap-2 pl-6">
+                                    {(q.choices || ["", "", "", ""]).map((choice, cIndex) => (
+                                        <div key={cIndex} className="flex items-center gap-1">
+                                            <span className="text-xs font-bold text-muted w-5">
+                                                {String.fromCharCode(65 + cIndex)}.
+                                            </span>
+                                            <input
+                                                value={choice || ""}
+                                                onChange={(e) => updateChoice(qIndex, cIndex, e.target.value)}
+                                                placeholder={`Choice ${cIndex + 1}`}
+                                                className={inputClass}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Answer + Explanation */}
+                                <div className="grid grid-cols-2 gap-2 pl-6">
+                                    <div>
+                                        <label className="text-xs text-muted">Correct Answer</label>
+                                        <select
+                                            value={q.answer || 0}
+                                            onChange={(e) => updateQuestion(qIndex, "answer", Number(e.target.value))}
+                                            className={inputClass}
+                                        >
+                                            <option value={0}>A</option>
+                                            <option value={1}>B</option>
+                                            <option value={2}>C</option>
+                                            <option value={3}>D</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="text-xs text-muted">Explanation</label>
+                                        <input
+                                            value={q.explain || ""}
+                                            onChange={(e) => updateQuestion(qIndex, "explain", e.target.value)}
+                                            placeholder="Why this answer is correct"
+                                            className={inputClass}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+
+                        <button
+                            onClick={addQuestion}
+                            className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-deep hover:underline"
+                            type="button"
+                        >
+                            <Plus className="h-4 w-4" strokeWidth={2.5} />
+                            Add Question
+                        </button>
+                    </div>
+                </div>
             )}
-            <div className="flex gap-2 pt-2">
+
+            {/* Buttons */}
+            <div className="flex gap-2 pt-2 border-t border-line-soft">
                 <button
                     onClick={handleSubmit}
                     className="inline-flex items-center gap-2 rounded-full bg-[#47735B] px-4 py-2 text-sm font-bold text-white hover:bg-[#3a5f4a]"
@@ -171,7 +323,6 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             };
             onChange([...safeSections, newModule]);
         } catch (error) {
-            toast.error(error?.message || "Failed to create module");
         } finally {
             setLoading(false);
         }
@@ -190,23 +341,18 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             );
             onChange(updatedSections);
             setEditingModule(null);
-            toast.success("Module updated successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to update module");
         } finally {
             setLoading(false);
         }
     };
 
     const handleDeleteModule = async (moduleId) => {
-        if (!confirm("Are you sure you want to delete this module?")) return;
         try {
             setLoading(true);
             await dispatch(deleteModule(moduleId)).unwrap();
             onChange(safeSections.filter(s => s.id !== moduleId));
-            toast.success("Module deleted successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to delete module");
         } finally {
             setLoading(false);
         }
@@ -264,16 +410,13 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             );
             onChange(updatedSections);
             setEditingLesson(null);
-            toast.success("Lesson updated successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to update lesson");
         } finally {
             setLoading(false);
         }
     };
 
     const handleDeleteLesson = async (moduleId, lessonId) => {
-        if (!confirm("Are you sure you want to delete this lesson?")) return;
         try {
             setLoading(true);
             await dispatch(deleteLesson(lessonId)).unwrap();
@@ -285,9 +428,7 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
                 } : s
             );
             onChange(updatedSections);
-            toast.success("Lesson deleted successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to delete lesson");
         } finally {
             setLoading(false);
         }

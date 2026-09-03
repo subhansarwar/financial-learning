@@ -132,9 +132,7 @@ export const deleteCourseById = createAsyncThunk(
             }
             throw new Error("Failed to delete course");
         } catch (error) {
-            dispatch(setLoadingDelete(false));
             const errorMsg = error?.response?.data?.detail || "Failed to delete course. Please try again.";
-            dispatch(setError(errorMsg));
             toast.error(errorMsg);
             throw error;
         }

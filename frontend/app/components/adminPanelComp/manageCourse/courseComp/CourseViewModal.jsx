@@ -1,7 +1,7 @@
 // app/components/adminPanelComp/manageCourse/courseComp/CourseViewModal.jsx
 "use client";
 
-import { X, Pencil, Globe, Layers, DollarSign, Tag, Layers3, PlayCircle, ImageIcon, Video, FileText, Calendar, Users, Star, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, Pencil, Globe, Layers, DollarSign, Tag, Layers3, PlayCircle, ImageIcon, Video, FileText, Calendar, Users, Star, Clock, ChevronLeft, ChevronRight, User, Award, BookOpen } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import Image from "next/image";
 import { useState } from "react";
@@ -24,14 +24,14 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
 
     if (!course) return null;
 
-    // Get all images from course
-    const allImages = course.images || [];
-    const coverImage = course.coverImageName || course.coverImage || course.image || (allImages.length > 0 ? allImages[0] : null);
-    const hasImages = allImages.length > 0;
+    // Course data mapping
+    const coverImage = course.thumbnail_url || course.coverImageName || course.coverImage || course.image || null;
+    const hasImages = course.images && course.images.length > 0;
     const hasVideos = course.videos && course.videos.length > 0;
+    const hasOutcomes = course.outcomes && course.outcomes.length > 0;
 
     // Filter valid image URLs
-    const validImages = allImages.filter(img => {
+    const validImages = (course.images || []).filter(img => {
         return img && (
             img.startsWith('data:image') ||
             img.startsWith('/') ||
@@ -41,6 +41,20 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
     });
 
     const hasValidImages = validImages.length > 0;
+
+    const formatDate = (dateString) => {
+        if (!dateString) return "N/A";
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+            });
+        } catch {
+            return dateString;
+        }
+    };
 
     const getVideoUrl = (video) => {
         return video.url || video.src || video.videoUrl || null;
@@ -91,15 +105,15 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
                 <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-line-soft bg-card p-4 sm:p-5 md:p-6">
                     <div className="min-w-0 flex-1">
                         <div className="mb-2 flex flex-wrap items-center gap-2">
-                            <StatusBadge status={course.status} />
+                            <StatusBadge status={course.is_published} />
                             <span className="text-xs font-bold uppercase tracking-wide text-muted">
-                                {course.category}
+                                {course.topic || course.category}
                             </span>
                         </div>
                         <h3 className="text-lg font-bold tracking-tight text-ink sm:text-xl md:text-2xl line-clamp-2">
                             {course.title}
                         </h3>
-                        <p className="mt-1 text-sm text-muted line-clamp-2">{course.subtitle}</p>
+                        <p className="mt-1 text-sm text-muted line-clamp-2">{course.tagline || course.subtitle}</p>
                     </div>
                     <button
                         onClick={onClose}
@@ -111,7 +125,7 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
 
                 {/* Body */}
                 <div className="space-y-5 p-4 sm:p-5 md:p-6">
-                    {/* Cover Image - Smaller size like Case Studies */}
+                    {/* Cover Image */}
                     {coverImage && (
                         <div className="relative w-full overflow-hidden rounded-xl2 bg-gradient-to-br from-brand-soft/20 to-cream-2">
                             <div className="aspect-[16/9] w-full relative max-h-[280px]">
@@ -136,15 +150,30 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
 
                     {/* Info Grid - 4 columns */}
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        <InfoItem icon={Globe} label="Language" value={course.language} />
+                        <InfoItem icon={Globe} label="Topic" value={course.topic || course.category} />
                         <InfoItem icon={Layers} label="Level" value={course.level} />
-                        <InfoItem
-                            icon={DollarSign}
-                            label="Price"
-                            value={course.price > 0 ? `$${course.price}` : "Free"}
-                        />
-                        <InfoItem icon={Tag} label="Category" value={course.category} />
+                        <InfoItem icon={Clock} label="Duration" value={course.length_min ? `${course.length_min} min` : "—"} />
+                        <InfoItem icon={Calendar} label="Created" value={formatDate(course.created_at)} />
                     </div>
+
+                    {/* Instructor Info */}
+                    {(course.instructor_name || course.instructor_title) && (
+                        <div className="rounded-lg border border-line-soft bg-cream-2/30 p-3 sm:p-4">
+                            <p className="mb-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted">
+                                <User className="h-3.5 w-3.5" strokeWidth={2} />
+                                Instructor
+                            </p>
+                            <div>
+                                <p className="font-bold text-ink">{course.instructor_name || "—"}</p>
+                                <p className="text-sm text-muted">{course.instructor_title || ""}</p>
+                                {course.instructor_bio && (
+                                    <p className="mt-2 text-sm text-ink-2 leading-relaxed line-clamp-3">
+                                        {course.instructor_bio}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Description */}
                     <div>
@@ -153,13 +182,34 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
                             Description
                         </p>
                         <div className="rounded-lg border border-line-soft bg-cream-2/30 p-3 sm:p-4">
-                            <p className="text-sm leading-relaxed text-ink-2">
+                            <p className="text-sm leading-relaxed text-ink-2 whitespace-pre-wrap">
                                 {course.description || "No description provided."}
                             </p>
                         </div>
                     </div>
 
-                    {/* Images Gallery - Like Case Studies */}
+                    {/* Outcomes/Learning Objectives */}
+                    {hasOutcomes && (
+                        <div>
+                            <p className="mb-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted">
+                                <Award className="h-3.5 w-3.5" strokeWidth={2} />
+                                Learning Outcomes ({course.outcomes.length})
+                            </p>
+                            <div className="space-y-1.5">
+                                {course.outcomes.map((outcome, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-start gap-2 rounded-lg border border-line-soft bg-cream-2/30 p-2.5"
+                                    >
+                                        <span className="text-xs font-bold text-brand mt-0.5">{index + 1}.</span>
+                                        <p className="text-sm text-ink-2">{outcome}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Images Gallery */}
                     {hasValidImages && (
                         <div>
                             <div className="mb-2 flex items-center justify-between">
@@ -193,14 +243,14 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
                     )}
 
                     {/* Fallback: Show image names if no valid images */}
-                    {!hasValidImages && allImages.length > 0 && (
+                    {!hasValidImages && (course.images || []).length > 0 && (
                         <div>
                             <p className="mb-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted">
                                 <ImageIcon className="h-3.5 w-3.5" strokeWidth={2} />
-                                Uploaded Files ({allImages.length})
+                                Uploaded Files ({(course.images || []).length})
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                {allImages.map((img, index) => (
+                                {(course.images || []).map((img, index) => (
                                     <div key={index} className="flex items-center gap-2 rounded-lg border border-line-soft bg-cream-2/30 px-3 py-2">
                                         <ImageIcon className="h-4 w-4 text-brand" strokeWidth={2} />
                                         <span className="text-sm text-ink-2 truncate max-w-[150px]">{img}</span>
@@ -252,19 +302,17 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
                     )}
 
                     {/* Curriculum */}
-                    <div>
-                        <div className="mb-2 flex items-center gap-2">
-                            <Layers3 className="h-4 w-4 text-brand" strokeWidth={2} />
-                            <p className="text-sm font-bold text-ink">Curriculum</p>
-                            {course.curriculum && (
+                    {course.curriculum && course.curriculum.length > 0 && (
+                        <div>
+                            <div className="mb-2 flex items-center gap-2">
+                                <Layers3 className="h-4 w-4 text-brand" strokeWidth={2} />
+                                <p className="text-sm font-bold text-ink">Curriculum</p>
                                 <span className="text-xs text-muted bg-cream-2/50 px-2 py-0.5 rounded-full">
                                     {course.curriculum.length} sections
                                 </span>
-                            )}
-                        </div>
-                        <div className="space-y-2">
-                            {(course.curriculum || []).length > 0 ? (
-                                course.curriculum.map((section, idx) => (
+                            </div>
+                            <div className="space-y-2">
+                                {course.curriculum.map((section, idx) => (
                                     <div
                                         key={section.id || idx}
                                         className="rounded-lg border border-line-soft bg-cream-2/30 p-3 sm:p-4"
@@ -284,15 +332,10 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
                                             ))}
                                         </div>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="rounded-lg border border-dashed border-line-soft bg-cream-2/30 p-6 text-center">
-                                    <Layers3 className="mx-auto h-8 w-8 text-muted" strokeWidth={1.5} />
-                                    <p className="mt-2 text-sm text-muted">No curriculum available</p>
-                                </div>
-                            )}
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Footer */}
@@ -312,7 +355,7 @@ export default function CourseViewModal({ course, onClose, onEdit }) {
                     </button>
                 </div>
 
-                {/* Image Lightbox - Like Case Studies */}
+                {/* Image Lightbox */}
                 {selectedImage && (
                     <div
                         className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md animate-in fade-in duration-200"

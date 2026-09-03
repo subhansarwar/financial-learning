@@ -171,7 +171,7 @@ const OtpVerification = () => {
 
                 // Redirect after 2 seconds
                 setTimeout(() => {
-                    router.push("/dashboard");
+                    router.push("/");
                 }, 2000);
             }
         } catch (error) {
