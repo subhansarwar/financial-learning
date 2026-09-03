@@ -76,7 +76,7 @@ const adminCoursesPersistConfig = {
 const websiteCoursePersistConfig = {
     key: "websiteCourse",
     storage,
-    whitelist: ["courses", "totalCourses", "topics", "filters", "pagination"],
+    whitelist: ["courses", "currentCourse", "topics", "pagination", "filters", "certificate"],
 };
 
 const caseStudiesPersistConfig = {
