@@ -119,7 +119,7 @@ export const updateCaseStudy = createAsyncThunk(
 
             const res = await apiCall({
                 path: `admin/case-studies/${id}`,
-                method: "put",
+                method: "patch",
                 body: updateData,
             });
 

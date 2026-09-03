@@ -262,38 +262,49 @@ export default function CoursePageClient({ slug }) {
 
                     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                         <div className="lg:col-span-2">
-                            <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-[#14301F] sm:text-4xl lg:text-5xl">
+                            <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-[#14301F] sm:text-5xl lg:text-6xl">
                                 {course.title}
                             </h1>
-                            <p className="mt-3 text-lg font-medium text-[#14301F]/70">{course.tagline}</p>
+                            <p className="mt-3 text-xl font-medium text-[#14301F]/70">{course.tagline}</p>
 
-                            <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-[#14301F]/60">
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1">
-                                    <Award className="h-3.5 w-3.5 text-[#72BB83]" strokeWidth={2.5} />
-                                    <b className="text-[#14301F]">{course.level || 'Beginner'}</b>
+                            <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-[#14301F]/60">
+                                {/* Level Badge - Increased size */}
+                                <span className="inline-flex items-center gap-2 rounded-full bg-white/60 px-4 py-2.5">
+                                    <Award className="h-4 w-4 text-[#72BB83]" strokeWidth={2.5} />
+                                    <b className="text-[#14301F] text-sm">{course.level || 'Beginner'}</b>
                                 </span>
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1">
-                                    <Clock className="h-3.5 w-3.5 text-[#72BB83]" strokeWidth={2.5} />
-                                    <b className="text-[#14301F]">{formatDuration(course.length_min)}</b>
+
+                                {/* Duration Badge - Increased size */}
+                                <span className="inline-flex items-center gap-2 rounded-full bg-white/60 px-4 py-2.5">
+                                    <Clock className="h-4 w-4 text-[#72BB83]" strokeWidth={2.5} />
+                                    <b className="text-[#14301F] text-sm">{formatDuration(course.length_min)}</b>
                                 </span>
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1">
-                                    <Layers className="h-3.5 w-3.5 text-[#72BB83]" strokeWidth={2.5} />
-                                    <b className="text-[#14301F]">{course.modules?.length || 0}</b> modules
+
+                                {/* Modules Badge - Increased size */}
+                                <span className="inline-flex items-center gap-2 rounded-full bg-white/60 px-4 py-2.5">
+                                    <Layers className="h-4 w-4 text-[#72BB83]" strokeWidth={2.5} />
+                                    <b className="text-[#14301F] text-sm">{course.modules?.length || 0}</b> modules
                                 </span>
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1">
-                                    <BookOpen className="h-3.5 w-3.5 text-[#72BB83]" strokeWidth={2.5} />
-                                    <b className="text-[#14301F]">{totalLessons}</b> lessons
+
+                                {/* Lessons Badge - Increased size */}
+                                <span className="inline-flex items-center gap-2 rounded-full bg-white/60 px-4 py-2.5">
+                                    <BookOpen className="h-4 w-4 text-[#72BB83]" strokeWidth={2.5} />
+                                    <b className="text-[#14301F] text-sm">{totalLessons}</b> lessons
                                 </span>
+
+                                {/* Course Complete Badge - Increased size */}
                                 {isCourseComplete && (
-                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#72BB83]/10 px-3 py-1 text-[#72BB83]">
-                                        <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-                                        Course Complete!
+                                    <span className="inline-flex items-center gap-2 rounded-full bg-[#72BB83]/10 px-4 py-2.5 text-[#72BB83]">
+                                        <CheckCircle2 className="h-4 w-4" strokeWidth={2.5} />
+                                        <span className="text-sm font-bold">Course Complete!</span>
                                     </span>
                                 )}
+
+                                {/* Gated Badge - Increased size */}
                                 {gated && (
-                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-amber-700">
-                                        <Lock className="h-3.5 w-3.5" strokeWidth={2.5} />
-                                        Pass each module at 70%+
+                                    <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2.5 text-amber-700">
+                                        <Lock className="h-4 w-4" strokeWidth={2.5} />
+                                        <span className="text-sm font-bold">Pass each module at 70%+</span>
                                     </span>
                                 )}
                             </div>

@@ -175,7 +175,7 @@ export default function AboutUsFinanceSection() {
                             initial={{ opacity: 0, x: -30, y: 30 }}
                             animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -30, y: 30 }}
                             transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-                            className="col-start-1 mt-10 sm:mt-15"
+                            className="col-center mt-10 sm:mt-15 mr-12 w-full"
                         >
                             <motion.div
                                 className="rounded-2xl bg-[#F8FDFF] p-6 text-center sm:p-8"
@@ -207,7 +207,7 @@ export default function AboutUsFinanceSection() {
                         </motion.div>
 
                         {/* Growth Focused */}
-                        <motion.div
+                        {/* <motion.div
                             initial={{ opacity: 0, x: 30, y: -20 }}
                             animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: 30, y: -20 }}
                             transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
@@ -239,7 +239,7 @@ export default function AboutUsFinanceSection() {
                                     time we just make those decisions easier to get right.&rdquo;
                                 </p>
                             </motion.div>
-                        </motion.div>
+                        </motion.div> */}
                     </div>
 
                     {/* What we cover */}

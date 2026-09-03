@@ -464,6 +464,8 @@ export default function LessonClient({
                             dangerouslySetInnerHTML={{ __html: lesson.content || "" }}
                         />
                     )}
+                    <LessonContentBlocks blocks={lesson?.content_blocks} />
+                    <LessonSummaryBlock summary={lesson?.summary} />
                     <Navigation
                         extra={
                             isComplete ? (

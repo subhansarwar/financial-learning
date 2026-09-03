@@ -38,8 +38,25 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
 
     useEffect(() => {
         if (!isOpen) return;
-        setData(mode === "edit" && initialData ? { ...initialData } : emptyCaseDraft());
-        setImagePreviews(mode === "edit" && initialData?.images ? initialData.images : []);
+
+        if (mode === "edit" && initialData) {
+            // Ensure content is an array
+            const contentArray = Array.isArray(initialData?.content)
+                ? initialData.content
+                : initialData.content
+                    ? [{ heading: "Content", text: initialData?.content }]
+                    : [{ heading: "", text: "" }];
+
+            setData({
+                ...initialData,
+                content: contentArray
+            });
+            setImagePreviews(mode === "edit" && initialData?.images ? initialData.images : []);
+        } else {
+            setData(emptyCaseDraft());
+            setImagePreviews([]);
+        }
+
         setTouched({
             title: false,
             slug: false,
@@ -81,13 +98,13 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
 
     const isFormValid = () => {
         return (
-            data.title.trim() !== "" &&
-            data.slug.trim() !== "" &&
-            /^[a-z0-9-]+$/.test(data.slug) &&
-            data.author.trim() !== "" &&
-            data.shortDescription.trim() !== "" &&
-            data.introduction.trim() !== "" &&
-            data.content.some((s) => s.heading.trim() !== "" && s.text.trim() !== "")
+            data?.title?.trim() !== "" &&
+            data?.slug?.trim() !== "" &&
+            /^[a-z0-9-]+$/.test(data?.slug) &&
+            data?.author?.trim() !== "" &&
+            data?.shortDescription?.trim() !== "" &&
+            data?.introduction?.trim() !== "" &&
+            data?.content?.some((s) => s?.heading?.trim() !== "" && s?.text?.trim() !== "")
         );
     };
 
@@ -294,7 +311,7 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                                     Add Section
                                 </button>
                             </div>
-                            {data.content.map((section, index) => (
+                            {data?.content?.map((section, index) => (
                                 <div key={index} className="mb-3 rounded-lg border border-line-soft bg-cream-2/30 p-4">
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="flex-1 space-y-2">
@@ -400,8 +417,8 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                         onClick={handleSave}
                         disabled={!isFormValid()}
                         className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors ${isFormValid()
-                                ? "bg-[#47735B] hover:bg-[#47735B]"
-                                : "bg-muted cursor-not-allowed opacity-60"
+                            ? "bg-[#47735B] hover:bg-[#47735B]"
+                            : "bg-muted cursor-not-allowed opacity-60"
                             }`}
                     >
                         <Send className="h-4 w-4" strokeWidth={2.5} />

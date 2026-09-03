@@ -146,7 +146,7 @@ export default function LessonClientWrapper() {
                     setLoading(false);
                 });
         }
-    }, [dispatch, slug]);
+    }, [slug]);
 
     // Helper: Check if lesson is locked
     const checkIfLessonLocked = (lesson, allLessons, currentIndex, completedIds) => {

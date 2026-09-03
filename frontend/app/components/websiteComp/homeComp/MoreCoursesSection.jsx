@@ -257,7 +257,13 @@ function ExploreCourseCard({ course, delay = 0, isInView }) {
     const duration = toText(course.duration);
     const rating = course.rating || null;
     const reviewsCount = course.reviewsCount || null;
-
+    const getRandomIcon = useMemo(() => {
+        // Use course id or slug to deterministically pick an icon
+        const seed = String(course?.id || course?.slug || '');
+        const hash = seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const icons = ['📚', '🌱', '🎓'];
+        return icons[hash % icons.length];
+    }, [course?.id, course?.slug]);
     // Build the meta row items so we can interleave "·" separators exactly
     // like the reference design, regardless of which fields are present.
     const metaItems = [
@@ -316,10 +322,13 @@ function ExploreCourseCard({ course, delay = 0, isInView }) {
                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                 ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-[#f5f0eb] to-[#e8e3dd] text-ink/20 transition-transform duration-500 ease-out group-hover:scale-105">
-                        <BookOpen className="h-6 w-6" strokeWidth={1.25} />
-                        <span className="px-4 text-center text-xs font-medium">{title}</span>
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#72BB83]/10 to-[#14301F]/5 transition-transform duration-300 group-hover:scale-105">
+                        <span className="text-6xl">{getRandomIcon}</span>
                     </div>
+                    // <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-[#f5f0eb] to-[#e8e3dd] text-ink/20 transition-transform duration-500 ease-out group-hover:scale-105">
+                    //     <BookOpen className="h-6 w-6" strokeWidth={1.25} />
+                    //     <span className="px-4 text-center text-xs font-medium">{title}</span>
+                    // </div>
                 )}
             </motion.div>
 

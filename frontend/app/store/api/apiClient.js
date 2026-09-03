@@ -28,13 +28,13 @@ const processQueue = (error, token = null) => {
     failedQueue = [];
 };
 
-// Refresh token function - Fixed error handling
+// Refresh token function - Silent fail on 422/error
 const refreshAccessToken = async () => {
     try {
         const refreshToken = localStorage.getItem("refresh_token");
         if (!refreshToken) {
-            // No refresh token, just throw error
-            // throw new Error("No refresh token available");
+            // 🔥 Silent fail - no error thrown
+            return null;
         }
 
         const response = await axios.post(`${baseUrl}v1/auth/refresh`, {
@@ -53,14 +53,14 @@ const refreshAccessToken = async () => {
 
         return access_token;
     } catch (error) {
-        // Clear tokens on refresh failure
+        // 🔥 Silent fail - clear tokens but don't throw error
         localStorage.removeItem("auth_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("efp.user");
         delete axiosInstance.defaults.headers.common["Authorization"];
 
-        // Don't redirect here, just throw error
-        throw error;
+        // 🔥 Return null instead of throwing error
+        return null;
     }
 };
 
@@ -86,15 +86,18 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        // 🔥 Only handle 401 errors, not 422 validation errors
+        // 🔥 Only handle 401 errors, ignore 422
         if (error.response?.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
                     failedQueue.push({ resolve, reject });
                 })
                     .then((token) => {
-                        originalRequest.headers.Authorization = `Bearer ${token}`;
-                        return axiosInstance(originalRequest);
+                        if (token) {
+                            originalRequest.headers.Authorization = `Bearer ${token}`;
+                            return axiosInstance(originalRequest);
+                        }
+                        return Promise.reject(error);
                     })
                     .catch((err) => {
                         return Promise.reject(err);
@@ -106,26 +109,35 @@ axiosInstance.interceptors.response.use(
 
             try {
                 const newToken = await refreshAccessToken();
-                originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                processQueue(null, newToken);
-                return axiosInstance(originalRequest);
+                if (newToken) {
+                    originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                    processQueue(null, newToken);
+                    return axiosInstance(originalRequest);
+                } else {
+                    processQueue(null, null);
+                    return Promise.reject(error);
+                }
             } catch (refreshError) {
                 processQueue(refreshError, null);
-                // 🔥 Don't redirect here, let the caller handle it
                 return Promise.reject(refreshError);
             } finally {
                 isRefreshing = false;
             }
         }
 
-        // 🔥 Don't redirect on 422 or other errors
-        // Only redirect if it's a 401 and we're not in the middle of a request
+        // 🔥 Ignore 422 errors - don't show anything
+        if (error.response?.status === 422) {
+            // 🔥 Just return the error without any toast or console
+            return Promise.reject(error);
+        }
+
+        // 🔥 Only redirect on 401 after retry
         if (error.response?.status === 401 && originalRequest._retry) {
-            // Only redirect if not on login page already
             if (typeof window !== "undefined" && !window.location.pathname.includes('/login')) {
                 localStorage.removeItem("auth_token");
                 localStorage.removeItem("refresh_token");
                 localStorage.removeItem("efp.user");
+                // 🔥 Silent redirect - no toast
                 window.location.href = "/login";
             }
         }
@@ -149,6 +161,12 @@ const apiCall = async ({ path, method = "get", body = null, token = null }) => {
 
         return response.data;
     } catch (error) {
+        // 🔥 Silent fail for 422 - no console error
+        if (error.response?.status === 422) {
+            // Return the error data without throwing
+            return error.response.data;
+        }
+
         console.error("API Call Error:", error);
 
         if (error.response) {

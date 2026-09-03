@@ -31,10 +31,10 @@ const LEARNING = "#34C79D";
 const CHALLENGE = "#F2B84B";
 
 const STATS = [
-    { label: "Courses", sub: "In Progress", value: 4, icon: BookOpen, bg: "#FCEFD9", fg: "#C8862B" },
-    { label: "Lessons", sub: "Completed", value: 12, icon: ClipboardCheck, bg: "#DCEFEA", fg: "#2F8574" },
-    { label: "Quizzes", sub: "Completed", value: 8, icon: HelpCircle, bg: "#E4E9FB", fg: "#5B6BC0" },
-    { label: "Time Spent", sub: "13h 10m", value: null, icon: Clock, bg: "#FBE1E4", fg: "#C0576A" },
+    { label: "Courses", sub: "In Progress", value: 2, icon: BookOpen, bg: "#FCEFD9", fg: "#C8862B" },
+    { label: "Lessons", sub: "Completed", value: 1, icon: ClipboardCheck, bg: "#DCEFEA", fg: "#2F8574" },
+    { label: "Quizzes", sub: "Completed", value: 1, icon: HelpCircle, bg: "#E4E9FB", fg: "#5B6BC0" },
+    { label: "Time Spent", sub: "30 min", value: null, icon: Clock, bg: "#FBE1E4", fg: "#C0576A" },
 ];
 
 const SPENT_HOURS = [
@@ -55,9 +55,9 @@ const METRICS = [
 ];
 
 const RECENT_ACTIVITY = [
-    { title: "UX Design Foundations", author: "Sen Jenson", progress: 60, tone: "#7C6AE8" },
-    { title: "UI/UX Design Terminology", author: "Sen Jenson", progress: 50, tone: "#4FA3D1" },
-    { title: "Common Design Patterns", author: "Sen Jenson", progress: 15, tone: "#E0A93E" },
+    { title: "Sustainable Energy Investment", author: "Prof. Marcus Webb", progress: 60, tone: "#7C6AE8" },
+    { title: "Microfinance: Financial Inclusion in Action", author: "Dr. Priya Raman", progress: 50, tone: "#4FA3D1" },
+    // { title: "Common Design Patterns", author: "Sen Jenson", progress: 15, tone: "#E0A93E" },
 ];
 
 function CustomTooltip({ active, payload, label }) {
