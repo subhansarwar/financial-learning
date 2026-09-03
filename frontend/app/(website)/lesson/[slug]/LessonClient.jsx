@@ -79,7 +79,7 @@ export default function LessonClient({
 
     // Use mark_as_completed from API instead of local state
     const [isComplete, setIsComplete] = useState(
-        initialCompletedIds?.includes(lesson?.id) || false
+        initialCompletedIds?.includes(lesson?.completed_lesson_ids) || false
     );
     const [isCompleting, setIsCompleting] = useState(false);
     const [quizSubmitted, setQuizSubmitted] = useState(false);
@@ -375,11 +375,11 @@ export default function LessonClient({
                         className="inline-flex items-center gap-2 rounded-full bg-[#72BB83] px-6 py-3 font-bold text-white transition-colors hover:bg-[#72BB83]/80"
                     >
                         {isDownloadingCert ? (
-                        <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
-                    ) : (
-                        <Download className="h-4 w-4" strokeWidth={2.5} />
-                    )}
-                    {isDownloadingCert ? "" : "Download Certificate (PDF)"}
+                            <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
+                        ) : (
+                            <Download className="h-4 w-4" strokeWidth={2.5} />
+                        )}
+                        {isDownloadingCert ? "" : "Download Certificate (PDF)"}
                     </button>
                     <Link
                         href={`/course/${slug}`}
@@ -545,7 +545,6 @@ export default function LessonClient({
                                 </button>
                             )
                         }
-                        disableNext={!isComplete}
                     />
                 </>
             );
@@ -600,7 +599,7 @@ export default function LessonClient({
                         markComplete={markComplete}
                         onProgressUpdate={onProgressUpdate}
                     />
-                    <Navigation extra={null} disableNext={!isComplete} hideNext={isQuizFailed} />
+                    <Navigation extra={null} disableNext={!isComplete && !quizPassed} hideNext={isQuizFailed} />
                     <CertificateModal
                         isOpen={showCertificate}
                         onClose={() => setShowCertificate(false)}

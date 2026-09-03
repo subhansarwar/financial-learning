@@ -345,9 +345,9 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
                 order_index: result.order_index,
             };
             onChange([...safeSections, newModule]);
-            toast.success("Module created successfully!");
+            // toast.success("Module created successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to create module");
+            // toast.error(error?.message || "Failed to create module");
         } finally {
             setLoading(false);
         }
@@ -366,23 +366,22 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             );
             onChange(updatedSections);
             setEditingModule(null);
-            toast.success("Module updated successfully!");
+            // toast.success("Module updated successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to update module");
+            // toast.error(error?.message || "Failed to update module");
         } finally {
             setLoading(false);
         }
     };
 
     const handleDeleteModule = async (moduleId) => {
-        if (!confirm("Are you sure you want to delete this module?")) return;
         try {
             setLoading(true);
             await dispatch(deleteModule(moduleId)).unwrap();
             onChange(safeSections.filter(s => s.id !== moduleId));
-            toast.success("Module deleted successfully!");
+            // toast.success("Module deleted successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to delete module");
+            // toast.error(error?.message || "Failed to delete module");
         } finally {
             setLoading(false);
         }
@@ -415,9 +414,9 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             );
             onChange(updatedSections);
             setEditingLesson(null);
-            toast.success("Lesson created successfully!");
+            // toast.success("Lesson created successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to create lesson");
+            // toast.error(error?.message || "Failed to create lesson");
         } finally {
             setLoading(false);
         }
@@ -441,16 +440,15 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
             );
             onChange(updatedSections);
             setEditingLesson(null);
-            toast.success("Lesson updated successfully!");
+            // toast.success("Lesson updated successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to update lesson");
+            // toast.error(error?.message || "Failed to update lesson");
         } finally {
             setLoading(false);
         }
     };
 
     const handleDeleteLesson = async (moduleId, lessonId) => {
-        if (!confirm("Are you sure you want to delete this lesson?")) return;
         try {
             setLoading(true);
             await dispatch(deleteLesson(lessonId)).unwrap();
@@ -462,9 +460,9 @@ export default function StepTwoCurriculum({ sections = [], onChange, courseId })
                 } : s
             );
             onChange(updatedSections);
-            toast.success("Lesson deleted successfully!");
+            // toast.success("Lesson deleted successfully!");
         } catch (error) {
-            toast.error(error?.message || "Failed to delete lesson");
+            // toast.error(error?.message || "Failed to delete lesson");
         } finally {
             setLoading(false);
         }
