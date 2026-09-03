@@ -1,11 +1,22 @@
 # app/core/storage.py
 import posixpath
 import uuid
+
+from httpx import HTTPStatusError
 from supabase import Client, create_client
+
 from app.core.config import settings
+
 
 class StorageNotConfiguredError(Exception):
     """Raised when Supabase Storage credentials aren't set in the environment."""
+
+
+class StorageUploadError(Exception):
+    """A Supabase Storage upload/delete was rejected. The message carries the
+    server's own response body (e.g. 'Bucket not found', 'The resource already
+    exists'), which storage3's bare HTTPStatusError hides."""
+
 
 _client: Client | None = None
 
@@ -19,48 +30,58 @@ def _get_client() -> Client:
     return _client
 
 
+def _upload(*, bucket: str, path: str, content: bytes, content_type: str) -> str:
+    """Upserts an object into ``bucket`` and returns its public URL. Raises
+    StorageUploadError with the server's message when Supabase rejects the call."""
+    client = _get_client()
+    try:
+        client.storage.from_(bucket).upload(
+            path,
+            content,
+            {"content-type": content_type, "upsert": "true"},
+        )
+    except HTTPStatusError as exc:
+        body = exc.response.text.strip()
+        raise StorageUploadError(
+            f"Supabase Storage rejected upload to '{bucket}/{path}' "
+            f"({exc.response.status_code}): {body or 'no response body'}"
+        ) from exc
+    return client.storage.from_(bucket).get_public_url(path)
+
+
 def upload_avatar(*, user_id: uuid.UUID, content: bytes, content_type: str) -> str:
     """Uploads avatar bytes to the configured Supabase Storage bucket and
     returns a public URL. Raises StorageNotConfiguredError if Supabase isn't set up."""
-    client = _get_client()
     extension = content_type.split("/")[-1]
-    path = f"{user_id}/avatar.{extension}"
-
-    client.storage.from_(settings.SUPABASE_AVATAR_BUCKET).upload(
-        path,
-        content,
-        {"content-type": content_type, "upsert": "true"},
+    return _upload(
+        bucket=settings.SUPABASE_AVATAR_BUCKET,
+        path=f"{user_id}/avatar.{extension}",
+        content=content,
+        content_type=content_type,
     )
-    return client.storage.from_(settings.SUPABASE_AVATAR_BUCKET).get_public_url(path)
 
 
 def upload_certificate(*, certificate_number: str, content: bytes) -> str:
     """Uploads a generated certificate PDF to the configured Supabase Storage bucket and
     returns a public URL. Raises StorageNotConfiguredError if Supabase isn't set up."""
-    client = _get_client()
-    path = f"{certificate_number}.pdf"
-
-    client.storage.from_(settings.SUPABASE_CERTIFICATE_BUCKET).upload(
-        path,
-        content,
-        {"content-type": "application/pdf", "upsert": "true"},
+    return _upload(
+        bucket=settings.SUPABASE_CERTIFICATE_BUCKET,
+        path=f"{certificate_number}.pdf",
+        content=content,
+        content_type="application/pdf",
     )
-    return client.storage.from_(settings.SUPABASE_CERTIFICATE_BUCKET).get_public_url(path)
 
 
 def upload_publication_file(*, publication_id: uuid.UUID, content: bytes, content_type: str) -> str:
     """Uploads a student-submitted publication PDF to the configured Supabase Storage
     bucket and returns a public URL. Raises StorageNotConfiguredError if Supabase isn't set up."""
-    client = _get_client()
     extension = content_type.split("/")[-1]
-    path = f"{publication_id}/paper.{extension}"
-
-    client.storage.from_(settings.SUPABASE_PUBLICATION_BUCKET).upload(
-        path,
-        content,
-        {"content-type": content_type, "upsert": "true"},
+    return _upload(
+        bucket=settings.SUPABASE_PUBLICATION_BUCKET,
+        path=f"{publication_id}/paper.{extension}",
+        content=content,
+        content_type=content_type,
     )
-    return client.storage.from_(settings.SUPABASE_PUBLICATION_BUCKET).get_public_url(path)
 
 
 def _media_extension(*, filename: str | None, content_type: str) -> str:
@@ -88,16 +109,15 @@ def upload_media(
 
     Returns ``(storage_path, public_url)``. Raises StorageNotConfiguredError if Supabase isn't set up.
     """
-    client = _get_client()
     extension = _media_extension(filename=filename, content_type=content_type)
     path = f"{container}/{kind}/{asset_id}.{extension}"
-
-    client.storage.from_(settings.SUPABASE_MEDIA_BUCKET).upload(
-        path,
-        content,
-        {"content-type": content_type, "upsert": "true"},
+    url = _upload(
+        bucket=settings.SUPABASE_MEDIA_BUCKET,
+        path=path,
+        content=content,
+        content_type=content_type,
     )
-    return path, client.storage.from_(settings.SUPABASE_MEDIA_BUCKET).get_public_url(path)
+    return path, url
 
 
 def delete_media(*, storage_path: str) -> None:
@@ -106,4 +126,11 @@ def delete_media(*, storage_path: str) -> None:
     client = _get_client()
     # Guard against absolute paths / traversal sneaking into the remove() call.
     clean_path = posixpath.normpath(storage_path).lstrip("/")
-    client.storage.from_(settings.SUPABASE_MEDIA_BUCKET).remove([clean_path])
+    try:
+        client.storage.from_(settings.SUPABASE_MEDIA_BUCKET).remove([clean_path])
+    except HTTPStatusError as exc:
+        body = exc.response.text.strip()
+        raise StorageUploadError(
+            f"Supabase Storage rejected delete of '{settings.SUPABASE_MEDIA_BUCKET}/{clean_path}' "
+            f"({exc.response.status_code}): {body or 'no response body'}"
+        ) from exc

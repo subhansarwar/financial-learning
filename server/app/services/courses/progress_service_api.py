@@ -7,19 +7,50 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from app.core.deps import SessionDep
 from app.core.security import logger
+from app.crud.courses import module_api as module_crud
 from app.crud.courses.course_api import get_course_by_id
 from app.crud.courses.enrollment_api import create_enrollement, get_enrollment_by_user_and_course
-from app.crud.courses.lesson_api import count_lessons_for_course, get_course_id_for_lesson
+from app.crud.courses.lesson_api import (
+    count_lessons_for_course,
+    get_course_id_for_lesson,
+    list_lessons_by_module,
+)
 from app.crud.courses.lesson_progress_api import list_completed_lesson_ids_for_course
 from app.models.courses.enrollment import EnrollmentStatus
 from app.models.courses.lesson_progress import LessonCompletion
 from app.models.users.user import User
-from app.schemas.courses.enrollment import CourseProgressResponse
+from app.schemas.courses.enrollment import CourseProgressResponse, ModuleProgress
 from app.services.courses.certificate_service_api import issue_certificate
 
 
 class CourseNotFoundForLessonError(Exception):
     """Raised when a lesson doesn't belong to any known course (orphaned FK chain)."""
+
+
+async def _build_module_progress(
+    db: SessionDep, *, course_id: uuid.UUID, completed_lesson_ids: list[uuid.UUID]
+) -> list[ModuleProgress]:
+    """Per-module completion for one student, derived from their lesson completions.
+    A module is complete once every lesson in it is done."""
+    completed = set(completed_lesson_ids)
+    modules = await module_crud.list_for_course(db, course_id)
+
+    out: list[ModuleProgress] = []
+    for module in modules:
+        lessons = await list_lessons_by_module(db, module.id)
+        total = len(lessons)
+        done = sum(1 for lesson in lessons if lesson.id in completed)
+        out.append(
+            ModuleProgress(
+                module_id=module.id,
+                title=module.title,
+                order_index=module.order_index,
+                lessons_total=total,
+                lessons_completed=done,
+                completed=total > 0 and done >= total,
+            )
+        )
+    return out
 
 
 async def get_progress(db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UUID) -> CourseProgressResponse:
@@ -28,6 +59,9 @@ async def get_progress(db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UU
         db, user_id=user_id, course_id=course_id
     )
     total_lessons = await count_lessons_for_course(db, course_id)
+    modules = await _build_module_progress(
+        db, course_id=course_id, completed_lesson_ids=completed_ids
+    )
 
     return CourseProgressResponse(
         course_id=course_id,
@@ -36,6 +70,7 @@ async def get_progress(db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UU
         total_lessons=total_lessons,
         completed_lessons=len(completed_ids),
         completed_lesson_ids=completed_ids,
+        modules=modules,
     )
 
 
@@ -125,7 +160,21 @@ async def complete_lesson(db: SessionDep, *, user: User, lesson_id: uuid.UUID) -
     if is_complete:
         course = await get_course_by_id(db, course_id)
         if course is not None:
-            await issue_certificate(db, user=user, course=course)
+            try:
+                await issue_certificate(db, user=user, course=course)
+            except Exception:
+                # Progress is already committed. A failed certificate (e.g. storage
+                # misconfigured) must not 500 the completion request — issue_certificate
+                # is idempotent and retries on the next completion call.
+                logger.exception(
+                    "Course %s completed for user %s but certificate issuance failed",
+                    course_id,
+                    user.id,
+                )
+
+    modules = await _build_module_progress(
+        db, course_id=course_id, completed_lesson_ids=completed_ids
+    )
 
     return CourseProgressResponse(
         course_id=course_id,
@@ -134,4 +183,5 @@ async def complete_lesson(db: SessionDep, *, user: User, lesson_id: uuid.UUID) -
         total_lessons=total_lessons,
         completed_lessons=len(completed_ids),
         completed_lesson_ids=completed_ids,
+        modules=modules,
     )
