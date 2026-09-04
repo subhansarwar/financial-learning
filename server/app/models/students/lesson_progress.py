@@ -1,13 +1,10 @@
 # app/models/courses/lesson_progress.py
 import uuid
 from datetime import datetime
-
 from sqlalchemy import DateTime, ForeignKey, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
-
 from app.core.database import Base
-
 
 class LessonCompletion(Base):
     __tablename__ = "lesson_completions"

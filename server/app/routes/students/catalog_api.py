@@ -23,23 +23,8 @@ from app.crud.students import quiz_attempt_api as quiz_crud
 from app.models.courses.lesson import LessonType
 from app.services.students import progress_service_api, quiz_service_api
 
-router = APIRouter(prefix="/courses", tags=["Course Catalog"])
+router = APIRouter(prefix="/courses", tags=["Student Course"])
 
-async def _build_course_detail(db: SessionDep, course: Course) -> CourseDetail:
-    modules = await module_crud.list_for_course(db, course.id)
-    module_reads = []
-    for m in modules:
-        lessons = await lesson_crud.list_lessons_by_module(db, m.id)
-        module_reads.append(
-            ModuleRead(
-                id=m.id,
-                course_id=m.course_id,
-                title=m.title,
-                order_index=m.order_index,
-                lessons=[LessonRead.model_validate(l) for l in lessons],
-            )
-        )
-    return CourseDetail(**CourseRead.model_validate(course).model_dump(), modules=module_reads)
 
 @router.get("/all", response_model=list[CourseListItem])
 async def list_courses(
@@ -60,12 +45,7 @@ async def list_my_enrollments(db: SessionDep, current_user: CurrentUser) -> list
     enrollments = await enrollment_crud.list_enrollments_by_user(db, current_user.id)
     return [EnrollmentRead.model_validate(e) for e in enrollments]
 
-@router.get("/read/{slug}", response_model=CourseDetail)
-async def get_course(slug: str, db: SessionDep) -> CourseDetail:
-    course = await course_crud.get_course_by_slug(db, slug)
-    if course is None or not course.is_published:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
-    return await _build_course_detail(db, course)
+
 
 @router.post("/{course_id}/enroll", response_model=EnrollmentRead)
 async def enroll(course_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> EnrollmentRead:

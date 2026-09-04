@@ -12,6 +12,7 @@ from app.core.database import check_db_connection, init_db
 from app.routes.auth.auth_api import router as auth_router
 from app.routes.users.profile_api import router as users_router
 from app.routes.students.catalog_api import router as courses_router
+from app.routes.students.dashboard_api import router as dashboard_router
 from app.routes.courses.course_api import router as courses_admin_router
 from app.routes.students.certificates_api import router as certificates_router
 from app.routes.students.monitoring_api import router as courses_monitoring_router
@@ -58,6 +59,7 @@ app.include_router(auth_router, prefix=p)
 # STUDENT ROUTERS
 app.include_router(users_router, prefix=p)
 app.include_router(courses_router, prefix=p)
+app.include_router(dashboard_router, prefix=p)
 app.include_router(certificates_router, prefix=p)
 app.include_router(publications_student_router,prefix=p)
 app.include_router(publications_catalog_router, prefix=p)

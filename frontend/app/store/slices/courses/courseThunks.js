@@ -103,7 +103,7 @@ export const getCourseBySlug = createAsyncThunk(
             dispatch(clearError());
 
             const res = await apiCall({
-                path: `v1/courses/read/${slug}`,
+                path: `v1/admin/courses/read/${slug}`,
                 method: "get",
             });
 

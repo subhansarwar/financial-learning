@@ -5,6 +5,8 @@ from app.core.deps import CurrentAdmin, SessionDep
 from app.crud.courses import course_api as course_crud
 from app.crud.courses import lesson_api as lesson_crud
 from app.crud.courses import module_api as module_crud
+from app.models.courses.course import Course, CourseLevel
+from app.schemas.courses.course import CourseDetail, CourseListItem, CourseRead
 from app.schemas.auth.auth import MessageResponse
 from app.schemas.courses.course import CourseCreate, CourseRead, CourseUpdate
 from app.schemas.courses.lesson import LessonCreate, LessonRead, LessonUpdate
@@ -19,6 +21,24 @@ async def _build_module_read(db: SessionDep, module) -> ModuleRead:
         order_index=module.order_index,
         lessons=[LessonRead.model_validate(l) for l in lessons],
     )
+
+async def _build_course_detail(db: SessionDep, course: Course) -> CourseDetail:
+    modules = await module_crud.list_for_course(db, course.id)
+    module_reads = []
+    for m in modules:
+        lessons = await lesson_crud.list_lessons_by_module(db, m.id)
+        module_reads.append(
+            ModuleRead(
+                id=m.id,
+                course_id=m.course_id,
+                title=m.title,
+                order_index=m.order_index,
+                lessons=[LessonRead.model_validate(l) for l in lessons],
+            )
+        )
+    return CourseDetail(**CourseRead.model_validate(course).model_dump(), modules=module_reads)
+
+
 
 router = APIRouter(prefix="/admin/courses", tags=["Course Catalog - Admin"])
 
@@ -47,6 +67,12 @@ async def search_courses_by_name(
     )
     return [CourseRead.model_validate(c) for c in courses]
 
+@router.get("/read/{slug}", response_model=CourseDetail)
+async def get_course(slug: str, db: SessionDep) -> CourseDetail:
+    course = await course_crud.get_course_by_slug(db, slug)
+    if course is None or not course.is_published:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
+    return await _build_course_detail(db, course)
 
 @router.post("/create", response_model=CourseRead, status_code=status.HTTP_201_CREATED)
 async def create_course(payload: CourseCreate, db: SessionDep) -> CourseRead: # , admin: CurrentAdmin
