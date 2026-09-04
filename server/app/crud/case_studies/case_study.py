@@ -28,7 +28,13 @@ async def list_case_studies(
         filters.append(CaseStudy.industry == industry)
     if search:
         like = f"%{search}%"
-        filters.append(or_(CaseStudy.title.ilike(like), CaseStudy.summary.ilike(like)))
+        filters.append(
+            or_(
+                CaseStudy.title.ilike(like),
+                CaseStudy.summary.ilike(like),
+                CaseStudy.company_name.ilike(like),
+            )
+        )
 
     count_stmt = select(func.count()).select_from(CaseStudy)
     list_stmt = select(CaseStudy).order_by(CaseStudy.created_at.desc()).offset(skip).limit(limit)

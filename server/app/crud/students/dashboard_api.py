@@ -1,17 +1,8 @@
 # app/crud/students/dashboard_api.py
-"""Aggregate reads for the student dashboard.
-
-Everything here is scoped to a single user. The time-series helpers return raw
-(timestamp, minutes) rows — the service layer buckets them — because the periods
-involved are short (at most ~31 days of activity) and bucketing in Python keeps
-the SQL portable.
-"""
 import uuid
 from datetime import datetime
-
 from sqlalchemy import case, func, select
 from sqlalchemy.exc import SQLAlchemyError
-
 from app.core.deps import SessionDep
 from app.core.security import logger
 from app.models.courses.course import Course
@@ -20,7 +11,6 @@ from app.models.courses.module import Module
 from app.models.students.enrollment import CourseEnrollment, EnrollmentStatus
 from app.models.students.lesson_progress import LessonCompletion
 from app.models.students.quiz_attempt import QuizAttempt
-
 
 async def count_enrollments(
     db: SessionDep, *, user_id: uuid.UUID, status: EnrollmentStatus | None = None
@@ -33,7 +23,6 @@ async def count_enrollments(
     except SQLAlchemyError:
         logger.exception("Failed to count enrollments: user_id=%s status=%s", user_id, status)
         raise
-
 
 async def list_enrollments_with_course(
     db: SessionDep, *, user_id: uuid.UUID
@@ -50,7 +39,6 @@ async def list_enrollments_with_course(
     except SQLAlchemyError:
         logger.exception("Failed to list enrollments with course: user_id=%s", user_id)
         raise
-
 
 async def count_lesson_completions(
     db: SessionDep,
@@ -75,7 +63,6 @@ async def count_lesson_completions(
         logger.exception("Failed to count lesson completions: user_id=%s", user_id)
         raise
 
-
 async def count_passed_quizzes(
     db: SessionDep,
     *,
@@ -97,7 +84,6 @@ async def count_passed_quizzes(
         logger.exception("Failed to count passed quizzes: user_id=%s", user_id)
         raise
 
-
 async def list_learning_minutes(
     db: SessionDep, *, user_id: uuid.UUID, start: datetime, end: datetime
 ) -> list[tuple[datetime, int]]:
@@ -117,7 +103,6 @@ async def list_learning_minutes(
     except SQLAlchemyError:
         logger.exception("Failed to list learning minutes: user_id=%s", user_id)
         raise
-
 
 async def list_challenge_minutes(
     db: SessionDep, *, user_id: uuid.UUID, start: datetime, end: datetime
@@ -141,7 +126,6 @@ async def list_challenge_minutes(
         logger.exception("Failed to list challenge minutes: user_id=%s", user_id)
         raise
 
-
 async def lesson_counts_by_course(
     db: SessionDep, *, course_ids: list[uuid.UUID]
 ) -> dict[uuid.UUID, tuple[int, int]]:
@@ -162,7 +146,6 @@ async def lesson_counts_by_course(
         logger.exception("Failed to count lessons by course")
         raise
 
-
 async def completed_lesson_counts_by_course(
     db: SessionDep, *, user_id: uuid.UUID, course_ids: list[uuid.UUID]
 ) -> dict[uuid.UUID, int]:
@@ -180,7 +163,6 @@ async def completed_lesson_counts_by_course(
     except SQLAlchemyError:
         logger.exception("Failed to count completed lessons by course: user_id=%s", user_id)
         raise
-
 
 async def passed_quiz_counts_by_course(
     db: SessionDep, *, user_id: uuid.UUID, course_ids: list[uuid.UUID]
@@ -203,7 +185,6 @@ async def passed_quiz_counts_by_course(
     except SQLAlchemyError:
         logger.exception("Failed to count passed quizzes by course: user_id=%s", user_id)
         raise
-
 
 async def last_activity_by_course(
     db: SessionDep, *, user_id: uuid.UUID, course_ids: list[uuid.UUID]

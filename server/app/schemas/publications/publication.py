@@ -11,9 +11,12 @@ class PublicationListItem(BaseModel):
     id: uuid.UUID
     publication_number: str
     title: str
+    abstract: str
     category: PublicationCategory
     keywords: list[str]
     author_id: uuid.UUID
+    co_authors: list[str]
+    file_url: str | None
     status: PublicationStatus
     view_count: int
     download_count: int

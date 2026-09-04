@@ -1,15 +1,12 @@
 # app/crud/courses/quiz_attempt_api.py
 import uuid
-
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-
 from app.core.deps import SessionDep
 from app.core.security import logger
 from app.models.courses.lesson import Lesson
 from app.models.courses.module import Module
 from app.models.students.quiz_attempt import QuizAttempt
-
 
 async def count_attempts(db: SessionDep, *, user_id: uuid.UUID, lesson_id: uuid.UUID) -> int:
     try:
@@ -22,7 +19,6 @@ async def count_attempts(db: SessionDep, *, user_id: uuid.UUID, lesson_id: uuid.
     except SQLAlchemyError:
         logger.exception("Failed to count quiz attempts: user_id=%s lesson_id=%s", user_id, lesson_id)
         raise
-
 
 async def list_attempts_for_lesson(
     db: SessionDep, *, user_id: uuid.UUID, lesson_id: uuid.UUID
@@ -38,7 +34,6 @@ async def list_attempts_for_lesson(
         logger.exception("Failed to list quiz attempts: user_id=%s lesson_id=%s", user_id, lesson_id)
         raise
 
-
 async def get_best_attempt(
     db: SessionDep, *, user_id: uuid.UUID, lesson_id: uuid.UUID
 ) -> QuizAttempt | None:
@@ -53,7 +48,6 @@ async def get_best_attempt(
     except SQLAlchemyError:
         logger.exception("Failed to fetch best quiz attempt: user_id=%s lesson_id=%s", user_id, lesson_id)
         raise
-
 
 async def list_best_attempts_for_course(
     db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UUID
@@ -77,7 +71,6 @@ async def list_best_attempts_for_course(
             "Failed to list best quiz attempts for course: user_id=%s course_id=%s", user_id, course_id
         )
         raise
-
 
 async def count_attempts_by_lesson_for_course(
     db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UUID

@@ -45,8 +45,6 @@ async def list_my_enrollments(db: SessionDep, current_user: CurrentUser) -> list
     enrollments = await enrollment_crud.list_enrollments_by_user(db, current_user.id)
     return [EnrollmentRead.model_validate(e) for e in enrollments]
 
-
-
 @router.post("/{course_id}/enroll", response_model=EnrollmentRead)
 async def enroll(course_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> EnrollmentRead:
     course = await course_crud.get_course_by_id(db, course_id)
@@ -77,9 +75,7 @@ async def complete_lesson(lesson_id: uuid.UUID, db: SessionDep, current_user: Cu
     except progress_service_api.CourseNotFoundForLessonError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lesson not found")
 
-
 # --- Quizzes -------------------------------------------------------------------
-
 async def _get_quiz_lesson_or_404(db: SessionDep, lesson_id: uuid.UUID):
     lesson = await lesson_crud.get_lesson_by_id(db, lesson_id)
     if lesson is None:
@@ -88,14 +84,12 @@ async def _get_quiz_lesson_or_404(db: SessionDep, lesson_id: uuid.UUID):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="This lesson has no quiz")
     return lesson
 
-
 @router.get("/lessons/{lesson_id}/quiz", response_model=QuizView)
 async def get_lesson_quiz(lesson_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> QuizView:
     """The module quiz for this lesson (questions without the answer key), plus the
     student's best score and pass mark so far."""
     lesson = await _get_quiz_lesson_or_404(db, lesson_id)
     return await quiz_service_api.get_quiz_view(db, user=current_user, lesson=lesson)
-
 
 @router.post("/lessons/{lesson_id}/quiz/submit", response_model=QuizResult)
 async def submit_lesson_quiz(
@@ -111,7 +105,6 @@ async def submit_lesson_quiz(
     except quiz_service_api.QuizError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
 
-
 @router.get("/lessons/{lesson_id}/quiz/attempts", response_model=list[QuizAttemptRead])
 async def list_lesson_quiz_attempts(
     lesson_id: uuid.UUID, db: SessionDep, current_user: CurrentUser
@@ -120,7 +113,6 @@ async def list_lesson_quiz_attempts(
     await _get_quiz_lesson_or_404(db, lesson_id)
     attempts = await quiz_crud.list_attempts_for_lesson(db, user_id=current_user.id, lesson_id=lesson_id)
     return [QuizAttemptRead.model_validate(a) for a in attempts]
-
 
 @router.get("/{course_id}/quiz-results", response_model=CourseQuizResults)
 async def get_course_quiz_results(

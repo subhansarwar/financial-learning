@@ -35,7 +35,6 @@ async def list_enrollments_by_user(db: SessionDep, user_id: uuid.UUID) -> list[C
         logger.exception("Failed to list enrollments: user_id=%s", user_id,)
         raise
 
-
 async def create_enrollement(db: SessionDep, *, user_id: uuid.UUID, course_id: uuid.UUID) -> CourseEnrollment:
     enrollment = await get_enrollment_by_user_and_course(db, user_id=user_id, course_id=course_id)
     if enrollment is not None:
@@ -59,7 +58,6 @@ async def create_enrollement(db: SessionDep, *, user_id: uuid.UUID, course_id: u
         logger.exception("Database error creating enrollment: "
             "user_id=%s course_id=%s", user_id, course_id, )
         raise
-
 
 async def update_progress(db: SessionDep, enrollment: CourseEnrollment, *, progress_pct: int) -> CourseEnrollment:
     if not 0 <= progress_pct <= 100:

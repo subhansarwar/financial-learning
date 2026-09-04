@@ -25,7 +25,6 @@ async def get_lesson_completion(db: SessionDep, *, user_id: uuid.UUID, lesson_id
         )
         raise
 
-
 async def create_lesson_completion(db: SessionDep, *, user_id: uuid.UUID, lesson_id: uuid.UUID) -> LessonCompletion:
     completion = await get_lesson_completion(db, user_id=user_id, lesson_id=lesson_id)
     if completion is not None:

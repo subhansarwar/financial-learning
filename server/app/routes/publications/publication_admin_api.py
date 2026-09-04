@@ -26,7 +26,7 @@ async def list_pending_reviews(
     return [PublicationRead.model_validate(p) for p in publications]
 
 @router.get("/read/{publication_id}", response_model=PublicationRead)
-async def get_publications(publication_id: uuid.UUID, db: SessionDep, _admin: CurrentAdmin) -> PublicationRead: # 
+async def get_publications(publication_id: uuid.UUID, db: SessionDep,) -> PublicationRead: #  _admin: CurrentAdmin 
     publication = await publication_crud.get_publication_by_id(db, publication_id)
     if publication is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
@@ -34,13 +34,15 @@ async def get_publications(publication_id: uuid.UUID, db: SessionDep, _admin: Cu
 
 
 @router.post("/approve/{publication_id}/approve", response_model=PublicationRead)
-async def approve_publication(publication_id: uuid.UUID, payload: ApproveRequest, db: SessionDep, _admin: CurrentAdmin) -> PublicationRead:
+async def approve_publication(publication_id: uuid.UUID, payload: ApproveRequest, db: SessionDep, ) -> PublicationRead:  # _admin: CurrentAdmin
     publication = await publication_crud.get_publication_by_id(db, publication_id)
     if publication is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
 
     try:
-        publication = await publication_service_api.approve(db, publication, reviewer=_admin, notes=payload.notes)
+        publication = await publication_service_api.approve_publications(
+            db, publication, reviewer_id=None, notes=payload.notes
+        )
     except publication_service_api.InvalidStatusTransitionError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
 
@@ -52,14 +54,16 @@ async def approve_publication(publication_id: uuid.UUID, payload: ApproveRequest
 
 @router.post("/reject/{publication_id}/reject", response_model=PublicationRead)
 async def reject_publication(
-    publication_id: uuid.UUID, payload: RejectRequest, db: SessionDep, admin: CurrentAdmin
+    publication_id: uuid.UUID, payload: RejectRequest, db: SessionDep, #admin: CurrentAdmin
 ) -> PublicationRead:
     publication = await publication_crud.get_publication_by_id(db, publication_id)
     if publication is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
 
     try:
-        publication = await publication_service_api.reject(db, publication, reviewer=admin, notes=payload.notes)
+        publication = await publication_service_api.reject_publications(
+            db, publication, reviewer_id=None, notes=payload.notes
+        )
     except publication_service_api.InvalidStatusTransitionError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
 
@@ -71,7 +75,7 @@ async def reject_publication(
 
 @router.delete("/delete/{publication_id}", response_model=MessageResponse)
 async def delete_publication(
-    publication_id: uuid.UUID, payload: DeleteRequest, db: SessionDep, _admin: CurrentAdmin
+    publication_id: uuid.UUID, payload: DeleteRequest, db: SessionDep, #_admin: CurrentAdmin
 ) -> MessageResponse:
     publication = await publication_crud.get_publication_by_id(db, publication_id)
     if publication is None:

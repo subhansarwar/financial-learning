@@ -1,17 +1,13 @@
 # app/schemas/courses/monitoring.py
 import uuid
 from datetime import datetime
-
 from pydantic import BaseModel
-
 from app.models.students.enrollment import EnrollmentStatus
-
 
 class PaginatedResponse(BaseModel):
     total: int
     skip: int
     limit: int
-
 
 class StudentSummary(BaseModel):
     id: uuid.UUID
@@ -23,10 +19,8 @@ class StudentSummary(BaseModel):
     enrolled_courses_count: int
     completed_courses_count: int
 
-
 class StudentListResponse(PaginatedResponse):
     students: list[StudentSummary]
-
 
 class EnrollmentActivityItem(BaseModel):
     id: uuid.UUID
@@ -40,10 +34,8 @@ class EnrollmentActivityItem(BaseModel):
     started_at: datetime
     completed_at: datetime | None
 
-
 class EnrollmentActivityResponse(PaginatedResponse):
     enrollments: list[EnrollmentActivityItem]
-
 
 class LessonCompletionActivityItem(BaseModel):
     id: uuid.UUID
@@ -56,10 +48,8 @@ class LessonCompletionActivityItem(BaseModel):
     course_title: str
     completed_at: datetime
 
-
 class LessonCompletionActivityResponse(PaginatedResponse):
     completions: list[LessonCompletionActivityItem]
-
 
 class StudentDetailResponse(BaseModel):
     student: StudentSummary

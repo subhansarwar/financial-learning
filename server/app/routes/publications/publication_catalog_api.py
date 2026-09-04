@@ -1,5 +1,7 @@
 # app/routes/publications/catalog.py
+import httpx
 from fastapi import APIRouter, HTTPException, Query, status
+from fastapi.responses import Response
 
 from app.core.config import settings
 from app.core.deps import SessionDep
@@ -7,7 +9,7 @@ from app.crud.publications import publication_api as publication_crud
 from app.models.publications.publication import PublicationCategory, PublicationStatus
 from app.schemas.publications.publication import PublicationListItem, PublicationRead
 
-router = APIRouter(prefix="/publications/catalog", tags=["Student Publications Catalog"])
+router = APIRouter(prefix="/publications/catalog", tags=["Publications Catalog"])
 
 @router.get("/all", response_model=list[PublicationListItem])
 async def list_published_publications(
@@ -29,15 +31,36 @@ async def get_publications_by_number(publication_number: str, db: SessionDep) ->
     if publication is None or publication.status != PublicationStatus.PUBLISHED:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
 
-    await publication_crud.increment_publication_view(db, publication)
+    await publication_crud.increment_publication_view(db, publication.id)
+    await db.refresh(publication)
     return PublicationRead.model_validate(publication)
 
 
-@router.get("/download/{publication_number}/download", response_model=PublicationRead)
-async def download_publications(publication_number: str, db: SessionDep) -> PublicationRead:
+@router.get(
+    "/download/{publication_number}/download",
+    response_class=Response,
+    responses={200: {"content": {"application/pdf": {}}}},
+)
+async def download_publications(publication_number: str, db: SessionDep) -> Response:
     publication = await publication_crud.get_publication_by_number(db, publication_number)
     if publication is None or publication.status != PublicationStatus.PUBLISHED or not publication.file_url:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Publication not found")
 
-    await publication_crud.increment_publication_download(db, publication)
-    return PublicationRead.model_validate(publication)
+    try:
+        async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
+            upstream = await client.get(publication.file_url)
+        upstream.raise_for_status()
+    except httpx.HTTPError:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Could not retrieve the publication file from storage",
+        )
+
+    await publication_crud.increment_publication_download(db, publication.id)
+
+    filename = f"{publication.publication_number}.pdf"
+    return Response(
+        content=upstream.content,
+        media_type=upstream.headers.get("content-type", "application/pdf"),
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )

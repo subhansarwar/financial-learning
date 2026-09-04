@@ -25,7 +25,10 @@ def _generate_publication_number() -> str:
 
 async def create_publication_draft(db: SessionDep, *, author: User, payload: PublicationCreate) -> Publication:
     return await publication_crud.create_publication(
-        db, author_id=author.id, publication_number=_generate_publication_number(), **payload.model_dump()
+        db,
+        author_id=author.id,
+        publication_number=_generate_publication_number(),
+        fields=payload.model_dump(),
     )
 
 
@@ -40,15 +43,19 @@ async def submit_publication_for_reviews(db: SessionDep, publication: Publicatio
     return await publication_crud.submit_publication_for_review(db, publication)
 
 
-async def approve_publications(db: SessionDep, publication: Publication, *, reviewer: User, notes: str | None) -> Publication:
+async def approve_publications(
+    db: SessionDep, publication: Publication, *, reviewer_id: uuid.UUID | None, notes: str | None
+) -> Publication:
     if publication.status != PublicationStatus.PENDING_REVIEW:
         raise InvalidStatusTransitionError("Only publications pending review can be approved")
 
-    return await publication_crud.approve_publication(db, publication, reviewer_id=reviewer.id, notes=notes)
+    return await publication_crud.approve_publication(db, publication, reviewer_id=reviewer_id, notes=notes)
 
 
-async def reject_publications(db: SessionDep, publication: Publication, *, reviewer: User, notes: str) -> Publication:
+async def reject_publications(
+    db: SessionDep, publication: Publication, *, reviewer_id: uuid.UUID | None, notes: str
+) -> Publication:
     if publication.status != PublicationStatus.PENDING_REVIEW:
         raise InvalidStatusTransitionError("Only publications pending review can be rejected")
 
-    return await publication_crud.reject_publication(db, publication, reviewer_id=reviewer.id, notes=notes)
+    return await publication_crud.reject_publication(db, publication, reviewer_id=reviewer_id, notes=notes)

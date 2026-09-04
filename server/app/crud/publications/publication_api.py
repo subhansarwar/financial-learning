@@ -155,13 +155,13 @@ async def set_publication_file_url(db: SessionDep, publication: Publication, fil
     file_url = file_url.strip() 
     if not file_url: 
         raise ValueError("file_url cannot be empty") 
-    try: 
-        publication.file_url = file_url 
-        await db.flush() 
-        await db.refresh(publication) 
-        return publication 
-    except SQLAlchemyError: 
-        await db.rollback() 
+    try:
+        publication.file_url = file_url
+        await db.commit()
+        await db.refresh(publication)
+        return publication
+    except SQLAlchemyError:
+        await db.rollback()
         logger.exception( "Failed to set publication file URL: "
                           "publication_id=%s", publication.id, ) 
         raise
@@ -172,19 +172,19 @@ async def submit_publication_for_review(db: SessionDep, publication: Publication
         publication.submitted_at = datetime.now(timezone.utc) 
         # Previous rejection feedback should not carry into 
         # a new review cycle unless your business rules require it. 
-        publication.review_notes = None 
-        publication.reviewed_by = None 
-        await db.flush() 
-        await db.refresh(publication) 
-        return publication 
-    except SQLAlchemyError: 
-        await db.rollback() 
-        logger.exception( "Failed to submit publication for review: " 
+        publication.review_notes = None
+        publication.reviewed_by = None
+        await db.commit()
+        await db.refresh(publication)
+        return publication
+    except SQLAlchemyError:
+        await db.rollback()
+        logger.exception( "Failed to submit publication for review: "
                          "publication_id=%s", publication.id, ) 
         raise
 
 
-async def approve_publication(db: SessionDep, publication: Publication, *, reviewer_id: uuid.UUID, notes: str | None) -> Publication:
+async def approve_publication(db: SessionDep, publication: Publication, *, reviewer_id: uuid.UUID | None, notes: str | None) -> Publication:
     try:
         publication.status = PublicationStatus.PUBLISHED
         publication.published_at = datetime.now(timezone.utc)
@@ -199,7 +199,7 @@ async def approve_publication(db: SessionDep, publication: Publication, *, revie
                          "publication_id=%s reviewer_id=%s", publication.id, reviewer_id, ) 
         raise
 
-async def reject_publication(db: SessionDep, publication: Publication, *, reviewer_id: uuid.UUID, notes: str) -> Publication:
+async def reject_publication(db: SessionDep, publication: Publication, *, reviewer_id: uuid.UUID | None, notes: str) -> Publication:
     notes = notes.strip() 
     if not notes: 
         raise ValueError( "Rejection notes cannot be empty" )
@@ -218,9 +218,10 @@ async def reject_publication(db: SessionDep, publication: Publication, *, review
 
 async def increment_publication_view(db: SessionDep, publication_id: uuid.UUID) -> None:
     try: 
-        stmt = (update(Publication).where( Publication.id == publication_id,).values( view_count=Publication.view_count + 1, )) 
-        await db.execute(stmt) 
-    except SQLAlchemyError: 
+        stmt = (update(Publication).where( Publication.id == publication_id,).values( view_count=Publication.view_count + 1, ))
+        await db.execute(stmt)
+        await db.commit()
+    except SQLAlchemyError:
         await db.rollback() 
         logger.exception( "Failed to increment publication view count: " 
                          "publication_id=%s", publication_id, ) 
@@ -229,9 +230,10 @@ async def increment_publication_view(db: SessionDep, publication_id: uuid.UUID) 
 
 async def increment_publication_download(db: SessionDep, publication_id: uuid.UUID,) -> None:
     try: 
-        stmt = ( update(Publication).where( Publication.id == publication_id,).values(download_count=Publication.download_count + 1,)) 
-        await db.execute(stmt) 
-    except SQLAlchemyError: 
+        stmt = ( update(Publication).where( Publication.id == publication_id,).values(download_count=Publication.download_count + 1,))
+        await db.execute(stmt)
+        await db.commit()
+    except SQLAlchemyError:
         await db.rollback() 
         logger.exception( "Failed to increment publication download count: " 
                          "publication_id=%s", publication_id, ) 

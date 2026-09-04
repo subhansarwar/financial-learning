@@ -23,6 +23,12 @@ class CaseStudy(Base):
     tags: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
     thumbnail_url: Mapped[str | None] = mapped_column(String(1024), nullable=True)
 
+    source: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    date: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    location: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    company_name: Mapped[str | None] = mapped_column(String(200), index=True, nullable=True)
+    key_results: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
+
     is_published: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_by: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True

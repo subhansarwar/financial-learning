@@ -13,6 +13,11 @@ class CaseStudyListItem(BaseModel):
     industry: str | None
     tags: list[str]
     thumbnail_url: str | None
+    source: str | None
+    date: str | None
+    location: str | None
+    company_name: str | None
+    key_results: list[str]
     is_published: bool
     created_at: datetime
 
@@ -29,6 +34,11 @@ class CaseStudyRead(BaseModel):
     industry: str | None
     tags: list[str]
     thumbnail_url: str | None
+    source: str | None
+    date: str | None
+    location: str | None
+    company_name: str | None
+    key_results: list[str]
     is_published: bool
     created_at: datetime
     updated_at: datetime
@@ -45,6 +55,11 @@ class CaseStudyCreate(BaseModel):
     industry: str | None = Field(default=None, max_length=100)
     tags: list[str] = []
     thumbnail_url: str | None = None
+    source: str | None = Field(default=None, max_length=500)
+    date: str | None = Field(default=None, max_length=100)
+    location: str | None = Field(default=None, max_length=200)
+    company_name: str | None = Field(default=None, max_length=200)
+    key_results: list[str] = []
     is_published: bool = False
 
 
@@ -56,4 +71,9 @@ class CaseStudyUpdate(BaseModel):
     industry: str | None = Field(default=None, max_length=100)
     tags: list[str] | None = None
     thumbnail_url: str | None = None
+    source: str | None = Field(default=None, max_length=500)
+    date: str | None = Field(default=None, max_length=100)
+    location: str | None = Field(default=None, max_length=200)
+    company_name: str | None = Field(default=None, max_length=200)
+    key_results: list[str] | None = None
     is_published: bool | None = None

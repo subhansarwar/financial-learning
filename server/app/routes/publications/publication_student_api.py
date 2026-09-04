@@ -71,7 +71,9 @@ async def update_my_publication(
             detail="Only draft or rejected publications can be edited",
         )
 
-    publication = await publication_crud.update_publication(db, publication, **payload.model_dump(exclude_unset=True))
+    publication = await publication_crud.update_publication(
+        db, publication, fields=payload.model_dump(exclude_unset=True)
+    )
     return PublicationRead.model_validate(publication)
 
 
@@ -125,7 +127,7 @@ async def upload_publication_file(
 async def submit_publication(publication_id: uuid.UUID, db: SessionDep, current_user: CurrentUser) -> PublicationRead:
     publication = await _get_owned_publication(db, current_user, publication_id)
     try:
-        publication = await publication_service_api.submit_for_review(db, publication)
+        publication = await publication_service_api.submit_publication_for_reviews(db, publication)
     except publication_service_api.InvalidStatusTransitionError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message)
     return PublicationRead.model_validate(publication)

@@ -1,11 +1,9 @@
 # app/crud/courses/monitoring.py
 import uuid
 from datetime import datetime
-
 from sqlalchemy import func, or_, select
 from sqlalchemy.exc import SQLAlchemyError
 from app.core.deps import SessionDep
-
 from app.models.courses.course import Course
 from app.models.students.enrollment import CourseEnrollment, EnrollmentStatus
 from app.models.courses.lesson import Lesson
@@ -13,7 +11,6 @@ from app.models.students.lesson_progress import LessonCompletion
 from app.models.courses.module import Module
 from app.models.users.user import User
 from app.core.security import logger
-
 
 async def list_students_with_stats(db: SessionDep, *, search: str | None = None, skip: int = 0, limit: int = 50) -> tuple[list[tuple[User, int, int]], int]:
     enrolled_subq = (

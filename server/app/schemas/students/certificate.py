@@ -18,28 +18,22 @@ class CertificateRead(BaseModel):
         from_attributes=True
     )
 
-
 class CertificateVerifyRequest(BaseModel):
     certificate_number: str = Field(
         min_length=1,
         max_length=40,
     )
 
-
 class ValidCertificateResponse(BaseModel):
     valid: Literal[True] = True
-
     certificate_number: str
     course_title: str
     holder_name: str
     issued_at: datetime
 
-
 class InvalidCertificateResponse(BaseModel):
     valid: Literal[False] = False
-
     certificate_number: str
-
 
 CertificateVerifyResponse = (
     ValidCertificateResponse

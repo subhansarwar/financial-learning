@@ -16,7 +16,6 @@ async def get_certificate_by_user_course(db: SessionDep, *, user_id: uuid.UUID, 
 
 async def get_certificate_by_id(db: SessionDep, certificate_number: str) -> Certificate | None:
     certificate_number = certificate_number.strip()
-
     if not certificate_number:
         raise ValueError("certificate_number cannot be empty")
     try:
