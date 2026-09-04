@@ -19,7 +19,7 @@ export default function ClientHeroSection({ cases }) {
             className="relative overflow-hidden bg-[#E6FBF1] py-16 sm:py-20 lg:py-12 lg:h-[480px]"
         >
 
-            <div className="relative mx-auto max-w-[1180px] px-4 sm:px-6 lg:px-8">
+            <div className="relative mx-6 px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-20 lg:grid-cols-2 lg:items-center lg:h-[480px]">
                     {/* Left Content */}
                     <div className="flex flex-col justify-center py-8 lg:py-0">

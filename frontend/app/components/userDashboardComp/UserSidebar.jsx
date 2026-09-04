@@ -22,7 +22,7 @@ import { useState, useEffect } from "react";
 const NAV_ITEMS = [
     { id: "dashboard", label: "Dashboard", href: "/dashboard", icon: BarChart3 },
     { id: "courses", label: "My Courses", href: "/my-courses", icon: BookOpen },
-    { id: "progress", label: "Progress", href: "/progress", icon: TrendingUp },
+    // { id: "progress", label: "Progress", href: "/progress", icon: TrendingUp },
     { id: "upcoming", label: "Upcoming Tasks", href: "/up-coming-tasks", icon: Calendar },
 ];
 
