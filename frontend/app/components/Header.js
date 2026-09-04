@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { logoutUser } from "../store/slices/user/userThunks";
+import ProfileModal from "./websiteComp/ProfileModal";
+import Image from "next/image";
 
 const NAV_LINKS = [
     { href: "/", label: "Home" },
@@ -29,11 +31,12 @@ export default function Header() {
     const [isNearFooter, setIsNearFooter] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
     const accountRef = useRef(null);
     const dispatch = useAppDispatch()
-    const { isAuthenticated, user, loading } = useAppSelector((state) => state.user);
+    const { isAuthenticated, user } = useAppSelector((state) => state.user);
     const lastScrollY = useRef(0);
-
+    console.log('user?.avatar_url ===>', user?.avatar_url)
     // Check scroll position
     useEffect(() => {
         const handleScroll = () => {
@@ -207,11 +210,12 @@ export default function Header() {
                                             aria-haspopup="menu"
                                             aria-expanded={isAccountOpen}
                                         >
-                                            <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-transform duration-300 hover:scale-110 ${isScrolled
-                                                ? "bg-[#14301F] text-white"
-                                                : "bg-btn-primary text-white"
-                                                }`}>
-                                                {getInitials(user?.full_name || user?.name || user?.email)}
+                                            <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#14301F]/10 text-sm font-bold text-[#14301F]">
+                                                {user?.avatar_url ? (
+                                                    <img src={user?.avatar_url} alt="avatar" className="h-full w-full object-cover" />
+                                                ) : (
+                                                    getInitials(user?.full_name || user?.name || user?.email)
+                                                )}
                                             </span>
                                             <span className={`max-w-[9ch] truncate ${isScrolled ? "text-gray-700" : "text-white"
                                                 }`}>
@@ -229,9 +233,18 @@ export default function Header() {
                                                 role="menu"
                                                 className="absolute right-0 top-[calc(100%+10px)] w-64 overflow-hidden rounded-2xl border border-gray-200 bg-white text-ink shadow-card-lg transition-all duration-300 origin-top scale-100 opacity-100"
                                             >
-                                                <div className="flex items-center gap-3 border-b border-gray-100 bg-gray-50/50 px-4 py-3.5">
-                                                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#14301F]/10 text-sm font-bold text-[#14301F]">
-                                                        {getInitials(user?.full_name || user?.name || user?.email)}
+                                                <div
+                                                    onClick={() => {
+                                                        setIsAccountOpen(false);
+                                                        setIsProfileModalOpen(true);
+                                                    }}
+                                                    className="flex items-center gap-3 border-b border-gray-100 bg-gray-50/50 px-4 py-3.5">
+                                                    <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#14301F]/10 text-sm font-bold text-[#14301F]">
+                                                        {user?.avatar_url ? (
+                                                            <img src={user?.avatar_url} alt="avatar" className="h-full w-full object-cover" />
+                                                        ) : (
+                                                            getInitials(user?.full_name || user?.name || user?.email)
+                                                        )}
                                                     </span>
                                                     <div className="min-w-0">
                                                         <p className="truncate font-bold text-ink">{user?.full_name || user?.name || 'User'}</p>
@@ -407,6 +420,10 @@ export default function Header() {
                 </div>
             </header>
             <div className="h-8 sm:h-8" aria-hidden="true" />
+            <ProfileModal
+                isOpen={isProfileModalOpen}
+                onClose={() => setIsProfileModalOpen(false)}
+            />
         </>
     );
 }

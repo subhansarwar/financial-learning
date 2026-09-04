@@ -99,7 +99,7 @@ export default function NotesConfirmModal({ isOpen, mode = "approve", paperTitle
                         onChange={(e) => setNotes(e.target.value)}
                         rows={4}
                         placeholder="Add a note for this action..."
-                        className="w-full rounded-lg border border-line bg-cream-2/50 p-3 text-sm text-ink placeholder:text-muted focus:border-brand/50 focus:outline-none focus:ring-4 focus:ring-brand/15"
+                        className="w-full rounded-lg border border-line bg-cream-2/50 p-3 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15"
                     />
                 </div>
 

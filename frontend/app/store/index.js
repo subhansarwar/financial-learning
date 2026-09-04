@@ -21,6 +21,7 @@ import caseStudiesReducer from "./admin/caseStudy/caseStudiesSlice";
 import researchReducer from "./website/research/researchSlice";
 import dashboardReducer from "./userDashboard/dashboardSlice";
 import publicationsReducer from "./admin/publications/publicationsSlice";
+import monitoringReducer from "./admin/monitoring/monitoringSlice";
 
 
 
@@ -131,6 +132,7 @@ const rootReducer = combineReducers({
     research: persistedResearchReducer,
     dashboard: persistedDashboardReducer,
     publications: publicationsReducer,
+    monitoring: monitoringReducer,
 });
 
 // ============================================

@@ -21,7 +21,6 @@ export default function ResearchEditor({ onDataChange }) {
     const dispatch = useAppDispatch();
     const { list, skip, limit, hasMore, listLoading, listError, selected, actionLoading } =
         useAppSelector((s) => s.publications);
-
     const [viewId, setViewId] = useState(null); // jis paper ka Read modal open hai uska id
     const [confirmModal, setConfirmModal] = useState(null); // { mode: "approve"|"reject"|"delete", paper }
 

@@ -71,7 +71,7 @@ export const approvePublication = createAsyncThunk(
             const res = await apiCall({
                 path: `v1/admin/publications/approve/${id}/approve`,
                 method: "post",
-                data: { notes },
+                body: { notes },
             });
 
             dispatch(updatePublicationInList(res));
@@ -95,7 +95,7 @@ export const rejectPublication = createAsyncThunk(
             const res = await apiCall({
                 path: `v1/admin/publications/reject/${id}/reject`,
                 method: "post",
-                data: { notes },
+                body: { notes },
             });
 
             dispatch(updatePublicationInList(res));
@@ -119,7 +119,7 @@ export const deletePublication = createAsyncThunk(
             const res = await apiCall({
                 path: `v1/admin/publications/delete/${id}`,
                 method: "delete",
-                data: { notes },
+                body: { notes },
             });
 
             dispatch(removePublicationFromList(id));

@@ -653,11 +653,72 @@ export const changePassword = createAsyncThunk(
                 return res;
             }
         } catch (error) {
+        }
+    }
+);
+
+export const updateUserName = createAsyncThunk(
+    "user/updateUserName",
+    async ({ full_name }, { dispatch }) => {
+        try {
+            dispatch(setLoading(true));
+            dispatch(clearError());
+
+            const token = localStorage.getItem("auth_token");
+            const res = await apiCall({
+                path: "v1/users/me",
+                method: "patch",
+                body: { full_name },
+                token,
+            });
+
             dispatch(setLoading(false));
-            const errorMsg = error?.message || "Something went wrong. Please try again.";
-            dispatch(setError(errorMsg));
-            toast.error(errorMsg);
-            throw error;
+
+            // Response direct user object hai (id, email, full_name, avatar_url, ...)
+            if (res?.id || res?.email) {
+                dispatch(setUser(res));
+                if (typeof window !== "undefined") {
+                    localStorage.setItem("efp.user", JSON.stringify(res));
+                }
+                toast.success("Name updated successfully!");
+                return res;
+            }
+        } catch (error) {
+        }
+    }
+);
+
+// 13. Update User Avatar Action (v1/users/me/avatar — multipart image upload)
+export const updateUserAvatar = createAsyncThunk(
+    "user/updateUserAvatar",
+    async (file, { dispatch, getState }) => {
+        try {
+            dispatch(setLoading(true));
+            dispatch(clearError());
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const res = await apiCall({
+                path: "v1/users/me/avatar",
+                method: "post",
+                body: formData,
+            });
+
+            dispatch(setLoading(false));
+
+            if (res?.avatar_url) {
+                const state = getState();
+                const updatedUser = { ...(state.user?.user || {}), avatar_url: res.avatar_url };
+                dispatch(setUser(updatedUser));
+                if (typeof window !== "undefined") {
+                    localStorage.setItem("efp.user", JSON.stringify(updatedUser));
+                }
+                toast.success("Profile picture updated!");
+                return res;
+            }
+        } catch (error) {
+
         }
     }
 );

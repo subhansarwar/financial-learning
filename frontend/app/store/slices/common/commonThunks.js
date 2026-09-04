@@ -41,7 +41,6 @@ export const uploadImage = createAsyncThunk(
                 path: "v1/admin/media/images",
                 method: "post",
                 body: formData,
-                // headers: { "Content-Type": "multipart/form-data" }, // <-- YEH HATAO!
             });
 
             console.log("✅ Upload response:", response);

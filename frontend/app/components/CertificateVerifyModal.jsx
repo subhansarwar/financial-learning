@@ -94,16 +94,16 @@ export default function CertificateVerifyModal({ isOpen, onClose }) {
                             stiffness: 300
                         }}
                         className="fixed inset-0 z-50 flex items-center justify-center p-4"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={handleClose}
                     >
                         <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl">
                             {/* Close Button */}
-                            <button
+                            {/* <button
                                 onClick={handleClose}
                                 className="absolute right-4 top-4 z-10 rounded-full p-1.5 text-[#14301F]/40 transition-colors hover:bg-[#14301F]/5 hover:text-[#14301F]"
                             >
                                 <X className="h-5 w-5" strokeWidth={2} />
-                            </button>
+                            </button> */}
 
                             {/* Header */}
                             <div className="relative bg-gradient-to-br from-[#14301F] to-[#1a3d2a] px-6 py-6 text-center">

@@ -94,7 +94,7 @@ export default function ResearchTable({
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search papers..."
-                            className="w-full rounded-full border border-line bg-cream-2/50 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-brand/50 focus:outline-none focus:ring-4 focus:ring-brand/15 sm:w-56"
+                            className="w-full rounded-full border border-line bg-cream-2/50 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15 sm:w-56"
                         />
                     </div>
                 </div>
@@ -145,6 +145,7 @@ export default function ResearchTable({
                         ) : (
                             filtered.map((paper) => {
                                 const statusLower = (paper.status || "").toLowerCase();
+                                console.log('paper ===>', paper)
                                 const displayStatus = toTitleCase(paper.status);
                                 return (
                                     <tr
@@ -153,7 +154,7 @@ export default function ResearchTable({
                                     >
                                         <td className="px-4 py-3">
                                             <div className="flex items-center gap-3">
-                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand-deep">
+                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#47735B]/10 text-[#365B50]">
                                                     <FileText className="h-4.5 w-4.5" strokeWidth={2} />
                                                 </div>
                                                 <div className="min-w-0">
@@ -163,7 +164,7 @@ export default function ResearchTable({
                                             </div>
                                         </td>
                                         <td className="whitespace-nowrap px-4 py-3">
-                                            <span className="rounded-full bg-brand-soft/50 px-2.5 py-1 text-xs font-bold text-brand-deep">
+                                            <span className="rounded-full bg-[#365B50] px-2.5 py-1 text-xs font-bold text-white">
                                                 {toTitleCase(paper.category)}
                                             </span>
                                         </td>
@@ -181,7 +182,7 @@ export default function ResearchTable({
                                                     <Eye className="h-4 w-4" strokeWidth={2} />
                                                 </button>
 
-                                                {statusLower === "pending" && (
+                                                {statusLower === "pending_review" && (
                                                     <button
                                                         onClick={() => onApprove(paper)}
                                                         title="Approve"
@@ -191,7 +192,7 @@ export default function ResearchTable({
                                                     </button>
                                                 )}
 
-                                                {statusLower === "pending" && (
+                                                {statusLower === "pending_review" && (
                                                     <button
                                                         onClick={() => onReject(paper)}
                                                         title="Reject"

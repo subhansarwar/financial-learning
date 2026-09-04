@@ -9,6 +9,7 @@ import {
     setCurrentPublication,
     setLoading,
     setCreating,
+    updatePublication,
     setError,
     clearError,
 } from "./researchSlice";
@@ -47,6 +48,26 @@ export const getMyPublications = createAsyncThunk(
     }
 );
 
+export const submitPublication = createAsyncThunk(
+    "research/submitPublication",
+    async (publicationId, { dispatch }) => {
+        try {
+            const res = await apiCall({
+                path: `v1/publications/student/me/submit/${publicationId}/submit`,
+                method: "post",
+            });
+
+            if (res?.id) {
+                dispatch(updatePublication(res));
+            }
+
+            return res;
+        } catch (error) {
+            // Silent fail — user ko pata nahi chalna chahiye
+            throw error;
+        }
+    }
+);
 // Create a new publication (Step 1)
 export const createPublication = createAsyncThunk(
     "research/createPublication",

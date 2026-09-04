@@ -87,9 +87,9 @@ export const getCourses = createAsyncThunk(
             }));
             return [];
         } catch (error) {
-            console.error("Get Courses Error:", error);
-            dispatch(setLoading(false));
-            toast.error("Failed to load courses");
+            // console.error("Get Courses Error:", error);
+            // dispatch(setLoading(false));
+            // toast.error("Failed to load courses");
             throw error;
         }
     }

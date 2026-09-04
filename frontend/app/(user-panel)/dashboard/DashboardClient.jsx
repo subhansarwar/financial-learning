@@ -11,7 +11,7 @@ import {
     TrendingDown,
     TrendingUp
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     Bar,
     BarChart,
@@ -31,6 +31,13 @@ const MAIN_BG = "#FFF7ED";
 const LEARNING = "#34C79D";
 const CHALLENGE = "#F2B84B";
 const TONES = ["#7C6AE8", "#4FA3D1", "#E0A93E", "#D9727B", "#5B7FE0"];
+
+// Dropdown options
+const PERIOD_OPTIONS = [
+    { value: "daily", label: "Daily" },
+    { value: "weekly", label: "Weekly" },
+    { value: "monthly", label: "Monthly" },
+];
 
 // Fallback defaults (agar API se koi data na ho, UI khaali na dikhe)
 const DEFAULT_STATS_META = [
@@ -76,11 +83,28 @@ function CustomTooltip({ active, payload, label }) {
 
 export default function DashboardClient() {
     const [activeIndex, setActiveIndex] = useState(3);
+    const [period, setPeriod] = useState("weekly"); // ab yeh dynamic hai
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
     const dispatch = useAppDispatch();
     const userData = useAppSelector((state) => state.user?.user);
     const summaryByPeriod = useAppSelector((state) => state.dashboard.summary);
-    const period = "weekly"; // abhi ke liye fixed, UI mein "Weekly" button static hai
     const summaryData = summaryByPeriod?.[period];
+
+    const currentPeriodLabel =
+        PERIOD_OPTIONS.find((p) => p.value === period)?.label || "Weekly";
+
+    // Dropdown ke bahar click hone par close ho jaye
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setIsDropdownOpen(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     // Cache-first load: agar cache mein hai to turant use karo, warna sirf ek dafa fetch karo
     useEffect(() => {
@@ -98,7 +122,12 @@ export default function DashboardClient() {
         }
 
         dispatch(getDashboardSummary(period));
-    }, [dispatch]);
+    }, [dispatch, period]); // period add kiya taake selection change hone par re-fetch ho
+
+    function handleSelectPeriod(value) {
+        setPeriod(value);
+        setIsDropdownOpen(false);
+    }
 
     // ===== Derive display data (API data available? use it, warna fallback) =====
     const stats = DEFAULT_STATS_META.map((meta) => ({
@@ -148,15 +177,41 @@ export default function DashboardClient() {
                                     Welcome back, {userData?.full_name?.split(" ")[0] || "User"}
                                 </h1>
                                 <p className="mt-1 text-xs text-white/55 sm:text-sm">
-                                    Here's an overview of your study progress this week.
+                                    Here's an overview of your study progress this {period === "daily" ? "day" : period === "monthly" ? "month" : "week"}.
                                 </p>
                             </div>
                         </div>
-                        <button className="hidden shrink-0 items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-white sm:flex">
-                            <Calendar className="h-3.5 w-3.5" />
-                            Weekly
-                            <ChevronDown className="h-3.5 w-3.5" />
-                        </button>
+
+                        {/* ===== Period Dropdown ===== */}
+                        <div className="relative hidden shrink-0 sm:block" ref={dropdownRef}>
+                            <button
+                                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                                className="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-white"
+                            >
+                                <Calendar className="h-3.5 w-3.5" />
+                                {currentPeriodLabel}
+                                <ChevronDown
+                                    className={`h-3.5 w-3.5 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                                />
+                            </button>
+
+                            {isDropdownOpen && (
+                                <div className="absolute right-0 top-full z-20 mt-2 w-36 overflow-hidden rounded-xl border border-white/10 bg-[#2C4A41] shadow-xl">
+                                    {PERIOD_OPTIONS.map((opt) => (
+                                        <button
+                                            key={opt.value}
+                                            onClick={() => handleSelectPeriod(opt.value)}
+                                            className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors ${period === opt.value
+                                                    ? "bg-white/15 text-white"
+                                                    : "text-white/70 hover:bg-white/10 hover:text-white"
+                                                }`}
+                                        >
+                                            {opt.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Stats Cards */}

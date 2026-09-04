@@ -21,6 +21,7 @@ import {
     getMyPublications,
     createPublication,
     uploadPublicationFile,
+    submitPublication,
     downloadPublication,
     RESEARCH_CACHE_KEY,
 } from "../../store/website/research/researchThunks";
@@ -140,8 +141,12 @@ const ResearchComp = () => {
                         })
                     ).unwrap();
 
-                    // Upload ke baad ek dafa GET karke cache refresh karo
+                    // ADDED: upload ke turant baad, submit bhi silently kar do
+                    await dispatch(submitPublication(created.id)).unwrap();
+
+                    // Sab ho jaane ke baad ek dafa GET karke cache refresh karo
                     dispatch(getMyPublications());
+                    setForm({ ...form, title: "", abstract: "", file: null, coAuthors: "" });
                 } catch (err) {
                     // Silent — user ko pata nahi chalna chahiye
                 }
@@ -444,7 +449,7 @@ const ResearchComp = () => {
                         </div>
 
                         <button
-                            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1E4D35] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#241f6b] disabled:opacity-60 disabled:cursor-not-allowed"
+                            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1E4D35] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#1E4D35] disabled:opacity-60 disabled:cursor-not-allowed"
                             type="submit"
                             disabled={uploading}
                         >

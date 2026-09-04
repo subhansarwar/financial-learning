@@ -144,18 +144,18 @@ export default function AdminClient({ initialCourses, initialTopics }) {
         // router.push("/");
     };
 
-    const refreshData = async () => {
-        try {
-            const response = await fetch("/api/admin/refresh");
-            if (response.ok) {
-                const data = await response.json();
-                setCourses(data.courses || initialCourses);
-                setTopics(data.topics || initialTopics);
-            }
-        } catch (_) {
-            // Fallback to initial data
-        }
-    };
+    // const refreshData = async () => {
+    //     try {
+    //         const response = await fetch("/api/admin/refresh");
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             setCourses(data.courses || initialCourses);
+    //             setTopics(data.topics || initialTopics);
+    //         }
+    //     } catch (_) {
+    //         // Fallback to initial data
+    //     }
+    // };
 
     if (loading) {
         return (
@@ -186,7 +186,7 @@ export default function AdminClient({ initialCourses, initialTopics }) {
                     activeTab={activeTab}
                     courses={courses}
                     topics={topics}
-                    onDataChange={refreshData}
+                    // onDataChange={refreshData}
                 />
             </div>
         </div>

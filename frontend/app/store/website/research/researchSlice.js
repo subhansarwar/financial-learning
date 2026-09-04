@@ -26,6 +26,12 @@ const researchSlice = createSlice({
                 p.id === id ? { ...p, file_url } : p
             );
         },
+        updatePublication: (state, action) => {
+            const updated = action.payload;
+            state.publications = state.publications.map((p) =>
+                p.id === updated.id ? { ...p, ...updated } : p
+            );
+        },
         setCurrentPublication: (state, action) => {
             state.currentPublication = action.payload;
         },
@@ -55,6 +61,7 @@ export const {
     setError,
     clearError,
     resetResearch,
+    updatePublication,
 } = researchSlice.actions;
 
 export default researchSlice.reducer;

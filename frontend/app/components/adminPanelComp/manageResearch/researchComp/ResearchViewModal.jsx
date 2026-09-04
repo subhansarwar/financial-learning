@@ -7,7 +7,7 @@ import StatusBadge from "./StatusBadge";
 function InfoItem({ icon: Icon, label, value }) {
     return (
         <div className="flex items-start gap-2.5">
-            <Icon className="mt-0.5 h-4 w-4 shrink-0 text-brand" strokeWidth={2} />
+            <Icon className="mt-0.5 h-4 w-4 shrink-0 text-[#47735B]" strokeWidth={2} />
             <div className="min-w-0">
                 <p className="text-xs font-bold uppercase tracking-wide text-muted">{label}</p>
                 <p className="truncate text-sm font-semibold text-ink">{value || "—"}</p>
@@ -57,7 +57,7 @@ export default function ResearchViewModal({ paper, onClose, onApprove, onReject 
                     </div>
                     <button
                         onClick={onClose}
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-cream-2 hover:text-ink"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-[#47735B]/10 hover:text-[#365B50]"
                     >
                         <X className="h-5 w-5" strokeWidth={2} />
                     </button>
@@ -83,7 +83,7 @@ export default function ResearchViewModal({ paper, onClose, onApprove, onReject 
                             <p className="mb-1.5 text-xs font-bold uppercase tracking-wide text-muted">Keywords</p>
                             <div className="flex flex-wrap gap-1.5">
                                 {paper.keywords.map((k) => (
-                                    <span key={k} className="rounded-full bg-brand-soft/50 px-2.5 py-1 text-xs font-bold text-brand-deep">
+                                    <span key={k} className="rounded-full bg-[#47735B]/10 px-2.5 py-1 text-xs font-bold text-[#365B50]">
                                         {k}
                                     </span>
                                 ))}
@@ -112,7 +112,7 @@ export default function ResearchViewModal({ paper, onClose, onApprove, onReject 
                                 href={paper.file_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-sm font-bold text-brand-deep hover:underline"
+                                className="inline-flex items-center gap-2 text-sm font-bold text-[#365B50] hover:underline"
                             >
                                 <FileText className="h-4 w-4" strokeWidth={2} />
                                 View PDF
@@ -143,7 +143,7 @@ export default function ResearchViewModal({ paper, onClose, onApprove, onReject 
                     )}
                     <button
                         onClick={onClose}
-                        className="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-line bg-card px-6 py-2.5 text-sm font-bold text-ink-2 transition-colors hover:border-brand/40 hover:bg-brand-soft/30 hover:text-brand-deep"
+                        className="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-line bg-card px-6 py-2.5 text-sm font-bold text-ink-2 transition-colors hover:border-[#365B50]/40 hover:bg-[#47735B]/10 hover:text-[#365B50]"
                     >
                         Close
                     </button>
