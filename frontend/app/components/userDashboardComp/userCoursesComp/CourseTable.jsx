@@ -205,7 +205,7 @@ export default function CourseTable({
                                             >
                                                 <Eye className="h-4 w-4" strokeWidth={2} />
                                             </button>
-                                            <button
+                                            {/* <button
                                                 onClick={() => onEdit(course)}
                                                 title="Edit"
                                                 className="flex h-8 w-8 items-center justify-center rounded-full text-ink-2 transition-colors hover:bg-[#365B50]/10 hover:text-[#365B50]"
@@ -218,7 +218,7 @@ export default function CourseTable({
                                                 className="flex h-8 w-8 items-center justify-center rounded-full text-rose-500 transition-colors hover:bg-rose-50"
                                             >
                                                 <Trash2 className="h-4 w-4" strokeWidth={2} />
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </td>
                                 </tr>
