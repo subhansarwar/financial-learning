@@ -4,6 +4,9 @@
 import { useRef, useState } from "react";
 import { ImageIcon, UploadCloud, Plus, X, Award } from "lucide-react";
 import { CATEGORY_OPTIONS, LEVEL_OPTIONS } from "./dummyCourses";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { uploadImage } from "../../../../store/slices/common/commonThunks";
+import Image from "next/image";
 
 const NAME_MAX = 60;
 const SUBTITLE_MAX = 80;
@@ -29,8 +32,11 @@ const inputClass =
     "w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15";
 
 export default function StepOneInfo({ data, onChange, categories }) {
+    console.log("StepOneInfo data:", data);
     const fileInputRef = useRef(null);
+    const dispatch = useAppDispatch();
     const [previewUrl, setPreviewUrl] = useState(null);
+    const { uploadLoading, uploadProgress, uploadError } = useAppSelector((state) => state.common);
     const [outcomeDraft, setOutcomeDraft] = useState("");
     const [touched, setTouched] = useState({
         title: false,
@@ -47,11 +53,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
 
     const set = (patch) => onChange({ ...data, ...patch });
 
-    const handleFile = (file) => {
-        if (!file) return;
-        set({ coverImageName: file.name });
-        setPreviewUrl(URL.createObjectURL(file));
-    };
+
 
     const handleBlur = (field) => {
         setTouched((prev) => ({ ...prev, [field]: true }));
@@ -94,6 +96,40 @@ export default function StepOneInfo({ data, onChange, categories }) {
         return touched[field] && !isFieldValid(field, value);
     };
 
+    const handleImageUpload = async (file) => {
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            toast.error("Please upload an image file");
+            return;
+        }
+        try {
+            const result = await dispatch(uploadImage({
+                file: file,
+                container: "course_material",
+                title: data?.title || file.name,
+                alt_text: data?.title || file.name,
+            })).unwrap();
+
+            if (result?.file_url) {
+                set({
+                    coverImageName: file.name,
+                    thumbnail_url: result.file_url,
+                });
+                setPreviewUrl(result?.file_url);
+            }
+        } catch (error) {
+        }
+    };
+    console.log('preview ====>', previewUrl)
+    const handleFile = (e) => {
+        console.log('click ====>')
+        const file = e?.target?.files?.[0];
+        if (file) {
+            handleImageUpload(file);
+        }
+        e.target.value = "";
+    };
     const getErrorMessage = (field) => {
         const messages = {
             title: "Course name is required",
@@ -289,7 +325,7 @@ export default function StepOneInfo({ data, onChange, categories }) {
                                 type="file"
                                 accept="image/*"
                                 className="hidden"
-                                onChange={(e) => handleFile(e?.target.files?.[0])}
+                                onChange={handleFile}
                             />
                             {previewUrl ? (
                                 <img
@@ -297,18 +333,21 @@ export default function StepOneInfo({ data, onChange, categories }) {
                                     alt="Cover preview"
                                     className="mb-3 h-28 w-full rounded-lg object-cover"
                                 />
+                            ) : data?.coverImageName ? (
+                                <img
+                                    src={data?.coverImageName}
+                                    alt={data?.title || "Course cover"}
+                                    className="mb-3 h-28 w-full rounded-lg object-cover"
+                                />
                             ) : (
-                                <ImageIcon className="mb-3 h-8 w-8 text-[#365B50]" strokeWidth={1.5} />
-                            )}
-                            <p className="text-sm font-bold text-[#14301F]">
-                                <UploadCloud className="mr-1 inline h-4 w-4 text-[#365B50]" strokeWidth={2} />
-                                Click to replace <span className="font-medium text-[#14301F]">or drag and drop</span>
-                            </p>
-                            <p className="mt-1 text-xs text-muted">SVG, PNG, JPG or (max. 1280 x 720px)</p>
-                            {data?.coverImageName && (
-                                <p className="mt-2 truncate text-xs font-semibold text-ink-2">
-                                    {data?.coverImageName}
-                                </p>
+                                <>
+                                    <ImageIcon className="mb-3 h-8 w-8 text-[#365B50]" strokeWidth={1.5} />
+                                    <p className="text-sm font-bold text-[#14301F]">
+                                        <UploadCloud className="mr-1 inline h-4 w-4 text-[#365B50]" strokeWidth={2} />
+                                        Click to upload <span className="font-medium text-[#14301F]">or drag and drop</span>
+                                    </p>
+                                    <p className="mt-1 text-xs text-muted">SVG, PNG, JPG (max. 5MB)</p>
+                                </>
                             )}
                         </div>
                     </Field>

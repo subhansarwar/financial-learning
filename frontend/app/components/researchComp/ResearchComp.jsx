@@ -13,75 +13,57 @@ import {
     Users,
     Zap,
     Upload,
-    Lightbulb
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+    getMyPublications,
+    createPublication,
+    uploadPublicationFile,
+    downloadPublication,
+    RESEARCH_CACHE_KEY,
+} from "../../store/website/research/researchThunks";
+import { setPublications } from "../../store/website/research/researchSlice";
+import AuthModal from "../auth/AuthModal";
 
 const ResearchComp = () => {
-    const [papers, setPapers] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const dispatch = useAppDispatch();
+    const { publications, loading } = useAppSelector((state) => state.research);
+    const { user, isAuthenticated } = useAppSelector((state) => state.user);
+
     const [form, setForm] = useState({
         title: "",
-        author: "",
         topic: "microfinance",
         abstract: "",
         file: null,
+        coAuthors: "",
     });
     const [uploading, setUploading] = useState(false);
     const [expandedPaper, setExpandedPaper] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterTopic, setFilterTopic] = useState("all");
+    const [showAuthModal, setShowAuthModal] = useState(false);
 
+    // Load once: cache se ho to wahi use karo, warna sirf ek dafa GET karo
     useEffect(() => {
-        const stored = localStorage.getItem("research_papers");
-        if (stored) {
-            setPapers(JSON.parse(stored));
-        } else {
-            const examples = [
-                {
-                    id: "1",
-                    title: "Group Lending and Women's Empowerment in Rural Sindh",
-                    author: "Amina Yusuf",
-                    topic: "microfinance",
-                    abstract:
-                        "This paper examines the impact of group lending models on women's economic participation and household decision-making in rural Pakistan. Findings suggest that access to microcredit significantly increases women's autonomy in financial decisions.",
-                    url: "#",
-                    at: Date.now() - 86400000 * 30,
-                },
-                {
-                    id: "2",
-                    title: "Green Bonds: Financing the Energy Transition",
-                    author: "Dr. Omar Khan",
-                    topic: "sustainability",
-                    abstract:
-                        "An analysis of the green bond market growth, impact measurement, and the role of institutional investors in climate finance. The paper identifies key drivers and barriers to green bond adoption in emerging markets.",
-                    url: "#",
-                    at: Date.now() - 86400000 * 15,
-                },
-                {
-                    id: "3",
-                    title: "Solar Energy Adoption in Rural Communities",
-                    author: "Fatima Ahmed",
-                    topic: "green-energy",
-                    abstract:
-                        "This research explores the factors influencing solar energy adoption in off-grid communities, focusing on financing mechanisms and community engagement strategies for sustainable energy access.",
-                    url: "#",
-                    at: Date.now() - 86400000 * 7,
-                },
-            ];
-            localStorage.setItem("research_papers", JSON.stringify(examples));
-            setPapers(examples);
-        }
-        setLoading(false);
+        if (typeof window === "undefined") return;
 
-        const user = localStorage.getItem("efp.user");
-        if (user) {
+        const cached = localStorage.getItem(RESEARCH_CACHE_KEY);
+        if (cached) {
             try {
-                const u = JSON.parse(user);
-                setForm((prev) => ({ ...prev, author: u.name || "" }));
-            } catch (e) { }
+                const parsed = JSON.parse(cached);
+                dispatch(setPublications(parsed));
+                return;
+            } catch (e) {
+                // corrupt cache — fallback to fresh fetch
+            }
         }
-    }, []);
+
+        if (isAuthenticated) {
+            dispatch(getMyPublications());
+        }
+    }, [dispatch, isAuthenticated]);
 
     const topicLabel = (t) => {
         const map = {
@@ -103,49 +85,98 @@ const ResearchComp = () => {
         return map[t] || BookOpen;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!form.title.trim() || !form.author.trim() || !form.abstract.trim()) {
-            alert("Please fill in all fields");
+
+        // Auth check — login/signup na hone par AuthModal dikhao
+        if (!isAuthenticated) {
+            setShowAuthModal(true);
+            return;
+        }
+
+        if (!form.title.trim() || !form.abstract.trim() || !form.file) {
+            toast.error("Please fill in all fields");
             return;
         }
 
         setUploading(true);
 
-        setTimeout(() => {
-            const newPaper = {
-                id: Date.now().toString(),
-                title: form.title.trim(),
-                author: form.author.trim(),
-                topic: form.topic,
-                abstract: form.abstract.trim(),
-                url: "#",
-                at: Date.now(),
-            };
+        try {
+            const keywords = form.topic && form.topic !== "other" ? [form.topic] : [];
+            const coAuthorsArray = form.coAuthors
+                .split(",")
+                .map((name) => name.trim())
+                .filter((name) => name.length > 0)
+            const created = await dispatch(
+                createPublication({
+                    title: form.title.trim(),
+                    abstract: form.abstract.trim(),
+                    category: "research_paper",
+                    keywords,
+                    co_authors: coAuthorsArray,
+                })
+            ).unwrap();
 
-            const updated = [newPaper, ...papers];
-            localStorage.setItem("research_papers", JSON.stringify(updated));
-            setPapers(updated);
-            setForm({ ...form, title: "", abstract: "", file: null });
+            // List mein turant dikhao (user ko wait na karna pade)
+            const updatedCache = [created, ...publications];
+            dispatch(setPublications(updatedCache));
+            if (typeof window !== "undefined") {
+                localStorage.setItem(RESEARCH_CACHE_KEY, JSON.stringify(updatedCache));
+            }
+
+            toast.success("Paper published successfully!");
+
+            const fileToUpload = form.file;
+            setForm({ ...form, title: "", abstract: "", file: null, coAuthors: "" });
             setUploading(false);
-            alert("Paper published successfully!");
-        }, 1000);
+
+            // 1 second baad chup-chaap PDF upload, phir list silently refresh
+            setTimeout(async () => {
+                try {
+                    await dispatch(
+                        uploadPublicationFile({
+                            publicationId: created.id,
+                            file: fileToUpload,
+                        })
+                    ).unwrap();
+
+                    // Upload ke baad ek dafa GET karke cache refresh karo
+                    dispatch(getMyPublications());
+                } catch (err) {
+                    // Silent — user ko pata nahi chalna chahiye
+                }
+            }, 1000);
+        } catch (error) {
+            setUploading(false);
+        }
+    };
+
+    const handleDownload = (pub) => {
+        if (pub.file_url) {
+            window.open(pub.file_url, "_blank");
+            return;
+        }
+        if (pub.publication_number) {
+            dispatch(downloadPublication(pub.publication_number));
+        } else {
+            toast.error("File not available yet");
+        }
     };
 
     const toggleExpand = (id) => {
         setExpandedPaper(expandedPaper === id ? null : id);
     };
 
-    const filteredPapers = papers.filter((p) => {
+    const filteredPapers = publications.filter((p) => {
         const matchesSearch =
-            p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            p.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            p.abstract.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesTopic = filterTopic === "all" || p.topic === filterTopic;
+            p.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            p.abstract?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesTopic =
+            filterTopic === "all" || (p.keywords || []).includes(filterTopic);
         return matchesSearch && matchesTopic;
     });
 
-    if (loading) {
+    if (loading && publications.length === 0) {
         return (
             <div className="flex min-h-[400px] items-center justify-center">
                 <div className="flex flex-col items-center gap-3">
@@ -162,7 +193,6 @@ const ResearchComp = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10">
             {/* ========== PAPERS LIST ========== */}
             <div className="lg:col-span-2">
-                {/* Heading — index-style, not a dashboard title */}
                 <div className="mb-6 flex items-end justify-between border-b border-[#14301F]/10 pb-4">
                     <div>
                         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#72BB83]">
@@ -177,13 +207,12 @@ const ResearchComp = () => {
                     </span>
                 </div>
 
-                {/* Search and Filter */}
                 <div className="mb-8 flex flex-col gap-3">
                     <div className="relative">
                         <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#14301F]/35" strokeWidth={2} />
                         <input
                             type="text"
-                            placeholder="Search by title, author, or abstract…"
+                            placeholder="Search by title or abstract…"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full rounded-lg border border-[#14301F]/15 bg-white py-2.5 pl-10 pr-4 text-sm font-medium text-[#14301F] placeholder:text-[#14301F]/35 focus:border-[#72BB83] focus:outline-none focus:ring-4 focus:ring-[#72BB83]/15"
@@ -228,31 +257,34 @@ const ResearchComp = () => {
                             )}
                         </div>
                     ) : (
-                        filteredPapers.map((p, idx) => {
-                            const Icon = topicIcon(p.topic);
+                        filteredPapers.map((p) => {
+                            const primaryTopic = (p.keywords || [])[0] || "other";
+                            const Icon = topicIcon(primaryTopic);
                             const isExpanded = expandedPaper === p.id;
+                            const abstractText = p.abstract || "";
 
                             return (
                                 <article
                                     key={p.id}
                                     className="group relative overflow-hidden rounded-lg border border-[#14301F]/10 bg-white transition-colors duration-200 hover:border-[#72BB83]/40"
                                 >
-                                    {/* Left accent bar */}
                                     <div className="absolute inset-y-0 left-0 w-[3px] bg-[#72BB83]/0 transition-colors duration-200 group-hover:bg-[#72BB83]" />
 
                                     <div className="p-5 pl-6 sm:p-6 sm:pl-7">
                                         <div className="flex flex-wrap items-center justify-between gap-2">
                                             <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-[#72BB83]">
                                                 <Icon className="h-3.5 w-3.5" strokeWidth={2.25} />
-                                                {topicLabel(p.topic)}
+                                                {topicLabel(primaryTopic)}
                                             </span>
                                             <span className="flex items-center gap-1 text-xs font-medium text-[#14301F]/40">
                                                 <Calendar className="h-3 w-3" strokeWidth={2} />
-                                                {new Date(p.at).toLocaleDateString("en-US", {
-                                                    year: "numeric",
-                                                    month: "short",
-                                                    day: "numeric",
-                                                })}
+                                                {p.created_at
+                                                    ? new Date(p.created_at).toLocaleDateString("en-US", {
+                                                        year: "numeric",
+                                                        month: "short",
+                                                        day: "numeric",
+                                                    })
+                                                    : ""}
                                             </span>
                                         </div>
 
@@ -262,16 +294,16 @@ const ResearchComp = () => {
 
                                         <div className="mt-1.5 flex items-center gap-1.5 text-sm font-medium text-[#14301F]/55">
                                             <User className="h-3.5 w-3.5" strokeWidth={2} />
-                                            {p.author}
+                                            {user?.name || "You"}
                                         </div>
 
                                         <p className="mt-3 text-sm leading-relaxed text-[#14301F]/65">
-                                            {p.abstract.length > 180 && !isExpanded
-                                                ? `${p.abstract.slice(0, 180)}…`
-                                                : p.abstract}
+                                            {abstractText.length > 180 && !isExpanded
+                                                ? `${abstractText.slice(0, 180)}…`
+                                                : abstractText}
                                         </p>
 
-                                        {p.abstract.length > 180 && (
+                                        {abstractText.length > 180 && (
                                             <button
                                                 onClick={() => toggleExpand(p.id)}
                                                 className="mt-2 flex items-center gap-1 text-xs font-bold text-[#72BB83] transition-colors hover:text-[#5DA870]"
@@ -289,15 +321,13 @@ const ResearchComp = () => {
                                         )}
 
                                         <div className="mt-4 flex flex-wrap items-center gap-4 border-t border-[#14301F]/8 pt-4">
-                                            <a
-                                                href={p.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                            <button
+                                                onClick={() => handleDownload(p)}
                                                 className="inline-flex items-center gap-1.5 rounded-md bg-[#14301F] px-4 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#0d2015]"
                                             >
                                                 <Download className="h-3.5 w-3.5" strokeWidth={2.5} />
                                                 Read PDF
-                                            </a>
+                                            </button>
                                             <span className="text-xs text-[#14301F]/35">Student contribution</span>
                                             <span className="text-xs text-[#14301F]/35">Not peer-reviewed</span>
                                         </div>
@@ -308,6 +338,7 @@ const ResearchComp = () => {
                     )}
                 </div>
             </div>
+
             {/* ========== UPLOAD FORM ========== */}
             <aside>
                 <div className="sticky top-24 rounded-xl2 border border-line bg-card p-5 sm:p-6">
@@ -329,10 +360,7 @@ const ResearchComp = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label
-                                htmlFor="pTitle"
-                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
-                            >
+                            <label htmlFor="pTitle" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">
                                 Paper title
                             </label>
                             <input
@@ -343,41 +371,36 @@ const ResearchComp = () => {
                                 placeholder="e.g. Group lending and women's empowerment in rural Sindh"
                                 value={form.title}
                                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                                disabled={!isAuthenticated}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1] disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                         </div>
 
                         <div>
-                            <label
-                                htmlFor="pAuthor"
-                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
-                            >
-                                Author name
+                            <label htmlFor="pCoAuthors" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">
+                                Co-authors <span className="normal-case font-normal text-muted/70">(optional, comma separated)</span>
                             </label>
                             <input
-                                id="pAuthor"
+                                id="pCoAuthors"
                                 type="text"
-                                required
-                                maxLength="80"
-                                placeholder="Your name"
-                                value={form.author}
-                                onChange={(e) => setForm({ ...form, author: e.target.value })}
-                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                                placeholder="e.g. Ahmed Raza, Sara Khan"
+                                value={form.coAuthors}
+                                onChange={(e) => setForm({ ...form, coAuthors: e.target.value })}
+                                disabled={!isAuthenticated}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1] disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                         </div>
 
                         <div>
-                            <label
-                                htmlFor="pTopic"
-                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
-                            >
+                            <label htmlFor="pTopic" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">
                                 Topic
                             </label>
                             <select
                                 id="pTopic"
                                 value={form.topic}
                                 onChange={(e) => setForm({ ...form, topic: e.target.value })}
-                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                                disabled={!isAuthenticated}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1] disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 <option value="microfinance">Microfinance</option>
                                 <option value="sustainability">Sustainability &amp; finance</option>
@@ -387,10 +410,7 @@ const ResearchComp = () => {
                         </div>
 
                         <div>
-                            <label
-                                htmlFor="pAbstract"
-                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
-                            >
+                            <label htmlFor="pAbstract" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">
                                 Abstract (2–3 sentences)
                             </label>
                             <textarea
@@ -401,15 +421,13 @@ const ResearchComp = () => {
                                 placeholder="What question does the paper ask, and what does it find?"
                                 value={form.abstract}
                                 onChange={(e) => setForm({ ...form, abstract: e.target.value })}
-                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                                disabled={!isAuthenticated}
+                                className="w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink placeholder:text-muted focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1] disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                         </div>
 
                         <div>
-                            <label
-                                htmlFor="pFile"
-                                className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted"
-                            >
+                            <label htmlFor="pFile" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">
                                 PDF file
                             </label>
                             <div className="relative">
@@ -419,7 +437,8 @@ const ResearchComp = () => {
                                     accept="application/pdf,.pdf"
                                     required
                                     onChange={(e) => setForm({ ...form, file: e.target.files[0] })}
-                                    className="w-full cursor-pointer rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink file:mr-3 file:rounded-full file:border-0 file:bg-[#E6FBF1] file:px-4 file:py-1.5 file:text-xs file:font-bold file:text-[#1E4D35] file:transition-colors hover:file:bg-[#E6FBF1]focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1]"
+                                    disabled={!isAuthenticated}
+                                    className="w-full cursor-pointer rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm font-medium text-ink file:mr-3 file:rounded-full file:border-0 file:bg-[#E6FBF1] file:px-4 file:py-1.5 file:text-xs file:font-bold file:text-[#1E4D35] file:transition-colors hover:file:bg-[#E6FBF1] focus:border-[#E6FBF1] focus:outline-none focus:ring-4 focus:ring-[#E6FBF1] disabled:opacity-50 disabled:cursor-not-allowed"
                                 />
                             </div>
                         </div>
@@ -430,9 +449,7 @@ const ResearchComp = () => {
                             disabled={uploading}
                         >
                             {uploading ? (
-                                <>
-                                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                                </>
+                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                             ) : (
                                 <>
                                     <Upload className="h-4 w-4 text-[#E6FBF1]" strokeWidth={2.5} />
@@ -443,8 +460,14 @@ const ResearchComp = () => {
                     </form>
                 </div>
             </aside>
-        </div>
-    )
-}
 
-export default ResearchComp
+            <AuthModal
+                isOpen={showAuthModal}
+                onClose={() => setShowAuthModal(false)}
+                redirectPath="/research"
+            />
+        </div>
+    );
+};
+
+export default ResearchComp;

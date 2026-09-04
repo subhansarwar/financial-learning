@@ -7,9 +7,9 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/";
 const axiosInstance = axios.create({
     baseURL: baseUrl,
     timeout: 30000,
-    headers: {
-        "Content-Type": "application/json",
-    },
+    // headers: {
+    //     "Content-Type": "application/json",
+    // },
 });
 
 // Flag to prevent multiple refresh requests
@@ -147,19 +147,47 @@ axiosInstance.interceptors.response.use(
 );
 
 // API Call function
-const apiCall = async ({ path, method = "get", body = null, token = null }) => {
+const apiCall = async ({ path, method = "get", body = null, token = null, headers = {} }) => {
     try {
         if (token) {
             axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
 
-        const response = await axiosInstance({
+        // ============ CHECK IF BODY IS FORMDATA ============
+        const isFormData = body instanceof FormData;
+
+        const config = {
             method,
             url: path,
-            data: body && method !== "get" && method !== "delete" ? body : undefined,
-        });
+            headers: {
+                ...headers,
+            },
+        };
 
+        if (isFormData) {
+            config.data = body;
+        } else {
+            config.headers["Content-Type"] = "application/json";
+
+            if (
+                body &&
+                method !== "get" &&
+                method !== "delete"
+            ) {
+                config.data = body;
+            }
+        }
+
+        const response = await axiosInstance(config);
         return response.data;
+
+        // const response = await axiosInstance({
+        //     method,
+        //     url: path,
+        //     data: body && method !== "get" && method !== "delete" ? body : undefined,
+        // });
+
+        // return response.data;
     } catch (error) {
         // 🔥 Silent fail for 422 - no console error
         if (error.response?.status === 422) {

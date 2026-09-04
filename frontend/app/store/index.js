@@ -18,6 +18,10 @@ import courseReducer from "./slices/courses/courseSlice";
 import adminCoursesReducer from "./admin/adminCourses/adminCoursesSlice";
 import websiteCourseReducer from "./website/websiteCourseSlice";
 import caseStudiesReducer from "./admin/caseStudy/caseStudiesSlice";
+import researchReducer from "./website/research/researchSlice";
+import dashboardReducer from "./userDashboard/dashboardSlice";
+import publicationsReducer from "./admin/publications/publicationsSlice";
+
 
 
 // ============================================
@@ -58,7 +62,7 @@ const userPersistConfig = {
 const commonPersistConfig = {
     key: "common",
     storage,
-    whitelist: [],
+    whitelist: ["uploadedImages"],
 };
 
 const coursePersistConfig = {
@@ -85,6 +89,18 @@ const caseStudiesPersistConfig = {
     whitelist: ["caseStudies", "pagination"],
 };
 
+const researchPersistConfig = {
+    key: "research",
+    storage,
+    whitelist: ["publications", "isInitialized"],
+};
+
+const dashboardPersistConfig = {
+    key: "dashboard",
+    storage,
+    whitelist: [],
+};
+
 // ============================================
 // PERSISTED REDUCERS
 // ============================================
@@ -95,6 +111,9 @@ const persistedCourseReducer = persistReducer(coursePersistConfig, courseReducer
 const persistedAdminCoursesReducer = persistReducer(adminCoursesPersistConfig, adminCoursesReducer);
 const persistedWebsiteCourseReducer = persistReducer(websiteCoursePersistConfig, websiteCourseReducer);
 const persistedCaseStudiesReducer = persistReducer(caseStudiesPersistConfig, caseStudiesReducer);
+const persistedResearchReducer = persistReducer(researchPersistConfig, researchReducer);
+const persistedDashboardReducer = persistReducer(dashboardPersistConfig, dashboardReducer);
+
 
 
 
@@ -109,6 +128,9 @@ const rootReducer = combineReducers({
     adminCourses: persistedAdminCoursesReducer,
     websiteCourse: persistedWebsiteCourseReducer,
     caseStudies: persistedCaseStudiesReducer,
+    research: persistedResearchReducer,
+    dashboard: persistedDashboardReducer,
+    publications: publicationsReducer,
 });
 
 // ============================================

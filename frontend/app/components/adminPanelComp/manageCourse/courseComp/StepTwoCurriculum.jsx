@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Plus, X, Video, Layers3, Edit2, Trash2, Save, ChevronDown, ChevronRight, FileText, HelpCircle, PlayCircle } from "lucide-react";
+import { Plus, X, Video, Layers3, Edit2, Trash2, Save, ChevronDown, ChevronRight, FileText, HelpCircle, PlayCircle, ListChecks, BookOpen, Type } from "lucide-react";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import {
@@ -36,6 +36,49 @@ function Field({ label, children, required = false }) {
     );
 }
 
+function ContentBlock({ block, index, onUpdate, onRemove }) {
+    return (
+        <div className="rounded-lg border border-line-soft bg-cream-2/30 p-3 sm:p-4 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-bold text-muted">Block {index + 1}</span>
+                <button
+                    onClick={onRemove}
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-rose-400 transition-colors hover:bg-rose-50 hover:text-rose-600"
+                    type="button"
+                >
+                    <X className="h-4 w-4" strokeWidth={2} />
+                </button>
+            </div>
+            <Field label="Paragraph Title">
+                <input
+                    value={block?.paragraph_title || ""}
+                    onChange={(e) => onUpdate(index, "paragraph_title", e.target.value)}
+                    placeholder="Enter paragraph title"
+                    className={inputClass}
+                />
+            </Field>
+            <Field label="Paragraph Content">
+                <textarea
+                    rows={3}
+                    value={block?.paragraph || ""}
+                    onChange={(e) => onUpdate(index, "paragraph", e.target.value)}
+                    placeholder="Enter paragraph content..."
+                    className={textareaClass}
+                />
+            </Field>
+            <Field label="Order Index">
+                <input
+                    type="number"
+                    min={0}
+                    value={block?.order_index || 0}
+                    onChange={(e) => onUpdate(index, "order_index", Number(e.target.value) || 0)}
+                    className={`${inputClass} max-w-[120px]`}
+                />
+            </Field>
+        </div>
+    );
+}
+
 function LessonForm({ lesson, onSave, onCancel, moduleId }) {
     const [formData, setFormData] = useState(lesson || {
         title: "",
@@ -46,7 +89,13 @@ function LessonForm({ lesson, onSave, onCancel, moduleId }) {
         video_url: "",
         quiz_pass_pct: 100,
         quiz_questions: [],
+        // Reading specific fields
+        summary: "",
+        learning_objectives: [],
+        content_blocks: [],
     });
+
+    const [objectiveDraft, setObjectiveDraft] = useState("");
 
     const handleSubmit = () => {
         if (!formData.title?.trim()) {
@@ -63,6 +112,45 @@ function LessonForm({ lesson, onSave, onCancel, moduleId }) {
         onSave(formData);
     };
 
+    // Learning Objectives handlers
+    const addObjective = () => {
+        const value = objectiveDraft.trim();
+        if (!value) return;
+        setFormData({
+            ...formData,
+            learning_objectives: [...(formData.learning_objectives || []), value]
+        });
+        setObjectiveDraft("");
+    };
+
+    const removeObjective = (index) => {
+        const objectives = (formData.learning_objectives || []).filter((_, i) => i !== index);
+        setFormData({ ...formData, learning_objectives: objectives });
+    };
+
+    // Content Blocks handlers
+    const addContentBlock = () => {
+        const blocks = [...(formData.content_blocks || [])];
+        blocks.push({
+            paragraph_title: "",
+            paragraph: "",
+            order_index: blocks.length,
+        });
+        setFormData({ ...formData, content_blocks: blocks });
+    };
+
+    const updateContentBlock = (index, field, value) => {
+        const blocks = [...(formData.content_blocks || [])];
+        blocks[index] = { ...blocks[index], [field]: value };
+        setFormData({ ...formData, content_blocks: blocks });
+    };
+
+    const removeContentBlock = (index) => {
+        const blocks = (formData.content_blocks || []).filter((_, i) => i !== index);
+        setFormData({ ...formData, content_blocks: blocks });
+    };
+
+    // Quiz Questions handlers
     const addQuestion = () => {
         const questions = [...(formData.quiz_questions || [])];
         questions.push({
@@ -172,6 +260,112 @@ function LessonForm({ lesson, onSave, onCancel, moduleId }) {
                 />
                 <p className="mt-1 text-xs text-muted">Add a video URL to include a video with this lesson.</p>
             </Field>
+
+            {/* ============ READING SECTION ============ */}
+            {formData.type === "reading" && (
+                <div className="border-t border-line-soft pt-4 mt-2 space-y-4">
+                    {/* Summary */}
+                    <Field label="Summary">
+                        <textarea
+                            rows={3}
+                            value={formData.summary || ""}
+                            onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+                            placeholder="Enter a brief summary of this lesson..."
+                            className={textareaClass}
+                        />
+                        <p className="mt-1 text-xs text-muted">A short summary that will be displayed on the course overview.</p>
+                    </Field>
+
+                    {/* Learning Objectives */}
+                    <div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <label className="text-xs font-bold uppercase tracking-wider text-muted">
+                                Learning Objectives ({formData.learning_objectives?.length || 0})
+                            </label>
+                        </div>
+                        <div className="flex gap-2">
+                            <input
+                                value={objectiveDraft}
+                                onChange={(e) => setObjectiveDraft(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        addObjective();
+                                    }
+                                }}
+                                placeholder="e.g. Understand the basics of microfinance"
+                                className={inputClass}
+                            />
+                            <button
+                                type="button"
+                                onClick={addObjective}
+                                disabled={!objectiveDraft.trim()}
+                                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#72BB83] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#5a9c6a] disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                <Plus className="h-4 w-4" strokeWidth={2.5} />
+                                Add
+                            </button>
+                        </div>
+                        {(formData.learning_objectives || []).length > 0 && (
+                            <div className="mt-3 space-y-1.5">
+                                {(formData.learning_objectives || []).map((objective, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-start gap-2 rounded-lg border border-line-soft bg-cream-2/30 p-2.5"
+                                    >
+                                        <ListChecks className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#72BB83]" strokeWidth={2} />
+                                        <p className="flex-1 text-sm text-[#14301F]">{objective}</p>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeObjective(index)}
+                                            className="shrink-0 rounded-full p-1 text-muted hover:bg-rose-50 hover:text-rose-500"
+                                        >
+                                            <X className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Content Blocks */}
+                    <div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                            <label className="text-xs font-bold uppercase tracking-wider text-muted">
+                                Content Blocks ({formData.content_blocks?.length || 0})
+                            </label>
+                            <button
+                                type="button"
+                                onClick={addContentBlock}
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#72BB83] hover:text-[#5a9c6a] transition-all"
+                            >
+                                <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                Add Block
+                            </button>
+                        </div>
+
+                        {(formData.content_blocks || []).length === 0 ? (
+                            <div className="rounded-lg border border-dashed border-line-soft bg-cream-2/30 p-6 text-center">
+                                <BookOpen className="mx-auto h-8 w-8 text-muted/40" strokeWidth={1.5} />
+                                <p className="mt-1 text-sm text-muted">No content blocks added</p>
+                                <p className="text-xs text-muted">Add structured content blocks for better readability</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                {(formData.content_blocks || []).map((block, index) => (
+                                    <ContentBlock
+                                        key={index}
+                                        block={block}
+                                        index={index}
+                                        onUpdate={updateContentBlock}
+                                        onRemove={() => removeContentBlock(index)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
 
             {/* ============ QUIZ SECTION ============ */}
             {formData.type === "quiz" && (

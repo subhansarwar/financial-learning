@@ -21,8 +21,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAppDispatch } from "../../../store/hooks";
-import { completeLesson, downloadCertificate, getCertificate, getQuizAttempts, submitQuiz } from "../../../store/website/websiteCourseThunks";
-import CertificateModal from "../../../components/CertificateModal";
+import { completeLesson, downloadCertificate, getCertificate, submitQuiz } from "../../../store/website/websiteCourseThunks";
 
 const typeIconMap = {
     reading: { icon: BookOpen, color: "text-blue-500", label: "Reading" },
@@ -86,10 +85,8 @@ export default function LessonClient({
     const [quizPassed, setQuizPassed] = useState(false);
     const [quizScore, setQuizScore] = useState(0);
     const [correctCount, setCorrectCount] = useState(0);
-    const [mounted, setMounted] = useState(false);
-    const [showCertificate, setShowCertificate] = useState(false);
+    const [mounted, setMounted] = useState(true);
     const [isDownloadingCert, setIsDownloadingCert] = useState(false);
-    const [completedLessonIds, setCompletedLessonIds] = useState(initialCompletedIds);
     const [courseProgress, setCourseProgress] = useState({
         done: initialCompletedIds,
         total: allLessons?.length || 0,
@@ -102,7 +99,7 @@ export default function LessonClient({
         setIsComplete(isCompletedFromApi);
 
         // 🔥 For quiz, check if completed from API
-        if (lesson.type === "quiz") {
+        if (lesson?.type === "quiz") {
             const isQuizCompleted = initialCompletedIds.includes(lesson.id);
 
             if (isQuizCompleted) {
@@ -146,7 +143,6 @@ export default function LessonClient({
 
         // Update progress from API
         const completedIds = initialCompletedIds.length > 0 ? initialCompletedIds : [];
-        setCompletedLessonIds(completedIds);
         const totalLessons = allLessons?.length || 0;
         const progressPct = initialCourseProgress?.progress_pct || 0; // 🔥 Use API progress_pct
 
@@ -231,7 +227,6 @@ export default function LessonClient({
 
             if (result.progress) {
                 const completedIds = result.progress.completed_lesson_ids || [];
-                setCompletedLessonIds(completedIds);
 
                 if (onProgressUpdate) {
                     onProgressUpdate(completedIds);
@@ -393,7 +388,7 @@ export default function LessonClient({
     }
 
     const renderContent = () => {
-        const { icon: Icon, color, label } = typeIconMap[lesson.type] || typeIconMap.reading;
+        const { icon: Icon, color, label } = typeIconMap[lesson?.type] || typeIconMap?.reading;
 
         const Navigation = ({ extra, disableNext = false, hideNext = false }) => (
             <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-[#E5E5E5] pt-6">
@@ -445,7 +440,7 @@ export default function LessonClient({
         );
 
         // Reading lesson
-        if (lesson.type === "reading") {
+        if (lesson?.type === "reading") {
             return (
                 <>
                     <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -495,7 +490,7 @@ export default function LessonClient({
         }
 
         // Video lesson
-        if (lesson.type === "video") {
+        if (lesson?.type === "video") {
             return (
                 <>
                     <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -511,7 +506,7 @@ export default function LessonClient({
                     {lesson.content && (
                         <p className="mt-2 text-base text-[#14301F]/70">{lesson.content}</p>
                     )}
-                    {lesson.video_url && (
+                    {lesson?.video_url && (
                         <div className="mt-4 overflow-hidden rounded-xl bg-black aspect-video">
                             <iframe
                                 src={getYouTubeEmbedUrl(lesson?.video_url)}
@@ -553,9 +548,9 @@ export default function LessonClient({
         }
 
         // Quiz lesson
-        if (lesson.type === "quiz") {
-            const quizQuestions = lesson.quiz_questions || [];
-            const passPct = lesson.quiz_pass_pct || 70;
+        if (lesson?.type === "quiz") {
+            const quizQuestions = lesson?.quiz_questions || [];
+            const passPct = lesson?.quiz_pass_pct || 70;
             const isQuizFailed = quizSubmitted && !quizPassed;
             return (
                 <>
@@ -602,12 +597,6 @@ export default function LessonClient({
                         onProgressUpdate={onProgressUpdate}
                     />
                     <Navigation extra={null} disableNext={!isComplete && !quizPassed} hideNext={isQuizFailed} />
-                    <CertificateModal
-                        isOpen={showCertificate}
-                        onClose={() => setShowCertificate(false)}
-                        courseId={course.id}
-                        courseTitle={course.title}
-                    />
                 </>
             );
         }

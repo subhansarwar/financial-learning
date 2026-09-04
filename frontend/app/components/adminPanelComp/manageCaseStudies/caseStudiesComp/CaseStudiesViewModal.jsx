@@ -19,6 +19,12 @@ function InfoItem({ icon: Icon, label, value }) {
 export default function CaseStudiesViewModal({ caseStudy, onClose }) {
     if (!caseStudy) return null;
 
+    const contentArray = Array.isArray(caseStudy?.content)
+        ? caseStudy.content
+        : caseStudy?.content
+            ? [{ heading: "Content", text: caseStudy.content }]
+            : [];
+
     return (
         <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 backdrop-blur-sm animate-in fade-in duration-200 sm:p-4"
@@ -90,10 +96,12 @@ export default function CaseStudiesViewModal({ caseStudy, onClose }) {
                             Content
                         </p>
                         <div className="space-y-3">
-                            {caseStudy.content && caseStudy.content.length > 0 ? (
-                                caseStudy.content.map((section, index) => (
+                            {contentArray.length > 0 ? (
+                                contentArray.map((section, index) => (
                                     <div key={index} className="rounded-lg border border-line-soft bg-cream-2/30 p-3 sm:p-4">
-                                        <h4 className="font-bold text-ink text-sm sm:text-base">{section.heading || "Untitled Section"}</h4>
+                                        <h4 className="font-bold text-ink text-sm sm:text-base">
+                                            {section.heading || "Untitled Section"}
+                                        </h4>
                                         <p className="mt-1 text-sm text-ink-2 leading-relaxed">
                                             {section.text || "No content provided."}
                                         </p>

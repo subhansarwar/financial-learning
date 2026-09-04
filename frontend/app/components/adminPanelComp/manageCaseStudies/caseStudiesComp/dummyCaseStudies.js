@@ -1,15 +1,17 @@
-export const emptyCaseDraft = () => ({
-    id: null,
-    title: "",
-    slug: "",
-    author: "",
-    shortDescription: "",
-    introduction: "",
-    industry: "",
-    tags: [],
-    content: [{ heading: "", text: "" }],
-    thumbnail_url: "",
-    images: [],
-    status: "Draft",
-    is_published: false,
-});
+export function emptyCaseDraft() {
+    return {
+        title: "",
+        slug: "",
+        industry: "",
+        tags: [],
+        thumbnail_url: "",
+        source: "",
+        date: "",
+        location: "",
+        company_name: "",
+        key_results: [],
+        shortDescription: "",
+        introduction: "", 
+        content: [{ heading: "", text: "" }],
+    };
+}

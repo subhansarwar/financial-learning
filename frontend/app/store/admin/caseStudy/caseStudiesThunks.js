@@ -133,9 +133,9 @@ export const updateCaseStudy = createAsyncThunk(
             }
             throw new Error("Failed to update case study");
         } catch (error) {
-            dispatch(setLoadingUpdate(false));
-            const errorMsg = error?.response?.data?.detail || "Failed to update case study. Please try again.";
-            toast.error(errorMsg);
+            // dispatch(setLoadingUpdate(false));
+            // const errorMsg = error?.response?.data?.detail || "Failed to update case study. Please try again.";
+            // toast.error(errorMsg);
             throw error;
         }
     }

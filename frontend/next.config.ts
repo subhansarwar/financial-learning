@@ -57,6 +57,15 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "hyhrckyuyevzgogvugqr.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
+  },
 
   // Other config options
   reactStrictMode: true,

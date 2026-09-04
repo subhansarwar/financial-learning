@@ -2,23 +2,44 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, ArrowUpDown, Eye, Trash2, FileText, CheckCircle, XCircle } from "lucide-react";
+import { Search, ArrowUpDown, Eye, Trash2, FileText, CheckCircle, XCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import StatusBadge from "./StatusBadge";
-import TablePagination from "./TablePagination";
 
 const COLUMNS = [
     { key: "title", label: "Paper Title", sortable: true },
-    { key: "author", label: "Author", sortable: true },
-    { key: "topic", label: "Topic", sortable: true },
-    { key: "submissionDate", label: "Submitted", sortable: true },
+    { key: "category", label: "Topic", sortable: true },
+    { key: "submitted_at", label: "Submitted", sortable: true },
     { key: "status", label: "Status", sortable: false },
 ];
 
-export default function ResearchTable({ research, onView, onDelete, onApprove, onReject }) {
+function formatDate(iso) {
+    if (!iso) return "—";
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return "—";
+    return d.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+}
+
+function toTitleCase(s) {
+    if (!s) return "—";
+    return s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, " ");
+}
+
+export default function ResearchTable({
+    research,
+    loading,
+    error,
+    skip,
+    limit,
+    hasMore,
+    onNextPage,
+    onPrevPage,
+    onView,
+    onDelete,
+    onApprove,
+    onReject,
+}) {
     const [search, setSearch] = useState("");
-    const [sort, setSort] = useState({ key: "submissionDate", dir: "desc" });
-    const [page, setPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(6);
+    const [sort, setSort] = useState({ key: "submitted_at", dir: "desc" });
 
     const filtered = useMemo(() => {
         const term = search.trim().toLowerCase();
@@ -26,21 +47,21 @@ export default function ResearchTable({ research, onView, onDelete, onApprove, o
             ? research
             : research.filter(
                 (r) =>
-                    r.title.toLowerCase().includes(term) ||
-                    r.author.toLowerCase().includes(term) ||
-                    r.topic.toLowerCase().includes(term) ||
-                    r.abstract.toLowerCase().includes(term)
+                    r.title?.toLowerCase().includes(term) ||
+                    r.category?.toLowerCase().includes(term) ||
+                    r.abstract?.toLowerCase().includes(term) ||
+                    r.publication_number?.toLowerCase().includes(term)
             );
 
         list = [...list].sort((a, b) => {
             let av = a[sort.key];
             let bv = b[sort.key];
-            if (sort.key === "submissionDate") {
-                av = new Date(av).getTime();
-                bv = new Date(bv).getTime();
+            if (sort.key === "submitted_at") {
+                av = av ? new Date(av).getTime() : 0;
+                bv = bv ? new Date(bv).getTime() : 0;
             } else if (typeof av === "string") {
-                av = av.toLowerCase();
-                bv = bv.toLowerCase();
+                av = (av || "").toLowerCase();
+                bv = (bv || "").toLowerCase();
             }
             if (av < bv) return sort.dir === "asc" ? -1 : 1;
             if (av > bv) return sort.dir === "asc" ? 1 : -1;
@@ -50,20 +71,12 @@ export default function ResearchTable({ research, onView, onDelete, onApprove, o
         return list;
     }, [research, search, sort]);
 
-    const totalPages = Math.max(1, Math.ceil(filtered.length / rowsPerPage));
-    const currentPage = Math.min(page, totalPages);
-    const pageItems = filtered.slice(
-        (currentPage - 1) * rowsPerPage,
-        currentPage * rowsPerPage
-    );
-
     const toggleSort = (key) => {
         setSort((prev) =>
             prev.key === key
                 ? { key, dir: prev.dir === "asc" ? "desc" : "asc" }
                 : { key, dir: "asc" }
         );
-        setPage(1);
     };
 
     return (
@@ -79,15 +92,11 @@ export default function ResearchTable({ research, onView, onDelete, onApprove, o
                         <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
                         <input
                             value={search}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                                setPage(1);
-                            }}
+                            onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search papers..."
                             className="w-full rounded-full border border-line bg-cream-2/50 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-brand/50 focus:outline-none focus:ring-4 focus:ring-brand/15 sm:w-56"
                         />
                     </div>
-                    {/* Removed "New Paper" button */}
                 </div>
             </div>
 
@@ -115,101 +124,122 @@ export default function ResearchTable({ research, onView, onDelete, onApprove, o
                         </tr>
                     </thead>
                     <tbody>
-                        {pageItems.length === 0 ? (
+                        {loading ? (
                             <tr>
-                                <td colSpan={6} className="px-4 py-12 text-center text-sm text-muted">
+                                <td colSpan={5} className="px-4 py-12 text-center text-sm text-muted">
+                                    Loading research papers...
+                                </td>
+                            </tr>
+                        ) : error ? (
+                            <tr>
+                                <td colSpan={5} className="px-4 py-12 text-center text-sm text-rose-500">
+                                    {error}
+                                </td>
+                            </tr>
+                        ) : filtered.length === 0 ? (
+                            <tr>
+                                <td colSpan={5} className="px-4 py-12 text-center text-sm text-muted">
                                     No research papers match your search.
                                 </td>
                             </tr>
                         ) : (
-                            pageItems.map((paper) => (
-                                <tr
-                                    key={paper.id}
-                                    className="border-b border-line-soft text-sm text-ink-2 last:border-b-0 hover:bg-cream-2/40"
-                                >
-                                    <td className="px-4 py-3">
-                                        <div className="flex items-center gap-3">
-                                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand-deep">
-                                                <FileText className="h-4.5 w-4.5" strokeWidth={2} />
+                            filtered.map((paper) => {
+                                const statusLower = (paper.status || "").toLowerCase();
+                                const displayStatus = toTitleCase(paper.status);
+                                return (
+                                    <tr
+                                        key={paper.id}
+                                        className="border-b border-line-soft text-sm text-ink-2 last:border-b-0 hover:bg-cream-2/40"
+                                    >
+                                        <td className="px-4 py-3">
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand-deep">
+                                                    <FileText className="h-4.5 w-4.5" strokeWidth={2} />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="truncate font-bold text-ink">{paper.title || "Untitled"}</p>
+                                                    <p className="truncate text-xs text-muted">{paper.publication_number}</p>
+                                                </div>
                                             </div>
-                                            <div className="min-w-0">
-                                                <p className="truncate font-bold text-ink">{paper.title}</p>
-                                                <p className="truncate text-xs text-muted">{paper.topic}</p>
+                                        </td>
+                                        <td className="whitespace-nowrap px-4 py-3">
+                                            <span className="rounded-full bg-brand-soft/50 px-2.5 py-1 text-xs font-bold text-brand-deep">
+                                                {toTitleCase(paper.category)}
+                                            </span>
+                                        </td>
+                                        <td className="whitespace-nowrap px-4 py-3">{formatDate(paper.submitted_at)}</td>
+                                        <td className="whitespace-nowrap px-4 py-3">
+                                            <StatusBadge status={displayStatus} />
+                                        </td>
+                                        <td className="whitespace-nowrap px-4 py-3">
+                                            <div className="flex items-center gap-1">
+                                                <button
+                                                    onClick={() => onView(paper)}
+                                                    title="View"
+                                                    className="flex h-8 w-8 items-center justify-center rounded-full text-ink-2 transition-colors hover:bg-brand-soft/60 hover:text-brand-deep"
+                                                >
+                                                    <Eye className="h-4 w-4" strokeWidth={2} />
+                                                </button>
+
+                                                {statusLower === "pending" && (
+                                                    <button
+                                                        onClick={() => onApprove(paper)}
+                                                        title="Approve"
+                                                        className="flex h-8 w-8 items-center justify-center rounded-full text-emerald-500 transition-colors hover:bg-emerald-50"
+                                                    >
+                                                        <CheckCircle className="h-4 w-4" strokeWidth={2} />
+                                                    </button>
+                                                )}
+
+                                                {statusLower === "pending" && (
+                                                    <button
+                                                        onClick={() => onReject(paper)}
+                                                        title="Reject"
+                                                        className="flex h-8 w-8 items-center justify-center rounded-full text-rose-500 transition-colors hover:bg-rose-50"
+                                                    >
+                                                        <XCircle className="h-4 w-4" strokeWidth={2} />
+                                                    </button>
+                                                )}
+
+                                                <button
+                                                    onClick={() => onDelete(paper)}
+                                                    title="Delete"
+                                                    className="flex h-8 w-8 items-center justify-center rounded-full text-rose-500 transition-colors hover:bg-rose-50 hover:text-rose-600"
+                                                >
+                                                    <Trash2 className="h-4 w-4" strokeWidth={2} />
+                                                </button>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td className="whitespace-nowrap px-4 py-3">
-                                        <p className="font-medium text-ink-2">{paper.author}</p>
-                                    </td>
-                                    <td className="whitespace-nowrap px-4 py-3">
-                                        <span className="rounded-full bg-brand-soft/50 px-2.5 py-1 text-xs font-bold text-brand-deep">
-                                            {paper.topic}
-                                        </span>
-                                    </td>
-                                    <td className="whitespace-nowrap px-4 py-3">{paper.submissionDate}</td>
-                                    <td className="whitespace-nowrap px-4 py-3">
-                                        <StatusBadge status={paper.status} />
-                                    </td>
-                                    <td className="whitespace-nowrap px-4 py-3">
-                                        <div className="flex items-center gap-1">
-                                            {/* View Only */}
-                                            <button
-                                                onClick={() => onView(paper)}
-                                                title="View"
-                                                className="flex h-8 w-8 items-center justify-center rounded-full text-ink-2 transition-colors hover:bg-brand-soft/60 hover:text-brand-deep"
-                                            >
-                                                <Eye className="h-4 w-4" strokeWidth={2} />
-                                            </button>
-
-                                            {/* Approve - Only for Pending */}
-                                            {paper.status === "Pending" && (
-                                                <button
-                                                    onClick={() => onApprove(paper)}
-                                                    title="Approve"
-                                                    className="flex h-8 w-8 items-center justify-center rounded-full text-emerald-500 transition-colors hover:bg-emerald-50"
-                                                >
-                                                    <CheckCircle className="h-4 w-4" strokeWidth={2} />
-                                                </button>
-                                            )}
-
-                                            {/* Reject - Only for Pending */}
-                                            {paper.status === "Pending" && (
-                                                <button
-                                                    onClick={() => onReject(paper)}
-                                                    title="Reject"
-                                                    className="flex h-8 w-8 items-center justify-center rounded-full text-rose-500 transition-colors hover:bg-rose-50"
-                                                >
-                                                    <XCircle className="h-4 w-4" strokeWidth={2} />
-                                                </button>
-                                            )}
-
-                                            {/* Delete - Always available */}
-                                            <button
-                                                onClick={() => onDelete(paper)}
-                                                title="Delete"
-                                                className="flex h-8 w-8 items-center justify-center rounded-full text-rose-500 transition-colors hover:bg-rose-50 hover:text-rose-600"
-                                            >
-                                                <Trash2 className="h-4 w-4" strokeWidth={2} />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
+                                        </td>
+                                    </tr>
+                                );
+                            })
                         )}
                     </tbody>
                 </table>
             </div>
 
-            <TablePagination
-                page={currentPage}
-                totalPages={totalPages}
-                onPageChange={setPage}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={(n) => {
-                    setRowsPerPage(n);
-                    setPage(1);
-                }}
-            />
+            {/* Pagination — no total count from API, so simple Prev/Next based on skip/limit */}
+            <div className="mt-5 flex items-center justify-between border-t border-line-soft pt-4">
+                <p className="text-xs text-muted">
+                    Showing {research.length === 0 ? 0 : skip + 1}–{skip + research.length}
+                </p>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={onPrevPage}
+                        disabled={skip === 0 || loading}
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-ink-2 transition-colors hover:bg-cream-2 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                        <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+                    </button>
+                    <button
+                        onClick={onNextPage}
+                        disabled={!hasMore || loading}
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-ink-2 transition-colors hover:bg-cream-2 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                        <ChevronRight className="h-4 w-4" strokeWidth={2} />
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

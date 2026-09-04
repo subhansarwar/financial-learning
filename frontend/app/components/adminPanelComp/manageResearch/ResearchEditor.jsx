@@ -1,67 +1,106 @@
 // app/components/adminPanelComp/manageResearch/ResearchEditor.jsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import {
+    getPendingPublications,
+    getPublicationById,
+    approvePublication,
+    rejectPublication,
+    deletePublication,
+} from "../../../store/admin/publications/publicationsThunks";
 import ResearchTable from "./researchComp/ResearchTable";
 import ResearchViewModal from "./researchComp/ResearchViewModal";
-import DeleteConfirmModal from "./researchComp/DeleteConfirmModal";
-import { initialResearch } from "./researchComp/dummyResearch";
+import NotesConfirmModal from "./researchComp/NotesConfirmModal";
+
+const LIMIT = 10;
 
 export default function ResearchEditor({ onDataChange }) {
-    const [research, setResearch] = useState(initialResearch);
-    const [viewPaper, setViewPaper] = useState(null);
-    const [deletePaper, setDeletePaper] = useState(null);
+    const dispatch = useAppDispatch();
+    const { list, skip, limit, hasMore, listLoading, listError, selected, actionLoading } =
+        useAppSelector((s) => s.publications);
 
-    const handleApprove = (paper) => {
-        setResearch((prev) =>
-            prev.map((p) =>
-                p.id === paper.id ? { ...p, status: "Approved" } : p
-            )
-        );
-        toast.success(`${paper.title} approved!`);
-        onDataChange?.();
+    const [viewId, setViewId] = useState(null); // jis paper ka Read modal open hai uska id
+    const [confirmModal, setConfirmModal] = useState(null); // { mode: "approve"|"reject"|"delete", paper }
+
+    useEffect(() => {
+        dispatch(getPendingPublications({ skip: 0, limit: LIMIT }));
+    }, [dispatch]);
+
+    const handleView = (paper) => {
+        setViewId(paper.id);
+        dispatch(getPublicationById(paper.id));
     };
 
-    const handleReject = (paper) => {
-        setResearch((prev) =>
-            prev.map((p) =>
-                p.id === paper.id ? { ...p, status: "Rejected" } : p
-            )
-        );
-        toast.success(`${paper.title} rejected.`);
-        onDataChange?.();
+    const closeView = () => setViewId(null);
+
+    const openConfirm = (mode, paper) => setConfirmModal({ mode, paper });
+    const closeConfirm = () => setConfirmModal(null);
+
+    const handleConfirmSubmit = async (notes) => {
+        if (!confirmModal) return;
+        const { mode, paper } = confirmModal;
+        try {
+            if (mode === "approve") {
+                await dispatch(approvePublication({ id: paper.id, notes })).unwrap();
+                toast.success(`${paper.title} approved!`);
+            } else if (mode === "reject") {
+                await dispatch(rejectPublication({ id: paper.id, notes })).unwrap();
+                toast.success(`${paper.title} rejected.`);
+            } else if (mode === "delete") {
+                await dispatch(deletePublication({ id: paper.id, notes })).unwrap();
+                toast.success("Research paper deleted!");
+            }
+            closeConfirm();
+            if (viewId === paper.id) closeView();
+            onDataChange?.();
+        } catch (error) {
+        }
     };
 
-    const handleDeleteConfirm = () => {
-        setResearch((prev) => prev.filter((p) => p.id !== deletePaper.id));
-        toast.success("Research paper deleted!");
-        setDeletePaper(null);
-        onDataChange?.();
+    const handleNextPage = () => {
+        if (!hasMore || listLoading) return;
+        dispatch(getPendingPublications({ skip: skip + limit, limit }));
+    };
+
+    const handlePrevPage = () => {
+        if (skip === 0 || listLoading) return;
+        dispatch(getPendingPublications({ skip: Math.max(0, skip - limit), limit }));
     };
 
     return (
         <>
             <ResearchTable
-                research={research}
-                onView={setViewPaper}
-                onDelete={setDeletePaper}
-                onApprove={handleApprove}
-                onReject={handleReject}
+                research={list}
+                loading={listLoading}
+                error={listError}
+                skip={skip}
+                limit={limit}
+                hasMore={hasMore}
+                onNextPage={handleNextPage}
+                onPrevPage={handlePrevPage}
+                onView={handleView}
+                onDelete={(paper) => openConfirm("delete", paper)}
+                onApprove={(paper) => openConfirm("approve", paper)}
+                onReject={(paper) => openConfirm("reject", paper)}
             />
 
             <ResearchViewModal
-                paper={viewPaper}
-                onClose={() => setViewPaper(null)}
-                onApprove={handleApprove}
-                onReject={handleReject}
+                paper={viewId ? selected : null}
+                onClose={closeView}
+                onApprove={(paper) => openConfirm("approve", paper)}
+                onReject={(paper) => openConfirm("reject", paper)}
             />
 
-            <DeleteConfirmModal
-                isOpen={!!deletePaper}
-                onClose={() => setDeletePaper(null)}
-                onConfirm={handleDeleteConfirm}
-                paperTitle={deletePaper?.title}
+            <NotesConfirmModal
+                isOpen={!!confirmModal}
+                mode={confirmModal?.mode}
+                paperTitle={confirmModal?.paper?.title}
+                loading={actionLoading}
+                onClose={closeConfirm}
+                onConfirm={handleConfirmSubmit}
             />
         </>
     );

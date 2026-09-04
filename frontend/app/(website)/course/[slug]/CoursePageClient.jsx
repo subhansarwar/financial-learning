@@ -159,41 +159,13 @@ export default function CoursePageClient({ slug }) {
         }
     };
 
-    // Fixed: Using isPageLoading instead of loading
-    if (isPageLoading || loadingDetail) {
-        return (
-            <section className="flex min-h-[60vh] items-center justify-center bg-[#E6FBF1] py-20">
-                <LoadingSpinner />
-            </section>
-        );
-    }
-
-    if (errorDetail || !course) {
-        return (
-            <section className="flex min-h-[60vh] items-center justify-center bg-[#E6FBF1] py-20">
-                <div className="text-center">
-                    <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#72BB83]/10">
-                        <BookOpen className="h-12 w-12 text-[#14301F]" strokeWidth={1.5} />
-                    </div>
-                    <h1 className="text-3xl font-extrabold text-[#14301F] sm:text-4xl">
-                        {errorDetail || 'Course not found'}
-                    </h1>
-                    <p className="mt-2 text-[#14301F]/60">
-                        {errorDetail || "The course you're looking for doesn't exist."}
-                    </p>
-                    <a
-                        href="/catalog"
-                        className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#14301F] px-6 py-3 font-bold text-white hover:bg-[#14301F]/80"
-                    >
-                        <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
-                        Browse courses
-                    </a>
-                </div>
-            </section>
-        );
-    }
-    // Fixed: Using isPageLoading instead of loading
-    if (isPageLoading || loadingDetail) {
+    // NOTE: The full-page loader is now gated ONLY on the local `isPageLoading`
+    // state, which is scoped to this page's own course fetch. It no longer
+    // reads the shared/global `loadingDetail` flag from the store, because
+    // that flag is also flipped by other background calls (progress fetch,
+    // certificate fetch, etc.) and was causing the loader to re-appear over
+    // the whole page even after the course had already loaded.
+    if (isPageLoading) {
         return (
             <section className="flex min-h-[60vh] items-center justify-center bg-[#E6FBF1] py-20">
                 <LoadingSpinner />

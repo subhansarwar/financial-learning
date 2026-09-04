@@ -2,10 +2,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
     clearCurrentCaseStudy,
     clearError,
+    setCaseStudies,
 } from "../../../store/admin/caseStudy/caseStudiesSlice";
 import {
     createCaseStudy,
@@ -17,9 +17,12 @@ import CaseStudiesFormModal from "./caseStudiesComp/CaseStudiesFormModal";
 import CaseStudiesTable from "./caseStudiesComp/CaseStudiesTable";
 import CaseStudiesViewModal from "./caseStudiesComp/CaseStudiesViewModal";
 import DeleteConfirmModal from "./caseStudiesComp/DeleteConfirmModal";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+
+const CACHE_KEY = "admin_case_studies_list";
 
 export default function CaseStudiesEditor({ onDataChange }) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const {
         caseStudies,
         loading,
@@ -28,21 +31,48 @@ export default function CaseStudiesEditor({ onDataChange }) {
         loadingCreate,
         loadingUpdate,
         loadingDelete,
-    } = useSelector((state) => state.caseStudies);
+    } = useAppSelector((state) => state.caseStudies);
 
     const [viewCase, setViewCase] = useState(null);
     const [formState, setFormState] = useState({ open: false, mode: "create", case: null });
     const [deleteCase, setDeleteCase] = useState(null);
+    const [hasHydratedFromCache, setHasHydratedFromCache] = useState(false);
 
-    // Fetch case studies on mount and when pagination changes
+    // Cache-first: pehle localStorage se dikhao (loader nahi), fir background me fresh fetch
     useEffect(() => {
+        if (typeof window !== "undefined") {
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (cached) {
+                try {
+                    const parsed = JSON.parse(cached);
+                    if (Array.isArray(parsed)) {
+                        dispatch(setCaseStudies(parsed));
+                    }
+                } catch (e) {
+                    // corrupt cache, ignore
+                }
+            }
+        }
+        setHasHydratedFromCache(true);
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!hasHydratedFromCache) return;
         dispatch(getAllCaseStudies({
             skip: pagination.skip || 0,
             limit: pagination.limit || 50,
-        }));
-    }, [dispatch, pagination.skip, pagination.limit]);
+        }))
+            .unwrap()
+            .then((res) => {
+                if (typeof window !== "undefined" && Array.isArray(res)) {
+                    localStorage.setItem(CACHE_KEY, JSON.stringify(res));
+                }
+            })
+            .catch(() => {
+                // fetch fail ho to jo cache/state hai wahi rehne do
+            });
+    }, [dispatch, pagination.skip, pagination.limit, hasHydratedFromCache]);
 
-    // Cleanup on unmount
     useEffect(() => {
         return () => {
             dispatch(clearError());
@@ -61,16 +91,38 @@ export default function CaseStudiesEditor({ onDataChange }) {
 
     const closeForm = () => setFormState((s) => ({ ...s, open: false }));
 
-    const prepareCaseData = (data, isEdit = false) => {
+    const syncCache = (list) => {
+        if (typeof window !== "undefined" && Array.isArray(list)) {
+            localStorage.setItem(CACHE_KEY, JSON.stringify(list));
+        }
+    };
+
+    // API ke exact fields ke mutabiq payload banata hai
+    const prepareCaseData = (data) => {
+        // content sections (heading/text) ko ek plain string me join karo, kyunke API "content" string leti hai
+        const joinedContent = Array.isArray(data?.content)
+            ? data.content
+                .filter((s) => s?.heading?.trim() || s?.text?.trim())
+                .map((s) => (s.heading ? `${s.heading}\n${s.text || ""}` : s.text || ""))
+                .join("\n\n")
+            : (data?.content || "");
+
         return {
-            slug: data?.slug || data?.title?.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now(),
+            slug: data?.slug?.trim() || `${(data?.title || "case").toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`,
             title: data?.title?.trim() || "Untitled Case Study",
-            summary: data?.shortDescription?.trim() || "Case study summary",
-            content: data?.introduction?.trim() || "",
-            industry: data?.category || data?.industry || "General",
-            tags: data?.tags || [],
-            thumbnail_url: data?.coverImageName || data?.thumbnail_url || "",
-            is_published: data?.status === "Published" ? true : false,
+            summary: data?.summary?.trim() || "",
+            content: data?.introduction?.trim()
+                ? `${data.introduction.trim()}\n\n${joinedContent}`
+                : joinedContent,
+            industry: data?.industry?.trim() || "",
+            tags: Array.isArray(data?.tags) ? data.tags : [],
+            thumbnail_url: data?.thumbnail_url || data?.coverImageName || "",
+            source: data?.source?.trim() || "",
+            date: data?.date || "",
+            location: data?.location?.trim() || "",
+            company_name: data?.company_name?.trim() || "",
+            key_results: Array.isArray(data?.key_results) ? data.key_results : [],
+            is_published: data?.status === "Published" ? true : Boolean(data?.is_published),
         };
     };
 
@@ -78,28 +130,30 @@ export default function CaseStudiesEditor({ onDataChange }) {
         try {
             let result;
             if (isCreateMode || formState.mode === "create") {
-                const caseData = prepareCaseData(data, false);
+                const caseData = prepareCaseData(data);
                 result = await dispatch(createCaseStudy(caseData)).unwrap();
 
                 if (isCreateMode) {
                     return result;
                 }
 
-                await dispatch(getAllCaseStudies({
+                const fresh = await dispatch(getAllCaseStudies({
                     skip: pagination.skip || 0,
                     limit: pagination.limit || 50,
                 })).unwrap();
+                syncCache(fresh);
             } else {
-                const updateData = prepareCaseData(data, true);
+                const updateData = prepareCaseData(data);
                 result = await dispatch(updateCaseStudy({
                     id: data?.id,
                     updateData,
                 })).unwrap();
 
-                await dispatch(getAllCaseStudies({
+                const fresh = await dispatch(getAllCaseStudies({
                     skip: pagination.skip || 0,
                     limit: pagination.limit || 50,
                 })).unwrap();
+                syncCache(fresh);
             }
 
             onDataChange?.();
@@ -113,13 +167,15 @@ export default function CaseStudiesEditor({ onDataChange }) {
     const handleDeleteConfirm = async () => {
         try {
             await dispatch(deleteCaseStudy(deleteCase.id)).unwrap();
-            await dispatch(getAllCaseStudies({
+            const fresh = await dispatch(getAllCaseStudies({
                 skip: pagination.skip || 0,
                 limit: pagination.limit || 50,
             })).unwrap();
+            syncCache(fresh);
             setDeleteCase(null);
             onDataChange?.();
         } catch (error) {
+            // error toast thunk ke andar already ho raha hai
         }
     };
 
@@ -131,7 +187,7 @@ export default function CaseStudiesEditor({ onDataChange }) {
                 onView={setViewCase}
                 onEdit={openEdit}
                 onDelete={setDeleteCase}
-                loading={loading}
+                loading={false}
             />
 
             <CaseStudiesViewModal

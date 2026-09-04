@@ -92,11 +92,11 @@ export default function CourseEditor({ topics, onDataChange }) {
             topic: topicValue,
             level: data?.level || "Beginner",
             length_min: 0,
-            thumbnail_url: data?.coverImageName || "",
+            thumbnail_url: data?.thumbnail_url || "",
             instructor_name: data?.instructor_name || "Instructor Name",
             instructor_title: data?.instructor_title || "Instructor Title",
             instructor_bio: "Instructor Bio",
-            outcomes: [],
+            outcomes: data?.outcomes || [],
             is_published: data?.status === "Published" ? true : false,
         };
     };

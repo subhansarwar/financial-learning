@@ -1,4 +1,3 @@
-// app/(user-panel)/dashboard/DashboardClient.jsx
 "use client";
 
 import {
@@ -12,7 +11,7 @@ import {
     TrendingDown,
     TrendingUp
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Bar,
     BarChart,
@@ -23,21 +22,25 @@ import {
     YAxis,
 } from "recharts";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getDashboardSummary, SUMMARY_CACHE_PREFIX } from "../../store/userDashboard/dashboardThunks";
+import { setSummary } from "../../store/userDashboard/dashboardSlice";
 
 // ===== CONSTANTS =====
 const SIDEBAR = "#365B50";
 const MAIN_BG = "#FFF7ED";
 const LEARNING = "#34C79D";
 const CHALLENGE = "#F2B84B";
+const TONES = ["#7C6AE8", "#4FA3D1", "#E0A93E", "#D9727B", "#5B7FE0"];
 
-const STATS = [
-    { label: "Courses", sub: "In Progress", value: 2, icon: BookOpen, bg: "#FCEFD9", fg: "#C8862B" },
-    { label: "Lessons", sub: "Completed", value: 1, icon: ClipboardCheck, bg: "#DCEFEA", fg: "#2F8574" },
-    { label: "Quizzes", sub: "Completed", value: 1, icon: HelpCircle, bg: "#E4E9FB", fg: "#5B6BC0" },
-    { label: "Time Spent", sub: "30 min", value: null, icon: Clock, bg: "#FBE1E4", fg: "#C0576A" },
+// Fallback defaults (agar API se koi data na ho, UI khaali na dikhe)
+const DEFAULT_STATS_META = [
+    { label: "Courses", sub: "In Progress", key: "courses_in_progress", icon: BookOpen, bg: "#FCEFD9", fg: "#C8862B" },
+    { label: "Lessons", sub: "Completed", key: "lessons_completed", icon: ClipboardCheck, bg: "#DCEFEA", fg: "#2F8574" },
+    { label: "Quizzes", sub: "Completed", key: "quizzes_completed", icon: HelpCircle, bg: "#E4E9FB", fg: "#5B6BC0" },
+    { label: "Time Spent", sub: null, key: "time_spent_label", icon: Clock, bg: "#FBE1E4", fg: "#C0576A" },
 ];
 
-const SPENT_HOURS = [
+const DEFAULT_SPENT_HOURS = [
     { day: "S", learning: 6, challenge: 3 },
     { day: "M", learning: 9, challenge: 4 },
     { day: "T", learning: 5, challenge: 8 },
@@ -47,17 +50,16 @@ const SPENT_HOURS = [
     { day: "S", learning: 3, challenge: 2 },
 ];
 
-const METRICS = [
+const DEFAULT_METRICS = [
     { label: "Total hours in a week", value: "140", delta: "+2%", trend: "up" },
     { label: "Average hours in a day", value: "12", delta: "-3%", trend: "down" },
     { label: "Course hours in a week", value: "80", delta: "+1%", trend: "up" },
     { label: "Challenge hours in a week", value: "40", delta: "-4%", trend: "down" },
 ];
 
-const RECENT_ACTIVITY = [
+const DEFAULT_RECENT_ACTIVITY = [
     { title: "Sustainable Energy Investment", author: "Prof. Marcus Webb", progress: 60, tone: "#7C6AE8" },
     { title: "Microfinance: Financial Inclusion in Action", author: "Dr. Priya Raman", progress: 50, tone: "#4FA3D1" },
-    // { title: "Common Design Patterns", author: "Sen Jenson", progress: 15, tone: "#E0A93E" },
 ];
 
 function CustomTooltip({ active, payload, label }) {
@@ -74,8 +76,66 @@ function CustomTooltip({ active, payload, label }) {
 
 export default function DashboardClient() {
     const [activeIndex, setActiveIndex] = useState(3);
-    const dispatch = useAppDispatch()
-    const userData = useAppSelector(state => state.user?.user)
+    const dispatch = useAppDispatch();
+    const userData = useAppSelector((state) => state.user?.user);
+    const summaryByPeriod = useAppSelector((state) => state.dashboard.summary);
+    const period = "weekly"; // abhi ke liye fixed, UI mein "Weekly" button static hai
+    const summaryData = summaryByPeriod?.[period];
+
+    // Cache-first load: agar cache mein hai to turant use karo, warna sirf ek dafa fetch karo
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        const cached = localStorage.getItem(`${SUMMARY_CACHE_PREFIX}${period}`);
+        if (cached) {
+            try {
+                const parsed = JSON.parse(cached);
+                dispatch(setSummary({ period, data: parsed }));
+                return;
+            } catch (e) {
+                // corrupt cache — fallback to fresh fetch
+            }
+        }
+
+        dispatch(getDashboardSummary(period));
+    }, [dispatch]);
+
+    // ===== Derive display data (API data available? use it, warna fallback) =====
+    const stats = DEFAULT_STATS_META.map((meta) => ({
+        ...meta,
+        value: summaryData?.stats ? summaryData.stats[meta.key] : null,
+    }));
+    const hasApiStats = Boolean(summaryData?.stats);
+
+    const spentHours = summaryData?.spent_hours?.buckets?.length
+        ? summaryData.spent_hours.buckets.map((b) => ({
+            day: b.label,
+            learning: b.learning_hours,
+            challenge: b.challenge_hours,
+        }))
+        : DEFAULT_SPENT_HOURS;
+
+    const durationLabel =
+        summaryData?.spent_hours?.peak?.duration_label || "5:30 Hours";
+
+    const metrics = summaryData?.metrics?.length
+        ? summaryData.metrics.map((m) => ({
+            label: m.label,
+            value: m.value,
+            delta: `${m.delta_pct > 0 ? "+" : ""}${m.delta_pct}%`,
+            trend: m.trend,
+        }))
+        : DEFAULT_METRICS;
+
+    const recentActivity = summaryData?.recent_activity?.length
+        ? summaryData.recent_activity.map((a, i) => ({
+            title: a.title,
+            author: a.instructor_name,
+            progress: a.progress_pct,
+            tone: TONES[i % TONES.length],
+        }))
+        : DEFAULT_RECENT_ACTIVITY;
+
     return (
         <div className="flex min-h-screen font-sans" style={{ background: MAIN_BG }}>
             <div className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
@@ -101,7 +161,7 @@ export default function DashboardClient() {
 
                     {/* Stats Cards */}
                     <div className="mb-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-                        {STATS.map((s) => (
+                        {stats.map((s) => (
                             <div
                                 key={s.label}
                                 className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-4"
@@ -111,10 +171,12 @@ export default function DashboardClient() {
                                 </div>
                                 <div className="min-w-0">
                                     <p className="truncate text-lg font-extrabold text-white sm:text-xl">
-                                        {s.value ?? s.sub}
+                                        {hasApiStats
+                                            ? (s.key === "time_spent_label" ? s.value : s.value ?? 0)
+                                            : (s.sub ? "—" : "—")}
                                     </p>
                                     <p className="truncate text-[11px] font-medium text-white/55 sm:text-xs">
-                                        {s.label}{s.value !== null ? ` · ${s.sub}` : ""}
+                                        {s.label}{s.sub ? ` · ${s.sub}` : ""}
                                     </p>
                                 </div>
                             </div>
@@ -142,7 +204,7 @@ export default function DashboardClient() {
                                 <div className="relative h-52 w-full">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart
-                                            data={SPENT_HOURS}
+                                            data={spentHours}
                                             barGap={4}
                                             onMouseMove={(st) => {
                                                 if (st?.activeTooltipIndex !== undefined) {
@@ -159,12 +221,12 @@ export default function DashboardClient() {
                                             <YAxis hide domain={[0, 14]} />
                                             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(255,255,255,0.05)" }} />
                                             <Bar dataKey="learning" name="Learning" radius={[6, 6, 6, 6]} maxBarSize={10}>
-                                                {SPENT_HOURS.map((_, i) => (
+                                                {spentHours.map((_, i) => (
                                                     <Cell key={`l-${i}`} fill={LEARNING} fillOpacity={i === activeIndex ? 1 : 0.55} />
                                                 ))}
                                             </Bar>
                                             <Bar dataKey="challenge" name="Challenge" radius={[6, 6, 6, 6]} maxBarSize={10}>
-                                                {SPENT_HOURS.map((_, i) => (
+                                                {spentHours.map((_, i) => (
                                                     <Cell key={`c-${i}`} fill={CHALLENGE} fillOpacity={i === activeIndex ? 1 : 0.55} />
                                                 ))}
                                             </Bar>
@@ -172,11 +234,11 @@ export default function DashboardClient() {
                                     </ResponsiveContainer>
                                     <div className="pointer-events-none absolute left-1/2 top-1 -translate-x-1/2 rounded-lg bg-[#1F2937] px-3 py-1.5 text-center shadow-lg">
                                         <p className="text-[10px] font-semibold text-white/50">Duration</p>
-                                        <p className="text-xs font-extrabold text-white">5:30 Hours</p>
+                                        <p className="text-xs font-extrabold text-white">{durationLabel}</p>
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
-                                    {METRICS.map((m) => (
+                                    {metrics.map((m) => (
                                         <div key={m.label}>
                                             <div className="flex items-baseline gap-1.5">
                                                 <span className="text-lg font-extrabold text-white">{m.value}</span>
@@ -199,8 +261,8 @@ export default function DashboardClient() {
                                 <button className="text-xs font-bold text-white/60 hover:text-white">View All →</button>
                             </div>
                             <div className="space-y-3">
-                                {RECENT_ACTIVITY.map((a) => (
-                                    <div key={a.title} className="flex items-center gap-3">
+                                {recentActivity.map((a, i) => (
+                                    <div key={a.title + i} className="flex items-center gap-3">
                                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style={{ background: `${a.tone}33` }}>
                                             <ImageIcon className="h-4.5 w-4.5" style={{ color: a.tone }} />
                                         </div>

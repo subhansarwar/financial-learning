@@ -3,9 +3,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-import { X, Save, Plus, Trash2, ImageIcon, Send, Upload, X as XIcon } from "lucide-react";
+import { X, Save, Plus, Trash2, ImageIcon, Send, Upload, X as XIcon, Loader2, Star } from "lucide-react";
 import { emptyCaseDraft } from "./dummyCaseStudies";
 import Image from "next/image";
+import { deleteImage, uploadImage } from "../../../../store/slices/common/commonThunks";
+import { useAppDispatch } from "../../../../store/hooks";
 
 const inputClass =
     "w-full rounded-lg border border-line bg-cream-2/50 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted focus:border-[#365B50]/50 focus:outline-none focus:ring-4 focus:ring-[#365B50]/15";
@@ -24,14 +26,15 @@ function Field({ label, children, required = false }) {
 
 export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClose, onSave }) {
     const [data, setData] = useState(emptyCaseDraft());
+    const dispatch = useAppDispatch();
     const [touched, setTouched] = useState({
         title: false,
         slug: false,
-        author: false,
-        shortDescription: false,
-        introduction: false,
         content: false,
+        summary: false,
     });
+    const [images, setImages] = useState([]);
+    const [thumbnailUrl, setThumbnailUrl] = useState("");
     const [imagePreviews, setImagePreviews] = useState([]);
     const fileInputRef = useRef(null);
     const dropRef = useRef(null);
@@ -40,30 +43,46 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
         if (!isOpen) return;
 
         if (mode === "edit" && initialData) {
-            // Ensure content is an array
-            const contentArray = Array.isArray(initialData?.content)
+            const contentArray = Array.isArray(initialData.content)
                 ? initialData.content
                 : initialData.content
-                    ? [{ heading: "Content", text: initialData?.content }]
+                    ? [{ heading: "Content", text: initialData.content }]
                     : [{ heading: "", text: "" }];
 
             setData({
                 ...initialData,
-                content: contentArray
+                content: contentArray,
+                status: initialData.status || "Draft",
+                summary: initialData.summary || "",
+                updatedAt: initialData.updatedAt || "",
+                publishedAt: initialData.publishedAt || "",
             });
-            setImagePreviews(mode === "edit" && initialData?.images ? initialData.images : []);
+
+            if (initialData?.thumbnail_url) {
+                setImages([{ id: "existing", url: initialData.thumbnail_url, uploading: false }]);
+                setThumbnailUrl(initialData.thumbnail_url);
+            } else {
+                setImages([]);
+                setThumbnailUrl("");
+            }
         } else {
-            setData(emptyCaseDraft());
-            setImagePreviews([]);
+            const draft = emptyCaseDraft();
+            setData({
+                ...draft,
+                content: Array.isArray(draft.content) ? draft.content : [{ heading: "", text: "" }],
+                status: draft.status || "Draft",
+                updatedAt: draft.updatedAt || "",
+                publishedAt: draft.publishedAt || "",
+            });
+            setImages([]);
+            setThumbnailUrl("");
         }
 
         setTouched({
             title: false,
             slug: false,
-            author: false,
-            shortDescription: false,
-            introduction: false,
             content: false,
+            summary: false,
         });
     }, [isOpen, mode, initialData]);
 
@@ -79,11 +98,7 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                 return value.trim() !== "";
             case "slug":
                 return value.trim() !== "" && /^[a-z0-9-]+$/.test(value);
-            case "author":
-                return value.trim() !== "";
-            case "shortDescription":
-                return value.trim() !== "";
-            case "introduction":
+            case "summary":
                 return value.trim() !== "";
             case "content":
                 return data.content.some((s) => s.heading.trim() !== "" && s.text.trim() !== "");
@@ -101,9 +116,7 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
             data?.title?.trim() !== "" &&
             data?.slug?.trim() !== "" &&
             /^[a-z0-9-]+$/.test(data?.slug) &&
-            data?.author?.trim() !== "" &&
-            data?.shortDescription?.trim() !== "" &&
-            data?.introduction?.trim() !== "" &&
+            data?.summary?.trim() !== "" &&
             data?.content?.some((s) => s?.heading?.trim() !== "" && s?.text?.trim() !== "")
         );
     };
@@ -115,7 +128,7 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
         }
         const saveData = {
             ...data,
-            images: imagePreviews,
+            thumbnail_url: thumbnailUrl || images.find((i) => i.url)?.url || data.thumbnail_url || "",
             status: "Published",
             updatedAt: new Date().toLocaleDateString("en-US", {
                 month: "short",
@@ -159,15 +172,33 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
     const handleImageUpload = (files) => {
         const fileArray = Array.from(files);
         fileArray.forEach((file) => {
-            if (file.type.startsWith("image/")) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    setImagePreviews((prev) => [...prev, e.target.result]);
-                };
-                reader.readAsDataURL(file);
-            } else {
+            if (!file.type.startsWith("image/")) {
                 toast.error("Please upload image files only");
+                return;
             }
+
+            const tempId = `temp-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+            // Optimistic placeholder — uploading spinner ke sath
+            setImages((prev) => [...prev, { id: tempId, url: null, uploading: true }]);
+
+            dispatch(uploadImage({ file, container: "case_studies", title: data?.title || "", alt_text: data?.title || "" }))
+                .unwrap()
+                .then((res) => {
+                    setImages((prev) =>
+                        prev.map((img) =>
+                            img.id === tempId
+                                ? { id: res.id || res.image_id || tempId, url: res.file_url, uploading: false }
+                                : img
+                        )
+                    );
+                    // Agar abhi tak koi thumbnail select nahi hui, pehli successful upload ko thumbnail bana do
+                    setThumbnailUrl((prev) => prev || res.file_url);
+                })
+                .catch(() => {
+                    // Fail hone par placeholder hata do
+                    setImages((prev) => prev.filter((img) => img.id !== tempId));
+                });
         });
     };
 
@@ -191,10 +222,23 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
         e.stopPropagation();
     };
 
-    const removeImage = (index) => {
-        setImagePreviews((prev) => prev.filter((_, i) => i !== index));
-    };
+    const removeImage = (img) => {
+        setImages((prev) => prev.filter((i) => i.id !== img.id));
 
+        if (thumbnailUrl === img.url) {
+            setThumbnailUrl("");
+        }
+
+        // Sirf real uploaded image (jiska server id hai, "existing" nahi) delete API call karo
+        if (img.url && img.id !== "existing" && !img.uploading) {
+            dispatch(deleteImage(img.id)).catch(() => {
+            });
+        }
+    };
+    const setAsThumbnail = (img) => {
+        if (img.uploading || !img.url) return;
+        setThumbnailUrl(img.url);
+    };
     return (
         <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-in fade-in duration-200"
@@ -252,49 +296,95 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                                     <p className="mt-1 text-xs text-rose-500">Slug is required (lowercase, hyphens only)</p>
                                 )}
                             </Field>
+                            {/* Summary */}
+                            <Field label="Summary" required>
+                                <textarea
+                                    rows={2}
+                                    value={data.summary || ""}
+                                    onChange={(e) => setData({ ...data, summary: e.target.value })}
+                                    onBlur={() => handleBlur("summary")}
+                                    placeholder="A brief summary of the case study"
+                                    className={`${inputClass} ${showError("summary", data.summary) ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15" : ""}`}
+                                />
+                                {showError("summary", data.summary) && (
+                                    <p className="mt-1 text-xs text-rose-500">Summary is required</p>
+                                )}
+                            </Field>
+                        </div>
+                        {/* Industry, Tags, Source */}
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                            <Field label="Industry">
+                                <input
+                                    value={data.industry}
+                                    onChange={(e) => setData({ ...data, industry: e.target.value })}
+                                    placeholder="e.g. Microfinance"
+                                    className={inputClass}
+                                />
+                            </Field>
+                            <Field label="Tags (comma separated)">
+                                <input
+                                    value={Array.isArray(data.tags) ? data.tags.join(", ") : ""}
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean),
+                                        })
+                                    }
+                                    placeholder="e.g. finance, growth, microloans"
+                                    className={inputClass}
+                                />
+                            </Field>
+                            <Field label="Source">
+                                <input
+                                    value={data.source}
+                                    onChange={(e) => setData({ ...data, source: e.target.value })}
+                                    placeholder="e.g. Company blog, Interview"
+                                    className={inputClass}
+                                />
+                            </Field>
                         </div>
 
-                        {/* Author - Full width now */}
-                        <Field label="Author" required>
-                            <input
-                                value={data.author}
-                                onChange={(e) => setData({ ...data, author: e.target.value })}
-                                onBlur={() => handleBlur("author")}
-                                placeholder="e.g. Dr. Muhammad Yunus"
-                                className={`${inputClass} ${showError("author", data.author) ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15" : ""}`}
-                            />
-                            {showError("author", data.author) && (
-                                <p className="mt-1 text-xs text-rose-500">Author is required</p>
-                            )}
-                        </Field>
+                        {/* Date, Location, Company Name */}
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                            <Field label="Date">
+                                <input
+                                    type="date"
+                                    value={data.date}
+                                    onChange={(e) => setData({ ...data, date: e.target.value })}
+                                    className={inputClass}
+                                />
+                            </Field>
+                            <Field label="Location">
+                                <input
+                                    value={data.location}
+                                    onChange={(e) => setData({ ...data, location: e.target.value })}
+                                    placeholder="e.g. Dhaka, Bangladesh"
+                                    className={inputClass}
+                                />
+                            </Field>
+                            <Field label="Company Name">
+                                <input
+                                    value={data.company_name}
+                                    onChange={(e) => setData({ ...data, company_name: e.target.value })}
+                                    placeholder="e.g. Grameen Bank"
+                                    className={inputClass}
+                                />
+                            </Field>
+                        </div>
 
-                        {/* Short Description */}
-                        <Field label="Short Description" required>
+                        {/* Key Results */}
+                        <Field label="Key Results (comma separated)">
                             <input
-                                value={data.shortDescription}
-                                onChange={(e) => setData({ ...data, shortDescription: e.target.value })}
-                                onBlur={() => handleBlur("shortDescription")}
-                                placeholder="A brief summary of the case study"
-                                className={`${inputClass} ${showError("shortDescription", data.shortDescription) ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15" : ""}`}
+                                value={Array.isArray(data.key_results) ? data.key_results.join(", ") : ""}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        key_results: e.target.value.split(",").map((t) => t.trim()).filter(Boolean),
+                                    })
+                                }
+                                placeholder="e.g. 40% revenue growth, 10k new users"
+                                className={inputClass}
                             />
-                            {showError("shortDescription", data.shortDescription) && (
-                                <p className="mt-1 text-xs text-rose-500">Short description is required</p>
-                            )}
-                        </Field>
-
-                        {/* Introduction */}
-                        <Field label="Introduction" required>
-                            <textarea
-                                rows={3}
-                                value={data.introduction}
-                                onChange={(e) => setData({ ...data, introduction: e.target.value })}
-                                onBlur={() => handleBlur("introduction")}
-                                placeholder="Introduction to the case study"
-                                className={`${inputClass} ${showError("introduction", data.introduction) ? "border-rose-300 focus:border-rose-500 focus:ring-rose-15" : ""}`}
-                            />
-                            {showError("introduction", data.introduction) && (
-                                <p className="mt-1 text-xs text-rose-500">Introduction is required</p>
-                            )}
                         </Field>
 
                         {/* Content Sections */}
@@ -378,18 +468,41 @@ export default function CaseStudiesFormModal({ isOpen, mode, initialData, onClos
                                 </p>
                             </div>
 
-                            {imagePreviews.length > 0 && (
+                            {images.length > 0 && (
                                 <div className="mt-4 flex flex-wrap gap-3">
-                                    {imagePreviews.map((img, index) => (
-                                        <div key={index} className="group relative h-24 w-24 overflow-hidden rounded-lg border border-line-soft">
-                                            <Image
-                                                src={img}
-                                                alt={`Image ${index + 1}`}
-                                                fill
-                                                className="object-cover"
-                                            />
+                                    {images.map((img) => (
+                                        <div
+                                            key={img.id}
+                                            className={`group relative h-24 w-24 overflow-hidden rounded-lg border-2 ${thumbnailUrl === img.url ? "border-[#47735B]" : "border-line-soft"
+                                                }`}
+                                        >
+                                            {img.uploading ? (
+                                                <div className="flex h-full w-full items-center justify-center bg-cream-2/50">
+                                                    <Loader2 className="h-6 w-6 animate-spin text-[#72BB83]" />
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <Image
+                                                        src={img.url}
+                                                        alt="Uploaded image"
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setAsThumbnail(img)}
+                                                        title={thumbnailUrl === img.url ? "Thumbnail" : "Set as thumbnail"}
+                                                        className={`absolute -left-1 -top-1 rounded-full p-0.5 transition-opacity ${thumbnailUrl === img.url
+                                                            ? "bg-[#47735B] text-white opacity-100"
+                                                            : "bg-white/90 text-muted opacity-0 group-hover:opacity-100"
+                                                            }`}
+                                                    >
+                                                    </button>
+                                                </>
+                                            )}
                                             <button
-                                                onClick={() => removeImage(index)}
+                                                type="button"
+                                                onClick={() => removeImage(img)}
                                                 className="absolute -right-1 -top-1 rounded-full bg-rose-500 p-0.5 text-white opacity-0 transition-opacity group-hover:opacity-100"
                                             >
                                                 <XIcon className="h-4 w-4" strokeWidth={2} />

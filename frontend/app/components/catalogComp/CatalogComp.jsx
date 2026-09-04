@@ -19,6 +19,7 @@ import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import certificateIcon from "../../../public/assets/aboutUsSectionImages/certificate-icon.webp";
 import CourseCard from "../../components/CourseCard";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import CertificateVerifyModal from "../CertificateVerifyModal";
 
 const LEVELS = ["Beginner", "Intermediate", "Advanced"];
 const LENGTHS = [
@@ -34,7 +35,7 @@ const labelClasses = "mb-1.5 block text-xs font-bold uppercase tracking-wide tex
 
 const CatalogComp = ({ initialFilters }) => {
     const dispatch = useAppDispatch();
-
+    const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
     const {
         courses,
         pagination,
@@ -391,13 +392,18 @@ const CatalogComp = ({ initialFilters }) => {
                     >
                         <button
                             type="button"
+                            onClick={() => setIsVerifyModalOpen(true)}
                             className="w-full flex-shrink-0 rounded-md bg-[#1D6E96] px-6 py-3 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#175877] sm:w-auto"
                         >
-                            Get Today
+                            Verify
                         </button>
                     </motion.div>
                 </div>
             </motion.div>
+            <CertificateVerifyModal
+                isOpen={isVerifyModalOpen}
+                onClose={() => setIsVerifyModalOpen(false)}
+            />
         </>
     );
 };

@@ -86,7 +86,7 @@ export const getCourseBySlug = createAsyncThunk(
     "websiteCourse/getCourseBySlug",
     async (slug, { dispatch }) => {
         try {
-            dispatch(setLoadingDetail(true));
+            dispatch(setLoadingDetail(false));
             dispatch(clearError());
 
             console.log('🔵 Fetching course with slug:', slug);
@@ -203,7 +203,7 @@ export const getCourseProgress = createAsyncThunk(
     "websiteCourse/getCourseProgress",
     async (courseId, { dispatch }) => {
         try {
-            dispatch(setLoadingDetail(true));
+            dispatch(setLoadingDetail(false));
             dispatch(clearError());
 
             console.log('🔵 Fetching progress for course:', courseId);
